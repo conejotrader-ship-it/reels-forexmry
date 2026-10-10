@@ -3,7 +3,7 @@ Horarios (hora Bogotá): 9:00, 13:00 y 19:00 (fin de semana: 9:00 y 13:00).
 
 | Día | 9:00 | 13:00 | 19:00 |
 |---|---|---|---|
-| Sáb 10 | Qué es un bróker regulado | 3 errores al elegir un robot | – |
+| Sáb 10 (HECHO) | Qué es un bróker regulado | 3 errores al elegir un robot | – |
 | Dom 11 | Cómo empezar con cuenta demo | Qué es una cuenta cent | – |
 | Lun 12 (HECHO) | ¿Qué es el spread y por qué importa? | Stop loss: dónde ponerlo en el oro | Qué es un pip en XAUUSD |
 | Mar 13 | Mito: "un robot gana siempre" | Qué es el slippage | Apalancamiento: ventaja y riesgo |
@@ -26,6 +26,7 @@ Texto de cada reel termina con la línea del producto y luego los hashtags.
 
 ## Estilos usados (no repetir el mismo dos días seguidos; variar dentro del mismo día)
 - Lun 12: velas animadas (spread), infografía (stop loss), neón (pip).
+- Sáb 10: terminal tipo MetaTrader (bróker regulado, `v6_terminal.html`, escena 20), pizarra (errores al elegir un robot, `v7_pizarra.html`, escena 21).
 - Disponibles: pizarra, terminal tipo MetaTrader, cómic, lowpoly, dashboard, pixel-art 3D, y los tres anteriores.
 
 ## Especiales
