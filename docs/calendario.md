@@ -26,8 +26,9 @@ Texto de cada reel termina con la línea del producto y luego los hashtags.
 
 ## Estilos usados (no repetir el mismo dos días seguidos; variar dentro del mismo día)
 - Lun 12: velas animadas (spread), infografía (stop loss), neón (pip).
-- Sáb 10: terminal tipo MetaTrader (bróker regulado, `v6_terminal.html`, escena 20), pizarra (errores al elegir un robot, `v7_pizarra.html`, escena 21).
+- Sáb 10: terminal tipo MetaTrader (bróker regulado, `v6_terminal.html`, escena 20), pizarra (errores al elegir un robot, `v7_pizarra.html`, escena 21); especial MT5 vs MT4 también en pizarra (`v5_pizarra.html`, escena 40, fuente Caveat Brush).
 - Disponibles: pizarra, terminal tipo MetaTrader, cómic, lowpoly, dashboard, pixel-art 3D, y los tres anteriores.
 
 ## Especiales
 - Vie 9 oct 20:00 — Las 4 subidas parabólicas más grandes del oro (60 s, estilo gráfico dorado). Datos: 1971–1980 ($35 → $850, ×24, mínimo de $252,80 en 1999), 1999–2011 ($252 → $1.921), 2015–2020 ($1.049 → ~$2.074), oct 2025–ene 2026 ($4.300+ → $5.500+, luego corrección de más de 20%). Cifras aproximadas de spot; las fuentes difieren en decimales.
+- Sáb 10 oct 11:50 — MT5 vs MT4: 5 razones (60 s, estilo pizarra, fuente Caveat Brush). Datos oficiales de MetaQuotes: 21 vs 9 temporalidades, 38 vs 30 indicadores, 44 vs 31 objetos gráficos, 6 vs 4 órdenes pendientes, probador multihilo/multidivisa/ticks reales vs un hilo; MT5 admite más mercados según el bróker. Aviso: los robots de MT4 no corren en MT5.

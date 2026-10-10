@@ -1,0 +1,139 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:CB;font-weight:400;src:url(node_modules/@fontsource/caveat-brush/files/caveat-brush-latin-400-normal.woff2)}
+@font-face{font-family:Kalam;font-weight:700;src:url(node_modules/@fontsource/kalam/files/kalam-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'MT5vsMT4',hook:'¿MT4 O MT5? 5 RAZONES POR LAS QUE MT5 GANA',dur:60,cta:56,bpm:92,mus:'soft',prog:[[57,'M'],[53,'M'],[55,'m'],[52,'M']],
+ ev:[[0.2,'chime'],[4.5,'wipe'],[5.0,'blip',880],[11.9,'wipe'],[12.5,'blip',880],[21.4,'wipe'],[22.0,'blip',880],[28.4,'wipe'],[29.0,'blip',880],[38.4,'wipe'],[39.0,'blip',880],[45.4,'wipe'],
+  [46.0,'alert'],[52.0,'wipe'],[52.6,'chime'],[56.0,'cta']],
+ subs:[
+ [0.2,4.4,'MT4 o MT5: ¿cuál es mejor? Te doy 5 razones.','¿Eme te cuatro, o eme te cinco? ¿Cuál es mejor? Te doy cinco razones.'],
+ [5.0,11.8,'1. Temporalidades: MT4 tiene 9 y MT5 tiene 21. Más detalle para analizar.','Uno: temporalidades. Eme te cuatro tiene nueve. Eme te cinco tiene veintiuna. Más detalle para analizar.'],
+ [12.5,21.3,'2. Más herramientas: MT4 tiene 30 indicadores y 31 objetos gráficos. MT5, 38 y 44.','Dos: más herramientas de análisis. Eme te cuatro tiene treinta indicadores y treinta y un objetos gráficos. Eme te cinco, treinta y ocho y cuarenta y cuatro.'],
+ [22.0,28.3,'3. Más órdenes pendientes: MT4 tiene 4 tipos y MT5 tiene 6.','Tres: más órdenes pendientes. Eme te cuatro tiene cuatro tipos. Eme te cinco tiene seis.'],
+ [29.0,38.3,'4. Mejor probador: MT4 usa un solo hilo. MT5 usa varios hilos, varias divisas y ticks reales.','Cuatro: un mejor probador de estrategias. Eme te cuatro usa un solo hilo. Eme te cinco usa varios hilos, varias divisas y tics reales.'],
+ [39.0,45.3,'5. Más mercados: MT4 es solo forex. MT5 suma acciones, futuros y más, según tu bróker.','Cinco: más mercados. Eme te cuatro es solo fórex. Eme te cinco suma acciones, futuros y más, según tu bróker.'],
+ [46.0,51.8,'Ojo: un robot de MT4 no corre en MT5. Hay que reprogramarlo.','Ojo: un robot de eme te cuatro no corre en eme te cinco. Hay que reprogramarlo.'],
+ [52.2,55.8,'Securus Apex está hecho para MT5.','Securus Apex está hecho para eme te cinco.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const INK='#1c1f26',BLU='#2459d6',RED='#d7263d',GRN='#1f9d55',ORG='#ef8a00',MUT='#5d6b88',YEL='#ffe14d';
+const STY={subFont:'800 44px Inter',subBg:'rgba(28,31,38,.92)',subStroke:ORG,subFill:'#fff',ctaBg:'#f6f4ec',ctaSub:GRN,ctaMain:INK,
+ ctaAccent:ORG,ctaBtnText:INK,ctaFontS:'62px CB',ctaFontL:'136px CB'};
+boot(['40px CB','700 40px Kalam','800 40px Inter']);
+const F=n=>`${Math.round(n*1.2)}px CB`,K=n=>`700 ${n}px Kalam`;
+let tip=null;const REG=[];const COL=()=>window.__collect;
+const reg=(t0,k,a)=>REG.push(a==null?[+t0.toFixed(2),k]:[+t0.toFixed(2),k,+a.toFixed(2)]);
+// ---------- trazos a mano ----------
+function WR(s,x,y,o,t,t0,dur){if(COL()){reg(t0,'scribble',dur);return}
+  const p=clamp((t-t0)/dur);if(p<=0)return;ctx.save();ctx.font=o.font;const w=ctx.measureText(s).width,sz=+/(\d+)px/.exec(o.font)[1];
+  const al=o.align||'center',lx=al=='center'?-w/2:(al=='left'?0:-w),rot=o.rot||0;
+  ctx.translate(x,y);ctx.rotate(rot);ctx.beginPath();ctx.rect(lx-12,-sz*.9,(w+24)*p,sz*1.8);ctx.clip();
+  ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillStyle=o.fill||INK;ctx.fillText(s,lx,0);ctx.restore();
+  if(p<1){const px=lx+w*p;tip={x:x+px*Math.cos(rot),y:y+px*Math.sin(rot)+sz*.1,col:o.fill||INK}}}
+function stroke(pts,t,t0,dur,col,lw,seed,o={}){if(COL()){reg(t0,'scribble',dur);return}
+  const p=clamp((t-t0)/dur);if(p<=0)return;const Ls=[0];
+  for(let i=1;i<pts.length;i++)Ls.push(Ls[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+  const tot=Ls[Ls.length-1],tg=tot*p,R=rng(seed),n=Math.max(2,Math.ceil(tot/18)),J=o.j==null?1.6:o.j;
+  const at=d=>{let i=1;while(i<Ls.length-1&&Ls[i]<d)i++;const f=(d-Ls[i-1])/((Ls[i]-Ls[i-1])||1);return [lerp(pts[i-1][0],pts[i][0],f),lerp(pts[i-1][1],pts[i][1],f)]};
+  const q=[];for(let k=0;k<=n;k++){const d=tot*k/n,j1=(R()-.5)*2*J,j2=(R()-.5)*2*J;if(d>tg)break;const a=at(d);q.push([a[0]+j1,a[1]+j2])}
+  const e=at(tg);q.push(e);ctx.save();ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle=col;const base=ctx.globalAlpha;
+  [[.8,.6,.3,lw+2],[0,0,1,lw]].forEach(([ox,oy,al,w])=>{ctx.globalAlpha=base*al;ctx.lineWidth=w;ctx.beginPath();q.forEach((pt,i)=>i?ctx.lineTo(pt[0]+ox,pt[1]+oy):ctx.moveTo(pt[0]+ox,pt[1]+oy));ctx.stroke()});
+  ctx.restore();if(p<1)tip={x:e[0],y:e[1],col}}
+const rectP=(x,y,w,h)=>[[x-6,y+1],[x+w+4,y-2],[x+w+1,y+h+3],[x-3,y+h-1],[x+2,y-8]];
+const ellP=(cx,cy,rx,ry)=>{const o=[];for(let i=0;i<=44;i++){const a=-2.2+i/44*Math.PI*2.18,g=1+.07*i/44;o.push([cx+Math.cos(a)*rx*g,cy+Math.sin(a)*ry*g])}return o};
+const waveP=(x1,x2,y,amp=5)=>{const o=[],n=Math.ceil((x2-x1)/24);for(let i=0;i<=n;i++)o.push([x1+(x2-x1)*i/n,y+(i%2?amp:-amp)]);return o};
+const checkP=(x,y,s)=>[[x-s*.5,y],[x-s*.15,y+s*.45],[x+s*.6,y-s*.5]];
+function hatch(x,y,w,h,col,t,t0,dur,gap=15,lw=4){if(COL()){reg(t0,'scribble',dur);return}
+  const p=clamp((t-t0)/dur);if(p<=0)return;ctx.save();ctx.beginPath();ctx.rect(x,y+h*(1-p),w,h*p);ctx.clip();
+  ctx.globalAlpha=.14;ctx.fillStyle=col;ctx.fillRect(x,y,w,h);ctx.globalAlpha=.8;ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineCap='round';
+  ctx.beginPath();for(let k=-h;k<w;k+=gap){ctx.moveTo(x+k,y+h);ctx.lineTo(x+k+h,y)}ctx.stroke();ctx.restore();
+  if(p<1)tip={x:x+w*.5,y:y+h*(1-p),col}}
+function chip(x,y,w,h,label,col,t,t0,o={}){if(COL()){reg(t0,'tick');return}
+  const k=eback(prog(t,t0,t0+.32));if(k<=.001)return;const rot=(rng(Math.floor(x*7+y))()-.5)*.05;
+  ctx.save();ctx.translate(x+w/2,y+h/2);ctx.rotate(rot);ctx.scale(k,k);ctx.globalAlpha*=Math.min(1,prog(t,t0,t0+.15));
+  RR(-w/2,-h/2,w,h,14);if(o.fill){ctx.fillStyle=o.fill;ctx.fill()}ctx.strokeStyle=col;ctx.lineWidth=5;ctx.stroke();
+  ctx.font=o.font||F(34);ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=o.tc||col;ctx.fillText(label,0,3);ctx.restore()}
+function cnt(val,x,y,font,col,t,t0,dur){if(COL()){reg(t0+dur*.8,'ding');return}
+  const p=prog(t,t0,t0+dur);if(p<=0)return;const k=eback(prog(t,t0,t0+.3));
+  ctx.save();ctx.translate(x,y);ctx.scale(Math.max(.01,k),Math.max(.01,k));T(String(Math.round(val*eout(p))),0,0,{font,fill:col});ctx.restore()}
+// ---------- pizarra ----------
+function board(){ctx.fillStyle='#cfd4db';ctx.fillRect(0,0,W,H);
+  RR(18,18,W-36,H-36,26);ctx.fillStyle='#aeb5c0';ctx.fill();
+  const g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,'#fcfbf7');g.addColorStop(.5,'#f4f2ea');g.addColorStop(1,'#eceadf');
+  RR(40,40,W-80,H-80,14);ctx.fillStyle=g;ctx.fill();
+  ctx.save();RR(40,40,W-80,H-80,14);ctx.clip();const R=rng(5);ctx.lineCap='round';
+  for(let i=0;i<16;i++){ctx.globalAlpha=.035+R()*.03;ctx.strokeStyle='#7d8798';ctx.lineWidth=26+R()*50;ctx.beginPath();const x=R()*W,y=R()*H;ctx.moveTo(x,y);ctx.lineTo(x+120+R()*260,y-30+R()*60);ctx.stroke()}
+  ctx.globalAlpha=.16;const rg=ctx.createLinearGradient(0,0,W*.8,H*.5);rg.addColorStop(0,'rgba(255,255,255,.9)');rg.addColorStop(.25,'rgba(255,255,255,0)');ctx.fillStyle=rg;ctx.fillRect(0,0,W,H);ctx.restore();
+  RR(40,40,W-80,H-80,14);ctx.strokeStyle='rgba(0,0,0,.18)';ctx.lineWidth=4;ctx.stroke()}
+function eraser(x){ctx.save();ctx.translate(x,930);ctx.rotate(.07);ctx.shadowColor='rgba(0,0,0,.3)';ctx.shadowBlur=26;ctx.shadowOffsetX=-10;
+  RR(-90,-190,190,380,22);ctx.fillStyle='#2f3644';ctx.fill();ctx.shadowBlur=0;ctx.shadowOffsetX=0;RR(-90,-190,70,380,22);ctx.fillStyle='#d8c8a0';ctx.fill();ctx.restore()}
+function marker(){if(!tip)return;ctx.save();ctx.translate(tip.x,tip.y);ctx.rotate(-.95);ctx.shadowColor='rgba(0,0,0,.25)';ctx.shadowBlur=14;ctx.shadowOffsetX=6;ctx.shadowOffsetY=10;
+  ctx.fillStyle='#e8e8ee';ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(34,-11);ctx.lineTo(34,11);ctx.closePath();ctx.fill();
+  ctx.fillStyle=tip.col;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(12,-4);ctx.lineTo(12,4);ctx.closePath();ctx.fill();
+  RR(34,-24,140,48,12);ctx.fillStyle='#f5f5f7';ctx.fill();ctx.shadowColor='transparent';RR(70,-24,70,48,4);ctx.fillStyle=tip.col;ctx.fill();
+  RR(174,-22,46,44,10);ctx.fillStyle=tip.col;ctx.fill();ctx.restore()}
+// ---------- páginas ----------
+function head(n,s,t,t0){stroke(ellP(150,330,58,58),t,t0,.5,ORG,7,n*11);WR(String(n),150,338,{font:F(72),fill:ORG},t,t0+.3,.25);
+  WR(s,250,330,{font:F(66),fill:INK,align:'left'},t,t0+.4,.9);stroke(waveP(250,250+Math.min(720,s.length*36),392,4),t,t0+1.3,.5,ORG,6,n*13)}
+function pIntro(t){
+  WR('MT4',250,610,{font:F(190),fill:MUT,rot:-.04},t,0.3,.7);WR('VS',540,650,{font:F(90),fill:RED,rot:.08},t,1.0,.4);WR('MT5',830,610,{font:F(190),fill:GRN,rot:.03},t,1.3,.7);
+  WR('¿CUÁL ES MEJOR?',540,930,{font:F(104),fill:INK},t,2.0,1.4);stroke(waveP(110,970,1000,6),t,3.4,.5,RED,8,2);
+  WR('5 RAZONES',540,1210,{font:F(130),fill:ORG,rot:-.02},t,3.4,.8);stroke(rectP(150,1110,780,200),t,4.0,.4,ORG,7,8)}
+const TF=['M1','M2','M3','M4','M5','M6','M10','M12','M15','M20','M30','H1','H2','H3','H4','H6','H8','H12','D1','W1','MN1'];
+const SH=new Set(['M1','M5','M15','M30','H1','H4','D1','W1','MN1']);
+function pR1(t){head(1,'TEMPORALIDADES',t,5.0);
+  WR('MT4',150,560,{font:F(66),fill:MUT,align:'left'},t,6.6,.4);stroke([[350,560],[350+9*24,560]],t,7.0,.8,MUT,60,5);cnt(9,350+9*24+70,560,F(84),MUT,t,7.7,.5);
+  WR('MT5',150,730,{font:F(66),fill:GRN,align:'left'},t,8.6,.4);stroke([[350,730],[350+21*24,730]],t,9.0,1.3,GRN,60,6);cnt(21,350+21*24+80,730,F(108),GRN,t,10.2,.6);
+  let a=0,b=0;TF.forEach((n,i)=>{const c=i%7,r=Math.floor(i/7),x=70+c*136,y=900+r*104;
+    if(SH.has(n))chip(x,y,124,80,n,INK,t,7.0+(a++)*.14);else chip(x,y,124,80,n,GRN,t,9.4+(b++)*.1,{fill:'rgba(31,157,85,.18)'})});
+  WR('LAS VERDES = SOLO EN MT5',540,1240,{font:F(44),fill:GRN},t,10.6,1.0)}
+function pR2(t){head(2,'MÁS HERRAMIENTAS',t,12.5);const BASE=1300,U=12;
+  WR('INDICADORES',340,590,{font:F(50),fill:INK},t,13.6,.7);WR('OBJETOS',740,560,{font:F(50),fill:INK},t,13.9,.5);WR('GRÁFICOS',740,618,{font:F(50),fill:INK},t,14.4,.5);
+  stroke([[110,BASE+6],[950,BASE+6]],t,14.2,.6,INK,6,9);
+  const col=(cx,val,c,ts,tag)=>{const h=val*U,x=cx-70,y=BASE-h;stroke(rectP(x,y,140,h),t,ts,.8,c,6,val*3);hatch(x+4,y+4,132,h-4,c,t,ts+.3,.7);
+    cnt(val,cx,y-50,F(72),c,t,ts+.9,.4);WR(tag,cx,BASE+58,{font:F(44),fill:c},t,ts-.2,.35)};
+  col(260,30,MUT,15.3,'MT4');col(660,31,MUT,17.0,'MT4');col(420,38,GRN,19.2,'MT5');col(820,44,GRN,20.2,'MT5')}
+const O4=['BUY LIMIT','SELL LIMIT','BUY STOP','SELL STOP'];
+function pR3(t){head(3,'MÁS ÓRDENES',t,22.0);
+  WR('MT4 · 4 TIPOS',130,530,{font:F(56),fill:MUT,align:'left'},t,24.3,.7);
+  O4.forEach((n,i)=>chip(130+(i%2)*460,590+Math.floor(i/2)*106,360,84,n,MUT,t,24.9+i*.25));
+  WR('MT5 · 6 TIPOS',130,880,{font:F(56),fill:GRN,align:'left'},t,26.2,.7);
+  [...O4,'BUY STOP LIMIT','SELL STOP LIMIT'].forEach((n,i)=>chip(130+(i%2)*460,940+Math.floor(i/2)*106,360,84,n,i<4?INK:GRN,t,26.8+i*.18,{fill:i<4?null:'rgba(31,157,85,.16)',font:F(i<4?34:31)}));
+  WR('LAS 2 NUEVAS EN VERDE',540,1290,{font:F(46),fill:GRN},t,27.6,.7)}
+function pR4(t){head(4,'PROBADOR',t,29.0);WR('DE ESTRATEGIAS',250,458,{font:F(46),fill:MUT,align:'left'},t,30.0,.7);
+  WR('MT4',130,615,{font:F(66),fill:MUT,align:'left'},t,31.6,.4);stroke(rectP(300,565,100,100),t,32.0,.4,MUT,6,2);hatch(304,569,92,92,MUT,t,32.4,5.6);
+  WR('UN SOLO HILO',440,615,{font:F(50),fill:MUT,align:'left'},t,33.0,.7);
+  WR('MT5',130,830,{font:F(66),fill:GRN,align:'left'},t,34.6,.4);
+  for(let i=0;i<8;i++){const c=i%4,r=Math.floor(i/4),x=300+c*120,y=770+r*120;stroke(rectP(x,y,96,96),t,34.9+i*.08,.3,GRN,6,20+i);hatch(x+4,y+4,88,88,GRN,t,35.2+i*.05,.9)}
+  const tag=(txt,y,ts)=>{stroke(checkP(150,y,44),t,ts,.3,GRN,9,y);WR(txt,205,y,{font:F(54),fill:GRN,align:'left'},t,ts+.25,.8)};
+  tag('VARIOS HILOS',1090,35.0);tag('VARIAS DIVISAS',1180,36.1);tag('TICS REALES',1270,37.1)}
+function pR5(t){head(5,'MÁS MERCADOS',t,39.0);
+  WR('MT4',130,570,{font:F(66),fill:MUT,align:'left'},t,40.6,.4);stroke(ellP(540,570,140,64),t,41.0,.6,MUT,6,3);WR('FOREX',540,574,{font:F(42),fill:MUT},t,41.2,.5);WR('SOLO',800,570,{font:F(44),fill:RED,rot:-.05},t,41.8,.4);
+  WR('MT5',130,830,{font:F(66),fill:GRN,align:'left'},t,42.5,.4);
+  [['FOREX',250,970],['ACCIONES',540,970],['FUTUROS',830,970],['OPCIONES',400,1110],['BONOS',690,1110]].forEach(([n,x,y],i)=>{const ts=42.9+i*.38;stroke(ellP(x,y,135,62),t,ts,.5,GRN,6,30+i);WR(n,x,y+4,{font:F(38),fill:GRN},t,ts+.15,.5)});
+  WR('*SEGÚN LO QUE OFREZCA TU BRÓKER',540,1250,{font:K(36),fill:MUT},t,44.8,.6)}
+function pOjo(t){WR('¡OJO!',540,360,{font:F(200),fill:RED,rot:-.03},t,46.0,.8);stroke(waveP(250,830,480,6),t,46.9,.5,RED,8,3);
+  WR('ROBOT DE MT4',290,640,{font:F(46),fill:MUT},t,47.2,.5);stroke(rectP(120,700,340,200),t,47.4,.5,MUT,7,4);WR('.ex4',290,805,{font:F(100),fill:MUT},t,47.8,.4);
+  WR('MT5',790,640,{font:F(46),fill:GRN},t,48.0,.4);stroke(rectP(620,700,340,200),t,48.2,.5,GRN,7,5);WR('.ex5',790,805,{font:F(100),fill:GRN},t,48.6,.4);
+  stroke([[470,800],[605,800]],t,48.4,.3,INK,8,6);stroke([[580,772],[608,800],[580,828]],t,48.7,.2,INK,8,7);
+  stroke([[500,745],[580,855]],t,48.9,.25,RED,16,8);stroke([[580,745],[500,855]],t,49.1,.25,RED,16,9);
+  WR('UN ROBOT DE MT4',540,1060,{font:F(72),fill:INK},t,48.5,.9);WR('NO CORRE EN MT5',540,1165,{font:F(72),fill:RED},t,49.5,.9);
+  WR('HAY QUE REPROGRAMARLO',540,1290,{font:F(54),fill:ORG},t,50.4,.9)}
+function pEnd(t){WR('MT5',540,420,{font:F(260),fill:GRN,rot:-.03},t,52.6,.8);stroke(ellP(540,420,390,190),t,53.0,.6,ORG,9,4);
+  WR('ROBOT DE ORO',540,800,{font:F(84),fill:INK},t,53.4,.6);WR('MR. Y 10.0',540,915,{font:F(112),fill:INK},t,53.9,.6);WR('SECURUS APEX',540,1040,{font:F(112),fill:ORG},t,54.4,.7);
+  WR('HECHO PARA MT5',540,1210,{font:F(66),fill:GRN},t,55.1,.5)}
+const PG=[[0,4.5,pIntro],[5.0,11.9,pR1],[12.5,21.4,pR2],[22.0,28.4,pR3],[29.0,38.4,pR4],[39.0,45.4,pR5],[46.0,52.0,pOjo],[52.5,999,pEnd]];
+function draw(t){board();tip=null;let er=null;
+  PG.forEach(([s,e,fn],i)=>{if(t<s||(t>=e+.5&&i<PG.length-1))return;ctx.save();
+    if(t>=e&&i<PG.length-1){const sx=(W+160)*clamp((t-e)/.5)-90;ctx.beginPath();ctx.rect(sx,0,W,H);ctx.clip();er=sx}
+    fn(t);ctx.restore()});
+  if(er!=null){tip=null;eraser(er)}marker()}
+function cover(){board();tip=null;const T0=1e9;
+  WR('¿MT4 O MT5?',540,330,{font:F(150),fill:INK,rot:-.02},T0,0,.1);
+  WR('MT4',540,590,{font:F(210),fill:MUT},T0,0,.1);stroke([[250,470],[830,700]],T0,0,.1,RED,22,3);stroke([[830,470],[250,700]],T0,0,.1,RED,22,4);
+  WR('MT5',540,930,{font:F(360),fill:GRN,rot:-.03},T0,0,.1);stroke(ellP(540,930,470,260),T0,0,.1,ORG,14,5);
+  ctx.save();RR(70,1250,940,130,26);ctx.fillStyle=YEL;ctx.fill();ctx.restore();WR('5 RAZONES POR LAS QUE GANA',540,1318,{font:F(52),fill:INK},T0,0,.1);
+  ctx.save();RR(270,1440,540,110,55);ctx.fillStyle=RED;ctx.fill();ctx.restore();T('MÍRALO AHORA',540,1498,{font:F(46),fill:'#fff'})}
+window.__load=()=>{if(!SPEC._c){window.__collect=true;REG.length=0;PG.forEach(p=>p[2](0));window.__collect=false;REG.forEach(r=>SPEC.ev.push(r));SPEC._c=1}return JSON.stringify(Object.assign({dur:21},SPEC))};
+</script></body></html>
