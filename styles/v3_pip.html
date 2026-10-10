@@ -1,0 +1,60 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Orbitron;font-weight:700;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-700-normal.woff2)}
+@font-face{font-family:Orbitron;font-weight:900;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'Pip',hook:'¿CUÁNTO VALE 1 PIP EN EL ORO?',bpm:124,prog:[[52,'m'],[48,'M'],[55,'M'],[50,'M']],
+ ev:[[0.3,'power'],[2.7,'rise',0.8],[3.4,'seq',[660,880,1320]],[4.2,'tick'],[4.6,'tick'],[5.0,'tick'],[6.2,'ding'],[8.2,'chime'],[9.4,'ding'],[12.9,'chime'],[14.0,'ding'],[17.2,'cta']],
+ subs:[[0.2,3.2,'¿Sabes cuánto vale un pip en el oro?'],
+ [3.4,7.8,'En la mayoría de brókers, un pip en oro es un movimiento de diez centavos de dólar.'],
+ [8.1,12.6,'Con un lote completo, que son cien onzas, cada pip vale diez dólares.'],
+ [12.9,16.9,'Con cero punto diez de lote, vale un dólar. Revisa siempre cómo lo define tu bróker.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const CY='#28f0ff',MG='#ff2bd6',GD='#ffd23d';
+const STY={subFont:'700 42px Orbitron',subBg:'rgba(10,2,24,.82)',subStroke:'#ff2bd6',subFill:'#eaffff',ctaBg:'#07030f',ctaSub:'#28f0ff',ctaGlow:'#ff2bd6',
+ ctaAccent:'#ff2bd6',ctaBtnText:'#fff',ctaFontS:'700 46px Orbitron',ctaFontL:'900 96px Orbitron'};
+boot(['700 40px Orbitron','900 40px Orbitron','800 40px Inter']);
+const HZ=1000;
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#14012e');g.addColorStop(.52,'#2a0746');g.addColorStop(.53,'#07030f');g.addColorStop(1,'#07030f');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // sol retro
+  ctx.save();ctx.beginPath();ctx.rect(0,0,W,HZ);ctx.clip();const sg=ctx.createLinearGradient(0,HZ-300,0,HZ);sg.addColorStop(0,GD);sg.addColorStop(1,MG);ctx.fillStyle=sg;ctx.globalAlpha=.55;
+  ctx.beginPath();ctx.arc(540,HZ,300,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;ctx.fillStyle='#2a0746';for(let i=0;i<7;i++){ctx.fillRect(200,HZ-20-i*38,680,4+i*3)}ctx.restore();
+  // piso con perspectiva
+  ctx.save();ctx.beginPath();ctx.rect(0,HZ,W,H-HZ);ctx.clip();ctx.strokeStyle=MG;ctx.shadowColor=MG;ctx.shadowBlur=10;ctx.lineWidth=2.5;ctx.globalAlpha=.7;
+  for(let i=-14;i<=14;i++){ctx.beginPath();ctx.moveTo(540+i*18,HZ);ctx.lineTo(540+i*180,H);ctx.stroke()}
+  const ph=(t*.5)%1;for(let j=0;j<14;j++){const u=(j+ph)/14,y=HZ+Math.pow(u,2.2)*(H-HZ);ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.save();ctx.strokeStyle=CY;ctx.shadowColor=CY;ctx.shadowBlur=14;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(0,HZ);ctx.lineTo(W,HZ);ctx.stroke();ctx.restore()}
+function scan(){ctx.save();ctx.globalAlpha=.07;ctx.fillStyle='#000';for(let y=0;y<H;y+=6)ctx.fillRect(0,y,W,3);ctx.restore()}
+function neon(s,x,y,font,col,a=1,sc=1){T(s,x,y,{font,fill:'#fff',glow:col,gb:34,a,scale:sc});T(s,x,y,{font,fill:col,glow:col,gb:10,a:a*.55,scale:sc})}
+function ladder(t){const a=eio(prog(t,3.4,4))*(1-eio(prog(t,7.9,8.3)));if(a<=0)return;ctx.save();ctx.globalAlpha=a;
+  const yb=1260,st=122;for(let i=0;i<=5;i++){const y=yb-i*st,show=prog(t,3.8+i*.15,4.1+i*.15);if(show<=0)continue;ctx.globalAlpha=a*show;
+    line(470,y,640,y,CY,4);T((2650+i*.1).toFixed(2),440,y,{font:'700 36px Orbitron',fill:CY,align:'right',glow:CY,gb:12})}
+  ctx.globalAlpha=a;const k=eout(prog(t,5.2,6.2));const y0=yb,y1=yb-st;
+  ctx.fillStyle='rgba(255,43,214,.25)';ctx.fillRect(470,y1,170,st);
+  ctx.strokeStyle=MG;ctx.lineWidth=5;ctx.shadowColor=MG;ctx.shadowBlur=20;ctx.beginPath();ctx.moveTo(670,y1);ctx.lineTo(690,y1);ctx.lineTo(690,y0);ctx.lineTo(670,y0);ctx.stroke();
+  ctx.shadowBlur=0;ctx.restore();
+  if(k>0){neon('1 PIP',830,yb-st/2-34,'900 62px Orbitron',MG,a*k);neon('= $0.10',830,yb-st/2+40,'900 52px Orbitron',GD,a*k)}
+  // punto de precio
+  const py=yb-st*eio(prog(t,5.0,6.2));ctx.save();ctx.globalAlpha=a;ctx.beginPath();ctx.arc(555,py,16,0,7);ctx.fillStyle='#fff';ctx.shadowColor='#fff';ctx.shadowBlur=24;ctx.fill();ctx.restore()}
+function tile(y,ts,lote,oz,val,unit,t,col){const k=eback(prog(t,ts,ts+.5));if(k<=0.001)return;ctx.save();ctx.globalAlpha=Math.min(1,prog(t,ts,ts+.2));ctx.translate(0,(1-k)*80);
+  RR(90,y,900,330,28);ctx.fillStyle='rgba(10,2,24,.82)';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=5;ctx.shadowColor=col;ctx.shadowBlur=26;ctx.stroke();ctx.shadowBlur=0;
+  T(lote,150,y+80,{font:'900 56px Orbitron',fill:col,align:'left',glow:col,gb:14});T(oz,150,y+150,{font:'700 34px Orbitron',fill:'#c9f7ff',align:'left'});
+  const c=eout(prog(t,ts+.3,ts+1.1));const v=val*c;
+  T('$'+(val>=10?Math.round(v):v.toFixed(0===0&&val<10?(c<1?2:0):0)),740,y+175,{font:'900 150px Orbitron',fill:GD,glow:GD,gb:30});
+  T(unit,840,y+280,{font:'700 36px Orbitron',fill:'#fff',align:'center'});ctx.restore()}
+function draw(t){bg(t);
+  const k=eio(prog(t,2.6,3.5));
+  if(k<1){const sc=1+.2*k,a=1-k,fl=1-0.15*Math.abs(Math.sin(t*14))*(t<1.2?1:0);
+    neon('¿CUÁNTO VALE',540,520,'900 76px Orbitron',CY,a*fl,sc);neon('1 PIP',540,720,'900 230px Orbitron',MG,a*fl,sc);neon('EN EL ORO?',540,900,'900 76px Orbitron',CY,a*fl,sc)}
+  if(k>0){neon('PIP · XAUUSD',540,300,'900 68px Orbitron',CY,k)}
+  ladder(t);
+  tile(470,8.2,'1.00 LOTE','= 100 onzas',10,'por pip',t,CY);
+  tile(840,12.9,'0.10 LOTE','= 10 onzas',1,'por pip',t,MG);
+  if(t>14.4&&t<17.1)T('*Revisa cómo define el pip tu bróker',540,1290,{font:'700 30px Orbitron',fill:'#ffffff',a:eio(prog(t,14.4,15))*.9});
+  scan()}
+function cover(){bg(3);ctx.save();ctx.translate(0,60);
+  neon('¿CUÁNTO VALE',540,430,'900 78px Orbitron',CY);neon('1 PIP',540,650,'900 260px Orbitron',MG);neon('EN EL ORO?',540,860,'900 84px Orbitron',CY);
+  RR(210,980,660,110,55);ctx.fillStyle=GD;ctx.shadowColor=GD;ctx.shadowBlur=26;ctx.fill();ctx.shadowBlur=0;T('DESCÚBRELO AQUÍ',540,1036,{font:'900 40px Orbitron',fill:'#1a0a00'});
+  ctx.restore();scan()}
+</script></body></html>

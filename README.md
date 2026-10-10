@@ -24,3 +24,10 @@ Sistema para producir y programar reels educativos de Instagram (estilo pixel-ar
 - Subtítulos siempre en la parte inferior de la pantalla (arriba los tapa la interfaz de Instagram).
 - Mantener los temas ligados al trading; no usar los temas ya producidos.
 - Los modelos de voz y los frames no se versionan (ver `.gitignore`).
+
+## Estilos canvas 2D (`styles/`)
+Motor liviano (`common.js`) para reels de estilos distintos, sin WebGL. Cada página define `SPEC` (subtítulos, bpm, acordes, eventos de sonido), `draw(t)` y `cover()`.
+- `v1_spread.html` — velas animadas (spread). `v2_stoploss.html` — infografía. `v3_pip.html` — neón synthwave.
+- Frames: `python3 styles/render_canvas.py <pagina.html> <escena>` (escenas 10+). Carátula: `... cover <pagina.html> <salida.png>`. Vista previa: `... sheet <pagina.html> 1,5,9 <salida.jpg>`.
+- Audio y ensamble: igual que pixel-art (`audio/gen_px5.py <escena>` y `pixel/build_pixel.py <escena> salida.mp4`).
+- Carátulas en `covers/`; se usan como `videoThumbnailUrl` en Metricool.

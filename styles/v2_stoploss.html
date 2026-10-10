@@ -1,0 +1,59 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:700;src:url(node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'StopLoss',hook:'¿DÓNDE VA TU STOP LOSS?',bpm:112,prog:[[60,'M'],[55,'M'],[57,'m'],[53,'M']],
+ ev:[[0.3,'blip',660],[2.6,'rise',0.8],[3.4,'chime'],[5.2,'tick'],[7.8,'chime'],[9.6,'alert'],[12.2,'chime'],[14.0,'seq',[523,659,784]],[17.2,'cta']],
+ subs:[[0.2,3.0,'¿Dónde pones tu stop loss en el oro?'],
+ [3.2,7.4,'Uno: detrás de un nivel que importe, un soporte o una resistencia. No a una distancia al azar.'],
+ [7.7,11.8,'Dos: deja espacio. El oro se mueve fuerte, y un stop muy pegado salta con el ruido.'],
+ [12.1,16.8,'Tres: primero define el stop y después calcula el lote. Nunca al revés.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const GOLD='#ffc83d',RED='#ff5a5f',GRN='#2ee6a6';
+const STY={subFont:'800 46px Inter',subBg:'rgba(6,14,40,.86)',subStroke:'#ffc83d',ctaBg:'#0b1b44',ctaSub:'#ffc83d',ctaGlow:'#ffc83d',
+ ctaAccent:'#ffc83d',ctaBtnText:'#0b1b44',ctaFontS:'800 52px Inter',ctaFontL:'900 110px Inter'};
+boot(['700 40px Inter','800 40px Inter','900 40px Inter']);
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0b1b44');g.addColorStop(1,'#1b3a8f');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.07;ctx.fillStyle='#fff';for(let i=-4;i<14;i++){ctx.save();ctx.translate(i*150+(t*20)%150,0);ctx.rotate(.35);ctx.fillRect(0,-200,40,2400);ctx.restore()}ctx.restore()}
+const CARDS=[{ts:3.4,y:470,n:'1',h:'DETRÁS DE UN NIVEL',s:'Más allá de un soporte o resistencia'},
+ {ts:7.8,y:790,n:'2',h:'DEJA ESPACIO',s:'El oro se mueve fuerte: un stop pegado salta'},
+ {ts:12.2,y:1110,n:'3',h:'PRIMERO EL STOP',s:'Después calcula el lote, nunca al revés'}];
+function diag(i,x,y,w,h,t,ts){const k=prog(t,ts+.4,ts+1.9);ctx.save();ctx.beginPath();ctx.rect(x,y,w,h);ctx.clip();
+  if(i==0){const sy=y+h*.55;line(x,sy,x+w,sy,GOLD,5);T('soporte',x+w-6,sy-16,{font:'800 26px Inter',fill:GOLD,align:'right'});
+    line(x,y+h*.88,x+w,y+h*.88,RED,5,[12,8]);T('SL',x+14,y+h*.88-16,{font:'900 28px Inter',fill:RED,align:'left'});
+    const pts=[[0,.1],[.2,.5],[.35,.3],[.55,.52],[.7,.2],[.85,.45],[1,.25]];ctx.strokeStyle='#fff';ctx.lineWidth=5;ctx.beginPath();
+    const n=Math.floor(k*(pts.length-1));for(let j=0;j<=n;j++){const [px,py]=pts[j];j?ctx.lineTo(x+px*w,y+py*h):ctx.moveTo(x+px*w,y+py*h)}ctx.stroke();
+    if(k>.95)T('✓',x+w-30,y+34,{font:'900 56px Inter',fill:GRN})}
+  if(i==1){const f=u=>y+h*(.42+.2*Math.sin(u*14)+.12*Math.sin(u*31)+(u>.55&&u<.65?.28:0));
+    line(x,y+h*.62,x+w,y+h*.62,RED,5,[12,8]);line(x,y+h*.92,x+w,y+h*.92,GRN,5,[12,8]);
+    T('pegado',x+8,y+h*.62-14,{font:'800 26px Inter',fill:RED,align:'left'});T('con espacio',x+8,y+h*.92-14,{font:'800 26px Inter',fill:GRN,align:'left'});
+    ctx.strokeStyle='#fff';ctx.lineWidth=4;ctx.beginPath();for(let u=0;u<=k;u+=.01){const px=x+u*w,py=f(u);u?ctx.lineTo(px,py):ctx.moveTo(px,py)}ctx.stroke();
+    if(k>.6)T('✕',x+.6*w,y+h*.62,{font:'900 64px Inter',fill:RED,scale:eback(prog(k,.6,.7))})}
+  if(i==2){const a=eout(prog(t,ts+.4,ts+1.0)),b=eout(prog(t,ts+1.0,ts+1.6));
+    RR(x,y+h*.2,w*.4,h*.4,16);ctx.fillStyle=RED;ctx.globalAlpha=a;ctx.fill();T('STOP',x+w*.2,y+h*.4,{font:'900 36px Inter',fill:'#fff',a:a});
+    ctx.globalAlpha=b;T('→',x+w*.5,y+h*.4,{font:'900 44px Inter',fill:GOLD});
+    RR(x+w*.6,y+h*.2,w*.4,h*.4,16);ctx.fillStyle=GRN;ctx.fill();T('LOTE',x+w*.8,y+h*.4,{font:'900 36px Inter',fill:'#06241b',a:b});
+    ctx.globalAlpha=1;T('nunca al revés',x+w/2,y+h*.85,{font:'800 28px Inter',fill:'#c8d6ff'})}
+  ctx.restore()}
+function card(c,i,t,active){const k=eback(prog(t,c.ts,c.ts+.5));if(k<=0)return;const ox=(1-k)*900;ctx.save();ctx.translate(ox,0);ctx.globalAlpha=Math.min(1,prog(t,c.ts,c.ts+.2))*(active?1:.78);
+  RR(100,c.y,880,300,30);ctx.fillStyle='rgba(8,18,52,.88)';ctx.fill();ctx.strokeStyle=active?GOLD:'rgba(255,255,255,.25)';ctx.lineWidth=active?6:3;ctx.stroke();
+  ctx.beginPath();ctx.arc(190,c.y+80,52,0,7);ctx.fillStyle=GOLD;ctx.fill();T(c.n,190,c.y+84,{font:'900 64px Inter',fill:'#0b1b44'});
+  T(c.h,270,c.y+62,{font:'900 50px Inter',fill:'#fff',align:'left'});
+  wrapLines(c.s,380,'700 32px Inter').forEach((l,j)=>T(l,140,c.y+160+j*44,{font:'700 32px Inter',fill:'#c8d6ff',align:'left'}));
+  ctx.restore();ctx.save();ctx.translate(ox,0);diag(i,640,c.y+95,320,190,t,c.ts);ctx.restore()}
+function draw(t){bg(t);
+  const k=eio(prog(t,2.6,3.5));
+  if(k<1){T('¿DÓNDE VA TU',540,800,{font:'900 92px Inter',fill:'#fff',a:1-k,scale:1+.25*k});T('STOP LOSS?',540,960,{font:'900 152px Inter',fill:GOLD,a:1-k,scale:1+.25*k,glow:'#ffc83d',gb:30});
+    T('3 reglas que debes conocer',540,1110,{font:'800 48px Inter',fill:'#c8d6ff',a:(1-k)*eout(prog(t,.8,1.6))})}
+  if(k>0){T('STOP LOSS',540,290,{font:'900 120px Inter',fill:GOLD,a:k,glow:'#ffc83d',gb:24});T('3 reglas para el oro',540,385,{font:'800 46px Inter',fill:'#fff',a:k})}
+  const act=t>=12.2?2:(t>=7.8?1:0);
+  CARDS.forEach((c,i)=>{if(t>=3.4)card(c,i,t,i===act)})}
+function cover(){bg(2);ctx.save();ctx.translate(0,40);
+  RR(120,500,840,200,40);ctx.fillStyle=GOLD;ctx.fill();
+  T('¿DÓNDE VA TU',540,600,{font:'900 92px Inter',fill:'#0b1b44'});
+  T('STOP LOSS',540,860,{font:'900 168px Inter',fill:'#fff',stroke:'#0b1b44',lw:16,glow:'#ffc83d',gb:30});
+  T('EN EL ORO?',540,1040,{font:'900 120px Inter',fill:GOLD,stroke:'#0b1b44',lw:12});
+  RR(220,1160,640,110,55);ctx.fillStyle=RED;ctx.fill();T('3 REGLAS · MÍRALO',540,1215,{font:'900 44px Inter',fill:'#fff'});ctx.restore()}
+</script></body></html>

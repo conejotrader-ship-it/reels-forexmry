@@ -1,0 +1,78 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:700;src:url(node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'Spread',hook:'EL COSTO OCULTO DE CADA OPERACIÓN',bpm:100,prog:[[57,'m'],[53,'M'],[48,'M'],[55,'M']],
+ ev:[[0.2,'rise',2.6],[3.2,'chime'],[3.5,'blip',880],[5.2,'tick'],[7.8,'blip',660],[8.1,'down'],[10.9,'ding'],[12.0,'chime'],[13.0,'rise',1.0],[15.3,'alert'],[17.2,'cta']],
+ subs:[[0.2,3.0,'El costo oculto de cada operación en el oro.'],
+ [3.2,7.5,'El spread es la diferencia entre el precio de compra y el de venta.'],
+ [7.8,12.0,'Si compras, entras en el precio más alto. Empiezas la operación con una pequeña pérdida.'],
+ [12.2,16.8,'Por eso importa: con spread alto, tu operación necesita moverse más para ganar.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const STY={subFont:'800 46px Inter',subBg:'rgba(8,12,24,.82)',subStroke:'#2a3552',ctaBg:'#0b0f1a',ctaSub:'#ffb020',ctaGlow:'#ffb020',
+ ctaAccent:'#ffb020',ctaBtnText:'#0b0f1a',ctaFontS:'800 52px Inter',ctaFontL:'900 110px Inter'};
+boot(['700 40px Inter','800 40px Inter','900 40px Inter']);
+const BG='#0b0f1a',GR='#19c37d',RD='#ff4d5e',BID='#4da3ff',ASK='#ffb020';
+// velas
+const R=rng(7);let p=2650;const C=[];
+for(let i=0;i<42;i++){const o=p;const c=o+(R()-.5)*.6-(o-2650)*.18;C.push({o,c,hi:Math.max(o,c)+R()*.22,lo:Math.min(o,c)-R()*.22});p=c}
+{const off=2650-C[C.length-1].c;C.forEach(k=>{k.o+=off;k.c+=off;k.hi+=off;k.lo+=off})}
+const Y0=430,Y1=1290,P0=2649.0,P1=2651.4,X0=90,XC=700,X1=1000;
+const Y=pv=>Y1-(pv-P0)/(P1-P0)*(Y1-Y0);
+function bg(){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,700,50,540,700,1100);g.addColorStop(0,'#16203a');g.addColorStop(1,BG);ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+function candles(t,a,upto){const n=C.length,w=(XC-X0)/n;const cnt=upto*n;
+  for(let i=0;i<Math.ceil(cnt);i++){const k=C[i],x=X0+i*w+w/2,part=Math.min(1,cnt-i);const up=k.c>=k.o,col=up?GR:RD;
+   ctx.save();ctx.globalAlpha=a;ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=2.5;
+   line(x,Y(k.hi),x,Y(k.lo),col,2.5);const yo=Y(k.o),yc=Y(k.o+(k.c-k.o)*part);
+   ctx.fillRect(x-w*.32,Math.min(yo,yc),w*.64,Math.max(4,Math.abs(yo-yc)));ctx.restore()}}
+function title(){T('EL COSTO OCULTO',540,270,{font:'900 84px Inter',fill:'#ffb020'});
+  T('DE CADA OPERACIÓN',540,355,{font:'800 52px Inter',fill:'#fff'})}
+function pb(t){return 2650+.6*eio(prog(t,9.8,12.2))+Math.sin(t*5)*.015}
+function chartPanel(t,a){ctx.save();ctx.globalAlpha=a;RR(60,Y0-40,960,Y1-Y0+90,28);ctx.fillStyle='rgba(17,24,39,.9)';ctx.fill();ctx.strokeStyle='#26324d';ctx.lineWidth=2;ctx.stroke();
+  for(let v=2649;v<=2651;v+=.5)line(X0,Y(v),X1,Y(v),'rgba(255,255,255,.06)',1.5);ctx.restore()}
+function draw(t){bg();title();
+  const pa=1-eio(prog(t,12.0,12.5));
+  if(pa>0){chartPanel(t,pa);candles(t,pa,eout(prog(t,.2,2.8)));
+   const lk=eout(prog(t,3.2,3.9));
+   if(lk>0){const b=pb(t),a=b+.3,yb=Y(b),ya=Y(a);ctx.save();ctx.globalAlpha=pa*lk;
+    ctx.fillStyle='rgba(255,176,32,.14)';ctx.fillRect(XC,ya,X1-XC,yb-ya);
+    line(XC-10,yb,X1,yb,BID,4);line(XC-10,ya,X1,ya,ASK,4);
+    RR(XC+8,yb+8,250,52,12);ctx.fillStyle=BID;ctx.fill();T('BID  '+b.toFixed(2),XC+133,yb+34,{font:'800 30px Inter',fill:'#06101f'});
+    RR(XC+8,ya-58,250,52,12);ctx.fillStyle=ASK;ctx.fill();T('ASK  '+a.toFixed(2),XC+133,ya-32,{font:'800 30px Inter',fill:'#2a1a00'});
+    T('venta',X1-16,yb+90,{font:'700 28px Inter',fill:BID,align:'right'});T('compra',X1-16,ya-90,{font:'700 28px Inter',fill:ASK,align:'right'});
+    ctx.restore();
+    const pu=1+.05*Math.sin(t*6);T('SPREAD 0.30',(XC+X1)/2,(ya+yb)/2,{font:'900 34px Inter',fill:'#fff',a:pa*lk,scale:pu});
+    // entrada y P/L
+    const ek=eback(prog(t,7.8,8.4));
+    if(ek>0){const ye=Y(2650.3);ctx.save();ctx.globalAlpha=pa*Math.min(1,ek);line(X0+300,ye,XC-10,ye,'rgba(255,255,255,.7)',3,[10,8]);
+     RR(X0,ye-26,300,52,12);ctx.fillStyle='#fff';ctx.fill();ctx.restore();T('ENTRAS AQUÍ 2650.30',X0+150,ye,{font:'800 26px Inter',fill:'#0b0f1a',a:pa*Math.min(1,ek)});
+     const pl=b-2650.3;const col=pl<-.005?RD:(pl>.005?GR:'#e6edf7');
+     ctx.save();ctx.globalAlpha=pa*Math.min(1,ek);RR(300,1180,480,96,24);ctx.fillStyle='rgba(8,12,24,.9)';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=4;ctx.stroke();ctx.restore();
+     T('RESULTADO  '+(pl>=0?'+':'')+pl.toFixed(2),540,1228,{font:'900 44px Inter',fill:col,a:pa*Math.min(1,ek)});
+     if(t>10.95&&t<11.95)T('¡EMPATE! YA RECUPERASTE EL SPREAD',540,Y0+20,{font:'900 36px Inter',fill:GR,a:pa*Math.sin(prog(t,10.95,11.95)*Math.PI)})}}}
+  // comparación
+  const ca=eio(prog(t,12.3,12.9));
+  if(ca>0){ctx.save();ctx.globalAlpha=ca;RR(60,Y0-40,960,860,28);ctx.fillStyle='rgba(17,24,39,.9)';ctx.fill();ctx.strokeStyle='#26324d';ctx.lineWidth=2;ctx.stroke();ctx.restore();
+   T('¿CUÁNTO DEBE MOVERSE EL PRECIO',540,Y0+30,{font:'800 36px Inter',fill:'#cbd5e1',a:ca});T('PARA QUE EMPATES?',540,Y0+78,{font:'800 36px Inter',fill:'#cbd5e1',a:ca});
+   const g1=eout(prog(t,13.0,14.2)),g2=eout(prog(t,15.2,16.5));
+   T('SPREAD BAJO · 0.30',100,Y0+190,{font:'800 36px Inter',fill:GR,align:'left',a:ca});
+   ctx.save();ctx.globalAlpha=ca;RR(100,Y0+230,840*(0.30/1.5)*g1+1,100,20);ctx.fillStyle=GR;ctx.fill();ctx.restore();
+   T('empatas con +0.30',100,Y0+370,{font:'700 32px Inter',fill:'#9fb0cc',align:'left',a:ca*g1});
+   const a2=ca*eio(prog(t,15.0,15.5));
+   T('SPREAD ALTO · 1.50',100,Y0+480,{font:'800 36px Inter',fill:RD,align:'left',a:a2});
+   ctx.save();ctx.globalAlpha=a2;RR(100,Y0+520,840*g2+1,100,20);ctx.fillStyle=RD;ctx.fill();ctx.restore();
+   T('empatas con +1.50',100,Y0+660,{font:'700 32px Inter',fill:'#9fb0cc',align:'left',a:a2*g2})}}
+function cover(){bg();ctx.save();ctx.translate(0,120);
+  // mini velas de fondo
+  ctx.save();ctx.globalAlpha=.9;candlesCover();ctx.restore();
+  ctx.fillStyle='rgba(8,12,24,.55)';ctx.fillRect(0,420,W,640);
+  T('EL COSTO',540,590,{font:'900 170px Inter',fill:'#fff',stroke:'#0b0f1a',lw:14});
+  T('OCULTO',540,780,{font:'900 190px Inter',fill:'#ff4d5e',stroke:'#0b0f1a',lw:14,glow:'#ff4d5e',gb:40});
+  T('de cada operación en el oro',540,930,{font:'800 52px Inter',fill:'#ffb020'});
+  RR(290,1010,500,100,50);ctx.fillStyle='#ffb020';ctx.fill();T('MÍRALO AHORA',540,1062,{font:'900 50px Inter',fill:'#0b0f1a'});
+  T('SPREAD',540,330,{font:'900 64px Inter',fill:'#4da3ff'});ctx.restore()}
+function candlesCover(){const n=C.length,w=1080/n;for(let i=0;i<n;i++){const k=C[i],x=i*w+w/2,s=1100,m=1;const yy=v=>1330-(v-2648)*220;const col=k.c>=k.o?GR:RD;
+ line(x,yy(k.hi),x,yy(k.lo),col,3);ctx.fillStyle=col;ctx.fillRect(x-w*.3,Math.min(yy(k.o),yy(k.c)),w*.6,Math.max(5,Math.abs(yy(k.o)-yy(k.c))))}}
+</script></body></html>
