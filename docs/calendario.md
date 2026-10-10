@@ -27,3 +27,6 @@ Texto de cada reel termina con la línea del producto y luego los hashtags.
 ## Estilos usados (no repetir el mismo dos días seguidos; variar dentro del mismo día)
 - Lun 12: velas animadas (spread), infografía (stop loss), neón (pip).
 - Disponibles: pizarra, terminal tipo MetaTrader, cómic, lowpoly, dashboard, pixel-art 3D, y los tres anteriores.
+
+## Especiales
+- Vie 9 oct 20:00 — Las 4 subidas parabólicas más grandes del oro (60 s, estilo gráfico dorado). Datos: 1971–1980 ($35 → $850, ×24, mínimo de $252,80 en 1999), 1999–2011 ($252 → $1.921), 2015–2020 ($1.049 → ~$2.074), oct 2025–ene 2026 ($4.300+ → $5.500+, luego corrección de más de 20%). Cifras aproximadas de spot; las fuentes difieren en decimales.

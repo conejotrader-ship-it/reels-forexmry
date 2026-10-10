@@ -24,8 +24,8 @@ with sync_playwright() as p:
         for i, im in enumerate(ims): sh.paste(im, (360*i, 0))
         sh.save(sys.argv[4], quality=88)
     else:
-        html, sc = sys.argv[1], int(sys.argv[2]); a, b = (int(x) for x in sys.argv[3].split(':')) if len(sys.argv) > 3 else (0, 630)
-        pg = page(br, html)
+        html, sc = sys.argv[1], int(sys.argv[2]); pg = page(br, html)
+        nf = int(round(json.loads(pg.evaluate('__load()'))['dur'] * FPS)); a, b = (int(x) for x in sys.argv[3].split(':')) if len(sys.argv) > 3 else (0, nf)
         if a == 0: open(f'/home/claude/pixel/scene{sc}.json','w').write(pg.evaluate('__load()'))
         d = f'/home/claude/pixel/frames5/s{sc}'; os.makedirs(d, exist_ok=True)
         for i in range(a, b):

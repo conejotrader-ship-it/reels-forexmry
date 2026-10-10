@@ -28,7 +28,7 @@ function subs(t,st){const s=SPEC.subs.find(([a,b])=>t>=a&&t<b);if(!s)return;cons
   if(st.subStroke){ctx.strokeStyle=st.subStroke;ctx.lineWidth=3;ctx.stroke()}ctx.restore();
   L.forEach((l,i)=>T(l,540,cy-bh/2+18+lh/2+i*lh,{font,fill:st.subFill||'#fff',a:al}))}
 // Tarjeta final: producto + CTA
-function ctaCard(t,st){const k=eout(prog(t,17.1,17.8));if(k<=0)return;ctx.save();ctx.globalAlpha=k*.985;
+function ctaCard(t,st){const CT=SPEC.cta||17.1;const k=eout(prog(t,CT,CT+.7));if(k<=0)return;ctx.save();ctx.globalAlpha=k*.985;
   ctx.fillStyle=st.ctaBg;ctx.fillRect(0,0,W,H);ctx.restore();
   const y=lerp(40,0,k);
   T('ROBOT DE ORO',540,640+y,{font:st.ctaFontS,fill:st.ctaSub,a:k,glow:st.ctaGlow,gb:18});
@@ -39,7 +39,7 @@ function ctaCard(t,st){const k=eout(prog(t,17.1,17.8));if(k<=0)return;ctx.save()
   T('@forexmry',540,1230+y,{font:st.ctaFontS,fill:'#fff',a:k})}
 window.__ready=false;
 function boot(fonts){Promise.all(fonts.map(f=>document.fonts.load(f))).then(()=>{window.__ready=true})}
-window.__load=()=>JSON.stringify(Object.assign({},SPEC,{dur:21}));
+window.__load=()=>JSON.stringify(Object.assign({dur:21},SPEC));
 window.__seek=t=>{ctx.clearRect(0,0,W,H);draw(t);ctaCard(t,STY);subs(t,STY)};
 window.__cover=()=>{ctx.clearRect(0,0,W,H);cover()};
 window.__frame=()=>cv.toDataURL('image/jpeg',.92);

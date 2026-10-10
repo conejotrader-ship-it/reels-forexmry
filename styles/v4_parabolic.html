@@ -1,0 +1,88 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:700;src:url(node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'Parabolicos',hook:'LAS 4 SUBIDAS PARABÓLICAS MÁS GRANDES DEL ORO',dur:60,cta:56,bpm:96,prog:[[57,'m'],[53,'M'],[55,'M'],[52,'m']],
+ ev:[[0.3,'hit'],[2.4,'rise',2.2],[5.7,'rise',4.5],[10.3,'ding'],[11.0,'down'],[15.3,'hit'],[17.5,'rise',5.0],[22.6,'ding'],[23.5,'down'],[27.6,'hit'],
+  [30.0,'rise',6.0],[36.1,'ding'],[41.5,'rise',4.0],[45.6,'ding'],[46.5,'down'],[50.6,'hit'],[51.8,'alert'],[56.0,'cta']],
+ subs:[
+ [0.2,4.7,'El oro se volvió parabólico 4 veces. Estas son las más grandes.','El oro se volvió parabólico cuatro veces en la historia. Estas son las más grandes.'],
+ [5.0,16.4,'1. De 1971 a 1980: de $35 a $850, más de 24 veces. En 1999 volvió a $252.','Uno. De mil novecientos setenta y uno a mil novecientos ochenta: de treinta y cinco a ochocientos cincuenta dólares. Más de veinticuatro veces. Y en mil novecientos noventa y nueve, volvió a doscientos cincuenta y dos.'],
+ [16.8,28.9,'2. De 1999 a 2011: de $252 a $1.921, más de 7 veces. Luego perdió casi la mitad.','Dos. De mil novecientos noventa y nueve a dos mil once: de doscientos cincuenta y dos a mil novecientos veintiuno dólares. Más de siete veces. Después perdió casi la mitad.'],
+ [29.3,40.4,'3. Agosto de 2020: supera los $2.000 por primera vez, casi el doble que en 2015.','Tres. Agosto de dos mil veinte: el oro supera los dos mil dólares por primera vez, casi el doble que su mínimo de dos mil quince.'],
+ [40.8,51.6,'4. De más de $4.300 en oct. 2025 a más de $5.500 en ene. 2026. Luego corrigió más de 20%.','Cuatro. De más de cuatro mil trescientos dólares en octubre de dos mil veinticinco, a más de cinco mil quinientos en enero de dos mil veintiséis. Luego corrigió más del veinte por ciento.'],
+ [51.9,55.8,'Un movimiento parabólico no avisa cuándo termina. El riesgo va primero.','Un movimiento parabólico no avisa cuándo termina. El riesgo va primero.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const GD='#ffc83d',RD='#ff4d5e',GRN='#2ee6a6';
+const STY={subFont:'800 46px Inter',subBg:'rgba(12,8,2,.86)',subStroke:'#ffc83d',ctaBg:'#0a0804',ctaSub:'#ffc83d',ctaGlow:'#ffc83d',
+ ctaAccent:'#ffc83d',ctaBtnText:'#0a0804',ctaFontS:'800 52px Inter',ctaFontL:'900 110px Inter'};
+boot(['700 40px Inter','800 40px Inter','900 40px Inter']);
+const fmt=v=>'$'+String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const PX0=170,PX1=985,PY0=760,PY1=1230;
+const SEG=[
+ {t0:5.0,t1:16.5,n:'1',title:'1971 → 1980',desc:'Tras el fin del patrón oro',x0:1971,x1:1999,y0:0,y1:950,ticks:[0,250,500,750],xl:[[1971,'1971'],[1980,'1980'],[1999,'1999']],
+  pcs:[{a:1971,b:1980,p0:35,p1:850,k:'r',e:3.2,ts:5.7,te:10.2},{a:1980,b:1999,p0:850,p1:252.8,k:'f',e:2.6,ts:11.0,te:15.2}],
+  marks:[{at:5.8,x:1971,p:35,l:'$35',c:'#fff',up:1},{at:10.2,x:1980,p:850,l:'$850',c:GD,up:0},{at:15.2,x:1999,p:252.8,l:'$252',c:RD,up:0}],
+  stats:[{at:10.4,l:'×24',c:GD,sz:150},{at:15.4,l:'−70%',c:RD,sz:130}]},
+ {t0:16.8,t1:28.9,n:'2',title:'1999 → 2011',desc:'Desde el mínimo de 1999',x0:1999,x1:2015.95,y0:0,y1:2200,ticks:[0,500,1000,1500,2000],xl:[[1999,'1999'],[2011.7,'2011'],[2015.95,'2015']],
+  pcs:[{a:1999.5,b:2011.7,p0:252.8,p1:1921,k:'r',e:2.6,ts:17.5,te:22.5},{a:2011.7,b:2015.95,p0:1921,p1:1049.4,k:'f',e:1.8,ts:23.5,te:27.5}],
+  marks:[{at:17.6,x:1999.5,p:252.8,l:'$252',c:'#fff',up:1},{at:22.5,x:2011.7,p:1921,l:'$1.921',c:GD,up:0},{at:27.5,x:2015.95,p:1049.4,l:'$1.049',c:RD,up:0}],
+  stats:[{at:22.7,l:'×7,6',c:GD,sz:150},{at:27.6,l:'−45%',c:RD,sz:130}]},
+ {t0:29.3,t1:40.4,n:'3',title:'2015 → 2020',desc:'Primera vez sobre $2.000',x0:2015.95,x1:2020.9,y0:800,y1:2300,ticks:[1000,1500,2000],xl:[[2015.95,'dic 2015'],[2020.6,'ago 2020']],
+  pcs:[{a:2015.95,b:2020.6,p0:1049.4,p1:2074,k:'r',e:1.8,ts:30.0,te:36.0}],
+  marks:[{at:30.1,x:2015.95,p:1049.4,l:'$1.049',c:'#fff',up:1},{at:36.0,x:2020.6,p:2074,l:'$2.074',c:GD,up:0}],
+  guide:2000,stats:[{at:36.3,l:'≈ ×2',c:GD,sz:150}]},
+ {t0:40.8,t1:51.7,n:'4',title:'2025 → 2026',desc:'El récord más reciente',x0:2025.8,x1:2026.45,y0:3500,y1:6000,ticks:[4000,4500,5000,5500],xl:[[2025.8,'oct 2025'],[2026.08,'ene 2026'],[2026.45,'jun 2026']],
+  pcs:[{a:2025.8,b:2026.08,p0:4379,p1:5600,k:'r',e:2.0,ts:41.5,te:45.5},{a:2026.08,b:2026.45,p0:5600,p1:4200,k:'f',e:1.8,ts:46.5,te:50.5}],
+  marks:[{at:41.6,x:2025.8,p:4379,l:'$4.300+',c:'#fff',up:1},{at:45.5,x:2026.08,p:5600,l:'$5.500+',c:GD,up:0}],
+  stats:[{at:45.7,l:'+28%',c:GD,sz:150},{at:50.6,l:'≈ −25%',c:RD,sz:130}]}];
+function pv(pc,u){return pc.k==='r'?pc.p0+(pc.p1-pc.p0)*Math.pow(u,pc.e):pc.p0+(pc.p1-pc.p0)*(1-Math.pow(1-u,pc.e))}
+function bg(){const g=ctx.createRadialGradient(540,800,60,540,900,1300);g.addColorStop(0,'#241705');g.addColorStop(1,'#050402');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+function seg(s,t){const al=eio(prog(t,s.t0,s.t0+.5))*(1-eio(prog(t,s.t1-.4,s.t1)));if(al<=0)return;
+  const X=x=>PX0+(x-s.x0)/(s.x1-s.x0)*(PX1-PX0),Yp=p=>PY1-(p-s.y0)/(s.y1-s.y0)*(PY1-PY0);
+  ctx.save();ctx.globalAlpha=al;
+  T('SUBIDA '+s.n+' DE 4',540,285,{font:'800 44px Inter',fill:GD});T(s.title,540,375,{font:'900 100px Inter',fill:'#fff'});T(s.desc,540,458,{font:'700 40px Inter',fill:'#d9c9a3'});
+  RR(60,520,960,830,28);ctx.fillStyle='rgba(18,13,4,.88)';ctx.fill();ctx.strokeStyle='#4a3a14';ctx.lineWidth=2;ctx.stroke();
+  s.ticks.forEach(v=>{const y=Yp(v);line(PX0,y,PX1,y,'rgba(255,255,255,.10)',1.5);T(fmt(v),PX0-12,y,{font:'700 26px Inter',fill:'#9d8e66',align:'right'})});
+  s.xl.forEach(([x,l])=>T(l,X(x),PY1+48,{font:'700 28px Inter',fill:'#d9c9a3'}));
+  if(s.guide){const y=Yp(s.guide);line(PX0,y,PX1,y,'#ffffff',2.5,[10,8]);T('$2.000',PX0+10,y-24,{font:'800 28px Inter',fill:'#fff',align:'left'})}
+  // curva
+  let head=null;
+  s.pcs.forEach(pc=>{const u=prog(t,pc.ts,pc.te);if(u<=0)return;const col=pc.k==='r'?GD:RD;const N=90;const pts=[];
+    for(let i=0;i<=N;i++){const uu=i/N*u;pts.push([X(pc.a+(pc.b-pc.a)*uu),Yp(pv(pc,uu))])}
+    if(pc.k==='r'){ctx.save();ctx.beginPath();ctx.moveTo(pts[0][0],PY1);pts.forEach(p=>ctx.lineTo(p[0],p[1]));ctx.lineTo(pts[pts.length-1][0],PY1);ctx.closePath();
+      const g=ctx.createLinearGradient(0,PY0,0,PY1);g.addColorStop(0,'rgba(255,200,61,.30)');g.addColorStop(1,'rgba(255,200,61,0)');ctx.fillStyle=g;ctx.fill();ctx.restore()}
+    ctx.save();ctx.strokeStyle=col;ctx.lineWidth=9;ctx.lineJoin='round';ctx.lineCap='round';ctx.shadowColor=col;ctx.shadowBlur=24;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.stroke();ctx.restore();
+    if(u<1)head=pts[pts.length-1]});
+  if(head){ctx.beginPath();ctx.arc(head[0],head[1],15,0,7);ctx.fillStyle='#fff';ctx.shadowColor='#fff';ctx.shadowBlur=26;ctx.fill();ctx.shadowBlur=0}
+  // marcas
+  s.marks.forEach(m=>{const k=eback(prog(t,m.at,m.at+.4));if(k<=0)return;const x=X(m.x),y=Yp(m.p);ctx.save();ctx.globalAlpha=al*Math.min(1,k);
+    ctx.beginPath();ctx.arc(x,y,13,0,7);ctx.fillStyle=m.c;ctx.shadowColor=m.c;ctx.shadowBlur=18;ctx.fill();ctx.shadowBlur=0;
+    ctx.font='900 38px Inter';const w=ctx.measureText(m.l).width+44;let bx=Math.min(Math.max(x-w/2,PX0-40),PX1+30-w),by=m.up?y+34:y-82;
+    RR(bx,by,w,58,29);ctx.fillStyle='#0a0804';ctx.fill();ctx.strokeStyle=m.c;ctx.lineWidth=4;ctx.stroke();ctx.restore();
+    T(m.l,bx+w/2,by+30,{font:'900 38px Inter',fill:m.c,a:al*Math.min(1,k)})});
+  // estadística grande (una a la vez, arriba del gráfico)
+  let cur=null;s.stats.forEach(st=>{if(t>=st.at)cur=st});
+  if(cur){const k=eback(prog(t,cur.at,cur.at+.45));T(cur.l,540,645,{font:`900 ${cur.sz}px Inter`,fill:cur.c,glow:cur.c,gb:30,a:Math.min(1,k),scale:.6+.4*Math.min(1.1,k)})}
+  T('Precios spot aproximados · ruta ilustrativa',540,1325,{font:'700 24px Inter',fill:'#8a7b52'});
+  ctx.restore()}
+function parab(t,a,x0,x1,y0,y1,e){ctx.save();ctx.globalAlpha=a;const N=100,u=prog(t,0.2,3.6);ctx.strokeStyle=GD;ctx.lineWidth=14;ctx.lineCap='round';ctx.shadowColor=GD;ctx.shadowBlur=30;ctx.beginPath();
+  for(let i=0;i<=N*u;i++){const q=i/N;const x=x0+(x1-x0)*q,y=y0+(y1-y0)*Math.pow(q,e);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.restore()}
+function intro(t){const a=1-eio(prog(t,4.3,4.9));if(a<=0)return;ctx.save();ctx.globalAlpha=a;
+  parab(t,.55,70,1010,1250,430,4.2);
+  const k=eback(prog(t,.3,1.0));T('4',540,720,{font:'900 520px Inter',fill:GD,glow:GD,gb:50,scale:Math.max(.01,k)});
+  T('SUBIDAS PARABÓLICAS',540,1030,{font:'900 76px Inter',fill:'#fff',a:eout(prog(t,1,1.6))});
+  T('las más grandes del oro',540,1115,{font:'800 52px Inter',fill:GD,a:eout(prog(t,1.4,2.0))});ctx.restore()}
+function outro(t){const a=eio(prog(t,51.8,52.4))*(1-eio(prog(t,55.6,56)));if(a<=0)return;ctx.save();ctx.globalAlpha=a;
+  T('UN MOVIMIENTO PARABÓLICO',540,640,{font:'900 64px Inter',fill:'#fff'});T('NO AVISA',540,780,{font:'900 130px Inter',fill:RD,glow:RD,gb:36});T('CUÁNDO TERMINA',540,920,{font:'900 76px Inter',fill:'#fff'});
+  RR(190,1030,700,110,55);ctx.fillStyle=GD;ctx.fill();T('EL RIESGO VA PRIMERO',540,1086,{font:'900 44px Inter',fill:'#0a0804',a:eout(prog(t,53,53.6))});ctx.restore()}
+function draw(t){bg();intro(t);SEG.forEach(s=>seg(s,t));outro(t)}
+function cover(){bg();ctx.save();ctx.translate(0,40);parab(9,.9,40,1040,1420,520,4.2);
+  ctx.fillStyle='rgba(5,4,2,.55)';ctx.fillRect(0,420,W,640);
+  T('4 SUBIDAS',540,540,{font:'900 150px Inter',fill:'#fff',stroke:'#050402',lw:14});
+  T('PARABÓLICAS',540,700,{font:'900 128px Inter',fill:GD,stroke:'#050402',lw:14,glow:GD,gb:36});
+  T('las más grandes de la historia del oro',540,820,{font:'800 44px Inter',fill:'#fff'});
+  RR(150,900,780,110,55);ctx.fillStyle=RD;ctx.fill();T('¿CUÁL FUE LA MÁS BRUTAL?',540,956,{font:'900 44px Inter',fill:'#fff'});ctx.restore()}
+</script></body></html>

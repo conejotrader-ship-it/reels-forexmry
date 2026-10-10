@@ -62,10 +62,10 @@ def sfx_events(evs):
         elif kind=='cta':place(sfx,seq([659,784,988,1319],.09,.16,.22),t0)
     return sfx
 for sc in ([int(x) for x in sys.argv[1:]] or range(5)):
-    d=json.load(open(f'/home/claude/pixel/scene{sc}.json'))
+    d=json.load(open(f'/home/claude/pixel/scene{sc}.json'));DUR=float(d.get('dur',21.0));N=int(SR*DUR)
     voice=np.zeros(N)
-    for a,b,tx in d['subs']:
-        s,dd=say(tx,b-a-.25);place(voice,s,a+.12);print(sc,a,round(dd,2),'/',round(b-a,2),flush=True)
+    for a,b,tx,*sp in d['subs']:
+        s,dd=say(sp[0] if sp else tx,b-a-.25);place(voice,s,a+.12);print(sc,a,round(dd,2),'/',round(b-a,2),flush=True)
     voice*=.9/np.abs(voice).max()
     mus=music(d['bpm'],d['prog']);sfx=sfx_events(d['ev'])
     sf.write(f'/home/claude/audio/v5_{sc}.wav',voice,SR);sf.write(f'/home/claude/audio/m5_{sc}.wav',np.clip(mus+sfx,-1,1),SR)
