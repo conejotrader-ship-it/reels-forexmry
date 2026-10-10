@@ -1,0 +1,99 @@
+<!doctype html><meta charset="utf-8">
+<style>
+@font-face{font-family:"PS2P";src:url(fonts/press-start-2p-latin-400-normal.woff2) format("woff2")}
+html,body{margin:0;background:#000}
+.stage{position:relative;width:360px;height:640px;overflow:hidden;container-type:inline-size;background:#0a0e18;font-family:"PS2P","Courier New",monospace}
+canvas{position:absolute;left:0;top:0;width:100%;height:100%;image-rendering:pixelated}
+.scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.27) 0 1px,transparent 1px 3px);pointer-events:none}
+.vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,.45) 100%);pointer-events:none}
+.hook{position:absolute;left:0;right:0;top:9%;padding-inline:6%;text-align:center;font-size:17px;font-size:4.7cqw;line-height:1.5;color:#f2c453;text-shadow:2px 2px 0 #1a1405}
+.subs{position:absolute;left:0;right:0;bottom:8%;background:rgba(10,14,24,.94);border-top:2px solid #2a3350;padding:12px 14px 14px;text-align:center;font-size:11px;font-size:3.15cqw;line-height:1.75;color:#d7dff0}
+.subs.cta{color:#f2c453}
+.subs.cta b{display:block;font-weight:400;color:#d7dff0;margin-top:6px;font-size:.92em}
+.tag{position:absolute;white-space:nowrap;font-size:9px;font-size:2.5cqw;color:#0a0e18;background:#e8b84a;padding:4px 6px;display:none}
+.tag.g{background:#2ee6a6}.tag.r{background:#e2584b;color:#fff}.tag.b{background:#7fd3ff}
+.gauge{position:absolute;right:8%;top:27%;width:5.5%;height:27%;border:2px solid #cdd6e6;background:#0a0e18;display:none}
+.gauge i{position:absolute;left:0;right:0;bottom:0;height:0;background:#e2584b}
+.glab{position:absolute;right:4%;top:23.5%;font-size:8px;font-size:2.3cqw;color:#cdd6e6;display:none}
+</style>
+<div class="stage" id="stage">
+  <canvas id="c" width="270" height="480"></canvas>
+  <div class="scan"></div><div class="vig"></div>
+  <div class="hook" id="hook">¿Qué es un grid?</div>
+  <div class="gauge" id="gauge"><i id="gfill"></i></div><div class="glab" id="glab">RIESGO</div>
+  <div class="tag" id="tAvg">PROMEDIO</div>
+  <div class="tag g" id="tWin">+ GANANCIA</div>
+  <div class="tag b" id="tApex" style="left:50%;top:17.5%;transform:translateX(-50%)">CON SECURUS APEX</div>
+  <div class="tag" id="tLim">OPERATIVA LIMITADA</div>
+  <div class="subs" id="subs"></div>
+</div>
+<script src="three.min.js"></script>
+<script>
+(function(){
+var W=270,H=480,DUR=21;
+var clamp=function(x){return Math.max(0,Math.min(1,x))},ease=function(x){return 1-Math.pow(1-clamp(x),3)};
+var renderer=new THREE.WebGLRenderer({canvas:document.getElementById('c'),antialias:false});renderer.setPixelRatio(1);renderer.setSize(W,H,false);
+var rt=new THREE.WebGLRenderTarget(W,H,{minFilter:THREE.NearestFilter,magFilter:THREE.NearestFilter});
+var scene=new THREE.Scene();scene.background=new THREE.Color(0x0a0e18);
+var VH=11,VW=VH*W/H,cam=new THREE.OrthographicCamera(-VW/2,VW/2,VH/2,-VH/2,.1,80);cam.position.set(8,6.4,8);cam.lookAt(0,-.2,0);cam.updateMatrixWorld();
+scene.add(new THREE.AmbientLight(0xffffff,.62));var dl=new THREE.DirectionalLight(0xffffff,.85);dl.position.set(-3,6,5);scene.add(dl);
+function box(w,h,d,c,x,y,z){var m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),new THREE.MeshLambertMaterial({color:c}));m.position.set(x||0,y||0,z||0);scene.add(m);return m}
+var lvlY=function(l){return 2.9-l*.52};
+/* estrellas */
+(function(){var p=[],r=new THREE.Vector3(),u=new THREE.Vector3(),d=new THREE.Vector3(),s=7;cam.matrixWorld.extractBasis(r,u,d);
+  for(var i=0;i<46;i++){var a=(Math.sin(i*91.7)*.5+.5),b=(Math.sin(i*37.3+1)*.5+.5);var q=new THREE.Vector3().addScaledVector(r,(a-.5)*VW*1.1).addScaledVector(u,(b-.5)*VH*1.1).addScaledVector(d,-30);p.push(q.x,q.y,q.z)}
+  var g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(p,3));scene.add(new THREE.Points(g,new THREE.PointsMaterial({color:0xdfe6f5,size:2,sizeAttenuation:false})))})();
+/* escenario */
+box(4.4,.3,4.4,0x44506b,0,-3.55,0);box(4.4,.2,4.4,0x2a3348,0,-3.8,0);
+box(.14,6.6,.14,0x9aa7bf,-1.1,-.1,0);
+for(var i=0;i<12;i++)box(.5,.05,.05,0x667089,-.8,lvlY(i),0);
+var marker=box(.4,.4,.4,0x7fd3ff,-1.1,lvlY(0),0),mcap=box(.22,.22,.22,0xffffff,-1.1,lvlY(0),.18);
+var avg=box(2.7,.06,.06,0xe8b84a,.2,lvlY(2),.3);avg.visible=false;
+var shield=box(2.6,.12,.5,0xffd166,.2,lvlY(5)-.02,0);shield.visible=false;
+/* cubos (órdenes) */
+var cubes=[],GOLD=0xe8b84a,RED=0xe2584b,GREEN=0x2ee6a6;
+function addCube(l,sp,die,close,ph){var m=box(.42,.42,.42,GOLD,.2,lvlY(l),0);m.visible=false;cubes.push({l:l,sp:sp,die:die,cl:close,ph:ph,m:m})}
+[3.8,4.6,5.4,6.2,7.0].forEach(function(s,l){addCube(l,s,8.7+l*.18+.5,8.7+l*.18,1)});
+for(var l=0;l<12;l++)addCube(l,11+l*.33,14.9,null,2);
+for(l=0;l<5;l++)addCube(l,15.3+l*.33,99,null,3);
+/* marcador */
+var KF=[[0,0],[3.8,0],[4.3,0],[4.6,1],[5.1,1],[5.4,2],[5.9,2],[6.2,3],[6.7,3],[7.0,4],[7.6,4],[8.6,2],[9.9,0],[11,0],[14.63,11],[14.99,11],[15.0,0],[15.3,0],[18.93,11],[30,11]];
+function mLevel(t){for(var i=1;i<KF.length;i++)if(t<=KF[i][0]){var a=KF[i-1],b=KF[i];if(b[0]-a[0]<.02)return b[1];return a[1]+(b[1]-a[1])*(t-a[0])/(b[0]-a[0])}return 11}
+/* post */
+var ps=new THREE.Scene(),pc=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+var post=new THREE.ShaderMaterial({uniforms:{t:{value:rt.texture},res:{value:new THREE.Vector2(W,H)},time:{value:0}},
+vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}',
+fragmentShader:'precision highp float;varying vec2 vUv;uniform sampler2D t;uniform vec2 res;uniform float time;float h(float n){return fract(sin(n*127.1)*43758.5453);}'+
+'float bayer(vec2 p){vec2 q=mod(floor(p),4.);float i=q.y*4.+q.x;if(i<.5)return 0.;if(i<1.5)return 8.;if(i<2.5)return 2.;if(i<3.5)return 10.;if(i<4.5)return 12.;if(i<5.5)return 4.;if(i<6.5)return 14.;if(i<7.5)return 6.;if(i<8.5)return 3.;if(i<9.5)return 11.;if(i<10.5)return 1.;if(i<11.5)return 9.;if(i<12.5)return 15.;if(i<13.5)return 7.;if(i<14.5)return 13.;return 5.;}'+
+'void main(){vec2 uv=vUv;vec2 px=uv*res;float row=floor(px.y/3.);float g=h(row+floor(time*9.)*17.);if(g>.985)uv.x+=(h(row)-.5)*.06;vec3 c=texture2D(t,uv).rgb;float b=bayer(px)/16.-.5;float L=6.;c=floor(c*(L-1.)+.5+b*.55)/(L-1.);gl_FragColor=vec4(c,1.);}'});
+ps.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),post));
+/* DOM */
+var $=function(s){return document.getElementById(s)},stage=$('stage');
+function place(el,v,ax,ay,dx,dy){var p=v.clone().project(cam);el.style.left=((p.x*.5+.5)*100+(dx||0))+'%';el.style.top=((1-(p.y*.5+.5))*100+(dy||0))+'%';el.style.transform='translate('+ax+'%,'+ay+'%)'}
+var SUBS=[[0,3.6,'Un grid abre operaciones a distancias fijas.'],[3.6,7.4,'Si el precio baja, compra un nivel más abajo.'],[7.4,11,'Cuando regresa, cierra todo en ganancia.'],[11,15,'Pero si la tendencia sigue en contra, las operaciones se acumulan.'],[15,18.4,'El Securus Apex limita la operativa en los parabólicos.'],[18.4,21,'Robot De Oro Mr. Y 10.0 Securus Apex|Link en bio · @forexmry','cta']];
+var lastS=-2,subs=$('subs');
+function show(el,on){el.style.display=on?'block':'none'}
+function seek(t){
+  var ml=mLevel(t);marker.position.y=lvlY(ml)+Math.sin(t*6)*.02;mcap.position.y=marker.position.y;
+  var open=0;
+  cubes.forEach(function(c){var on=t>=c.sp&&t<c.die;c.m.visible=on;if(!on)return;
+    var s=ease((t-c.sp)/.22),k=c.cl!==null?clamp((t-c.cl)/.5):0,col=GOLD;
+    if(c.cl!==null&&t>=c.cl-.12)col=GREEN;else if(ml>c.l+1.5&&c.ph>=2)col=RED;
+    c.m.material.color.setHex(col);var sc=s*(1-k)*(c.ph===2?1-clamp((t-(c.die-.15))/.15):1);c.m.scale.setScalar(Math.max(.001,sc));
+    c.m.position.y=lvlY(c.l)+k*1.1+(1-s)*.4;if(c.ph>=2&&sc>.5)open++});
+  avg.visible=t>=7.2&&t<9.9;
+  var sh=t>=16.8;shield.visible=sh;if(sh){var q=ease((t-16.8)/.35);shield.scale.set(Math.max(.01,q),1,1);shield.material.color.setHex(Math.floor(t*6)%2?0xffd166:0xfff0b0)}
+  var gOn=t>=10.8;show($('gauge'),gOn);show($('glab'),gOn);$('gfill').style.height=Math.min(100,open/12*100)+'%';
+  show($('tAvg'),t>=7.2&&t<9.9);place($('tAvg'),new THREE.Vector3(1.55,lvlY(2),.3),-100,-150,0,0);
+  show($('tWin'),t>=9.0&&t<11);place($('tWin'),new THREE.Vector3(.2,lvlY(0)+.5,0),-50,-100,0,0);
+  show($('tApex'),t>=15.0&&t<18.4);
+  show($('tLim'),t>=17.0&&t<18.4);place($('tLim'),new THREE.Vector3(.2,lvlY(5)-.5,0),-50,0,0,0);
+  var idx=-1;for(var i=0;i<SUBS.length;i++)if(t>=SUBS[i][0]&&t<SUBS[i][1]){idx=i;break}
+  if(idx!==lastS){lastS=idx;subs.textContent='';subs.style.display=idx<0?'none':'block';if(idx>=0){var s=SUBS[idx];subs.className='subs'+(s[3]?' cta':'');var p=s[2].split('|');subs.appendChild(document.createTextNode(p[0]));if(p[1]){var b=document.createElement('b');b.textContent=p[1];subs.appendChild(b)}}}
+  post.uniforms.time.value=t;
+  renderer.setRenderTarget(rt);renderer.render(scene,cam);renderer.setRenderTarget(null);renderer.render(ps,pc);
+}
+window.__seek=seek;window.__ready=false;
+(document.fonts&&document.fonts.load?document.fonts.load('12px "PS2P"'):Promise.resolve()).then(function(){seek(0);window.__ready=true},function(){seek(0);window.__ready=true});
+})();
+</script>

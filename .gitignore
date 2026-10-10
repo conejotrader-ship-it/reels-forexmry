@@ -1,0 +1,7 @@
+node_modules/
+frames*/
+*.wav
+*.onnx
+voices.bin
+sil_*.mp4
+__pycache__/
