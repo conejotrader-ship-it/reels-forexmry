@@ -1,0 +1,122 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:700;src:url(node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'Nixon1971',hook:'EL FIN DEL PATRÓN ORO EN 1971',dur:60,cta:56,bpm:92,prog:[[52,'m'],[48,'M'],[55,'M'],[50,'m']],
+ ev:[[0.3,'hit'],[1.6,'rise',2.4],[5.0,'hit'],[6.3,'ding'],[8.6,'ding'],[11.0,'ding'],[16.3,'hit'],[17.2,'rise',5.5],[23.6,'down'],[24.3,'ding'],
+  [27.6,'hit'],[29.6,'alert'],[32.6,'ding'],[35.6,'hit'],[38.6,'hit'],[39.2,'rise',5.4],[44.7,'ding'],[49.1,'hit'],[50.4,'blip',880],[51.6,'blip',1175],[52.8,'ding'],[56.0,'cta']],
+ subs:[
+ [0.2,4.8,'15 de agosto de 1971: Nixon cambió el dinero del mundo para siempre.','Quince de agosto de mil novecientos setenta y uno. Richard Nixon cambió el dinero del mundo para siempre.'],
+ [5.2,15.8,'Desde 1944 el dólar estaba atado al oro: $35 por onza. Las demás monedas dependían del dólar.','Desde mil novecientos cuarenta y cuatro, el dólar estaba atado al oro: treinta y cinco dólares por onza. Y las demás monedas dependían del dólar.'],
+ [16.2,27.2,'Pero EE. UU. imprimió más dólares que oro tenía. Otros países pidieron oro y las reservas se vaciaban.','Pero Estados Unidos imprimió más dólares de los que respaldaba con oro. Otros países empezaron a pedir oro a cambio de sus dólares, y las reservas se vaciaban.'],
+ [27.5,38.2,'Nixon anunció que el dólar dejaba de cambiarse por oro. Dijo que sería temporal. No lo fue.','Entonces Nixon anunció por televisión que el dólar dejaba de cambiarse por oro. Dijo que sería temporal. No lo fue.'],
+ [38.5,48.7,'El oro quedó libre: de $35 a cerca de $850 en 1980. Y las monedas empezaron a flotar.','El oro quedó libre, y pasó de treinta y cinco dólares a cerca de ochocientos cincuenta en mil novecientos ochenta. Y las monedas empezaron a flotar.'],
+ [49.0,55.8,'Ahí nació el mercado de divisas moderno: precios que se mueven por noticias.','Ahí nació el mercado de divisas moderno: precios que se mueven por noticias y expectativas.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const GD='#ffc83d',RD='#ff4d5e',CY='#4cc9f0',GRN='#2ee6a6';
+const STY={subFont:'800 46px Inter',subBg:'rgba(4,10,22,.88)',subStroke:CY,ctaBg:'#040a14',ctaSub:CY,ctaGlow:CY,
+ ctaAccent:GD,ctaBtnText:'#040a14',ctaFontS:'800 52px Inter',ctaFontL:'900 110px Inter'};
+boot(['700 40px Inter','800 40px Inter','900 40px Inter']);
+const fmt=v=>'$'+String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const fmtn=v=>String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+const win=(t,a,b)=>eio(prog(t,a,a+.5))*(1-eio(prog(t,b-.4,b)));
+function bg(){const g=ctx.createRadialGradient(540,800,60,540,900,1300);g.addColorStop(0,'#0d2038');g.addColorStop(1,'#03070e');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+function head(lbl,title,desc,col){T(lbl,540,285,{font:'800 44px Inter',fill:col||GD});T(title,540,375,{font:'900 100px Inter',fill:'#fff'});T(desc,540,458,{font:'700 38px Inter',fill:'#a9c3dd'})}
+function panel(){RR(60,520,960,830,28);ctx.fillStyle='rgba(8,18,34,.88)';ctx.fill();ctx.strokeStyle='#1d3b5e';ctx.lineWidth=2;ctx.stroke()}
+function foot(){T('Cifras aproximadas · contenido educativo, no es asesoría financiera',540,1325,{font:'700 24px Inter',fill:'#6f8aa6'})}
+function intro(t){const a=1-eio(prog(t,4.3,4.9));if(a<=0)return;ctx.save();ctx.globalAlpha=a;
+  const k=eback(prog(t,.3,1.0));
+  RR(330,330,420,90,45);ctx.fillStyle=RD;ctx.fill();T('15 · AGO',540,376,{font:'900 48px Inter',fill:'#fff',a:eout(prog(t,.2,.6))});
+  T('1971',540,700,{font:'900 400px Inter',fill:GD,glow:GD,gb:50,scale:Math.max(.01,k)});
+  T('EL FIN DEL',540,1010,{font:'900 84px Inter',fill:'#fff',a:eout(prog(t,1,1.6))});
+  T('PATRÓN ORO',540,1115,{font:'900 120px Inter',fill:CY,glow:CY,gb:30,a:eout(prog(t,1.4,2.0))});
+  T('cómo Nixon cambió el mercado',540,1215,{font:'800 44px Inter',fill:'#a9c3dd',a:eout(prog(t,2.2,2.8))});ctx.restore()}
+function secA(t){const al=win(t,5.0,15.9);if(al<=0)return;ctx.save();ctx.globalAlpha=al;
+  head('BRETTON WOODS','1944 → 1971','Todo giraba alrededor del oro');panel();
+  const B=[[590,'OTRAS MONEDAS','ligadas al dólar',CY,5.9],[840,'DÓLAR','convertible en oro',GRN,8.2],[1090,'ORO','$35 por onza',GD,10.6]];
+  B.forEach(([y,a,b,c,at])=>{const k=eback(prog(t,at,at+.5));if(k<=0)return;ctx.save();ctx.globalAlpha=al*Math.min(1,k);
+    ctx.translate(540,y+85);ctx.scale(.7+.3*Math.min(1.1,k),.7+.3*Math.min(1.1,k));ctx.translate(-540,-y-85);
+    RR(190,y,700,170,30);ctx.fillStyle='#0a1a30';ctx.fill();ctx.strokeStyle=c;ctx.lineWidth=5;ctx.shadowColor=c;ctx.shadowBlur=22;ctx.stroke();ctx.shadowBlur=0;ctx.restore();
+    T(a,540,y+62,{font:'900 64px Inter',fill:c,a:al*Math.min(1,k)});T(b,540,y+124,{font:'800 38px Inter',fill:'#d6e6f5',a:al*Math.min(1,k)})});
+  [[770,7.4,''],[1020,9.8,'1 onza = $35']].forEach(([y,at,l])=>{const k=eout(prog(t,at,at+.5));if(k<=0)return;ctx.save();ctx.globalAlpha=al*k;
+    line(540,y,540,y+58*k,'#ffffff',6);ctx.beginPath();ctx.moveTo(520,y+50*k);ctx.lineTo(540,y+72*k);ctx.lineTo(560,y+50*k);ctx.fillStyle='#fff';ctx.fill();ctx.restore();
+    if(l)T(l,700,y+38,{font:'800 34px Inter',fill:GD,a:al*k})});
+  if(t>12.4){const k=eout(prog(t,12.4,13));T('El dólar era el ancla de todo el sistema',540,1305,{font:'800 36px Inter',fill:'#fff',a:al*k})}
+  ctx.restore()}
+function secB(t){const al=win(t,16.2,27.3);if(al<=0)return;ctx.save();ctx.globalAlpha=al;
+  head('LA GRIETA','1957 → 1971','Las reservas de oro de EE. UU. se vaciaban',RD);panel();
+  const x0=1957,x1=1971.8,y0=0,y1=23000,PX0=170,PX1=985,PY0=760,PY1=1230;
+  const X=x=>PX0+(x-x0)/(x1-x0)*(PX1-PX0),Y=p=>PY1-(p-y0)/(y1-y0)*(PY1-PY0);
+  [0,5000,10000,15000,20000].forEach(v=>{const y=Y(v);line(PX0,y,PX1,y,'rgba(255,255,255,.10)',1.5);T(fmtn(v),PX0-12,y,{font:'700 24px Inter',fill:'#7f9bb8',align:'right'})});
+  [[1957,'1957'],[1965,'1965'],[1971,'1971']].forEach(([x,l])=>T(l,X(x),PY1+48,{font:'700 28px Inter',fill:'#a9c3dd'}));
+  T('toneladas de oro de EE. UU. (aprox.)',540,725,{font:'700 28px Inter',fill:'#a9c3dd'});
+  const P=[[1957,20300],[1960,15800],[1965,13800],[1968,10700],[1971,9100]];
+  const u=prog(t,17.2,23.4),N=90,pts=[];
+  const val=x=>{for(let i=0;i<P.length-1;i++){if(x<=P[i+1][0]){const q=(x-P[i][0])/(P[i+1][0]-P[i][0]);return P[i][1]+(P[i+1][1]-P[i][1])*q}}return P[P.length-1][1]};
+  for(let i=0;i<=N*u;i++){const x=1957+14*i/N;pts.push([X(x),Y(val(x))])}
+  if(pts.length>1){ctx.save();ctx.strokeStyle=RD;ctx.lineWidth=9;ctx.lineJoin='round';ctx.lineCap='round';ctx.shadowColor=RD;ctx.shadowBlur=24;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.stroke();ctx.restore();
+    if(u<1){const h=pts[pts.length-1];ctx.beginPath();ctx.arc(h[0],h[1],15,0,7);ctx.fillStyle='#fff';ctx.shadowColor='#fff';ctx.shadowBlur=26;ctx.fill();ctx.shadowBlur=0}}
+  [[17.3,1957,20300,'≈ 20.000 t','#fff',1],[23.4,1971,9100,'≈ 9.000 t',RD,0]].forEach(([at,x,p,l,c,up])=>{const k=eback(prog(t,at,at+.4));if(k<=0)return;const px=X(x),py=Y(p);ctx.save();ctx.globalAlpha=al*Math.min(1,k);
+    ctx.beginPath();ctx.arc(px,py,13,0,7);ctx.fillStyle=c;ctx.shadowColor=c;ctx.shadowBlur=18;ctx.fill();ctx.shadowBlur=0;
+    ctx.font='900 36px Inter';const w=ctx.measureText(l).width+44;const bx=Math.min(Math.max(px-w/2,PX0-40),PX1+30-w),by=up?py+30:py-86;
+    RR(bx,by,w,58,29);ctx.fillStyle='#04101e';ctx.fill();ctx.strokeStyle=c;ctx.lineWidth=4;ctx.stroke();ctx.restore();
+    T(l,bx+w/2,by+30,{font:'900 36px Inter',fill:c,a:al*Math.min(1,k)})});
+  if(t>=23.8){const k=eback(prog(t,23.8,24.3));T('≈ −55%',540,645,{font:'900 130px Inter',fill:RD,glow:RD,gb:30,a:Math.min(1,k),scale:.6+.4*Math.min(1.1,k)})}
+  foot();ctx.restore()}
+function secC(t){const al=win(t,27.5,38.3);if(al<=0)return;ctx.save();ctx.globalAlpha=al;
+  head('EL ANUNCIO','15 AGO 1971','Nixon habla por televisión',CY);panel();
+  RR(150,580,780,520,50);ctx.fillStyle='#1a2a3f';ctx.fill();ctx.strokeStyle='#33506f';ctx.lineWidth=5;ctx.stroke();
+  RR(190,620,700,420,24);ctx.fillStyle='#07111f';ctx.fill();
+  ctx.save();RR(190,620,700,420,24);ctx.clip();for(let y=620;y<1040;y+=8){ctx.fillStyle='rgba(76,201,240,.05)';ctx.fillRect(190,y,700,3)}
+  const fl=.8+.2*Math.sin(t*40);ctx.globalAlpha=al*fl;
+  T('TRANSMISIÓN EN VIVO',540,670,{font:'800 28px Inter',fill:RD});
+  T('$',420,830,{font:'900 200px Inter',fill:GRN});T('→',540,830,{font:'900 150px Inter',fill:'#fff'});T('ORO',690,830,{font:'900 110px Inter',fill:GD});
+  const x=eback(prog(t,29.5,30.1));if(x>0){ctx.globalAlpha=al*Math.min(1,x);ctx.strokeStyle=RD;ctx.lineWidth=26;ctx.lineCap='round';ctx.shadowColor=RD;ctx.shadowBlur=24;
+    const s=Math.min(1.05,x);ctx.beginPath();ctx.moveTo(540-230*s,830-130*s);ctx.lineTo(540+230*s,830+130*s);ctx.moveTo(540+230*s,830-130*s);ctx.lineTo(540-230*s,830+130*s);ctx.stroke()}
+  ctx.restore();
+  T('SUSPENDIDO',540,1000,{font:'900 44px Inter',fill:RD,a:eout(prog(t,30.2,30.8))});
+  RR(300,1100,480,26,13);ctx.fillStyle='#1a2a3f';ctx.fill();
+  const k1=eout(prog(t,32.4,33.1));if(k1>0){T('«TEMPORAL»',540,1190,{font:'900 84px Inter',fill:'#fff',a:k1});
+    const s=eout(prog(t,35.3,35.8));if(s>0){line(540-250*s,1190,540+250*s,1190,RD,12)}}
+  const k2=eback(prog(t,35.6,36.2));if(k2>0)T('PERMANENTE',540,1285,{font:'900 76px Inter',fill:RD,glow:RD,gb:26,a:Math.min(1,k2),scale:.6+.4*Math.min(1.1,k2)});
+  ctx.restore()}
+function secD(t){const al=win(t,38.5,48.8);if(al<=0)return;ctx.save();ctx.globalAlpha=al;
+  head('SIN ANCLA','1971 → 1980','El oro quedó libre',GD);panel();
+  const x0=1971,x1=1980.9,y0=0,y1=950,PX0=170,PX1=985,PY0=760,PY1=1230;
+  const X=x=>PX0+(x-x0)/(x1-x0)*(PX1-PX0),Y=p=>PY1-(p-y0)/(y1-y0)*(PY1-PY0);
+  [0,250,500,750].forEach(v=>{const y=Y(v);line(PX0,y,PX1,y,'rgba(255,255,255,.10)',1.5);T(fmt(v),PX0-12,y,{font:'700 26px Inter',fill:'#7f9bb8',align:'right'})});
+  [[1971,'1971'],[1980,'1980']].forEach(([x,l])=>T(l,X(x),PY1+48,{font:'700 28px Inter',fill:'#a9c3dd'}));
+  const u=prog(t,39.2,44.5),N=90,pts=[];for(let i=0;i<=N*u;i++){const q=i/N;pts.push([X(1971+9*q),Y(35+815*Math.pow(q,3.2))])}
+  if(pts.length>1){ctx.save();ctx.beginPath();ctx.moveTo(pts[0][0],PY1);pts.forEach(p=>ctx.lineTo(p[0],p[1]));ctx.lineTo(pts[pts.length-1][0],PY1);ctx.closePath();
+    const g=ctx.createLinearGradient(0,PY0,0,PY1);g.addColorStop(0,'rgba(255,200,61,.30)');g.addColorStop(1,'rgba(255,200,61,0)');ctx.fillStyle=g;ctx.fill();ctx.restore();
+    ctx.save();ctx.strokeStyle=GD;ctx.lineWidth=9;ctx.lineJoin='round';ctx.lineCap='round';ctx.shadowColor=GD;ctx.shadowBlur=24;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));ctx.stroke();ctx.restore();
+    if(u<1){const h=pts[pts.length-1];ctx.beginPath();ctx.arc(h[0],h[1],15,0,7);ctx.fillStyle='#fff';ctx.shadowColor='#fff';ctx.shadowBlur=26;ctx.fill();ctx.shadowBlur=0}}
+  [[39.3,1971,35,'$35','#fff',1],[44.5,1980,850,'$850',GD,0]].forEach(([at,x,p,l,c,up])=>{const k=eback(prog(t,at,at+.4));if(k<=0)return;const px=X(x),py=Y(p);ctx.save();ctx.globalAlpha=al*Math.min(1,k);
+    ctx.beginPath();ctx.arc(px,py,13,0,7);ctx.fillStyle=c;ctx.shadowColor=c;ctx.shadowBlur=18;ctx.fill();ctx.shadowBlur=0;
+    ctx.font='900 38px Inter';const w=ctx.measureText(l).width+44;const bx=Math.min(Math.max(px-w/2,PX0-40),PX1+30-w),by=up?py+34:py-82;
+    RR(bx,by,w,58,29);ctx.fillStyle='#04101e';ctx.fill();ctx.strokeStyle=c;ctx.lineWidth=4;ctx.stroke();ctx.restore();
+    T(l,bx+w/2,by+30,{font:'900 38px Inter',fill:c,a:al*Math.min(1,k)})});
+  if(t>=44.7){const k=eback(prog(t,44.7,45.15));T('×24',540,645,{font:'900 150px Inter',fill:GD,glow:GD,gb:30,a:Math.min(1,k),scale:.6+.4*Math.min(1.1,k)})}
+  foot();ctx.restore()}
+function secE(t){const al=win(t,49.0,55.9);if(al<=0)return;ctx.save();ctx.globalAlpha=al;
+  head('EL EFECTO','MONEDAS LIBRES','Su precio lo fija el mercado',CY);panel();
+  const R=[['EUR/USD',CY,1.3],['USD/JPY',GRN,2.1],['GBP/USD',CY,.7],['XAU/USD',GD,1.7]];
+  R.forEach(([n,c,ph],i)=>{const k=eout(prog(t,49.5+i*.35,50.0+i*.35));if(k<=0)return;const y=570+i*185;ctx.save();ctx.globalAlpha=al*k;
+    RR(100,y,880,160,26);ctx.fillStyle='#0a1a30';ctx.fill();ctx.strokeStyle='#1d3b5e';ctx.lineWidth=2;ctx.stroke();
+    T(n,300,y+80,{font:'900 50px Inter',fill:c,align:'right'});
+    ctx.beginPath();for(let j=0;j<=70;j++){const x=340+j*8.4,tt=t*1.6+j*.13+ph;const v=Math.sin(tt)*28+Math.sin(tt*2.3+ph)*16+Math.sin(tt*5.1)*7;j?ctx.lineTo(x,y+80-v):ctx.moveTo(x,y+80-v)}
+    ctx.strokeStyle=c;ctx.lineWidth=6;ctx.lineJoin='round';ctx.shadowColor=c;ctx.shadowBlur=14;ctx.stroke();ctx.shadowBlur=0;ctx.restore()});
+  const k=eback(prog(t,52.6,53.2));if(k>0){ctx.save();ctx.globalAlpha=al*Math.min(1,k);RR(150,1310,780,0,0);ctx.restore();
+    ctx.save();ctx.globalAlpha=al*Math.min(1,k);RR(180,1260,720,80,40);ctx.fillStyle=GD;ctx.fill();T('NACE EL FOREX MODERNO',540,1301,{font:'900 40px Inter',fill:'#04101e'});ctx.restore()}
+  ctx.restore()}
+function draw(t){bg();intro(t);secA(t);secB(t);secC(t);secD(t);secE(t)}
+function cover(){bg();ctx.save();
+  ctx.fillStyle='rgba(3,7,14,.55)';ctx.fillRect(0,360,W,760);
+  RR(300,420,480,90,45);ctx.fillStyle=RD;ctx.fill();T('15 · AGO',540,466,{font:'900 48px Inter',fill:'#fff'});
+  T('1971',540,700,{font:'900 330px Inter',fill:GD,stroke:'#03070e',lw:14,glow:GD,gb:40});
+  T('EL DÍA QUE EL DÓLAR',540,900,{font:'900 76px Inter',fill:'#fff',stroke:'#03070e',lw:12});
+  T('DEJÓ EL ORO',540,1000,{font:'900 100px Inter',fill:CY,stroke:'#03070e',lw:12,glow:CY,gb:30});
+  RR(150,1160,780,110,55);ctx.fillStyle=RD;ctx.fill();T('¿CÓMO CAMBIÓ TODO?',540,1216,{font:'900 48px Inter',fill:'#fff'});ctx.restore()}
+</script></body></html>
