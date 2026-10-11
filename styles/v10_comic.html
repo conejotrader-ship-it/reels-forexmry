@@ -1,0 +1,104 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Bangers;font-weight:400;src:url(node_modules/@fontsource/bangers/files/bangers-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'TiposPatronesVelas',hook:'¿SABES LEER UNA VELA JAPONESA?',dur:60,cta:56,bpm:120,prog:[[57,'m'],[53,'M'],[48,'M'],[55,'M']],
+ ev:[[0.3,'hit'],[4.5,'wipe'],[13.5,'wipe'],[30.8,'wipe'],[39.9,'wipe'],[48.9,'wipe'],[56.0,'cta']],
+ subs:[
+ [0.2,4.4,'¿Sabes leer una vela japonesa? Estos son los tipos y patrones clave.','¿Sabes leer una vela japonesa? Estos son los tipos y patrones clave.'],
+ [5.0,13.4,'1. Anatomía: el cuerpo va de la apertura al cierre; las mechas, del mínimo al máximo.','Uno: anatomía. El cuerpo va de la apertura al cierre; las mechas, del mínimo al máximo. Alcista cierra arriba; bajista, abajo.'],
+ [14.0,18.4,'2. Tipos de vela. Doji: abre y cierra casi igual. Indecisión.','Dos: tipos de vela. Doji: abre y cierra casi igual. Indecisión.'],
+ [18.5,22.4,'Martillo: mecha larga abajo. Posible giro alcista.','Martillo: mecha larga abajo. Posible giro alcista.'],
+ [22.5,26.4,'Estrella fugaz: mecha larga arriba. Posible giro bajista.','Estrella fugaz: mecha larga arriba. Posible giro bajista.'],
+ [26.5,30.7,'Marubozu: cuerpo sin mechas. Fuerza total.','Marubozu: cuerpo sin mechas. Fuerza total.'],
+ [31.3,39.8,'3. Patrón envolvente: una vela cubre el cuerpo de la anterior: alcista tras una caída, bajista tras una subida.','Tres: patrón envolvente. Una vela cubre el cuerpo de la anterior: alcista tras una caída, bajista tras una subida.'],
+ [40.4,48.8,'4. Estrella de la mañana: vela bajista larga, una pequeña y una alcista fuerte. Giro alcista. La de la tarde, al revés.','Cuatro: estrella de la mañana. Vela bajista larga, una pequeña y una alcista fuerte. Giro alcista. La estrella de la tarde, al revés.'],
+ [49.4,55.8,'Ningún patrón es infalible: confirma con el contexto y la tendencia.','Ningún patrón es infalible: confirma con el contexto y la tendencia.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BK='#111',PNK='#ff4fa3',YEL='#ffd23d',CY='#25c7ff',ORG='#ff8a2b',PUR='#9b5cff',G='#1ed760',R='#ff3b30';
+const STY={subFont:'800 44px Inter',subBg:'rgba(17,17,17,.94)',subStroke:YEL,subFill:'#fff',ctaBg:YEL,ctaSub:'#e0207f',ctaMain:BK,
+ ctaAccent:'#e0207f',ctaBtnText:'#fff',ctaFontS:'64px Bangers',ctaFontL:'150px Bangers'};
+boot(['40px Bangers','800 40px Inter']);
+const F=n=>`${n}px Bangers`,IN=n=>`800 ${n}px Inter`;const REG=[];const COL=()=>window.__collect;
+const reg=(t0)=>REG.push([+t0.toFixed(2),'tick']);
+const BG=[[PNK,'#e03388'],[YEL,'#f0b400'],[CY,'#0aa5de'],[ORG,'#e86d00'],[PUR,'#7d3fe0'],[PNK,'#e03388']];
+function bg(i){const [a,b]=BG[i];ctx.fillStyle=a;ctx.fillRect(0,0,W,H);ctx.fillStyle=b;
+ for(let y=0,r=0;y<H+40;y+=44,r++)for(let x=(r%2)*22;x<W+40;x+=44){const d=9*(1-y/H*.55);ctx.beginPath();ctx.arc(x,y,d,0,7);ctx.fill()}
+ ctx.strokeStyle=BK;ctx.lineWidth=14;ctx.strokeRect(7,7,W-14,H-14)}
+const ap=(t,t0,d=.35)=>eback(prog(t,t0,t0+d));
+function tx(s,x,y,font,fill,t,t0,o={}){if(COL()){reg(t0);return}const k=ap(t,t0);if(k<=.001)return;
+ ctx.save();ctx.translate(x,y);ctx.rotate(o.rot||0);ctx.scale(k,k);ctx.globalAlpha*=Math.min(1,prog(t,t0,t0+.12));
+ T(s,0,0,{font,fill,stroke:o.nos?null:BK,lw:o.lw||12,align:o.align});ctx.restore()}
+function starP(r,r2,n){ctx.beginPath();for(let i=0;i<n*2;i++){const a=i*Math.PI/n-1.57,rr=i%2?r2:r;i?ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr):ctx.moveTo(Math.cos(a)*rr,Math.sin(a)*rr)}ctx.closePath()}
+function burst(cx,cy,r,n,col,t,t0,label,font,tc,rot=0){if(COL()){reg(t0);return}const k=ap(t,t0,.4);if(k<=.001)return;
+ ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.scale(k,k);starP(r,r*.72,n);ctx.fillStyle=col;ctx.fill();ctx.lineWidth=8;ctx.strokeStyle=BK;ctx.lineJoin='round';ctx.stroke();
+ if(label)T(label,0,4,{font,fill:tc||BK,nos:1});ctx.restore()}
+function panel(x,y,w,h,fill,t,t0,fn){if(COL()){reg(t0);fn(t);return}const k=ap(t,t0,.45);if(k<=.001)return;
+ ctx.save();ctx.translate(x+w/2,y+h/2);ctx.scale(k,k);ctx.translate(-w/2,-h/2);
+ RR(16,16,w,h,10);ctx.fillStyle=BK;ctx.fill();RR(0,0,w,h,10);ctx.fillStyle=fill;ctx.fill();ctx.lineWidth=8;ctx.strokeStyle=BK;ctx.stroke();fn(t);ctx.restore()}
+function cdl(cx,yH,yL,yO,yC,w){const bull=yC<yO,top=Math.min(yO,yC),bot=Math.max(yO,yC),h=Math.max(bot-top,12);
+ ctx.save();ctx.lineCap='round';ctx.strokeStyle=BK;ctx.lineWidth=12;ctx.beginPath();ctx.moveTo(cx,yH);ctx.lineTo(cx,yL);ctx.stroke();
+ const y0=bot-top<12?(top+bot)/2-6:top;ctx.fillStyle=bot-top<12?'#777':(bull?G:R);ctx.fillRect(cx-w/2,y0,w,h);ctx.lineWidth=8;ctx.lineJoin='round';ctx.strokeStyle=BK;ctx.strokeRect(cx-w/2,y0,w,h);ctx.restore()}
+function lin(x1,y1,x2,y2,w=6){ctx.save();ctx.strokeStyle=BK;ctx.lineWidth=w;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.restore()}
+function arrow(x,y1,y2,col){ctx.save();const d=y2>y1?1:-1;ctx.strokeStyle=BK;ctx.fillStyle=col;ctx.lineWidth=8;ctx.lineJoin='round';
+ ctx.beginPath();ctx.moveTo(x-16,y1);ctx.lineTo(x+16,y1);ctx.lineTo(x+16,y2-d*30);ctx.lineTo(x+40,y2-d*30);ctx.lineTo(x,y2);ctx.lineTo(x-40,y2-d*30);ctx.lineTo(x-16,y2-d*30);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore()}
+function head(n,s,t,t0){burst(130,250,98,10,YEL,t,t0,String(n),F(110),BK,.2);tx(s,250,255,F(86),'#fff',t,t0+.3,{align:'left'})}
+function pIntro(t){burst(540,740,420,14,YEL,t,.3,'',F(10));
+ tx('¿SABES LEER',540,560,F(124),'#fff',t,1.0,{rot:-.05});tx('UNA VELA',540,720,F(150),PNK,t,1.5,{rot:.03});tx('JAPONESA?',540,885,F(124),'#fff',t,2.0,{rot:-.03});
+ panel(110,1130,860,120,BK,t,2.8,()=>{T('TIPOS Y PATRONES CLAVE',430,62,{font:F(76),fill:YEL,nos:1})});
+ if(COL()){reg(3.3);return}[[-300,1360,1450,1500,1400,PNK],[-150,1330,1450,1420,1370,CY],[0,1350,1450,1380,1420,PNK],[150,1320,1450,1410,1360,CY],[300,1360,1450,1440,1390,PNK]].forEach((c,i)=>{const k=ap(t,3.3+i*.12);if(k<=.001)return;ctx.save();ctx.translate(540+c[0],1440);ctx.scale(k,k);ctx.translate(-540-c[0],-1440);cdl(540+c[0],c[1],c[2],c[3],c[4],70);ctx.restore()})}
+function lab(s,x,y,al,t,t0,ex){tx(s,x,y,F(42),BK,t,t0,{align:al,nos:1,lw:0});if(ex!=null)lin(al=='left'?x+(s.length*19):x-(s.length*19),y,ex,y,5)}
+function pP1(t){head(1,'ANATOMÍA',t,5.0);
+ panel(60,330,960,1000,'#fff',t,5.0,t=>{
+  cdl(270,150,680,560,230,110);cdl(700,150,680,230,560,110);
+  tx('ALCISTA',270,70,F(70),G,t,5.6);tx('BAJISTA',700,70,F(70),R,t,5.9);
+  lab('MÁXIMO',20,150,'left',t,6.4,262);lab('CIERRE',20,230,'left',t,7.0,210);lab('APERTURA',20,560,'left',t,7.6,210);lab('MÍNIMO',20,680,'left',t,8.2,262);
+  lab('MÁXIMO',940,150,'right',t,9.0,708);lab('APERTURA',940,230,'right',t,9.5,760);lab('CIERRE',940,560,'right',t,10.0,760);lab('MÍNIMO',940,680,'right',t,10.5,708);
+  tx('CUERPO: APERTURA → CIERRE',480,810,F(60),BK,t,11.0,{nos:1,lw:0});tx('MECHAS: MÁXIMO Y MÍNIMO',480,900,F(60),'#e0207f',t,12.0,{nos:1,lw:0})})}
+function two(x,y,name,desc,fn,bc,btxt,t,t0){panel(x,y,440,480,'#fff',t,t0,t=>{
+  tx(name,220,55,F(60),BK,t,t0+.3,{nos:1,lw:0});fn();tx(desc[0],220,400,IN(30),BK,t,t0+.9,{nos:1,lw:0});tx(desc[1],220,442,IN(30),'#e0207f',t,t0+1.2,{nos:1,lw:0});
+  burst(372,160,56,9,bc,t,t0+.7,btxt,F(40))})}
+function pP2(t){head(2,'TIPOS DE VELA',t,14.0);
+ two(70,330,'DOJI',['ABRE Y CIERRA','CASI IGUAL'],()=>cdl(190,110,340,228,222,96),YEL,'¿?',t,14.0);
+ two(570,330,'MARTILLO',['MECHA LARGA ABAJO','¿GIRO ALCISTA?'],()=>cdl(190,130,340,190,145,96),G,'¡PUM!',t,18.5);
+ two(70,860,'ESTRELLA FUGAZ',['MECHA LARGA ARRIBA','¿GIRO BAJISTA?'],()=>cdl(190,110,325,270,310,96),R,'¡ZAS!',t,22.5);
+ two(570,860,'MARUBOZU',['CUERPO SIN MECHAS','FUERZA TOTAL'],()=>cdl(190,120,340,340,120,96),CY,'¡BAM!',t,26.5)}
+function pP3(t){head(3,'PATRÓN ENVOLVENTE',t,31.3);
+ tx('UNA VELA CUBRE A LA ANTERIOR',540,375,F(54),'#fff',t,31.8);
+ panel(60,430,450,760,'#fff',t,32.2,t=>{tx('ENVOLVENTE ALCISTA',225,50,F(48),G,t,32.6);
+  tx('TRAS UNA CAÍDA',225,115,IN(30),BK,t,33.0,{nos:1,lw:0});arrow(140,150,260,R);
+  cdl(140,330,520,380,490,90);cdl(310,290,570,540,330,90);tx('1',140,640,F(50),BK,t,33.6,{nos:1,lw:0});tx('2',310,640,F(50),BK,t,34.0,{nos:1,lw:0});
+  tx('GIRO ALCISTA',225,710,F(54),'#0a9b41',t,34.4,{nos:1,lw:0})});
+ panel(570,430,450,760,'#fff',t,35.6,t=>{tx('ENVOLVENTE BAJISTA',225,50,F(48),R,t,36.0);
+  tx('TRAS UNA SUBIDA',225,115,IN(30),BK,t,36.4,{nos:1,lw:0});arrow(140,260,150,G);
+  cdl(140,330,520,490,380,90);cdl(310,290,570,330,540,90);tx('1',140,640,F(50),BK,t,37.0,{nos:1,lw:0});tx('2',310,640,F(50),BK,t,37.4,{nos:1,lw:0});
+  tx('GIRO BAJISTA',225,710,F(54),'#d4271c',t,37.8,{nos:1,lw:0})})}
+function pP4(t){head(4,'ESTRELLAS',t,40.4);
+ tx('3 VELAS: GIRO DE TENDENCIA',540,375,F(54),'#fff',t,40.9);
+ panel(60,430,450,760,'#fff',t,41.2,t=>{tx('ESTRELLA DE LA MAÑANA',225,50,F(42),G,t,41.6);
+  cdl(90,250,560,280,520,84);cdl(225,545,630,600,575,84);cdl(360,310,590,560,340,84);
+  burst(225,500,34,8,YEL,t,42.4,'',F(10));
+  ['1','2','3'].forEach((n,i)=>tx(n,[90,225,360][i],690,F(50),BK,t,42.8+i*.3,{nos:1,lw:0}));
+  tx('TRAS UNA CAÍDA',225,115,IN(28),BK,t,42.0,{nos:1,lw:0});tx('GIRO ALCISTA',225,740,F(46),'#0a9b41',t,43.8,{nos:1,lw:0})});
+ panel(570,430,450,760,'#fff',t,44.6,t=>{tx('ESTRELLA DE LA TARDE',225,50,F(42),R,t,45.0);
+  cdl(90,250,560,520,280,84);cdl(225,165,245,225,200,84);cdl(360,215,480,235,450,84);
+  burst(225,300,34,8,YEL,t,45.8,'',F(10));
+  ['1','2','3'].forEach((n,i)=>tx(n,[90,225,360][i],690,F(50),BK,t,46.2+i*.3,{nos:1,lw:0}));
+  tx('TRAS UNA SUBIDA',225,115,IN(28),BK,t,45.4,{nos:1,lw:0});tx('GIRO BAJISTA',225,740,F(46),'#d4271c',t,47.2,{nos:1,lw:0})})}
+function pEnd(t){burst(540,420,230,12,YEL,t,49.4,'¡OJO!',F(120),BK,-.1);
+ tx('NINGÚN PATRÓN',540,780,F(140),'#fff',t,50.2,{rot:-.03});tx('ES INFALIBLE',540,940,F(150),YEL,t,50.9,{rot:.02});
+ panel(90,1060,900,130,BK,t,52.4,()=>{T('CONFIRMA CON EL CONTEXTO',450,68,{font:F(72),fill:'#fff',nos:1})});
+ panel(190,1230,700,130,'#fff',t,54.0,()=>{T('Y LA TENDENCIA',350,68,{font:F(72),fill:'#e0207f',nos:1})})}
+const PG=[[0,4.5,pIntro],[5.0,13.5,pP1],[14.0,30.8,pP2],[31.3,39.9,pP3],[40.4,48.9,pP4],[49.4,999,pEnd]];
+function zig(sx){ctx.save();ctx.fillStyle=BK;ctx.beginPath();ctx.moveTo(sx-160,0);for(let y=0,i=0;y<=H+60;y+=60,i++)ctx.lineTo(sx+(i%2?34:-34),y);ctx.lineTo(sx-160,H);ctx.fill();ctx.restore()}
+function draw(t){let cur=0;PG.forEach(([s],i)=>{if(t>=s)cur=i});const e=PG[cur][1];
+ if(cur<PG.length-1&&t>=e){const sx=(W+260)*clamp((t-e)/.5)-130;bg(cur+1);ctx.save();ctx.beginPath();ctx.rect(sx,0,W,H);ctx.clip();bg(cur);PG[cur][2](t);ctx.restore();zig(sx)}
+ else{bg(cur);PG[cur][2](t)}}
+function cover(){const T0=1e9;bg(0);burst(540,640,470,16,YEL,T0,0,'',F(10));
+ const q=(s,y,f,c,r)=>{ctx.save();ctx.translate(540,y);ctx.rotate(r);T(s,0,0,{font:f,fill:c,stroke:BK,lw:16});ctx.restore()};
+ q('¿SABES LEER',470,F(134),'#fff',-.05);q('UNA VELA',640,F(165),PNK,.03);q('JAPONESA?',815,F(134),'#fff',-.03);
+ ctx.save();RR(100,1060,880,130,10);ctx.fillStyle=BK;ctx.fill();ctx.restore();T('TIPOS Y PATRONES CLAVE',540,1128,{font:F(84),fill:YEL,nos:1});
+ [[-330,1420,1790,1530,1700,PNK],[-165,1380,1790,1700,1480,0],[0,1400,1790,1430,1720,0],[165,1370,1790,1720,1460,0],[330,1440,1790,1560,1690,0]].forEach(c=>cdl(540+c[0],c[1],c[2]+0,c[3],c[4],100))}
+window.__load=()=>{if(!SPEC._c){window.__collect=true;REG.length=0;PG.forEach(p=>p[2](0));window.__collect=false;REG.forEach(r=>SPEC.ev.push(r));SPEC._c=1}return JSON.stringify(Object.assign({dur:21},SPEC))};
+</script></body></html>
