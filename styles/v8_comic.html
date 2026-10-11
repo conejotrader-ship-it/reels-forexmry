@@ -1,0 +1,87 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo: cómic (viñetas, tramado, globos) — tema: cómo empezar con una cuenta demo
+const SPEC={name:'CuentaDemo',hook:'¿OPERAR SIN ARRIESGAR DINERO REAL?',bpm:116,prog:[[60,'M'],[57,'m'],[53,'M'],[55,'M']],
+ ev:[[0.3,'power'],[3.3,'blip',784],[4.6,'ding'],[7.8,'blip',660],[9.0,'blip',784],[10.3,'blip',988],[12.4,'wipe'],[13.6,'tick'],[14.9,'tick'],[16.0,'chime'],[17.2,'cta']],
+ subs:[[0.2,3.0,'¿Quieres practicar con oro sin arriesgar dinero real? Empieza en demo.'],
+ [3.2,7.5,'Una cuenta demo usa dinero virtual, con precios muy parecidos a los del mercado real.'],
+ [7.8,12.0,'Úsala para practicar, probar tu estrategia y aprender a manejar la plataforma.'],
+ [12.3,16.9,'Revisa tus resultados y pasa a real solo cuando estés preparado, con poco riesgo.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const INK='#14121c',YEL='#ffd23f',RED='#ee4266',BLU='#3bc1ff',GRN='#4cd98a',PAP='#fff4d6';
+const STY={subFont:'800 46px Inter',subBg:'#fff4d6',subStroke:INK,subFill:INK,ctaBg:'#ffd23f',ctaSub:INK,ctaGlow:'rgba(0,0,0,0)',ctaMain:INK,
+ ctaAccent:RED,ctaBtnText:'#fff',ctaFontS:'900 52px Inter',ctaFontL:'900 110px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+function bg(){ctx.fillStyle=PAP;ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(238,66,102,.16)';
+  for(let y=0;y<H;y+=36)for(let x=(y/36%2)*18;x<W;x+=36){ctx.beginPath();ctx.arc(x,y,6+((y/H)*6),0,7);ctx.fill()}
+  ctx.strokeStyle=INK;ctx.lineWidth=14;ctx.strokeRect(14,14,W-28,H-28)}
+function panel(x,y,w,h,col,rot=0,k=1){ctx.save();ctx.translate(x+w/2,y+h/2);ctx.rotate(rot);ctx.scale(k,k);
+  ctx.fillStyle=INK;RR(-w/2+14,-h/2+14,w,h,10);ctx.fill();ctx.fillStyle=col;RR(-w/2,-h/2,w,h,10);ctx.fill();ctx.lineWidth=10;ctx.strokeStyle=INK;ctx.stroke();ctx.restore()}
+function ct(s,x,y,sz,col=INK,a=1,st){T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,stroke:st,lw:12})}
+function burst(cx,cy,r1,r2,n,col,rot=0){ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.beginPath();
+  for(let i=0;i<n*2;i++){const r=i%2?r1:r2,a=Math.PI*i/n;ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();
+  ctx.fillStyle=INK;ctx.save();ctx.translate(12,12);ctx.fill();ctx.restore();ctx.fillStyle=col;ctx.fill();ctx.lineWidth=10;ctx.strokeStyle=INK;ctx.stroke();ctx.restore()}
+function bubble(x,y,w,h,lines,tx,ty,k=1,sz=44){if(k<=0)return;ctx.save();ctx.translate(x+w/2,y+h/2);ctx.scale(k,k);ctx.translate(-x-w/2,-y-h/2);
+  ctx.fillStyle='#fff';ctx.strokeStyle=INK;ctx.lineWidth=9;RR(x,y,w,h,40);ctx.fill();ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x+w/2-30,y+h-4);ctx.lineTo(tx,ty);ctx.lineTo(x+w/2+30,y+h-4);ctx.fillStyle='#fff';ctx.fill();ctx.stroke();
+  ctx.fillStyle='#fff';ctx.fillRect(x+w/2-26,y+h-14,52,14);
+  lines.forEach((l,i)=>T(l,x+w/2,y+h/2+(i-(lines.length-1)/2)*(sz+8),{font:`900 ${sz}px Inter`,fill:INK}));ctx.restore()}
+function fade(t,a,b){return Math.min(prog(t,a,a+.3),1-prog(t,b-.25,b))}
+function monitor(cx,cy,s,t0,t){ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);
+  ctx.fillStyle=INK;RR(-250,-170,500,340,26);ctx.fill();ctx.fillStyle='#0f2a3a';RR(-228,-148,456,296,14);ctx.fill();
+  ctx.fillStyle=INK;ctx.fillRect(-30,170,60,60);RR(-110,226,220,26,12);ctx.fill();
+  const pts=[[-200,90],[-140,50],[-100,70],[-40,-10],[10,20],[70,-60],[130,-30],[200,-100]];
+  ctx.strokeStyle=GRN;ctx.lineWidth=10;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();
+  const f=eio(prog(t,t0,t0+1.4))*(pts.length-1);for(let i=0;i<=Math.floor(f);i++){i?ctx.lineTo(...pts[i]):ctx.moveTo(...pts[i])}
+  if(f<pts.length-1){const i=Math.floor(f),fr=f-i;ctx.lineTo(lerp(pts[i][0],pts[i+1][0],fr),lerp(pts[i][1],pts[i+1][1],fr))}ctx.stroke();
+  ctx.restore()}
+function icon(kind,cx,cy,s){ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);ctx.lineWidth=9;ctx.strokeStyle=INK;
+  if(kind==='target'){[70,46,22].forEach((r,i)=>{ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.fillStyle=i%2?'#fff':RED;ctx.fill();ctx.stroke()});}
+  if(kind==='chart'){ctx.fillStyle=GRN;[[-50,10,30,50],[-10,-30,30,90],[30,-10,30,70]].forEach(([x,y,w,h])=>{ctx.fillRect(x,y,w,h);ctx.strokeRect(x,y,w,h)})}
+  if(kind==='gear'){ctx.fillStyle=BLU;ctx.beginPath();for(let i=0;i<16;i++){const r=i%2?52:70,a=Math.PI*i/8;ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.arc(0,0,22,0,7);ctx.fillStyle='#fff';ctx.fill();ctx.stroke()}
+  ctx.restore()}
+function arrow(x1,y,x2,col,k){if(k<=0)return;const x=lerp(x1,x2,k);ctx.save();ctx.strokeStyle=INK;ctx.lineWidth=12;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x,y);ctx.stroke();
+  if(k>.9){ctx.beginPath();ctx.moveTo(x2-30,y-30);ctx.lineTo(x2,y);ctx.lineTo(x2-30,y+30);ctx.stroke()}ctx.restore()}
+function draw(t){bg();
+  // Gancho
+  let a=1-prog(t,2.7,3.2);if(t<3.3){ctx.save();ctx.globalAlpha=a;const k=eback(prog(t,.1,.7));
+    ctx.translate(540,760);ctx.scale(k,k);burst(0,0,400,490,14,YEL,Math.sin(t*2)*.04);
+    ct('¿OPERAR SIN',0,-190,92,INK);ct('ARRIESGAR',0,-60,120,RED);ct('DINERO REAL?',0,80,92,INK);
+    ctx.restore();bubble(560,1130,440,150,['¡Empieza en','DEMO!'],760,1330,eback(prog(t,1.2,1.8)),50)}
+  // Viñeta 1: qué es demo
+  a=fade(t,3.2,7.6);if(a>0){ctx.save();ctx.globalAlpha=a;const k=eback(prog(t,3.2,3.8));
+    panel(90,230,900,1130,BLU,-.012,k);ctx.save();ctx.beginPath();ctx.rect(0,0,W,H);ctx.restore();
+    ct('CUENTA DEMO',540,340,86,'#fff',a,INK);
+    monitor(540,700,1.25*k,3.7,t);
+    ctx.save();ctx.translate(780,500);ctx.rotate(.18);RR(-150,-45,300,90,16);ctx.fillStyle=YEL;ctx.fill();ctx.lineWidth=8;ctx.stroke();T('VIRTUAL',0,3,{font:'900 56px Inter',fill:INK});ctx.restore();
+    const b=eback(prog(t,4.6,5.2));
+    ctx.save();ctx.translate(310,1130);ctx.scale(b,b);ctx.fillStyle=GRN;ctx.beginPath();ctx.arc(0,0,95,0,7);ctx.fill();ctx.lineWidth=10;ctx.stroke();T('$',0,6,{font:'900 120px Inter',fill:INK});ctx.restore();
+    bubble(480,1020,420,150,['Dinero virtual,','cero riesgo real'],520,1140,eback(prog(t,5.4,6.0)),40);
+    ctx.restore()}
+  // Viñeta 2: para qué sirve
+  a=fade(t,7.8,12.1);if(a>0){ctx.save();ctx.globalAlpha=a;
+    ct('¿PARA QUÉ SIRVE?',540,260,84,INK);
+    [['target','PRACTICA',RED,8.0],['chart','PRUEBA TU ESTRATEGIA',GRN,9.3],['gear','CONOCE LA PLATAFORMA',BLU,10.6]].forEach(([ic,tx,col,ts],i)=>{
+      const k=eback(prog(t,ts,ts+.5));const y=360+i*330;panel(110,y,860,270,col,(i-1)*.012,k);
+      if(k>0){icon(ic,270,y+135,k*1.3);ctx.save();ctx.globalAlpha=a*clamp(k);
+        const L=wrapLines(tx,500,'900 54px Inter');L.forEach((l,j)=>T(l,640,y+135+(j-(L.length-1)/2)*62,{font:'900 54px Inter',fill:i==0?'#fff':INK,stroke:i==0?INK:null,lw:10}));ctx.restore()}});
+    ctx.restore()}
+  // Viñeta 3: camino
+  a=fade(t,12.3,17.0);if(a>0){ctx.save();ctx.globalAlpha=a;
+    ct('TU CAMINO',540,260,90,INK);
+    const st=[['1','DEMO',BLU,12.6],['2','REVISA',YEL,13.8],['3','REAL',GRN,15.0]];
+    st.forEach(([n,tx,col,ts],i)=>{const k=eback(prog(t,ts,ts+.5));const y=380+i*300;panel(140,y,800,230,col,(i-1)*.01,k);
+      if(k>0){ctx.save();ctx.globalAlpha=a*clamp(k);ctx.beginPath();ctx.arc(270,y+115,70,0,7);ctx.fillStyle='#fff';ctx.fill();ctx.lineWidth=9;ctx.stroke();T(n,270,y+121,{font:'900 90px Inter',fill:INK});
+        T(tx,640,y+115,{font:'900 92px Inter',fill:i==2?INK:INK});ctx.restore()}});
+    bubble(560,1290,430,120,['Poco riesgo al inicio'],760,1440,eback(prog(t,15.8,16.4)),36);
+    ctx.restore()}
+}
+function cover(){bg();ctx.save();ctx.translate(0,150);burst(540,760,430,510,16,YEL,.05);
+  ct('¿SABES CÓMO',540,500,86,INK);ct('EMPEZAR SIN',540,610,96,INK);ct('PERDER DINERO?',540,745,104,RED);
+  ct('CUENTA DEMO',540,900,120,'#fff',1,INK);
+  RR(200,1210,680,120,60);ctx.fillStyle=INK;ctx.fill();RR(190,1198,680,120,60);ctx.fillStyle=RED;ctx.fill();ctx.lineWidth=9;ctx.stroke();T('VER REEL',530,1260,{font:'900 56px Inter',fill:'#fff'});ctx.restore()}
+</script></body></html>
