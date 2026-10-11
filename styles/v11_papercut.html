@@ -1,0 +1,114 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'BancosCentralesOro',hook:'¿QUIÉN TIENE MÁS ORO DEL MUNDO?',dur:60,cta:56,bpm:92,mus:'soft',prog:[[57,'m'],[53,'M'],[60,'M'],[55,'m']],
+ ev:[[0.3,'hit'],[0.9,'tick'],[1.6,'tick'],[2.3,'tick'],[3.0,'ding'],
+  [4.5,'wipe'],[5.0,'blip',660],[6.0,'tick'],[7.6,'tick'],[9.2,'tick'],[11.8,'ding'],
+  [13.5,'wipe'],[14.0,'blip',660],
+  [15.5,'wipe'],[16.0,'blip',660],[17.6,'tick'],[19.4,'tick'],[21.2,'tick'],[23.0,'tick'],[25.6,'ding'],
+  [29.5,'wipe'],[30.0,'blip',660],[31.4,'tick'],[33.2,'tick'],[36.0,'ding'],
+  [39.5,'wipe'],[40.0,'blip',660],[41.0,'tick'],[44.0,'tick'],[46.5,'ding'],[49.0,'tick'],
+  [51.8,'wipe'],[52.4,'blip',660],[53.6,'ding'],[56.0,'cta']],
+ subs:[
+ [0.2,4.4,'¿Quién tiene más oro del mundo? Los bancos centrales.','¿Quién tiene más oro del mundo? Los bancos centrales.'],
+ [5.0,13.4,'1. Los bancos centrales guardan reservas: divisas, bonos y oro. El oro no es la deuda de ningún país.','Uno: los bancos centrales guardan reservas: divisas, bonos y oro. Y el oro es especial: no es la deuda de ningún país.'],
+ [16.0,29.4,'2. Los que más tienen: EE. UU., 8.133 t. Alemania, 3.350 t. Italia, 2.452 t. Francia, 2.437 t.','Dos: los que más tienen. Estados Unidos, más de ocho mil toneladas. Alemania, unas tres mil trescientas cincuenta. Italia y Francia, cerca de dos mil cuatrocientas cada una.'],
+ [30.0,39.4,'3. China reporta 2.346 t. Rusia, cerca de 2.300 t. Cifras oficiales.','Tres: China reporta unas dos mil trescientas cuarenta toneladas. Rusia, cerca de dos mil trescientas. Cifras oficiales.'],
+ [40.0,51.4,'4. Siguen comprando: más de 1.000 t al año (2022–2024) y 289 t en el 2.º trimestre de 2026.','Cuatro: siguen comprando. Más de mil toneladas al año entre dos mil veintidós y veinticuatro. Y doscientas ochenta y nueve en el segundo trimestre de este año.'],
+ [52.4,55.8,'Diversificar y protegerse en crisis: por eso el oro sigue en sus bóvedas.','Diversificar y protegerse en crisis: por eso el oro sigue en sus bóvedas.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+// Paleta papel recortado
+const TEAL='#0f4c5c',TEAL2='#176a73',TEAL3='#238a8a',MUS='#f0b83a',MUSD='#c98f14',COR='#e4572e',CRM='#fbf1dc',INK='#1d2a32',SKY='#8fd3c8';
+const STY={subFont:'800 44px Inter',subBg:'rgba(251,241,220,.96)',subStroke:COR,subFill:INK,ctaBg:TEAL,ctaSub:SKY,ctaMain:CRM,
+ ctaAccent:MUS,ctaBtnText:INK,ctaFontS:'800 54px Poppins, sans-serif',ctaFontL:'800 108px Poppins, sans-serif'};
+boot(['800 40px Inter','800 40px Poppins']);
+const PO=n=>`800 ${n}px Poppins, sans-serif`;
+const fmt=n=>Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+// ---- recorte de papel: forma con sombra y borde claro
+function cut(path,fill,d=12){ctx.save();ctx.shadowColor='rgba(0,20,25,.42)';ctx.shadowBlur=d*.9;ctx.shadowOffsetY=d;ctx.shadowOffsetX=d*.25;
+  ctx.fillStyle=fill;path();ctx.fill();ctx.restore();ctx.save();ctx.strokeStyle='rgba(255,255,255,.28)';ctx.lineWidth=3;path();ctx.stroke();ctx.restore()}
+const rrp=(x,y,w,h,r)=>()=>{ctx.beginPath();ctx.roundRect(x,y,w,h,r)};
+// Fondo: capas de papel con ondas, parallax suave
+const GR=(()=>{const c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d'),R=rng(7);
+  for(let i=0;i<5200;i++){g.globalAlpha=.03+R()*.06;g.fillStyle=R()<.5?'#fff':'#001';g.fillRect(R()*W,R()*H,1+R()*2,1+R()*2)}return c})();
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0c3a47');g.addColorStop(1,'#12606b');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const L=[[1180,TEAL,.0],[1330,TEAL2,.8],[1470,TEAL3,1.6],[1600,'#2f9d94',2.4]];
+  L.forEach(([y0,c,ph],k)=>{ctx.save();ctx.shadowColor='rgba(0,20,25,.4)';ctx.shadowBlur=18;ctx.shadowOffsetY=-6;ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(0,H);
+    for(let x=0;x<=W;x+=20)ctx.lineTo(x,y0+Math.sin(x*.006+ph+t*.35*(k%2?1:-1))*34+Math.sin(x*.015+ph*2)*14);ctx.lineTo(W,H);ctx.fill();ctx.restore()});
+  // estrellas de papel
+  const R=rng(3);for(let i=0;i<14;i++){const x=R()*W,y=60+R()*700,s=8+R()*14,a=.25+.25*Math.sin(t*1.2+i);ctx.save();ctx.globalAlpha=a;ctx.fillStyle=CRM;ctx.translate(x,y);ctx.rotate(t*.2+i);
+    ctx.beginPath();for(let j=0;j<8;j++){const r=j%2?s*.4:s;ctx.lineTo(Math.cos(j*Math.PI/4)*r,Math.sin(j*Math.PI/4)*r)}ctx.fill();ctx.restore()}
+  ctx.globalAlpha=1;ctx.drawImage(GR,0,0)}
+// pop con rebote
+function popIn(t,t0,fn,o={}){const k=eback(prog(t,t0,t0+(o.d||.45)));if(k<=.001)return;ctx.save();ctx.translate(o.x||0,o.y||0);ctx.rotate((o.r||0)*(1-prog(t,t0,t0+.5))*.6+(o.rot||0));ctx.scale(k,k);ctx.globalAlpha*=Math.min(1,prog(t,t0,t0+.15));fn();ctx.restore()}
+function card(x,y,w,h,fill,r=36){cut(rrp(x,y,w,h,r),fill,14)}
+function txt(s,x,y,f,fill,o={}){T(s,x,y,Object.assign({font:f,fill},o))}
+// lingote de papel
+function bar(x,y,w,h){const ins=w*.13;const p=()=>{ctx.beginPath();ctx.moveTo(x+ins,y);ctx.lineTo(x+w-ins,y);ctx.lineTo(x+w,y+h);ctx.lineTo(x,y+h);ctx.closePath()};
+  cut(p,MUS,Math.max(6,h*.22));ctx.save();ctx.fillStyle='#ffd869';ctx.beginPath();ctx.moveTo(x+ins+8,y+7);ctx.lineTo(x+w-ins-8,y+7);ctx.lineTo(x+w-ins*1.7,y+h*.45);ctx.lineTo(x+ins*1.7,y+h*.45);ctx.fill();
+  ctx.fillStyle=MUSD;ctx.globalAlpha=.55;ctx.fillRect(x+w*.38,y+h*.55,w*.24,h*.12);ctx.restore()}
+function pyramid(cx,y,n,bw,bh,t,t0,gap=1.08){let k=0;for(let r=0;r<n;r++)for(let i=0;i<n-r;i++){const x=cx-(n-r)*bw*gap/2+i*bw*gap,yy=y-r*bh*1.12;
+  popIn(t,t0+k*.18,()=>bar(-bw/2,-bh/2,bw,bh),{x:x+bw/2,y:yy+bh/2});k++}}
+function head(n,s,t,t0){popIn(t,t0,()=>{cut(()=>{ctx.beginPath();ctx.arc(0,0,48,0,7)},COR,10);txt(String(n),0,3,PO(56),CRM)},{x:120,y:330});
+  popIn(t,t0+.15,()=>{card(-10,-52,830,104,CRM,52);txt(s,405,3,PO(46),INK)},{x:190,y:330,r:.05})}
+function counter(x,y,v,t,t0,dur,f,fill,suf='',o={}){const p=eout(prog(t,t0,t0+dur));txt(fmt(v*p)+suf,x,y,f,fill,o)}
+// ---------- escenas
+function pIntro(t){
+  popIn(t,.3,()=>{card(-450,-230,900,520,CRM,50);
+    txt('¿QUIÉN TIENE',0,-130,PO(92),INK);txt('MÁS ORO',0,-10,PO(112),COR);txt('DEL MUNDO?',0,115,PO(92),INK)},{x:540,y:660,r:-.06});
+  popIn(t,1.0,()=>{ctx.save();ctx.rotate(-.05);cut(rrp(-340,-55,680,110,20),COR,12);txt('BANCOS CENTRALES',0,4,PO(50),CRM);ctx.restore()},{x:540,y:1090});
+  pyramid(540,1380,3,230,100,t,1.7)}
+function bank(t,t0){const cx=540;
+  popIn(t,t0,()=>{cut(rrp(-300,330,600,50,10),CRM,10);cut(rrp(-270,280,540,50,10),CRM,10)},{x:cx,y:620-330});
+  [-200,-100,0,100,200].forEach((dx,i)=>popIn(t,t0+.15+i*.08,()=>{cut(rrp(-28,0,56,260,12),CRM,10)},{x:cx+dx,y:630-330+30-30}));
+  popIn(t,t0+.7,()=>{cut(()=>{ctx.beginPath();ctx.moveTo(-320,0);ctx.lineTo(0,-170);ctx.lineTo(320,0);ctx.closePath()},COR,12);ctx.beginPath()},{x:cx,y:520});
+  popIn(t,t0+.9,()=>{ctx.save();ctx.beginPath();ctx.arc(0,0,30,0,7);ctx.fillStyle=CRM;ctx.fill();txt('$€',0,2,PO(28),INK);ctx.restore()},{x:cx,y:470})}
+function pS1(t){head(1,'¿QUÉ GUARDAN?',t,5.0);
+  // edificio de banco central (columnas)
+  popIn(t,5.6,()=>{cut(rrp(-320,0,640,56,10),CRM,10)},{x:540,y:1010});
+  popIn(t,5.7,()=>{cut(rrp(-280,0,560,50,10),CRM,10)},{x:540,y:960});
+  [-200,-100,0,100,200].forEach((dx,i)=>popIn(t,5.9+i*.07,()=>{cut(rrp(-30,0,60,280,14),'#f4e2bd',10)},{x:540+dx,y:690}));
+  popIn(t,6.6,()=>{cut(()=>{ctx.beginPath();ctx.moveTo(-340,0);ctx.lineTo(0,-170);ctx.lineTo(340,0);ctx.closePath()},COR,12)},{x:540,y:690});
+  popIn(t,6.9,()=>{cut(()=>{ctx.beginPath();ctx.arc(0,0,34,0,7)},MUS,8);txt('¢',0,2,PO(38),INK)},{x:540,y:575});
+  // fichas que caen al edificio
+  [['DIVISAS',TEAL3,150,7.6],['BONOS',SKY,540,8.6],['ORO',MUS,930,9.6]].forEach(([s,c,x,t0])=>{const k=eout(prog(t,t0,t0+.55));if(k<=0)return;
+    popIn(t,t0,()=>{cut(rrp(-120,-50,240,100,24),c,12);txt(s,0,3,PO(40),INK)},{x:x+(540-x)*.0,y:lerp(1130,1190,k),r:.06})});
+  popIn(t,10.8,()=>{card(-440,-80,880,160,CRM,40);txt('EL ORO NO ES LA DEUDA',0,-28,PO(42),INK);txt('DE NINGÚN PAÍS',0,34,PO(48),COR)},{x:540,y:1330,r:-.03});
+  if(t>11.8&&t<12.6){ctx.save();ctx.globalAlpha=1-(t-11.8)/.8;txt('✦',900,1210-(t-11.8)*60,PO(80),'#fff');ctx.restore()}}
+const RK=[['EE. UU.',8133],['ALEMANIA',3350],['ITALIA',2452],['FRANCIA',2437]];
+function pS2(t){head(2,'LOS QUE MÁS TIENEN',t,16.0);
+  RK.forEach(([n,v],i)=>{const t0=17.4+i*1.9,y=520+i*190,wm=560,w=v/8133*wm,p=eout(prog(t,t0,t0+1.0));if(p<=0)return;
+    popIn(t,t0-.1,()=>{card(-30,-48,250,96,CRM,48);txt(n,95,3,PO(n.length>7?30:36),INK)},{x:60+30,y:y});
+    if(w*p>20){ctx.save();const bx=290,bw=w*p;const pth=()=>{ctx.beginPath();ctx.roundRect(bx,y-48,bw,96,14)};cut(pth,MUS,12);
+      ctx.beginPath();ctx.roundRect(bx+8,y-40,Math.max(0,bw-16),30,10);ctx.fillStyle='#ffd869';ctx.fill();
+      ctx.fillStyle=MUSD;ctx.globalAlpha=.4;for(let q=bx+40;q<bx+bw-30;q+=70)ctx.fillRect(q,y+8,36,24);ctx.restore()}
+    txt(fmt(v*p)+' t',290+w*p+14,y+2,PO(40),CRM,{align:'left'})});
+  popIn(t,25.0,()=>{ctx.save();ctx.rotate(-.02);card(-380,-44,760,88,COR,44);txt('TONELADAS DE ORO · mayo 2026',0,3,PO(30),CRM);ctx.restore()},{x:540,y:1330});
+  txt('Fuente: World Gold Council / FMI',540,1405,'700 28px Inter','rgba(251,241,220,.8)',{a:prog(t,25.4,25.9)})}
+function pS3(t){head(3,'CHINA Y RUSIA',t,30.0);
+  const coin=(x,lab,val,sub,t0)=>{popIn(t,t0,()=>{cut(()=>{ctx.beginPath();ctx.arc(0,0,225,0,7)},MUS,18);ctx.save();ctx.strokeStyle=MUSD;ctx.lineWidth=8;ctx.setLineDash([14,12]);ctx.beginPath();ctx.arc(0,0,190,0,7);ctx.stroke();ctx.restore();
+      txt(lab,0,-95,PO(40),INK);counter(0,-5,val,t,t0+.4,1.4,PO(86),INK);txt('TONELADAS',0,70,PO(30),INK);txt(sub,0,128,'800 24px Inter',MUSD==='' ?INK:'#7a4e00')},{x,y:840,r:.08})};
+  coin(285,'CHINA',2346,'reportado a jun. 2026',31.4);coin(795,'RUSIA',2300,'aprox. · cifra oficial',33.2);
+  popIn(t,35.8,()=>{card(-430,-62,860,124,CRM,44);txt('SOLO CIFRAS OFICIALES',0,-22,PO(40),INK);txt('LAS COMPRAS NO REPORTADAS NO ENTRAN',0,36,'800 26px Inter',COR)},{x:540,y:1230,r:.03})}
+function pS4(t){head(4,'SIGUEN COMPRANDO',t,40.0);
+  popIn(t,41.0,()=>{card(-440,-120,880,240,CRM,48);counter(0,0,1000,t,41.2,1.2,PO(130),COR,'+');txt('TONELADAS AL AÑO · 2022–2024',0,82,PO(34),INK)},{x:540,y:640,r:-.03});
+  popIn(t,44.0,()=>{card(-440,-130,880,260,TEAL3,48);counter(0,-18,289,t,44.2,1.4,PO(150),CRM,' t');txt('2.º TRIM. 2026 · RÉCORD PARA UN 2.º TRIMESTRE',0,92,'800 27px Inter',CRM)},{x:540,y:960,r:.03});
+  pyramid(300,1330,3,150,66,t,46.8);
+  popIn(t,48.8,()=>{ctx.save();ctx.rotate(-.03);card(-300,-70,600,140,COR,40);txt('POLONIA +51 t',0,-20,PO(44),CRM);txt('lidera · total 632 t',0,38,'800 28px Inter',CRM);ctx.restore()},{x:760,y:1290})}
+function pEnd(t){
+  popIn(t,52.4,()=>{card(-450,-190,900,380,CRM,50);txt('DIVERSIFICAR',0,-90,PO(86),INK);txt('Y PROTEGERSE',0,20,PO(70),COR);txt('EN CRISIS',0,110,PO(70),COR)},{x:540,y:700,r:.04});
+  pyramid(540,1300,4,210,92,t,53.2,1.06)}
+const PG=[[0,4.5,pIntro],[5.0,13.5,pS1],[16.0,29.5,pS2],[30.0,39.5,pS3],[40.0,51.8,pS4],[52.4,999,pEnd]];
+function draw(t){bg(t);let er=null;
+  PG.forEach(([s,e,fn],i)=>{if(t<s||(t>=e+.5&&i<PG.length-1))return;ctx.save();
+    if(t>=e&&i<PG.length-1){const sx=(W+260)*clamp((t-e)/.5)-140;ctx.beginPath();ctx.rect(sx,0,W,H);ctx.clip();er=sx}
+    fn(t);ctx.restore()});
+  if(er!=null){ctx.save();ctx.shadowColor='rgba(0,20,25,.55)';ctx.shadowBlur=24;ctx.shadowOffsetX=-12;ctx.fillStyle=COR;ctx.beginPath();ctx.moveTo(er,0);
+    for(let y=0;y<=H;y+=50)ctx.lineTo(er+(y/50%2?16:-6),y);ctx.lineTo(er-70,H);ctx.lineTo(er-70,0);ctx.fill();ctx.restore()}}
+function cover(){bg(0);const T0=1e9;
+  ctx.save();ctx.translate(540,720);ctx.rotate(-.05);card(-450,-260,900,560,CRM,56);txt('¿QUIÉN TIENE',0,-150,PO(94),INK);txt('MÁS ORO',0,-20,PO(130),COR);txt('DEL MUNDO?',0,120,PO(94),INK);ctx.restore();
+  ctx.save();ctx.translate(540,1190);ctx.rotate(-.04);cut(rrp(-360,-60,720,120,22),COR,14);txt('BANCOS CENTRALES',0,4,PO(54),CRM);ctx.restore();
+  pyramid(540,1560,4,200,90,T0,0,1.06);
+  for(let i=0;i<30;i++);}
+</script></body></html>
