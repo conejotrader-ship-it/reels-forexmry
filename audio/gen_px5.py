@@ -83,6 +83,9 @@ def sfx_events(evs):
         elif kind=='power':place(sfx,sweep(900,120,.7,.25),t0)
         elif kind=='ding':place(sfx,note(1320,.5,.25,.5,6),t0)
         elif kind=='tick':place(sfx,note(1500,.03,.15,.5,40),t0)
+        elif kind=='type':
+            for i in range(int(arg*16)):place(sfx,note(1800+int(rs.integers(0,400)),.02,.07,.5,60),t0+i/16)
+        elif kind=='zip':place(sfx,sweep(500,1900,min(arg,.5),.07),t0)
         elif kind=='scribble':place(sfx,scribble(arg),t0)
         elif kind=='wipe':place(sfx,wipe(),t0)
         elif kind=='cta':place(sfx,seq([659,784,988,1319],.09,.16,.22),t0)

@@ -1,0 +1,119 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Orbitron;font-weight:700;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-700-normal.woff2)}
+@font-face{font-family:Orbitron;font-weight:900;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-900-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Mono;font-weight:400;src:url(node_modules/@fontsource/share-tech-mono/files/share-tech-mono-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'MetaQuotes',hook:'¿QUIÉN ESTÁ DETRÁS DE METATRADER? METAQUOTES',dur:60,cta:56,bpm:100,mus:'soft',prog:[[57,'m'],[53,'M'],[48,'M'],[55,'M']],
+ ev:[[0.2,'chime'],[4.5,'wipe'],[5.0,'blip',880],[12.0,'wipe'],[12.5,'blip',880],[21.0,'wipe'],[21.5,'blip',880],[30.8,'wipe'],[31.3,'blip',880],[41.8,'wipe'],[42.3,'blip',880],[50.5,'wipe'],[51.0,'blip',880],[56.0,'cta']],
+ subs:[
+ [0.2,4.4,'¿Quién está detrás de MetaTrader? MetaQuotes.','¿Quién está detrás de Metatrader? Meta Cuóts.'],
+ [5.0,11.9,'1. Una empresa de software fundada en el año 2000. Sus clientes son brókers, bancos y bolsas.','Uno: una empresa de software fundada en el año dos mil. Sus clientes son brókers, bancos y bolsas.'],
+ [12.5,20.9,'2. Sus plataformas: MetaTrader 4 en 2005 y MetaTrader 5 en 2010, que suma acciones y futuros.','Dos: sus plataformas. Metatrader cuatro, en dos mil cinco. Metatrader cinco, en dos mil diez, que suma acciones y futuros.'],
+ [21.5,30.7,'3. No es un bróker. Hace el software, pero no ofrece servicios de inversión ni de corretaje.','Tres: no es un bróker. Hace el software, pero no ofrece servicios de inversión ni de corretaje.'],
+ [31.3,41.7,'4. Más que una plataforma: su comunidad MQL5 tiene tienda de robots, señales de copy trading, VPS y freelancers.','Cuatro: más que una plataforma. Su comunidad eme cu ele cinco tiene tienda de robots, señales de copy trading, servidores VPS y programadores freelance.'],
+ [42.3,50.4,'5. MQL5 es su lenguaje de programación. Con él se crean robots como Securus Apex.','Cinco: eme cu ele cinco, su lenguaje de programación. Con él se crean robots como Securus Apex.'],
+ [51.0,55.8,'Recuerda: MetaQuotes hace la plataforma. Tu bróker te da la cuenta. Verifica que esté regulado.','Recuerda: Meta Cuóts hace la plataforma. Tu bróker te da la cuenta. Verifica que esté regulado.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BG1='#071d36',BG2='#0d3257',LN='#8fd8ff',WH='#f2fbff',GD='#ffd23d',RD='#ff5a6a',GN='#3ee6a8',MU='#6fa3c7';
+const STY={subFont:'800 44px Inter',subBg:'rgba(4,16,32,.9)',subStroke:LN,subFill:'#fff',ctaBg:'#071d36',ctaSub:LN,ctaMain:'#fff',ctaGlow:LN,
+ ctaAccent:GD,ctaBtnText:'#071d36',ctaFontS:'700 46px Orbitron',ctaFontL:'900 84px Orbitron'};
+boot(['700 40px Orbitron','900 40px Orbitron','800 40px Inter','40px Mono']);
+const OR=(w,n)=>`${w} ${n}px Orbitron`,IN=n=>`800 ${n}px Inter`,MO=n=>`${n}px Mono`;
+let tip=null;const REG=[];const COL=()=>window.__collect;
+const reg=(t0,k,a)=>REG.push(a==null?[+t0.toFixed(2),k]:[+t0.toFixed(2),k,+a.toFixed(2)]);
+function WR(s,x,y,o,t,t0,dur){if(COL()){reg(t0,'type',dur);return}
+  const p=clamp((t-t0)/dur);if(p<=0)return;ctx.save();ctx.font=o.font;const w=ctx.measureText(s).width,sz=+/(\d+)px/.exec(o.font)[1];
+  const al=o.align||'center',lx=al=='center'?-w/2:(al=='left'?0:-w),rot=o.rot||0;
+  ctx.translate(x,y);ctx.rotate(rot);ctx.beginPath();ctx.rect(lx-30,-sz*1.1,(w+60)*p,sz*2.2);ctx.clip();
+  ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillStyle=o.fill||WH;if(o.glow){ctx.shadowColor=o.glow;ctx.shadowBlur=o.gb||16}ctx.fillText(s,lx,0);ctx.restore();
+  if(p<1){const px=lx+w*p;tip={x:x+px*Math.cos(rot),y:y+px*Math.sin(rot)}}}
+function stroke(pts,t,t0,dur,col,lw,o={}){if(COL()){reg(t0,'zip',dur);return}
+  const p=clamp((t-t0)/dur);if(p<=0)return;const Ls=[0];
+  for(let i=1;i<pts.length;i++)Ls.push(Ls[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+  const tot=Ls[Ls.length-1],tg=tot*p;
+  const at=d=>{let i=1;while(i<Ls.length-1&&Ls[i]<d)i++;const f=(d-Ls[i-1])/((Ls[i]-Ls[i-1])||1);return [lerp(pts[i-1][0],pts[i][0],f),lerp(pts[i-1][1],pts[i][1],f)]};
+  const q=[pts[0]];for(let i=1;i<pts.length;i++){if(Ls[i]<=tg)q.push(pts[i])}const e=at(tg);q.push(e);
+  ctx.save();ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.shadowColor=col;ctx.shadowBlur=o.gb==null?10:o.gb;
+  ctx.beginPath();q.forEach((pt,i)=>i?ctx.lineTo(pt[0],pt[1]):ctx.moveTo(pt[0],pt[1]));ctx.stroke();ctx.restore();if(p<1)tip={x:e[0],y:e[1]}}
+const boxP=(x,y,w,h)=>[[x,y],[x+w,y],[x+w,y+h],[x,y+h],[x,y-2]];
+const ellP=(cx,cy,rx,ry)=>{const o=[];for(let i=0;i<=44;i++){const a=-1.57+i/44*Math.PI*2;o.push([cx+Math.cos(a)*rx,cy+Math.sin(a)*ry])}return o};
+const arrowP=(x1,y1,x2,y2)=>{const a=Math.atan2(y2-y1,x2-x1),h=26;return [[x1,y1],[x2,y2],[x2-h*Math.cos(a-.5),y2-h*Math.sin(a-.5)],[x2,y2],[x2-h*Math.cos(a+.5),y2-h*Math.sin(a+.5)]]};
+function chip(x,y,w,h,label,col,t,t0,o={}){if(COL()){reg(t0,'tick');return}
+  const k=eback(prog(t,t0,t0+.32));if(k<=.001)return;ctx.save();ctx.translate(x+w/2,y+h/2);ctx.scale(k,k);ctx.globalAlpha*=Math.min(1,prog(t,t0,t0+.15));
+  RR(-w/2,-h/2,w,h,10);ctx.fillStyle=o.fill||'rgba(143,216,255,.1)';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=4;ctx.shadowColor=col;ctx.shadowBlur=12;ctx.stroke();ctx.shadowBlur=0;
+  ctx.font=o.font||OR(700,34);ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=o.tc||WH;ctx.fillText(label,0,2);ctx.restore()}
+function cnt(val,x,y,font,col,t,t0,dur){if(COL()){reg(t0+dur*.8,'ding');return}
+  const p=prog(t,t0,t0+dur);if(p<=0)return;const k=eback(prog(t,t0,t0+.3));
+  ctx.save();ctx.translate(x,y);ctx.scale(Math.max(.01,k),Math.max(.01,k));T(String(Math.round(val*eout(p))),0,0,{font,fill:col,glow:col,gb:24});ctx.restore()}
+function pop(s,x,y,font,col,t,t0,rot=0){if(COL()){reg(t0,'tick');return}const k=eback(prog(t,t0,t0+.35));if(k<=.001)return;
+  ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.scale(k,k);ctx.globalAlpha*=Math.min(1,prog(t,t0,t0+.15));T(s,0,0,{font,fill:col,glow:col,gb:14});ctx.restore()}
+function board(){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,BG2);g.addColorStop(1,BG1);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.lineWidth=1.5;for(let x=0;x<=W;x+=54){ctx.strokeStyle='rgba(143,216,255,'+(x%270==0?.16:.065)+')';ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+  for(let y=0;y<=H;y+=54){ctx.strokeStyle='rgba(143,216,255,'+(y%270==0?.16:.065)+')';ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  ctx.strokeStyle='rgba(143,216,255,.55)';ctx.lineWidth=3;ctx.strokeRect(36,36,W-72,H-72);
+  [[36,36,1,1],[W-36,36,-1,1],[36,H-36,1,-1],[W-36,H-36,-1,-1]].forEach(([x,y,a,b])=>{ctx.beginPath();ctx.moveTo(x,y+b*60);ctx.lineTo(x,y);ctx.lineTo(x+a*60,y);ctx.lineWidth=7;ctx.strokeStyle=LN;ctx.stroke()});
+  const vg=ctx.createRadialGradient(540,960,500,540,960,1150);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,'rgba(0,0,0,.35)');ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);ctx.restore()}
+function scanbar(x){ctx.save();const g=ctx.createLinearGradient(x-150,0,x,0);g.addColorStop(0,'rgba(143,216,255,0)');g.addColorStop(1,'rgba(143,216,255,.4)');ctx.fillStyle=g;ctx.fillRect(x-150,0,150,H);
+  ctx.strokeStyle=LN;ctx.lineWidth=5;ctx.shadowColor=LN;ctx.shadowBlur=24;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();ctx.restore()}
+function cursor(){if(!tip)return;ctx.save();ctx.translate(tip.x,tip.y);ctx.strokeStyle=GD;ctx.lineWidth=3;ctx.shadowColor=GD;ctx.shadowBlur=18;ctx.beginPath();ctx.arc(0,0,10,0,7);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(-28,0);ctx.lineTo(-15,0);ctx.moveTo(15,0);ctx.lineTo(28,0);ctx.moveTo(0,-28);ctx.lineTo(0,-15);ctx.moveTo(0,15);ctx.lineTo(0,28);ctx.stroke();ctx.restore()}
+function head(n,s,t,t0){stroke(boxP(100,296,84,84),t,t0,.5,GD,5);WR(String(n),142,340,{font:OR(900,54),fill:GD},t,t0+.3,.25);
+  WR(s,215,338,{font:OR(900,52),fill:WH,align:'left'},t,t0+.4,.9);stroke([[215,392],[215+Math.min(740,s.length*40),392]],t,t0+1.2,.5,GD,4)}
+function pIntro(t){WR('¿QUIÉN ESTÁ DETRÁS',540,500,{font:OR(700,54),fill:LN},t,0.3,1.0);WR('DE METATRADER?',540,600,{font:OR(900,70),fill:GD,glow:GD},t,1.2,1.0);
+  stroke(boxP(70,760,940,210),t,2.4,.8,LN,6);WR('METAQUOTES',540,865,{font:OR(900,100),fill:WH,glow:LN,gb:26},t,2.9,1.0);
+  WR('LA EMPRESA DETRÁS DE MT4 Y MT5',540,1080,{font:IN(40),fill:LN},t,3.5,.9)}
+function pP1(t){head(1,'QUIÉNES SON',t,5.0);
+  WR('EMPRESA DE SOFTWARE',540,520,{font:OR(700,52),fill:WH},t,5.9,1.3);WR('FUNDADA EN EL AÑO',540,640,{font:IN(46),fill:LN},t,7.2,.8);
+  cnt(2000,540,800,OR(900,200),GD,t,7.8,1.0);
+  WR('SUS CLIENTES',540,990,{font:IN(44),fill:LN},t,9.2,.6);
+  chip(95,1050,260,100,'BRÓKERS',LN,t,9.9);chip(410,1050,260,100,'BANCOS',LN,t,10.4);chip(725,1050,260,100,'BOLSAS',LN,t,10.9)}
+function pP2(t){head(2,'SUS PLATAFORMAS',t,12.5);const X=y=>150+(y-2000)*70,Y=830;
+  stroke([[100,Y],[980,Y]],t,13.3,.9,LN,5);
+  [[2000,13.6,'FUNDADA',null],[2005,14.4,'MT4','METATRADER 4'],[2010,17.0,'MT5','METATRADER 5']].forEach(([yr,ts,a,b])=>{const x=X(yr);
+    stroke(ellP(x,Y,22,22),t,ts,.35,GD,6);pop(String(yr),x,Y-90,OR(900,66),GD,t,ts+.2);
+    if(b){pop(a,x,Y+110,OR(900,104),WH,t,ts+.4);WR(b,x,Y+190,{font:IN(28),fill:LN},t,ts+.7,.6)}else WR(a,x,Y+80,{font:IN(30),fill:LN},t,ts+.4,.6)});
+  WR('FOREX',500,Y+250,{font:IN(32),fill:MU},t,15.4,.4);
+  ['FOREX','ACCIONES','FUTUROS'].forEach((s,i)=>WR(s,850,Y+250+i*50,{font:IN(32),fill:GN},t,18.6+i*.5,.5))}
+function pP3(t){head(3,'QUIÉN ES QUIÉN',t,21.5);
+  stroke(boxP(130,470,820,170),t,23.0,.6,LN,6);WR('METAQUOTES',540,545,{font:OR(900,62),fill:WH},t,23.4,.8);WR('SOFTWARE',540,610,{font:IN(34),fill:LN},t,24.0,.5);
+  stroke(arrowP(540,650,540,750),t,24.6,.4,LN,6);
+  stroke(boxP(130,770,820,170),t,24.9,.6,GN,6);WR('TU BRÓKER',540,845,{font:OR(900,62),fill:WH},t,25.3,.8);WR('TE DA LA CUENTA',540,910,{font:IN(34),fill:GN},t,26.0,.6);
+  stroke(arrowP(540,950,540,1050),t,28.0,.4,LN,6);
+  stroke(boxP(130,1070,820,150),t,28.3,.6,GD,6);WR('TÚ',540,1130,{font:OR(900,60),fill:WH},t,28.7,.4);WR('OPERAS EN LA PLATAFORMA',540,1190,{font:IN(32),fill:GD},t,29.1,.8);
+  const k=eback(prog(t,26.4,26.8));if(COL())reg(26.4,'alert');else if(k>0){ctx.save();ctx.translate(780,705);ctx.rotate(-.07);ctx.scale(k,k);RR(-205,-44,410,88,10);ctx.fillStyle='rgba(7,29,54,.92)';ctx.fill();ctx.strokeStyle=RD;ctx.lineWidth=7;ctx.shadowColor=RD;ctx.shadowBlur=18;ctx.stroke();ctx.shadowBlur=0;
+    T('NO ES UN BRÓKER',0,3,{font:OR(900,35),fill:RD});ctx.restore()}}
+function icon(i,x,y,t,t0){const c=GD,lw=5;
+  if(i==0){stroke(boxP(x,y+22,64,50),t,t0,.4,c,lw);stroke([[x+16,y+22],[x+16,y+6],[x+48,y+6],[x+48,y+22]],t,t0+.2,.3,c,lw)}
+  if(i==1){stroke(boxP(x,y+44,14,28),t,t0,.25,c,lw);stroke(boxP(x+24,y+26,14,46),t,t0+.1,.25,c,lw);stroke(boxP(x+48,y+6,14,66),t,t0+.2,.25,c,lw)}
+  if(i==2){stroke(boxP(x,y+6,64,30),t,t0,.3,c,lw);stroke(boxP(x,y+42,64,30),t,t0+.2,.3,c,lw);stroke([[x+12,y+21],[x+14,y+21]],t,t0+.4,.1,c,9);stroke([[x+12,y+57],[x+14,y+57]],t,t0+.45,.1,c,9)}
+  if(i==3){stroke(ellP(x+32,y+18,15,15),t,t0,.3,c,lw);stroke([[x+2,y+72],[x+8,y+46],[x+56,y+46],[x+62,y+72]],t,t0+.2,.3,c,lw)}}
+function pP4(t){head(4,'LO QUE OFRECE',t,31.3);WR('COMUNIDAD MQL5',540,470,{font:OR(700,44),fill:LN},t,31.9,1.0);
+  const C=[['MARKET','TIENDA DE ROBOTS','E INDICADORES',33.4],['SIGNALS','SEÑALES DE','COPY TRADING',35.4],['VPS','SERVIDOR PARA','CORRER ROBOTS',37.4],['FREELANCE','ENCARGA ROBOTS','A PROGRAMADORES',39.4]];
+  C.forEach(([a,b,c,ts],i)=>{const x=90+(i%2)*460,y=520+Math.floor(i/2)*310;stroke(boxP(x,y,440,270),t,ts,.6,LN,5);icon(i,x+34,y+34,t,ts+.3);
+    WR(a,x+130,y+70,{font:OR(900,44),fill:GD,align:'left'},t,ts+.4,.6);WR(b,x+34,y+170,{font:IN(30),fill:WH,align:'left'},t,ts+.9,.7);WR(c,x+34,y+215,{font:IN(30),fill:WH,align:'left'},t,ts+1.2,.7)})}
+function pP5(t){head(5,'MQL5: EL LENGUAJE',t,42.3);
+  stroke(boxP(90,470,900,430),t,43.0,.6,LN,5);
+  const L=[['// Un robot en MQL5',MU],['void OnTick()',WH],['{',WH],['   // aquí va la estrategia',MU],['}',WH]];
+  L.forEach(([s,c],i)=>WR(s,130,540+i*76,{font:MO(46),fill:c,align:'left'},t,43.5+i*.7,.65));
+  WR('ESCRITO EN MQL5:',540,1010,{font:IN(42),fill:LN},t,46.6,.7);
+  WR('ROBOT DE ORO MR. Y 10.0',540,1100,{font:OR(900,56),fill:WH},t,47.3,1.0);WR('SECURUS APEX',540,1190,{font:OR(900,70),fill:GD,glow:GD},t,48.3,.9)}
+function pEnd(t){WR('RECUERDA',540,420,{font:OR(900,100),fill:GD,glow:GD},t,51.1,.7);stroke([[240,490],[840,490]],t,51.8,.3,GD,5);
+  WR('METAQUOTES',300,640,{font:OR(900,46),fill:WH},t,51.9,.6);WR('=',540,640,{font:OR(900,50),fill:GD},t,52.4,.2);WR('PLATAFORMA',770,640,{font:OR(900,46),fill:LN},t,52.5,.6);
+  WR('TU BRÓKER',300,790,{font:OR(900,46),fill:WH},t,53.3,.6);WR('=',540,790,{font:OR(900,50),fill:GD},t,53.8,.2);WR('TU CUENTA',770,790,{font:OR(900,46),fill:GN},t,53.9,.6);
+  WR('VERIFICA QUE ESTÉ',540,990,{font:OR(700,50),fill:WH},t,54.6,.7);WR('REGULADO',540,1090,{font:OR(900,84),fill:GD,glow:GD},t,55.1,.7)}
+const PG=[[0,4.5,pIntro],[5.0,12.0,pP1],[12.5,21.0,pP2],[21.5,30.8,pP3],[31.3,41.8,pP4],[42.3,50.5,pP5],[51.0,999,pEnd]];
+function draw(t){board();tip=null;let er=null;
+  PG.forEach(([s,e,fn],i)=>{if(t<s||(t>=e+.5&&i<PG.length-1))return;ctx.save();
+    if(t>=e&&i<PG.length-1){const sx=(W+160)*clamp((t-e)/.5)-90;ctx.beginPath();ctx.rect(sx,0,W,H);ctx.clip();er=sx}
+    fn(t);ctx.restore()});
+  if(er!=null){tip=null;scanbar(er)}cursor()}
+function cover(){board();tip=null;const T0=1e9;
+  WR('¿QUIÉN ESTÁ DETRÁS',540,420,{font:OR(700,62),fill:LN},T0,0,.1);WR('DE METATRADER?',540,540,{font:OR(900,86),fill:GD,glow:GD},T0,0,.1);
+  stroke(boxP(60,700,960,300),T0,0,.1,LN,8);[[60,700],[1020,700],[60,1000],[1020,1000]].forEach(([x,y])=>{ctx.save();ctx.fillStyle=GD;ctx.fillRect(x-12,y-12,24,24);ctx.restore()});
+  WR('METAQUOTES',540,850,{font:OR(900,108),fill:WH,glow:LN,gb:30},T0,0,.1);
+  WR('LA EMPRESA DETRÁS DE MT4 Y MT5',540,1110,{font:IN(44),fill:LN},T0,0,.1);
+  ctx.save();RR(190,1230,700,120,60);ctx.fillStyle=GD;ctx.shadowColor=GD;ctx.shadowBlur=26;ctx.fill();ctx.restore();T('MÍRALO EN 60 SEGUNDOS',540,1292,{font:OR(900,36),fill:'#071d36'})}
+window.__load=()=>{if(!SPEC._c){window.__collect=true;REG.length=0;PG.forEach(p=>p[2](0));window.__collect=false;REG.forEach(r=>SPEC.ev.push(r));SPEC._c=1}return JSON.stringify(Object.assign({dur:21},SPEC))};
+</script></body></html>

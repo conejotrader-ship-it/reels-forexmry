@@ -33,3 +33,5 @@ Texto de cada reel termina con la línea del producto y luego los hashtags.
 ## Especiales
 - Vie 9 oct 20:00 — Las 4 subidas parabólicas más grandes del oro (60 s, estilo gráfico dorado). Datos: 1971–1980 ($35 → $850, ×24, mínimo de $252,80 en 1999), 1999–2011 ($252 → $1.921), 2015–2020 ($1.049 → ~$2.074), oct 2025–ene 2026 ($4.300+ → $5.500+, luego corrección de más de 20%). Cifras aproximadas de spot; las fuentes difieren en decimales.
 - Sáb 10 oct 11:50 — MT5 vs MT4: 5 razones (60 s, estilo pizarra, fuente Caveat Brush). Datos oficiales de MetaQuotes: 21 vs 9 temporalidades, 38 vs 30 indicadores, 44 vs 31 objetos gráficos, 6 vs 4 órdenes pendientes, probador multihilo/multidivisa/ticks reales vs un hilo; MT5 admite más mercados según el bróker. Aviso: los robots de MT4 no corren en MT5.
+- Sáb 10 oct 22:10 — MetaQuotes: quiénes son y qué hacen (60 s, estilo plano técnico/blueprint, `v8_blueprint.html`, escena 41). Fuentes: metaquotes.net/en/company y mql5.com/en/about. Datos: fundada en 2000, empresa de software que no ofrece servicios de inversión ni corretaje, MetaTrader 4 (2005) y MetaTrader 5 (2010), comunidad MQL5 con Market, Signals, VPS y Freelance.
+
