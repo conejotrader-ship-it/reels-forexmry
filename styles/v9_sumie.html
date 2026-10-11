@@ -1,0 +1,108 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:SM;font-weight:800;src:url(node_modules/@fontsource/shippori-mincho/files/shippori-mincho-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'VelasJaponesas',hook:'¿QUIÉN INVENTÓ LAS VELAS JAPONESAS?',dur:60,cta:56,bpm:84,mus:'soft',prog:[[57,'m'],[53,'M'],[55,'m'],[52,'M']],
+ ev:[[0.3,'hit'],[4.5,'wipe'],[5.0,'blip',660],[13.5,'wipe'],[14.0,'blip',660],[22.5,'wipe'],[23.0,'blip',660],[32.5,'wipe'],[33.0,'blip',660],[38.0,'ding'],[42.0,'wipe'],[42.5,'blip',660],[43.2,'ding'],[50.5,'wipe'],[51.0,'blip',660],[56.0,'cta']],
+ subs:[
+ [0.2,4.4,'¿Quién inventó las velas japonesas? La historia no es tan simple.','¿Quién inventó las velas japonesas? La historia no es tan simple.'],
+ [5.0,13.4,'1. La versión popular: Munehisa Homma (1724–1803), comerciante de arroz de Sakata, Japón. Operaba en la bolsa de arroz de Osaka.','Uno: la versión popular. Munehisa Homma, comerciante de arroz de Sakata, Japón. Operaba en la bolsa de arroz de Osaka.'],
+ [14.0,22.4,'2. Se le atribuye un libro de 1755 sobre psicología del mercado. Decía que las emociones mueven los precios.','Dos: se le atribuye un libro de mil setecientos cincuenta y cinco sobre psicología del mercado. Decía que las emociones mueven los precios.'],
+ [23.0,32.4,'3. Pero hay un problema: Steve Nison, que investigó el tema, concluyó que es poco probable que Homma usara gráficos de velas.','Tres: pero hay un problema. Steve Nison, que investigó el tema, concluyó que es poco probable que Homma usara gráficos de velas.'],
+ [33.0,41.9,'4. ¿Cuándo, entonces? Según Nison, lo más probable es que surgieran a finales del siglo 19, al inicio de la era Meiji.','Cuatro: ¿cuándo, entonces? Según Nison, lo más probable es que surgieran a finales del siglo diecinueve, al inicio de la era Meiji.'],
+ [42.5,50.4,'5. A Occidente llegaron en 1991, con el libro de Steve Nison.','Cinco: a Occidente llegaron en mil novecientos noventa y uno, con el libro de Steve Nison.'],
+ [51.0,55.8,'En resumen: nacieron en Japón, pero quién las inventó sigue en debate.','En resumen: nacieron en Japón, pero quién las inventó sigue en debate.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const INK='#14110f',RED='#c8281e',CRM='#f6eddb',MU='#7a6e5d';
+const STY={subFont:'800 44px Inter',subBg:'rgba(20,17,15,.92)',subStroke:RED,subFill:CRM,ctaBg:'#efe6d2',ctaSub:RED,ctaMain:INK,
+ ctaAccent:RED,ctaBtnText:CRM,ctaFontS:'800 54px SM, serif',ctaFontL:'800 108px SM, serif'};
+boot(['800 40px SM','800 40px Inter']);
+const SF=n=>`800 ${n}px SM, "Noto Serif CJK JP", serif`,IN=n=>`800 ${n}px Inter`;
+let tip=null;const REG=[];const COL=()=>window.__collect;
+const reg=(t0,k,a)=>REG.push(a==null?[+t0.toFixed(2),k]:[+t0.toFixed(2),k,+a.toFixed(2)]);
+function WR(s,x,y,o,t,t0,dur){if(COL()){reg(t0,'type',dur);return}
+  const p=clamp((t-t0)/dur);if(p<=0)return;ctx.save();ctx.font=o.font;const w=ctx.measureText(s).width,sz=+/(\d+)px/.exec(o.font)[1];
+  const al=o.align||'center',lx=al=='center'?-w/2:(al=='left'?0:-w);
+  ctx.translate(x,y);ctx.beginPath();ctx.rect(lx-30,-sz*1.1,(w+60)*p,sz*2.2);ctx.clip();
+  ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillStyle=o.fill||INK;ctx.fillText(s,lx,0);ctx.restore();
+  if(p<1){tip={x:x+lx+w*p,y:y}}}
+function brush(pts,t,t0,dur,col,lw,o={}){if(COL()){reg(t0,'zip',dur);return}
+  const p=clamp((t-t0)/dur);if(p<=0)return;const Ls=[0];
+  for(let i=1;i<pts.length;i++)Ls.push(Ls[i-1]+Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]));
+  const tot=Ls[Ls.length-1],tg=tot*p;
+  const at=d=>{let i=1;while(i<Ls.length-1&&Ls[i]<d)i++;const f=(d-Ls[i-1])/((Ls[i]-Ls[i-1])||1);return [lerp(pts[i-1][0],pts[i][0],f),lerp(pts[i-1][1],pts[i][1],f)]};
+  const q=[pts[0]];for(let i=1;i<pts.length;i++){if(Ls[i]<=tg)q.push(pts[i])}const e=at(tg);q.push(e);
+  const path=(ox,oy)=>{ctx.beginPath();q.forEach((pt,i)=>i?ctx.lineTo(pt[0]+ox,pt[1]+oy):ctx.moveTo(pt[0]+ox,pt[1]+oy))};
+  ctx.save();ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.globalAlpha*=.93;path(0,0);ctx.stroke();
+  if(lw>14){ctx.strokeStyle=CRM;ctx.lineCap='butt';ctx.lineWidth=2.5;[-.32,-.1,.14,.34].forEach((k,i)=>{ctx.setLineDash([26+i*11,12+i*5,44,18]);ctx.globalAlpha=.2;path(k*lw*.5,k*lw*.5);ctx.stroke()})}
+  ctx.restore();if(p<1)tip={x:e[0],y:e[1]}}
+function rrP(x,y,w,h,r){const o=[];const c=[[x+w-r,y+r,-1.57],[x+w-r,y+h-r,0],[x+r,y+h-r,1.57],[x+r,y+r,3.14]];c.forEach(([cx,cy,a0])=>{for(let i=0;i<=6;i++){const a=a0+i/6*1.57;o.push([cx+Math.cos(a)*r,cy+Math.sin(a)*r])}});o.push(o[0]);return o}
+const lineP=(x1,y1,x2,y2)=>[[x1,y1],[x2,y2]];
+const circP=(cx,cy,r)=>{const o=[];for(let i=0;i<=40;i++){const a=-1.57+i/40*Math.PI*2.05;o.push([cx+Math.cos(a)*r,cy+Math.sin(a)*r])}return o};
+function chip(x,y,w,h,label,col,t,t0,font){if(COL()){reg(t0,'tick');return}
+  const k=eback(prog(t,t0,t0+.32));if(k<=.001)return;ctx.save();ctx.translate(x+w/2,y+h/2);ctx.scale(k,k);ctx.globalAlpha*=Math.min(1,prog(t,t0,t0+.15));
+  RR(-w/2,-h/2,w,h,14);ctx.fillStyle='rgba(20,17,15,.05)';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=6;ctx.stroke();
+  ctx.font=font||SF(44);ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle=col;ctx.fillText(label,0,3);ctx.restore()}
+function pop(s,x,y,font,col,t,t0){if(COL()){reg(t0,'tick');return}const k=eback(prog(t,t0,t0+.4));if(k<=.001)return;
+  ctx.save();ctx.translate(x,y);ctx.scale(k,k);ctx.globalAlpha*=Math.min(1,prog(t,t0,t0+.15));T(s,0,0,{font,fill:col});ctx.restore()}
+function seal(label,x,y,sz,t,t0,font){if(COL()){reg(t0,'tick');return}const k=eback(prog(t,t0,t0+.4));if(k<=.001)return;
+  ctx.save();ctx.translate(x,y);ctx.rotate(-.04);ctx.scale(k,k);RR(-sz/2,-sz/2,sz,sz,8);ctx.fillStyle=RED;ctx.fill();ctx.strokeStyle='rgba(20,17,15,.35)';ctx.lineWidth=3;ctx.stroke();
+  if(label)T(label,0,3,{font:font||SF(sz*.62),fill:CRM});ctx.restore()}
+function blob(cx,cy,r,col,a){ctx.save();ctx.globalAlpha=a;ctx.fillStyle=col;ctx.beginPath();for(let i=0;i<=90;i++){const an=i/90*Math.PI*2,rr=r*(1+.012*Math.sin(an*13)+.01*Math.sin(an*7+1));i?ctx.lineTo(cx+Math.cos(an)*rr,cy+Math.sin(an)*rr):ctx.moveTo(cx+Math.cos(an)*rr,cy+Math.sin(an)*rr)}ctx.fill();ctx.restore()}
+function paper(){ctx.fillStyle='#efe6d2';ctx.fillRect(0,0,W,H);const R=rng(21);ctx.save();ctx.lineCap='round';
+  for(let i=0;i<260;i++){ctx.globalAlpha=.04+R()*.07;ctx.strokeStyle=R()<.5?'#b49a72':'#d9c9a6';ctx.lineWidth=1+R()*1.5;const x=R()*W,y=R()*H,l=10+R()*40,a=R()*6.28;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+Math.cos(a)*l,y+Math.sin(a)*l);ctx.stroke()}
+  ctx.globalAlpha=.055;ctx.fillStyle='#3b2f20';for(let k=0;k<2;k++){ctx.beginPath();ctx.moveTo(0,H);for(let x=0;x<=W;x+=40)ctx.lineTo(x,1650-k*90-Math.sin(x*.006+k*2)*70-Math.sin(x*.017+k)*30);ctx.lineTo(W,H);ctx.fill()}
+  ctx.globalAlpha=1;const vg=ctx.createRadialGradient(540,960,600,540,960,1200);vg.addColorStop(0,'rgba(80,55,20,0)');vg.addColorStop(1,'rgba(80,55,20,.28)');ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(20,17,15,.55)';ctx.lineWidth=4;ctx.strokeRect(34,34,W-68,H-68);ctx.restore()}
+function inkwipe(x){ctx.save();const g=ctx.createLinearGradient(x-200,0,x,0);g.addColorStop(0,'rgba(20,17,15,0)');g.addColorStop(1,'rgba(20,17,15,.5)');ctx.fillStyle=g;ctx.fillRect(x-200,0,200,H);
+  ctx.fillStyle='rgba(20,17,15,.85)';ctx.beginPath();ctx.moveTo(x,0);for(let y=0;y<=H;y+=40)ctx.lineTo(x+8+Math.sin(y*.05)*14,y);ctx.lineTo(x-16,H);ctx.lineTo(x-16,0);ctx.fill();ctx.restore()}
+function inkdot(){if(!tip)return;ctx.save();ctx.fillStyle=INK;ctx.shadowColor='rgba(20,17,15,.5)';ctx.shadowBlur=12;ctx.beginPath();ctx.arc(tip.x,tip.y,9,0,7);ctx.fill();ctx.restore()}
+function candle(cx,wt,wb,bt,bb,col,t,t0){brush(lineP(cx,wt,cx,wb),t,t0,.35,INK,9);brush(lineP(cx,bt+34,cx,bb-34),t,t0+.2,.45,col,68)}
+function head(n,s,t,t0){seal(String(n),140,338,84,t,t0);WR(s,215,338,{font:SF(54),fill:INK,align:'left'},t,t0+.4,.9);brush(lineP(215,398,215+Math.min(780,s.length*36),398),t,t0+1.2,.5,RED,9)}
+function pIntro(t){WR('¿QUIÉN INVENTÓ',540,430,{font:SF(72),fill:INK},t,0.3,1.0);
+  const k=eout(prog(t,1.2,2.4));if(!COL()&&k>0)blob(540,850,330*(.86+.14*k),RED,k);
+  WR('LAS VELAS',540,800,{font:SF(92),fill:CRM},t,2.3,.8);WR('JAPONESAS',540,915,{font:SF(92),fill:CRM},t,2.9,.8);
+  WR('LA HISTORIA NO ES TAN SIMPLE',540,1290,{font:IN(40),fill:INK},t,3.5,.9)}
+function bale(x,y,t,t0){brush(rrP(x,y,220,130,28),t,t0,.5,INK,7);brush(lineP(x+70,y+6,x+70,y+124),t,t0+.4,.2,INK,5);brush(lineP(x+150,y+6,x+150,y+124),t,t0+.5,.2,INK,5)}
+function pP1(t){head(1,'LA VERSIÓN POPULAR',t,5.0);
+  WR('MUNEHISA HOMMA',540,545,{font:SF(72),fill:INK},t,5.7,1.2);WR('本間宗久',540,645,{font:SF(64),fill:RED},t,7.0,.7);WR('1724 – 1803',540,735,{font:SF(56),fill:INK},t,7.6,.7);
+  bale(310,930,t,8.0);bale(550,930,t,8.5);bale(430,800,t,9.0);
+  WR('COMERCIANTE DE ARROZ',540,1130,{font:SF(48),fill:INK},t,8.2,1.2);WR('SAKATA · 酒田',540,1205,{font:SF(48),fill:MU},t,9.6,.8);
+  WR('BOLSA DE ARROZ DE OSAKA',540,1295,{font:SF(46),fill:RED},t,10.9,1.2)}
+function pP2(t){head(2,'UN LIBRO DE 1755',t,14.0);
+  brush(rrP(340,520,400,380,14),t,14.6,1.0,INK,9);brush(lineP(392,530,392,890),t,15.5,.4,INK,6);
+  WR('PSICOLOGÍA',566,650,{font:SF(33),fill:INK},t,16.0,.7);WR('DEL MERCADO',566,700,{font:SF(33),fill:INK},t,16.5,.7);seal('',566,810,64,t,17.0);
+  pop('1755',540,1010,SF(130),RED,t,17.5);
+  chip(110,1120,340,100,'EMOCIONES',RED,t,19.0);brush([[470,1170],[610,1170],[584,1146],[610,1170],[584,1194]],t,19.8,.4,INK,8);chip(630,1120,340,100,'PRECIOS',INK,t,20.4)}
+function pP3(t){head(3,'PERO HAY UN PROBLEMA',t,23.0);
+  pop('?',540,650,SF(400),RED,t,23.4);
+  WR('STEVE NISON',540,900,{font:SF(76),fill:INK},t,25.2,1.2);
+  WR('ES POCO PROBABLE',540,1030,{font:SF(54),fill:INK},t,27.4,1.0);WR('QUE HOMMA USARA',540,1100,{font:SF(54),fill:INK},t,28.5,1.0);WR('GRÁFICOS DE VELAS',540,1170,{font:SF(54),fill:RED},t,29.6,1.1);
+  WR('— Beyond Candlesticks (traducido)',540,1250,{font:IN(30),fill:MU},t,30.8,1.0)}
+function pP4(t){head(4,'¿CUÁNDO, ENTONCES?',t,33.0);
+  brush(lineP(200,480,200,1300),t,33.4,.8,INK,8);
+  [[560,'1724 – 1803','HOMMA',33.9],[720,'1755','SU LIBRO',34.6]].forEach(([y,a,b,ts])=>{brush(circP(200,y,18),t,ts,.3,MU,6);WR(a,255,y-10,{font:SF(48),fill:MU,align:'left'},t,ts+.2,.7);WR(b,255,y+40,{font:IN(30),fill:MU,align:'left'},t,ts+.7,.5)});
+  if(!COL()){const k=eback(prog(t,37.8,38.3));if(k>0){ctx.save();ctx.translate(200,980);ctx.scale(k,k);ctx.beginPath();ctx.arc(0,0,34,0,7);ctx.fillStyle=RED;ctx.fill();ctx.restore()}}else reg(37.8,'tick');
+  WR('明治',555,945,{font:SF(120),fill:RED},t,38.2,.8);WR('ERA MEIJI',300,1055,{font:SF(56),fill:INK,align:'left'},t,38.8,.9);WR('FINALES DEL 1800',300,1120,{font:IN(40),fill:RED,align:'left'},t,39.6,.9);
+  candle(760,1180,1300,1210,1270,RED,t,40.0);candle(880,1170,1300,1190,1250,INK,t,40.3);
+  WR('LO MÁS PROBABLE',540,1360,{font:IN(36),fill:MU},t,40.9,.8)}
+function pP5(t){head(5,'LLEGAN A OCCIDENTE',t,42.5);
+  pop('1991',540,650,SF(230),RED,t,43.2);WR('STEVE NISON',540,850,{font:SF(66),fill:INK},t,44.4,1.0);
+  brush(rrP(150,940,780,230,14),t,45.4,1.0,INK,8);WR('JAPANESE CANDLESTICK',540,1015,{font:SF(46),fill:INK},t,46.4,1.0);WR('CHARTING TECHNIQUES',540,1085,{font:SF(46),fill:RED},t,47.4,1.0)}
+function pEnd(t){WR('NACIERON EN JAPÓN',540,470,{font:SF(66),fill:INK},t,51.2,1.0);WR('PERO QUIÉN LAS INVENTÓ',540,575,{font:SF(50),fill:INK},t,52.4,1.1);
+  WR('SIGUE EN DEBATE',540,710,{font:SF(86),fill:RED},t,53.6,1.0);brush(lineP(170,775,910,775),t,54.6,.4,RED,10);
+  candle(330,950,1250,1010,1200,INK,t,54.9);candle(540,900,1250,940,1190,RED,t,55.1);candle(750,980,1250,1040,1210,INK,t,55.3)}
+const PG=[[0,4.5,pIntro],[5.0,13.5,pP1],[14.0,22.5,pP2],[23.0,32.5,pP3],[33.0,42.0,pP4],[42.5,50.5,pP5],[51.0,999,pEnd]];
+function draw(t){paper();tip=null;let er=null;
+  PG.forEach(([s,e,fn],i)=>{if(t<s||(t>=e+.5&&i<PG.length-1))return;ctx.save();
+    if(t>=e&&i<PG.length-1){const sx=(W+220)*clamp((t-e)/.5)-120;ctx.beginPath();ctx.rect(sx,0,W,H);ctx.clip();er=sx}
+    fn(t);ctx.restore()});
+  if(er!=null){tip=null;inkwipe(er)}inkdot()}
+function cover(){paper();tip=null;const T0=1e9;
+  WR('¿QUIÉN INVENTÓ',540,390,{font:SF(80),fill:INK},T0,0,.1);blob(540,840,340,RED,1);
+  WR('LAS VELAS',540,790,{font:SF(100),fill:CRM},T0,0,.1);WR('JAPONESAS',540,910,{font:SF(100),fill:CRM},T0,0,.1);
+  ctx.save();RR(150,1230,780,100,50);ctx.fillStyle=INK;ctx.fill();ctx.restore();T('LA HISTORIA REAL · MÍRALO',540,1283,{font:SF(38),fill:CRM});
+  candle(300,1410,1650,1450,1580,INK,T0,0);candle(540,1390,1660,1440,1590,RED,T0,0);candle(780,1420,1640,1470,1570,INK,T0,0)}
+window.__load=()=>{if(!SPEC._c){window.__collect=true;REG.length=0;PG.forEach(p=>p[2](0));window.__collect=false;REG.forEach(r=>SPEC.ev.push(r));SPEC._c=1}return JSON.stringify(Object.assign({dur:21},SPEC))};
+</script></body></html>
