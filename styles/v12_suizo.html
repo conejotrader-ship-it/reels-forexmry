@@ -1,0 +1,75 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'Scalping',hook:'¿QUÉ ES EL SCALPING EN FOREX?',dur:60,cta:56,bpm:112,prog:[[57,'m'],[53,'M'],[48,'M'],[55,'M']],
+ ev:[[0.3,'hit'],[4.5,'wipe'],[13.5,'wipe'],[22.5,'wipe'],[32.5,'wipe'],[42.0,'wipe'],[50.5,'wipe'],[56.0,'cta']],
+ subs:[
+ [0.2,4.4,'¿Qué es el scalping en forex? Muchas operaciones rápidas y ganancias pequeñas.','¿Qué es el scalping en forex? Muchas operaciones rápidas y ganancias pequeñas.'],
+ [5.0,13.4,'1. Es una estrategia de muy corto plazo: las operaciones duran desde unos segundos hasta unos minutos.','Uno: es una estrategia de muy corto plazo. Las operaciones duran desde unos segundos hasta unos minutos.'],
+ [14.0,18.2,'2. Busca pequeños movimientos, con decenas o hasta cientos de operaciones al día.','Dos: busca pequeños movimientos, con decenas o hasta cientos de operaciones al día.'],
+ [18.4,22.4,'Usa gráficos cortos: de uno y de cinco minutos.','Usa gráficos cortos: de uno y de cinco minutos.'],
+ [23.0,27.6,'3. Los costos pesan: un spread alto se come las ganancias pequeñas.','Tres: los costos pesan. Un spread alto se come las ganancias pequeñas.'],
+ [27.8,32.4,'Se prefieren pares líquidos, como EUR/USD, y las sesiones de Londres y Nueva York.','Se prefieren pares líquidos, como euro dólar, y las sesiones de Londres y Nueva York.'],
+ [33.0,41.9,'4. El apalancamiento multiplica también las pérdidas. Exige disciplina y stop loss.','Cuatro: el apalancamiento multiplica también las pérdidas. Exige disciplina y stop loss.'],
+ [42.5,50.4,'5. Exige decisiones rápidas, atención constante y ejecución veloz. Por eso no suele recomendarse a principiantes.','Cinco: exige decisiones rápidas, atención constante y ejecución veloz. Por eso no suele recomendarse a principiantes.'],
+ [51.0,55.8,'En resumen: operaciones rápidas y pequeñas, costos bajos y disciplina estricta.','En resumen: operaciones rápidas y pequeñas, costos bajos y disciplina estricta.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const INK='#0d0d0d',RED='#e63312',GN='#0a8f4a',PAP='#f1efe7',MU='#8a877d';
+const STY={subFont:'800 44px Inter',subBg:'rgba(13,13,13,.94)',subStroke:RED,subFill:'#fff',ctaBg:PAP,ctaSub:RED,ctaMain:INK,ctaAccent:RED,ctaBtnText:'#fff',ctaFontS:'800 54px Inter',ctaFontL:'800 108px Inter'};
+boot(['800 40px Inter']);
+const IN=n=>`800 ${n}px Inter`;const REG=[];const COL=()=>window.__collect;
+const reg=(t0)=>REG.push([+t0.toFixed(2),'tick']);
+function bg(){ctx.fillStyle=PAP;ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(13,13,13,.07)';ctx.lineWidth=2;for(let x=90;x<W;x+=90){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=90;y<H;y+=90){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+ ctx.fillStyle=INK;ctx.fillRect(0,0,W,26);ctx.fillRect(0,H-26,W,26)}
+function tx(s,x,y,font,fill,t,t0,al='center'){if(COL()){reg(t0);return}const k=eout(prog(t,t0,t0+.4));if(k<=.001)return;ctx.save();ctx.globalAlpha*=k;T(s,x,y+30*(1-k),{font,fill,align:al});ctx.restore()}
+function rect(x,y,w,h,fill,t,t0,stroke){if(COL()){reg(t0);return}const k=eout(prog(t,t0,t0+.4));if(k<=.001)return;ctx.save();ctx.globalAlpha*=k;ctx.translate(x+w/2,y+h/2);ctx.scale(k,1);if(fill){ctx.fillStyle=fill;ctx.fillRect(-w/2,-h/2,w,h)}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=8;ctx.strokeRect(-w/2,-h/2,w,h)}ctx.restore()}
+function head(n,s,t,t0){tx(n,90,250,IN(200),RED,t,t0,'left');tx(s,90,400,IN(68),INK,t,t0+.3,'left');if(COL())return;const k=eout(prog(t,t0+.4,t0+.9));ctx.fillStyle=INK;ctx.fillRect(90,440,900*k,10)}
+function stopwatch(cx,cy,r,ang){ctx.save();ctx.translate(cx,cy);ctx.fillStyle=INK;ctx.fillRect(-26,-r-62,52,40);ctx.fillRect(-12,-r-30,24,20);
+ ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.fillStyle='#fff';ctx.fill();ctx.lineWidth=18;ctx.strokeStyle=INK;ctx.stroke();
+ for(let i=0;i<60;i++){const a=i/60*Math.PI*2,l=i%5?12:28;ctx.beginPath();ctx.moveTo(Math.sin(a)*(r-18),-Math.cos(a)*(r-18));ctx.lineTo(Math.sin(a)*(r-18-l),-Math.cos(a)*(r-18-l));ctx.lineWidth=i%5?4:8;ctx.strokeStyle=INK;ctx.stroke()}
+ ctx.beginPath();ctx.moveTo(-Math.sin(ang)*30,Math.cos(ang)*30);ctx.lineTo(Math.sin(ang)*(r-40),-Math.cos(ang)*(r-40));ctx.lineWidth=10;ctx.lineCap='round';ctx.strokeStyle=RED;ctx.stroke();
+ ctx.beginPath();ctx.arc(0,0,16,0,7);ctx.fillStyle=INK;ctx.fill();ctx.restore()}
+function sw(cx,cy,r,t,t0,sp){if(COL()){reg(t0);return}const k=eback(prog(t,t0,t0+.5));if(k<=.001)return;ctx.save();ctx.translate(cx,cy);ctx.scale(k,k);ctx.translate(-cx,-cy);stopwatch(cx,cy,r,(t-t0)*sp);ctx.restore()}
+function pIntro(t){tx('¿QUÉ ES EL',90,470,IN(80),INK,t,.4,'left');tx('SCALPING',90,640,IN(176),RED,t,1.0,'left');tx('EN FOREX?',90,800,IN(110),INK,t,1.8,'left');
+ rect(90,860,900,10,INK,t,2.4);sw(540,1190,190,t,2.8,7)}
+function pP1(t){head('01','QUÉ ES',t,5.0);tx('OPERACIONES DE',90,560,IN(70),INK,t,5.8,'left');tx('MUY CORTO PLAZO',90,650,IN(70),RED,t,6.6,'left');
+ sw(540,990,185,t,7.4,6);
+ tx('SEGUNDOS',90,1290,IN(40),INK,t,9.6,'left');tx('MINUTOS',990,1290,IN(40),INK,t,10.4,'right');
+ if(COL()){reg(9.8);return}const k=eout(prog(t,9.8,11.6));ctx.fillStyle=INK;ctx.fillRect(90,1325,900,12);ctx.fillStyle=RED;ctx.fillRect(90,1325,900*k,12);if(k>0){ctx.beginPath();ctx.arc(90+900*k,1331,20,0,7);ctx.fill()}}
+function pP2(t){head('02','CÓMO SE OPERA',t,14.0);tx('DECENAS O CIENTOS',90,540,IN(66),RED,t,14.6,'left');tx('DE OPERACIONES AL DÍA',90,610,IN(40),INK,t,15.0,'left');
+ for(let i=0;i<160;i++){const c=i%20,r=Math.floor(i/20),t0=15.2+i*.017;if(COL()){if(i%16==0)reg(t0);continue}const k=eout(prog(t,t0,t0+.2));if(k<=0)continue;
+  ctx.fillStyle=(i*7)%5==0?RED:INK;const s=34*k;ctx.fillRect(100+c*44+(34-s)/2,680+r*44+(34-s)/2,s,s)}
+ tx('GRÁFICOS CORTOS',90,1100,IN(56),INK,t,18.4,'left');
+ [[90,'M1','1 MINUTO',18.9],[560,'M5','5 MINUTOS',19.5]].forEach(([x,a,b,t0])=>{rect(x,1160,430,210,INK,t,t0);tx(a,x+215,1235,IN(120),'#fff',t,t0+.2);tx(b,x+215,1330,IN(38),RED,t,t0+.4)})}
+function pP3(t){head('03','LO QUE IMPORTA',t,23.0);tx('EL SPREAD SE COME',90,540,IN(66),INK,t,23.6,'left');tx('LA GANANCIA',90,625,IN(66),RED,t,24.2,'left');
+ rect(90,720,900,120,GN,t,24.8);tx('GANANCIA',140,780,IN(44),'#fff',t,25.2,'left');
+ if(COL()){reg(25.8)}else{const k=eout(prog(t,25.8,27.0));if(k>0){ctx.fillStyle=RED;ctx.fillRect(990-520*k,720,520*k,120);if(k>.5)T('SPREAD',990-220*k,780,{font:IN(44),fill:'#fff',a:1})}}
+ tx('(ILUSTRATIVO)',90,890,IN(30),MU,t,26.5,'left');
+ tx('PARES LÍQUIDOS',90,1000,IN(54),INK,t,27.8,'left');
+ ['EUR/USD','GBP/USD','USD/JPY'].forEach((p,i)=>{rect(90+i*305,1050,285,110,INK,t,28.4+i*.4);tx(p,90+i*305+142,1105,IN(40),'#fff',t,28.6+i*.4)});
+ rect(90,1220,900,120,RED,t,30.2);tx('LONDRES + NUEVA YORK',540,1280,IN(52),'#fff',t,30.5)}
+function pP4(t){head('04','RIESGOS',t,33.0);tx('APALANCAMIENTO',90,540,IN(70),INK,t,33.6,'left');tx('MULTIPLICA AMBOS LADOS',90,610,IN(40),MU,t,34.2,'left');
+ if(COL()){reg(35.0)}else{const k=eout(prog(t,35.0,37.0));ctx.fillStyle=INK;ctx.fillRect(90,930,900,8);
+  ctx.fillStyle=GN;ctx.fillRect(230,930-220*k,240,220*k);ctx.fillStyle=RED;ctx.fillRect(610,938,240,220*k)}
+ tx('GANANCIAS ×',350,675,IN(36),INK,t,36.8);tx('PÉRDIDAS ×',730,1215,IN(36),INK,t,36.8);
+ rect(90,1290,420,110,INK,t,38.4);tx('STOP LOSS',300,1345,IN(48),'#fff',t,38.7);rect(570,1290,420,110,RED,t,39.6);tx('DISCIPLINA',780,1345,IN(48),'#fff',t,39.9)}
+function pP5(t){head('05','¿PARA QUIÉN?',t,42.5);
+ ['DECISIONES RÁPIDAS','ATENCIÓN CONSTANTE','EJECUCIÓN VELOZ','DISCIPLINA ESTRICTA'].forEach((s,i)=>{const t0=43.3+i*1.2,y=540+i*130;
+  rect(90,y-38,76,76,null,t,t0,INK);tx(s,200,y+2,IN(52),INK,t,t0+.2,'left');
+  if(COL()){reg(t0+.4);return}const k=eout(prog(t,t0+.4,t0+.8));if(k>0){ctx.save();ctx.strokeStyle=RED;ctx.lineWidth=12;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(104,y);ctx.lineTo(104+k*20,y+k*20);if(k>.5)ctx.lineTo(104+20+(k-.5)*2*36,y+20-(k-.5)*2*52);ctx.stroke();ctx.restore()}});
+ rect(90,1120,900,230,RED,t,48.0);tx('NO SUELE RECOMENDARSE',540,1195,IN(52),'#fff',t,48.4);tx('A PRINCIPIANTES',540,1275,IN(66),'#fff',t,48.8)}
+function pEnd(t){tx('EN RESUMEN',90,470,IN(56),MU,t,51.0,'left');
+ tx('OPERACIONES',90,610,IN(100),INK,t,51.6,'left');tx('RÁPIDAS Y',90,730,IN(100),INK,t,52.3,'left');tx('PEQUEÑAS',90,850,IN(100),RED,t,53.0,'left');
+ rect(90,910,900,10,INK,t,53.6);tx('COSTOS BAJOS',90,1010,IN(70),INK,t,54.0,'left');tx('DISCIPLINA ESTRICTA',90,1100,IN(70),INK,t,54.6,'left');
+ tx('FUENTES: PEPPERSTONE · FOREXBROKERS.COM',90,1260,IN(30),MU,t,55.0,'left')}
+const PG=[[0,4.5,pIntro],[5.0,13.5,pP1],[14.0,22.5,pP2],[23.0,32.5,pP3],[33.0,42.0,pP4],[42.5,50.5,pP5],[51.0,999,pEnd]];
+function bar(x){ctx.save();ctx.fillStyle=RED;ctx.fillRect(x-180,0,180,H);ctx.fillStyle=INK;ctx.fillRect(x-30,0,30,H);ctx.restore()}
+function draw(t){bg();let er=null;
+ PG.forEach(([s,e,fn],i)=>{if(t<s||(t>=e+.5&&i<PG.length-1))return;ctx.save();
+  if(t>=e&&i<PG.length-1){const sx=(W+260)*clamp((t-e)/.5)-130;ctx.beginPath();ctx.rect(sx,0,W,H);ctx.clip();er=sx}
+  fn(t);ctx.restore()});if(er!=null)bar(er)}
+function cover(){bg();T('¿QUÉ ES EL',90,380,{font:IN(96),fill:INK,align:'left'});T('SCALPING',90,560,{font:IN(176),fill:RED,align:'left'});T('EN FOREX?',90,730,{font:IN(124),fill:INK,align:'left'});
+ ctx.fillStyle=INK;ctx.fillRect(90,810,900,12);ctx.fillStyle=INK;ctx.fillRect(90,880,560,110);T('EXPLICADO EN 1 MINUTO',370,936,{font:IN(40),fill:'#fff'});stopwatch(540,1370,270,.9)}
+window.__load=()=>{if(!SPEC._c){window.__collect=true;REG.length=0;PG.forEach(p=>p[2](0));window.__collect=false;REG.forEach(r=>SPEC.ev.push(r));SPEC._c=1}return JSON.stringify(Object.assign({dur:21},SPEC))};
+</script></body></html>
