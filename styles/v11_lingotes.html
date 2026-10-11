@@ -1,0 +1,75 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:PF;font-weight:800;src:url(node_modules/@fontsource/playfair-display/files/playfair-display-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'MinerasOro',hook:'LAS MINERAS DE ORO MÁS GRANDES DEL MUNDO',dur:60,cta:56,bpm:96,mus:'soft',prog:[[57,'m'],[53,'M'],[48,'M'],[55,'M']],
+ ev:[[0.3,'hit'],[4.5,'wipe'],[13.5,'wipe'],[22.5,'wipe'],[32.5,'wipe'],[42.0,'wipe'],[50.5,'wipe'],[56.0,'cta']],
+ subs:[
+ [0.2,4.4,'¿Cuáles son las mineras de oro más grandes del mundo? Ranking 2025.','¿Cuáles son las mineras de oro más grandes del mundo? Un ranking con datos de dos mil veinticinco.'],
+ [5.0,13.4,'1. Newmont: la número uno, con unas 183 toneladas de oro en 2025.','Uno: Newmont. La número uno, con unas ciento ochenta y tres toneladas de oro en dos mil veinticinco.'],
+ [14.0,18.2,'2. Agnico Eagle Mines: unas 107 toneladas.','Dos: Agnico Eagle Mines. Unas ciento siete toneladas.'],
+ [18.4,22.4,'3. Barrick Mining: unas 101 toneladas.','Tres: Barrick Mining. Unas ciento una toneladas.'],
+ [23.0,27.6,'4. Navoi Mining, de Uzbekistán: unas 98 toneladas.','Cuatro: Navoi Mining, de Uzbekistán. Unas noventa y ocho toneladas.'],
+ [27.8,32.4,'5. AngloGold Ashanti: unas 96 toneladas.','Cinco: AngloGold Ashanti. Unas noventa y seis toneladas.'],
+ [33.0,41.9,'Las cinco juntas: cerca de 586 toneladas de oro en un año.','Las cinco juntas suman cerca de quinientas ochenta y seis toneladas de oro en un año.'],
+ [42.5,50.4,'Del 6.º al 10.º: Polyus, Zijin Mining, Gold Fields, Kinross y Northern Star. El orden varía según la fuente.','Del sexto al décimo: Polyus, Zijin Mining, Gold Fields, Kinross y Northern Star. El orden varía según la fuente.'],
+ [51.0,55.8,'Newmont lidera. Datos: Investing News Network, producción atribuible 2025.','Newmont lidera. Datos de Investing News Network, producción atribuible de dos mil veinticinco.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const GOLD='#f2c14e',GD='#b8860b',BKG='#0b0b0e',MU='#a39a86';
+const STY={subFont:'800 44px Inter',subBg:'rgba(11,11,14,.94)',subStroke:GOLD,subFill:'#fff',ctaBg:BKG,ctaSub:GOLD,ctaMain:'#fff',
+ ctaAccent:GOLD,ctaBtnText:BKG,ctaFontS:'800 54px PF, serif',ctaFontL:'800 108px PF, serif'};
+boot(['800 40px PF','800 40px Inter']);
+const PF=n=>`800 ${n}px PF, serif`,IN=n=>`800 ${n}px Inter`;const REG=[];const COL=()=>window.__collect;
+const reg=(t0)=>REG.push([+t0.toFixed(2),'tick']);
+function bg(){ctx.fillStyle=BKG;ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,820,40,540,820,1000);g.addColorStop(0,'rgba(242,193,78,.2)');g.addColorStop(.5,'rgba(242,193,78,.06)');g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ ctx.save();ctx.globalAlpha=.05;ctx.strokeStyle=GOLD;ctx.lineWidth=2;for(let i=-H;i<W;i+=70){ctx.beginPath();ctx.moveTo(i,H);ctx.lineTo(i+H,0);ctx.stroke()}ctx.restore();
+ ctx.strokeStyle='rgba(242,193,78,.55)';ctx.lineWidth=4;ctx.strokeRect(34,34,W-68,H-68);ctx.strokeStyle='rgba(242,193,78,.25)';ctx.lineWidth=2;ctx.strokeRect(50,50,W-100,H-100)}
+function pop(s,x,y,font,fill,t,t0,o={}){if(COL()){reg(t0);return}const k=eback(prog(t,t0,t0+.4));if(k<=.001)return;
+ ctx.save();ctx.translate(x,y);ctx.scale(k,k);ctx.globalAlpha*=Math.min(1,prog(t,t0,t0+.15));T(s,0,0,{font,fill,align:o.align,glow:o.glow,gb:o.gb||18});ctx.restore()}
+function ingot(x,y,w,h,frac=1){const d=h*.5,sx=d*.7;ctx.save();if(frac<1){ctx.beginPath();ctx.rect(x-4,y-d-6,(w+sx)*frac+8,h+d+12);ctx.clip()}
+ ctx.lineJoin='round';ctx.lineWidth=3;ctx.strokeStyle='#5c3f03';
+ ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+sx,y-d);ctx.lineTo(x+w+sx,y-d);ctx.lineTo(x+w,y);ctx.closePath();let g=ctx.createLinearGradient(0,y-d,0,y);g.addColorStop(0,'#fff3c0');g.addColorStop(1,'#ffd45a');ctx.fillStyle=g;ctx.fill();ctx.stroke();
+ ctx.beginPath();ctx.moveTo(x+w,y);ctx.lineTo(x+w+sx,y-d);ctx.lineTo(x+w+sx,y-d+h);ctx.lineTo(x+w,y+h);ctx.closePath();ctx.fillStyle='#8a5f06';ctx.fill();ctx.stroke();
+ g=ctx.createLinearGradient(0,y,0,y+h);g.addColorStop(0,'#ffe28a');g.addColorStop(.5,'#e8b22a');g.addColorStop(1,'#a8760a');ctx.beginPath();ctx.roundRect(x,y,w,h,5);ctx.fillStyle=g;ctx.fill();ctx.stroke();
+ ctx.globalAlpha=.35;ctx.fillStyle='#fff';ctx.beginPath();ctx.moveTo(x+w*.12,y+h*.12);ctx.lineTo(x+w*.4,y+h*.12);ctx.lineTo(x+w*.28,y+h*.5);ctx.lineTo(x+w*.12,y+h*.5);ctx.fill();ctx.restore()}
+function drop(x,y,w,h,t,t0,frac=1){if(COL()){reg(t0+.3);return}const p=t-t0;if(p<0)return;const k=prog(p,0,.32);let off=-(1-k*k)*520;if(p>.32)off=-Math.max(0,Math.sin((p-.32)*14))*14*Math.exp(-(p-.32)*5);
+ ctx.save();ctx.translate(0,off);ctx.globalAlpha*=Math.min(1,p/.1);ingot(x,y,w,h,frac);ctx.restore()}
+function row(x0,y,iw,ih,n,t,t0,dt=.22){const pitch=iw*1.28;for(let i=0;i<Math.ceil(n);i++){const fr=Math.min(1,n-i);drop(x0+i*pitch,y,iw,ih,t,t0+i*dt,fr)}}
+function pyr(cx,yb,iw,ih,rows,t,t0,dt=.25){let k=0;rows.forEach((n,r)=>{const pitch=iw*1.28,x0=cx-(n*pitch-iw*.28)/2-iw*.1;for(let i=0;i<n;i++){drop(x0+i*pitch,yb-r*(ih+10),iw,ih,t,t0+(k++)*dt)}})}
+function legend(y,t,t0){pop('1 LINGOTE = 20 TONELADAS',540,y,IN(34),MU,t,t0)}
+function lbl(n,name,tons,y,t,t0,tf){pop('Nº '+n,90,y-70,IN(36),GOLD,t,t0,{align:'left'});pop(name,90,y,PF(name.length>14?54:66),'#fff',t,t0+.2,{align:'left'});pop(tons+' t',990,y,PF(86),GOLD,t,t0+.4,{align:'right',glow:'rgba(242,193,78,.6)'})}
+function pIntro(t){pop('LAS MINERAS',540,470,PF(104),'#fff',t,.4);pop('DE ORO',540,650,PF(200),GOLD,t,1.0,{glow:'rgba(242,193,78,.7)',gb:30});pop('MÁS GRANDES',540,830,PF(104),'#fff',t,1.7);pop('DEL MUNDO',540,945,PF(104),'#fff',t,2.2);
+ pop('RANKING 2025',540,1100,IN(46),GOLD,t,2.9);pyr(540,1360,170,66,[2,1],t,3.3,.3)}
+function pP1(t){lbl(1,'NEWMONT','183',560,t,5.0);
+ if(COL()){reg(5.9)}else{const k=prog(t,5.0,12.5);pop('',0,0,'',0,t,5)}
+ pop('≈ 5,9 millones de onzas',540,680,IN(40),MU,t,6.2);pyr(540,1290,200,80,[4,3,2],t,7.0,.35);legend(960,t,6.8)}
+function pP2(t){lbl(2,'AGNICO EAGLE','107',480,t,14.0);row(80,600,130,60,5.36,t,14.6,.28);
+ lbl(3,'BARRICK MINING','101',940,t,18.4);row(80,1060,130,60,5.06,t,19.0,.28);legend(1320,t,15.0)}
+function pP3(t){lbl(4,'NAVOI MINING','98',480,t,23.0);pop('UZBEKISTÁN',90,535,IN(30),MU,t,23.5,{align:'left'});row(80,640,130,60,4.9,t,23.6,.28);
+ lbl(5,'ANGLOGOLD ASHANTI','96',940,t,27.8);row(80,1060,130,60,4.8,t,28.4,.28);legend(1320,t,24.0)}
+function pP4(t){pop('LAS CINCO JUNTAS',540,350,PF(76),'#fff',t,33.0);
+ const v=Math.round(586*eout(prog(t,33.8,37.4)));if(COL())reg(33.8);else{const k=eback(prog(t,33.4,33.9));if(k>0){ctx.save();ctx.translate(540,540);ctx.scale(k,k);T(v+' t',0,0,{font:PF(210),fill:GOLD,glow:'rgba(242,193,78,.6)',gb:30});ctx.restore()}}
+ for(let i=0;i<30;i++){const c=i%6,r=Math.floor(i/6);drop(100+c*150,780+r*95,120,52,t,33.8+i*.11,i==29?.3:1)}legend(1300,t,34.0)}
+function pP5(t){pop('DEL 6.º AL 10.º',540,350,PF(80),'#fff',t,42.5);
+ [['6','POLYUS','79'],['7','ZIJIN MINING','75'],['8','GOLD FIELDS','69'],['9','KINROSS GOLD','63'],['10','NORTHERN STAR','49']].forEach(([n,nm,tn],i)=>{const t0=43.0+i*.7,y=520+i*150;
+  if(COL()){reg(t0);return}const k=eback(prog(t,t0,t0+.4));if(k<=.001)return;ctx.save();ctx.translate(540,y);ctx.scale(k,k);ctx.globalAlpha*=Math.min(1,prog(t,t0,t0+.15));
+  RR(-460,-58,920,116,22);ctx.fillStyle='rgba(242,193,78,.08)';ctx.fill();ctx.strokeStyle=GOLD;ctx.lineWidth=3;ctx.stroke();
+  ctx.beginPath();ctx.arc(-385,0,40,0,7);ctx.fillStyle=GOLD;ctx.fill();T(n,-385,3,{font:PF(n.length>1?36:44),fill:BKG});
+  T(nm,-320,2,{font:PF(50),fill:'#fff',align:'left'});T(tn+' t',430,2,{font:PF(54),fill:GOLD,align:'right'});ctx.restore()});
+ pop('EL ORDEN VARÍA SEGÚN LA FUENTE',540,1330,IN(34),MU,t,47.5)}
+function pEnd(t){pop('NEWMONT',540,520,PF(130),'#fff',t,51.0);pop('LIDERA CON',540,670,IN(52),MU,t,51.8);
+ if(COL())reg(52.4);else{const v=Math.round(183*eout(prog(t,52.4,54.2)));const k=eback(prog(t,52.4,52.9));if(k>0){ctx.save();ctx.translate(540,880);ctx.scale(k,k);T(v+' t',0,0,{font:PF(230),fill:GOLD,glow:'rgba(242,193,78,.6)',gb:30});ctx.restore()}}
+ pop('DE ORO EN 2025',540,1040,IN(50),'#fff',t,53.4);pop('FUENTE: INVESTING NEWS NETWORK',540,1230,IN(32),MU,t,54.2);pop('PRODUCCIÓN ATRIBUIBLE 2025',540,1280,IN(32),MU,t,54.6)}
+const PG=[[0,4.5,pIntro],[5.0,13.5,pP1],[14.0,22.5,pP2],[23.0,32.5,pP3],[33.0,42.0,pP4],[42.5,50.5,pP5],[51.0,999,pEnd]];
+function sweep(x){ctx.save();const g=ctx.createLinearGradient(x-260,0,x+30,0);g.addColorStop(0,'rgba(242,193,78,0)');g.addColorStop(.85,'rgba(242,193,78,.55)');g.addColorStop(1,'rgba(255,255,255,.95)');ctx.fillStyle=g;ctx.fillRect(x-260,0,290,H);ctx.restore()}
+function draw(t){bg();let er=null;
+ PG.forEach(([s,e,fn],i)=>{if(t<s||(t>=e+.5&&i<PG.length-1))return;ctx.save();
+  if(t>=e&&i<PG.length-1){const sx=(W+300)*clamp((t-e)/.5)-150;ctx.beginPath();ctx.rect(sx,0,W,H);ctx.clip();er=sx}
+  fn(t);ctx.restore()});if(er!=null)sweep(er)}
+function cover(){bg();const T0=1e9;const q=(s,y,f,c,g)=>T(s,540,y,{font:f,fill:c,glow:g,gb:34});
+ q('LAS MINERAS',330,PF(112),'#fff');q('DE ORO',540,PF(230),GOLD,'rgba(242,193,78,.7)');q('MÁS GRANDES',760,PF(112),'#fff');q('DEL MUNDO',890,PF(112),'#fff');
+ ctx.save();RR(250,1010,580,100,50);ctx.fillStyle=GOLD;ctx.fill();ctx.restore();T('RANKING 2025',540,1062,{font:IN(48),fill:BKG});
+ [[3,1560],[2,1470],[1,1380]].forEach(([n,y],r)=>{const iw=200,ih=84,pitch=iw*1.28,x0=540-(n*pitch-iw*.28)/2-iw*.1;for(let i=0;i<n;i++)ingot(x0+i*pitch,y+60,iw,ih)})}
+window.__load=()=>{if(!SPEC._c){window.__collect=true;REG.length=0;PG.forEach(p=>p[2](0));window.__collect=false;REG.forEach(r=>SPEC.ev.push(r));SPEC._c=1}return JSON.stringify(Object.assign({dur:21},SPEC))};
+</script></body></html>
