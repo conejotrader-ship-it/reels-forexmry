@@ -1,0 +1,63 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:PF;font-weight:800;src:url(node_modules/@fontsource/playfair-display/files/playfair-display-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'OperacionesForex',hook:'LAS 5 OPERACIONES DE FOREX MÁS LEGENDARIAS',dur:60,cta:56,bpm:92,mus:'soft',prog:[[57,'m'],[53,'M'],[48,'M'],[55,'M']],
+ ev:[[0.3,'hit'],[4.5,'wipe'],[11.8,'wipe'],[19.1,'wipe'],[26.4,'wipe'],[33.7,'wipe'],[41.0,'wipe'],[49.0,'wipe'],[56.0,'cta']],
+ subs:[
+ [0.2,4.4,'Las 5 operaciones de forex más legendarias. Cifras reportadas.','Las cinco operaciones de forex más legendarias de la historia. Con cifras reportadas.'],
+ [5.0,11.7,'1. 1987, Andy Krieger: venta en corto del dólar neozelandés. Más de 300 millones para Bankers Trust, según reportes.','Uno: mil novecientos ochenta y siete, Andy Krieger. Venta en corto del dólar neozelandés. Más de trescientos millones para Bankers Trust, según reportes.'],
+ [12.3,19.0,'2. 1992, George Soros: venta en corto de la libra esterlina en el Miércoles Negro. Más de 1.000 millones, según reportes.','Dos: mil novecientos noventa y dos, George Soros. Venta en corto de la libra esterlina en el Miércoles Negro. Más de mil millones, según reportes.'],
+ [19.6,26.3,'3. 1992, Joe Lewis: corto en libra y peso mexicano. Más de 1.000 millones, según reportes.','Tres: mil novecientos noventa y dos, Joe Lewis. Corto en libra y peso mexicano. Más de mil millones, según reportes.'],
+ [26.9,33.6,'4. 1997, Soros: corto contra el baht tailandés, en plena crisis asiática. Cerca de 1.000 millones, según estimaciones.','Cuatro: mil novecientos noventa y siete, Soros. Corto contra el baht tailandés, en plena crisis asiática. Cerca de mil millones, según estimaciones.'],
+ [34.2,40.9,'5. 2013–2014, Soros: corto en yen y largo en el Nikkei. Otros 1.000 millones, según reportes.','Cinco: dos mil trece a dos mil catorce, Soros. Corto en yen y largo en el índice Nikkei. Otros mil millones, según reportes.'],
+ [41.5,48.9,'Ojo: son cifras reportadas por medios y blogs de brókers, sin verificación oficial. Y son apuestas de fondos gigantes.','Ojo: son cifras reportadas por medios y blogs de brókers, sin verificación oficial. Y son apuestas de fondos gigantes.'],
+ [49.5,55.8,'En común: las cinco fueron posiciones cortas contra una divisa.','En común: las cinco fueron posiciones cortas contra una divisa.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const INK='#17140f',RED='#a3200f',PAP='#e8dec3',MU='#6f6753';
+const STY={subFont:'800 44px Inter',subBg:'rgba(23,20,15,.94)',subStroke:RED,subFill:'#f3ead2',ctaBg:PAP,ctaSub:RED,ctaMain:INK,ctaAccent:RED,ctaBtnText:'#f3ead2',ctaFontS:'800 54px PF, serif',ctaFontL:'800 108px PF, serif'};
+boot(['800 40px PF','800 40px Inter']);
+const PF=n=>`800 ${n}px PF, serif`,IN=n=>`800 ${n}px Inter`;const REG=[];const COL=()=>window.__collect;
+const reg=(t0,k='tick')=>REG.push([+t0.toFixed(2),k]);
+function bg(){ctx.fillStyle=PAP;ctx.fillRect(0,0,W,H);const R=rng(7);ctx.save();for(let i=0;i<900;i++){ctx.globalAlpha=.05+R()*.08;ctx.fillStyle=R()<.5?'#8a7650':'#fff8e4';ctx.fillRect(R()*W,R()*H,1+R()*3,1+R()*3)}ctx.restore();
+ const vg=ctx.createRadialGradient(540,960,600,540,960,1250);vg.addColorStop(0,'rgba(90,60,20,0)');vg.addColorStop(1,'rgba(90,60,20,.3)');ctx.fillStyle=vg;ctx.fillRect(0,0,W,H);
+ T('EL DIARIO DEL FOREX',540,125,{font:PF(68),fill:INK});ctx.fillStyle=INK;ctx.fillRect(70,175,940,7);ctx.fillRect(70,190,940,2);T('EDICIÓN HISTÓRICA · OPERACIONES LEGENDARIAS',540,222,{font:IN(22),fill:MU});ctx.fillRect(70,245,940,2)}
+function tx(s,x,y,font,fill,t,t0,al='center'){if(COL()){reg(t0);return}const k=eout(prog(t,t0,t0+.4));if(k<=.001)return;ctx.save();ctx.globalAlpha*=k;T(s,x,y+24*(1-k),{font,fill,align:al});ctx.restore()}
+function stamp(cx,cy,w,h,rot,lines,t,t0){if(COL()){reg(t0,'hit');return}const p=prog(t,t0,t0+.3);if(p<=0)return;const k=1+.8*(1-eout(p));ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.scale(k,k);ctx.globalAlpha*=p;
+ ctx.strokeStyle=RED;ctx.lineWidth=8;ctx.strokeRect(-w/2,-h/2,w,h);ctx.lineWidth=3;ctx.strokeRect(-w/2+14,-h/2+14,w-28,h-28);lines.forEach(([s,f],i)=>T(s,0,lines.length==1?0:(i?24:-h*.24),{font:f,fill:RED}));ctx.restore()}
+function chart(seed,t,t0,label){const x0=90,y0=840,w=900,h=250;if(COL()){reg(t0);return}const a=prog(t,t0,t0+.4);if(a<=0)return;ctx.save();ctx.globalAlpha=a;ctx.strokeStyle=INK;ctx.lineWidth=4;ctx.strokeRect(x0,y0,w,h);ctx.fillStyle='rgba(23,20,15,.04)';ctx.fillRect(x0,y0,w,h);
+ for(let i=1;i<4;i++){ctx.strokeStyle='rgba(23,20,15,.15)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x0,y0+i*h/4);ctx.lineTo(x0+w,y0+i*h/4);ctx.stroke()}
+ const R=rng(seed),pts=[];for(let i=0;i<=40;i++){const f=i/40;pts.push([x0+30+f*(w-60),y0+40+f*(h-90)+Math.sin(f*17+seed)*16*(1-f*.4)+(R()-.5)*14])}
+ const p=eout(prog(t,t0+.5,t0+2.6)),n=Math.floor(p*40);ctx.strokeStyle=INK;ctx.lineWidth=7;ctx.lineJoin='round';ctx.beginPath();for(let i=0;i<=n;i++)i?ctx.lineTo(...pts[i]):ctx.moveTo(...pts[i]);ctx.stroke();
+ if(p>0){const q=pts[n];ctx.fillStyle=RED;ctx.beginPath();ctx.arc(q[0],q[1],12,0,7);ctx.fill()}
+ T(label,x0+20,y0+30,{font:IN(26),fill:RED,align:'left'});T('(ILUSTRATIVO)',x0+w-16,y0+h-22,{font:IN(22),fill:MU,align:'right'});ctx.restore()}
+function trade(o,t,t0){tx(o.year,90,420,PF(210),INK,t,t0,'left');tx('OPERACIÓN '+o.n+' DE 5',990,335,IN(30),MU,t,t0+.2,'right');if(!COL()){const k=eout(prog(t,t0+.3,t0+.8));ctx.fillStyle=INK;ctx.fillRect(90,530,900*k,6)}else{}
+ tx(o.l1,90,630,PF(84),INK,t,t0+.5,'left');tx(o.l2,90,715,PF(o.f2||54),RED,t,t0+.8,'left');tx(o.sub,90,780,IN(30),MU,t,t0+1.1,'left');
+ chart(o.seed,t,t0+1.4,'VENTA EN CORTO  ↘');stamp(540,1270,780,210,-.05,[['GANANCIA REPORTADA',IN(30)],[o.amt,PF(70)]],t,t0+4.6)}
+const T1={n:1,year:'1987',l1:'ANDY KRIEGER',l2:'VS. EL DÓLAR NEOZELANDÉS',sub:'Bankers Trust · Crash de octubre de 1987',seed:3,amt:'> $300 MILLONES'};
+const T2={n:2,year:'1992',l1:'GEORGE SOROS',l2:'VS. LA LIBRA ESTERLINA',sub:'Miércoles Negro · 16 de septiembre de 1992',seed:5,amt:'> $1.000 MILLONES'};
+const T3={n:3,year:'1992',l1:'JOE LEWIS',l2:'VS. LIBRA Y PESO MEXICANO',sub:'Libra esterlina y peso mexicano · años 90',seed:8,amt:'> $1.000 MILLONES'};
+const T4={n:4,year:'1997',l1:'GEORGE SOROS',l2:'VS. EL BAHT TAILANDÉS',sub:'Crisis financiera asiática · 1997',seed:11,amt:'≈ $1.000 MILLONES'};
+const T5={n:5,year:'2013',l1:'GEORGE SOROS',l2:'VS. EL YEN JAPONÉS',sub:'Era Abenomics · 2013–2014 · corto en yen, largo en Nikkei',seed:14,amt:'≈ $1.000 MILLONES'};
+function pIntro(t){tx('LAS 5 OPERACIONES',540,500,PF(88),INK,t,.4);tx('DE FOREX MÁS',540,610,PF(88),INK,t,1.0);tx('LEGENDARIAS',540,770,PF(132),RED,t,1.6);tx('DE LA HISTORIA',540,890,PF(88),INK,t,2.4);
+ stamp(540,1130,720,150,-.06,[['CIFRAS REPORTADAS',PF(58)]],t,3.2);tx('1987 · 1992 · 1997 · 2013',540,1290,IN(40),MU,t,3.8)}
+const p1=t=>trade(T1,t,5.0),p2=t=>trade(T2,t,12.3),p3=t=>trade(T3,t,19.6),p4=t=>trade(T4,t,26.9),p5=t=>trade(T5,t,34.2);
+function box(y,s,t,t0){if(COL()){reg(t0);return}const k=eout(prog(t,t0,t0+.4));if(k<=.001)return;ctx.save();ctx.globalAlpha*=k;ctx.translate(540,y);ctx.scale(k,1);ctx.strokeStyle=INK;ctx.lineWidth=6;ctx.strokeRect(-450,-55,900,110);T(s,0,3,{font:IN(44),fill:INK});ctx.restore()}
+function pCav(t){tx('CIFRAS REPORTADAS',540,500,PF(90),RED,t,41.5);box(680,'SIN VERIFICACIÓN OFICIAL',t,42.4);box(830,'MEDIOS Y BLOGS DE BRÓKERS',t,43.8);box(980,'APUESTAS DE FONDOS GIGANTES',t,45.2);
+ tx('FUENTES: WIKIPEDIA · FTUK · ADMIRAL MARKETS',540,1180,IN(28),MU,t,46.6);tx('DUKASCOPY · DAILYFOREX · ROBOFOREX · OTET',540,1225,IN(28),MU,t,46.9)}
+function pEnd(t){const rows=[['1987','KRIEGER','NZD'],['1992','SOROS','GBP'],['1992','LEWIS','GBP · MXN'],['1997','SOROS','THB'],['2013','SOROS','JPY']];
+ tx('EN COMÚN',90,350,IN(34),MU,t,49.5,'left');
+ rows.forEach(([y,n,c],i)=>{const t0=49.9+i*.45,yy=470+i*120;tx(y,90,yy,PF(64),RED,t,t0,'left');tx(n,330,yy+2,IN(46),INK,t,t0+.1,'left');tx(c,990,yy+2,PF(54),INK,t,t0+.2,'right');if(!COL()){const k=eout(prog(t,t0,t0+.5));ctx.fillStyle=INK;ctx.fillRect(90,yy+52,900*k,3)}});
+ stamp(540,1180,860,150,-.03,[['POSICIONES CORTAS CONTRA UNA DIVISA',IN(38)]],t,52.6)}
+const PG=[[0,4.5,pIntro],[5.0,11.8,p1],[12.3,19.1,p2],[19.6,26.4,p3],[26.9,33.7,p4],[34.2,41.0,p5],[41.5,49.0,pCav],[49.5,999,pEnd]];
+function paperwipe(x){ctx.save();ctx.fillStyle='rgba(23,20,15,.9)';ctx.fillRect(x-14,0,14,H);const g=ctx.createLinearGradient(x-240,0,x-14,0);g.addColorStop(0,'rgba(23,20,15,0)');g.addColorStop(1,'rgba(23,20,15,.45)');ctx.fillStyle=g;ctx.fillRect(x-240,0,226,H);ctx.restore()}
+function draw(t){bg();let er=null;
+ PG.forEach(([s,e,fn],i)=>{if(t<s||(t>=e+.5&&i<PG.length-1))return;ctx.save();
+  if(t>=e&&i<PG.length-1){const sx=(W+260)*clamp((t-e)/.5)-130;ctx.beginPath();ctx.rect(sx,0,W,H);ctx.clip();er=sx}
+  fn(t);ctx.restore()});if(er!=null)paperwipe(er)}
+function cover(){bg();const q=(s,y,f,c)=>T(s,540,y,{font:f,fill:c});q('LAS 5 OPERACIONES',520,PF(98),INK);q('DE FOREX MÁS',640,PF(98),INK);q('LEGENDARIAS',810,PF(128),RED);q('DE LA HISTORIA',940,PF(98),INK);
+ const R=rng(5),pts=[];for(let i=0;i<=40;i++){const f=i/40;pts.push([110+f*860,1230+f*230+Math.sin(f*13)*24+(R()-.5)*16])}ctx.strokeStyle=INK;ctx.lineWidth=12;ctx.lineJoin='round';ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.stroke();ctx.fillStyle=RED;ctx.beginPath();ctx.arc(...pts[40],20,0,7);ctx.fill();
+ stamp(540,1130,740,160,-.06,[['CIFRAS REPORTADAS',PF(62)]],0,-1)}
+window.__load=()=>{if(!SPEC._c){window.__collect=true;REG.length=0;PG.forEach(p=>p[2](0));window.__collect=false;REG.forEach(r=>SPEC.ev.push(r));SPEC._c=1}return JSON.stringify(Object.assign({dur:21},SPEC))};
+</script></body></html>
