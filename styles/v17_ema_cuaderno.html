@@ -1,0 +1,109 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// ---- series (deterministas)
+function walk(seed,segs,start){const R=rng(seed);let v=start;const o=[v];for(const [n,dr,vol] of segs){for(let i=0;i<n;i++){v+=dr+(R()-.5)*2*vol;o.push(v)}}return o}
+function ema(S,n){const k=2/(n+1),e=[S[0]];for(let i=1;i<S.length;i++)e.push(S[i]*k+e[i-1]*(1-k));return e}
+function sma(S,n){return S.map((_,i)=>{const a=Math.max(0,i-n+1);let s=0;for(let j=a;j<=i;j++)s+=S[j];return s/(i-a+1)})}
+function cdl(S,seed,vol){const R=rng(seed);return S.map((c,i)=>{const o=i?S[i-1]:c-.3;return{o,c,h:Math.max(o,c)+R()*vol,l:Math.min(o,c)-R()*vol}})}
+function crosses(f,s,from){const o=[];for(let i=Math.max(1,from);i<f.length;i++){const a=f[i-1]-s[i-1],b=f[i]-s[i];if(a<=0&&b>0)o.push({i,d:'up'});else if(a>=0&&b<0)o.push({i,d:'dn'})}return o}
+const S1=walk(3,[[28,0,.5],[5,5,.4],[27,.1,.6]],100),P1=sma(S1,10),E1=ema(S1,10);
+const S2=walk(7,[[40,1.6,2.2],[40,-1.7,2.2]],100),E2=ema(S2,21);
+const S3=walk(11,[[22,-1.5,1.6],[34,1.8,1.8],[22,-1.6,1.8]],100),E3a=ema(S3,9),E3b=ema(S3,21),X3=crosses(E3a,E3b,12);
+const R4=rng(5);const S4=Array.from({length:81},(_,i)=>100+i*1.2+12*Math.sin(i*.5)+(R4()-.5)*2.2),E4=ema(S4,21);const TR4=[22,35,47,60,72];
+const R5=rng(9);const S5=Array.from({length:71},(_,i)=>100+6*Math.sin(i*.45)+(R5()-.5)*3),E5a=ema(S5,9),E5b=ema(S5,21),X5=crosses(E5a,E5b,14);
+const T3=[23.4,29.6],T4=[31.8,37.0],T5=[45.4,51.0];
+const tAt=(T,n,i)=>+(T[0]+i/(n-1)*(T[1]-T[0])).toFixed(2);
+const EVX=[];X3.forEach(c=>EVX.push([tAt(T3,S3.length,c.i),c.d=='up'?'chime':'down']));
+TR4.forEach(i=>EVX.push([tAt(T4,S4.length,i),'tick']));
+X5.slice(0,5).forEach(c=>EVX.push([tAt(T5,S5.length,c.i),'alert']));
+const SPEC={name:'EMA',hook:'LA EMA: LA MEDIA MÓVIL MÁS RÁPIDA',dur:57,cta:53,bpm:104,mus:'soft',prog:[[57,'m'],[53,'M'],[60,'M'],[55,'m']],
+ ev:[[0.3,'hit'],[1.4,'tick'],[2.4,'tick'],[3.4,'ding'],[4.6,'wipe'],[13.4,'wipe'],[22.2,'wipe'],[30.8,'wipe'],[38.0,'wipe'],[44.4,'wipe'],[10.0,'ding'],[16.8,'ding'],[40.0,'tick'],[41.0,'tick'],[42.0,'tick'],[43.0,'ding'],[52.0,'ding'],[53.0,'cta']].concat(EVX),
+ subs:[
+ [0.2,4.4,'La EMA: la media móvil que reacciona más rápido.','La E, M, A: la media móvil que reacciona más rápido.'],
+ [5.1,9.9,'1. Qué es: un promedio de precios que pesa más lo más reciente.','Uno: qué es. Un promedio de precios que pesa más lo más reciente.'],
+ [10.1,13.3,'Por eso gira antes que la media simple.','Por eso gira antes que la media simple.'],
+ [14.0,19.3,'2. Tendencia: precio sobre la EMA, sesgo alcista; debajo, sesgo bajista.','Dos: tendencia. Precio sobre la EMA, sesgo alcista; debajo, sesgo bajista.'],
+ [19.5,22.1,'Una forma simple de leer quién domina.','Una forma simple de leer quién domina.'],
+ [22.7,27.7,'3. Cruces: cuando la EMA rápida cruza la lenta, cambia el impulso.','Tres: cruces. Cuando la EMA rápida cruza la lenta, cambia el impulso.'],
+ [27.9,30.7,'Hacia arriba, alcista; hacia abajo, bajista.','Hacia arriba, alcista; hacia abajo, bajista.'],
+ [31.3,37.9,'4. Soporte dinámico: en tendencia, el precio suele rebotar en la EMA.','Cuatro: soporte dinámico. En tendencia, el precio suele rebotar en la EMA.'],
+ [38.5,44.3,'5. Períodos comunes: 9 y 21 corto plazo, 50 medio, 200 largo.','Cinco: períodos comunes. Nueve y veintiuno, corto plazo; cincuenta, medio; doscientos, largo.'],
+ [44.9,49.6,'6. Su límite: llega tarde y en mercados laterales da señales falsas.','Seis: su límite. Llega tarde, y en mercados laterales da señales falsas.'],
+ [49.8,52.7,'Úsala con otras herramientas y con stop loss.','Úsala con otras herramientas y con stop loss.'],
+ [53.2,56.8,'Securus Apex. Link en bio.']]};
+const INK='#14213d',BGc='#f5efe0',PN='#fffaf0',OR='#ff6b1a',TE='#1b7f8c',GR='#1f9d55',RD='#d64045',MU='#6b7a8c';
+const STY={subFont:'800 44px Inter',subBg:'rgba(20,33,61,.95)',subStroke:OR,subFill:'#fff',ctaBg:INK,ctaSub:OR,ctaMain:'#fff',ctaAccent:OR,ctaBtnText:INK,ctaFontS:'800 54px Inter',ctaFontL:'800 108px Inter'};
+boot(['800 40px Inter']);
+const IN=n=>`800 ${n}px Inter`;
+function bg(){ctx.fillStyle=BGc;ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(20,33,61,.07)';ctx.lineWidth=2;
+ for(let x=0;x<W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+ ctx.strokeStyle=INK;ctx.lineWidth=6;ctx.strokeRect(28,28,W-56,H-56)}
+function tx(s,x,y,font,fill,t,t0,al='center'){const k=eout(prog(t,t0,t0+.4));if(k<=.001)return;ctx.save();ctx.globalAlpha*=k;T(s,x,y+24*(1-k),{font,fill,align:al});ctx.restore()}
+function tag(s,t,t0){const k=eout(prog(t,t0,t0+.4));if(k<=0)return;ctx.save();ctx.globalAlpha=k;ctx.font=IN(30);const w=ctx.measureText(s).width+50;RR(90,290,w,60,30);ctx.fillStyle=OR;ctx.fill();T(s,90+w/2,322,{font:IN(30),fill:'#fff'});ctx.restore()}
+function head(tg,title,t,t0){tag(tg,t,t0);tx(title,90,410,IN(58),INK,t,t0+.3,'left')}
+// panel + gráfico. o:{y0,h,candles,seed,vol,lines:[{a,c,w,dash}],price:{c,w,a}}
+function chart(t,t0,t1,S,o){o=Object.assign({y0:480,h:720},o);const X0=60,Pw=960,Y0=o.y0,Ph=o.h;
+ const pa=eout(prog(t,t0-.7,t0-.2));ctx.save();ctx.globalAlpha=pa;ctx.shadowColor='rgba(20,33,61,.25)';ctx.shadowBlur=18;ctx.shadowOffsetY=8;RR(X0,Y0,Pw,Ph,28);ctx.fillStyle=PN;ctx.fill();ctx.restore();
+ ctx.save();ctx.globalAlpha=pa;ctx.strokeStyle=INK;ctx.lineWidth=4;RR(X0,Y0,Pw,Ph,28);ctx.stroke();ctx.strokeStyle='rgba(20,33,61,.09)';ctx.lineWidth=2;for(let k=1;k<6;k++){ctx.beginPath();ctx.moveTo(X0+20,Y0+k*Ph/6);ctx.lineTo(X0+Pw-20,Y0+k*Ph/6);ctx.stroke()}ctx.restore();
+ const n=S.length,cd=o.candles?cdl(S,o.seed||1,o.vol||1.2):null;let lo=1e9,hi=-1e9;
+ (cd?cd.flatMap(c=>[c.h,c.l]):S).forEach(v=>{lo=Math.min(lo,v);hi=Math.max(hi,v)});
+ const padx=40,pady=70,sx=(Pw-2*padx)/(n-1),fx=i=>X0+padx+i*sx,fy=v=>Y0+Ph-pady-(v-lo)/(hi-lo)*(Ph-2*pady);
+ const m=Math.floor(clamp((t-t0)/(t1-t0))*(n-1));if(t<t0)return{fx,fy,m:-1,cd,sx};
+ ctx.save();ctx.beginPath();RR(X0+4,Y0+4,Pw-8,Ph-8,24);ctx.clip();
+ if(cd){const w=sx*.62;for(let i=0;i<=m;i++){const c=cd[i],up=c.c>=c.o,col=up?GR:RD;ctx.strokeStyle=col;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(fx(i),fy(c.h));ctx.lineTo(fx(i),fy(c.l));ctx.stroke();
+   ctx.fillStyle=col;const y1=fy(Math.max(c.o,c.c)),y2=fy(Math.min(c.o,c.c));ctx.fillRect(fx(i)-w/2,y1,w,Math.max(3,y2-y1))}}
+ else{const p=o.price||{c:INK,w:5,a:.55};ctx.globalAlpha=p.a;ctx.strokeStyle=p.c;ctx.lineWidth=p.w;ctx.lineJoin='round';ctx.beginPath();for(let i=0;i<=m;i++){i?ctx.lineTo(fx(i),fy(S[i])):ctx.moveTo(fx(i),fy(S[i]))}ctx.stroke();ctx.globalAlpha=1}
+ (o.lines||[]).forEach(L=>{ctx.save();ctx.strokeStyle=L.c;ctx.lineWidth=L.w||8;ctx.lineJoin='round';ctx.lineCap='round';if(L.dash)ctx.setLineDash(L.dash);ctx.beginPath();for(let i=0;i<=m;i++){i?ctx.lineTo(fx(i),fy(L.a[i])):ctx.moveTo(fx(i),fy(L.a[i]))}ctx.stroke();ctx.restore()});
+ ctx.restore();return{fx,fy,m,cd,sx}}
+function leg(items,y,t,t0){const k=eout(prog(t,t0,t0+.4));if(k<=0)return;ctx.save();ctx.globalAlpha=k;ctx.font=IN(28);const ws=items.map(([s])=>ctx.measureText(s).width+70);const tot=ws.reduce((a,b)=>a+b,0);let x=540-tot/2;
+ items.forEach(([s,c,dash],i)=>{ctx.strokeStyle=c;ctx.lineWidth=9;ctx.lineCap='round';if(dash)ctx.setLineDash(dash);ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+40,y);ctx.stroke();ctx.setLineDash([]);T(s,x+52,y,{font:IN(28),fill:INK,align:'left'});x+=ws[i]});ctx.restore()}
+function pop(cx,cy,col,t,t0,r=26){const p=prog(t,t0,t0+.35);if(p<=0)return;const k=eback(p);ctx.save();ctx.globalAlpha=Math.min(1,p*2);ctx.translate(cx,cy);ctx.scale(k,k);ctx.strokeStyle=col;ctx.lineWidth=7;ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.stroke();ctx.fillStyle=col+'33';ctx.fill();ctx.restore()}
+function badge(s,col,y,t,t0,fs=36){const k=eout(prog(t,t0,t0+.3));if(k<=0)return;ctx.save();ctx.globalAlpha=k;ctx.font=IN(fs);const w=ctx.measureText(s).width+70;RR(540-w/2,y-45,w,90,45);ctx.fillStyle=col;ctx.fill();T(s,540,y+2,{font:IN(fs),fill:'#fff'});ctx.restore()}
+// ---- páginas
+function pIntro(t){tx('EMA',540,450,IN(330),OR,t,.4);tx('MEDIA MÓVIL EXPONENCIAL',540,640,IN(50),INK,t,1.1);tx('LA QUE REACCIONA MÁS RÁPIDO',540,708,IN(34),MU,t,1.6);
+ chart(t,1.9,4.4,S2,{y0:790,h:560,candles:1,seed:2,vol:1.3,lines:[{a:E2,c:OR,w:9}]})}
+function pP1(t){head('01 · QUÉ ES','PESA MÁS LO RECIENTE',t,5.0);
+ chart(t,5.8,10.2,S1,{lines:[{a:P1,c:MU,w:7,dash:[18,14]},{a:E1,c:OR,w:10}]});
+ leg([['PRECIO',INK],['SMA 10 (lenta)',MU,[10,8]],['EMA 10 (rápida)',OR]],1250,t,6.4);
+ badge('LA EMA GIRA ANTES QUE LA SMA',OR,1335,t,9.6,32);
+ tx('EMA = precio × k + EMA anterior × (1 − k)',540,1420,IN(30),INK,t,11.0);tx('k = 2 ÷ (n + 1)',540,1470,IN(30),MU,t,11.8)}
+function pP2(t){head('02 · TENDENCIA','PRECIO VS EMA',t,13.8);
+ const r=chart(t,14.6,21.4,S2,{candles:1,seed:3,vol:1.4,lines:[{a:E2,c:OR,w:10}]});
+ leg([['EMA 21',OR]],1250,t,15.0);
+ if(r.m>=1){const up=S2[r.m]>E2[r.m];badge(up?'PRECIO SOBRE LA EMA = SESGO ALCISTA':'PRECIO BAJO LA EMA = SESGO BAJISTA',up?GR:RD,1340,t,15.4,30)}}
+function pP3(t){head('03 · CRUCES','EMA RÁPIDA × EMA LENTA',t,22.6);
+ const r=chart(t,T3[0],T3[1],S3,{candles:1,seed:4,vol:1.3,lines:[{a:E3b,c:TE,w:9},{a:E3a,c:OR,w:9}]});
+ leg([['EMA 9 (rápida)',OR],['EMA 21 (lenta)',TE]],1250,t,23.0);
+ X3.forEach(c=>{const tc=tAt(T3,S3.length,c.i);if(t<tc)return;const up=c.d=='up',col=up?GR:RD;pop(r.fx(c.i),r.fy(E3a[c.i]),col,t,tc);
+  const lx=clamp(r.fx(c.i),270,810),ly=up?r.fy(E3a[c.i])+95:r.fy(E3a[c.i])-95;const k=eout(prog(t,tc+.1,tc+.45));ctx.save();ctx.globalAlpha=k;ctx.font=IN(30);const s=up?'CRUCE ALCISTA':'CRUCE BAJISTA',w=ctx.measureText(s).width+44;RR(lx-w/2,ly-30,w,60,30);ctx.fillStyle=col;ctx.fill();T(s,lx,ly+2,{font:IN(30),fill:'#fff'});ctx.restore()});
+ tx('LA RÁPIDA SOBRE LA LENTA = IMPULSO ALCISTA',540,1345,IN(30),INK,t,28.2)}
+function pP4(t){head('04 · SOPORTE DINÁMICO','REBOTES EN LA EMA',t,31.2);
+ const r=chart(t,T4[0],T4[1],S4,{candles:1,seed:6,vol:1.4,lines:[{a:E4,c:OR,w:10}]});
+ leg([['EMA 21',OR]],1250,t,31.6);
+ TR4.forEach(i=>{const tc=tAt(T4,S4.length,i);if(t<tc||!r.cd)return;pop(r.fx(i),r.fy(r.cd[i].l)+6,TE,t,tc,22)});
+ badge('EN TENDENCIA, EL PRECIO SUELE REBOTAR AQUÍ',TE,1340,t,33.4,28)}
+function pP5(t){head('05 · PERÍODOS COMUNES','¿CUÁL USAR?',t,38.4);
+ const rows=[['EMA 9 · EMA 21','CORTO PLAZO',OR,5],['EMA 50','MEDIANO PLAZO',TE,9],['EMA 200','LARGO PLAZO',INK,14]];
+ rows.forEach(([a,b,col,lw],i)=>{const t0=39.0+i*1.3,k=eout(prog(t,t0,t0+.5));if(k<=0)return;ctx.save();ctx.globalAlpha=k;ctx.translate(0,40*(1-k));const y=560+i*250;
+  ctx.shadowColor='rgba(20,33,61,.22)';ctx.shadowBlur=16;ctx.shadowOffsetY=8;RR(90,y,900,200,30);ctx.fillStyle=PN;ctx.fill();ctx.shadowColor='transparent';ctx.strokeStyle=INK;ctx.lineWidth=4;RR(90,y,900,200,30);ctx.stroke();
+  ctx.strokeStyle=col;ctx.lineWidth=lw+4;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(130,y+100);ctx.bezierCurveTo(190,y+30,230,y+170,300,y+70);ctx.stroke();
+  T(a,340,y+70,{font:IN(54),fill:col,align:'left'});T(b,340,y+142,{font:IN(36),fill:INK,align:'left'});ctx.restore()});
+ tx('LA EMA 200 SE USA COMO FILTRO DE TENDENCIA',540,1340,IN(28),MU,t,42.6)}
+function pP6(t){head('06 · SU LÍMITE','LLEGA TARDE',t,44.8);
+ const r=chart(t,T5[0],T5[1],S5,{price:{c:INK,w:5,a:.5},lines:[{a:E5b,c:TE,w:9},{a:E5a,c:OR,w:9}]});
+ leg([['EMA 9',OR],['EMA 21',TE]],1250,t,45.2);
+ X5.forEach(c=>{const tc=tAt(T5,S5.length,c.i);if(t<tc)return;const p=prog(t,tc,tc+.3),k=eback(p);ctx.save();ctx.translate(r.fx(c.i),r.fy(E5a[c.i]));ctx.scale(k,k);ctx.strokeStyle=RD;ctx.lineWidth=8;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-18,-18);ctx.lineTo(18,18);ctx.moveTo(18,-18);ctx.lineTo(-18,18);ctx.stroke();ctx.restore()});
+ badge('LATERAL = CRUCES FALSOS',RD,1340,t,47.4,32);
+ tx('USA OTRAS HERRAMIENTAS Y STOP LOSS',540,1430,IN(32),INK,t,50.0)}
+const PG=[[0,4.6,pIntro],[5.0,13.4,pP1],[13.8,22.2,pP2],[22.6,30.8,pP3],[31.2,38.0,pP4],[38.4,44.4,pP5],[44.8,999,pP6]];
+function sweep(x){ctx.save();const g=ctx.createLinearGradient(x-260,0,x+20,0);g.addColorStop(0,'rgba(255,107,26,0)');g.addColorStop(.9,'rgba(255,107,26,.55)');g.addColorStop(1,'rgba(255,255,255,.95)');ctx.fillStyle=g;ctx.fillRect(x-260,0,280,H);ctx.restore()}
+function draw(t){bg();let er=null;
+ PG.forEach(([s,e,fn],i)=>{if(t<s||(t>=e+.5&&i<PG.length-1))return;ctx.save();
+  if(t>=e&&i<PG.length-1){const sx=(W+300)*clamp((t-e)/.5)-150;ctx.beginPath();ctx.rect(sx,0,W,H);ctx.clip();er=sx}
+  fn(t);ctx.restore()});if(er!=null)sweep(er)}
+function cover(){bg();T('EMA',540,420,{font:IN(380),fill:OR});T('MEDIA MÓVIL EXPONENCIAL',540,630,{font:IN(52),fill:INK});
+ chart(99,0,1,S2,{y0:740,h:640,candles:1,seed:2,vol:1.3,lines:[{a:E2,c:OR,w:10}]});
+ ctx.fillStyle=OR;RR(250,1560,580,100,50);ctx.fill();T('EXPLICADA FÁCIL',540,1612,{font:IN(42),fill:'#fff'})}
+</script></body></html>
