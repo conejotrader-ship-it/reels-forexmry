@@ -1,0 +1,83 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo: cómic — tema: apalancamiento
+const SPEC={name:'Apalancamiento',hook:'¿QUÉ PASA SI MULTIPLICAS TU POSICIÓN?',bpm:116,prog:[[57,'m'],[53,'M'],[60,'M'],[55,'M']],
+ ev:[[0.3,'power'],[3.3,'blip',784],[4.6,'ding'],[7.8,'blip',660],[9.2,'blip',784],[12.4,'wipe'],[13.8,'down'],[16.0,'chime'],[17.2,'cta']],
+ subs:[[0.2,3.0,'¿Qué pasa si multiplicas el tamaño de tu posición? Eso es el apalancamiento.'],
+ [3.2,7.5,'Con apalancamiento controlas una posición mayor que tu capital. Ejemplo ilustrativo: uno a cien.'],
+ [7.8,12.0,'La ventaja: puedes operar con menos capital. Pero las ganancias se amplifican, y las pérdidas también.'],
+ [12.3,16.9,'Úsalo con prudencia: lotaje pequeño y stop loss siempre definido.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const INK='#14121c',YEL='#ffd23f',RED='#ee4266',BLU='#3bc1ff',GRN='#4cd98a',PAP='#fff4d6';
+const STY={subFont:'800 46px Inter',subBg:'#fff4d6',subStroke:INK,subFill:INK,ctaBg:'#ffd23f',ctaSub:INK,ctaGlow:'rgba(0,0,0,0)',ctaMain:INK,
+ ctaAccent:RED,ctaBtnText:'#fff',ctaFontS:'900 52px Inter',ctaFontL:'900 110px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+function bg(){ctx.fillStyle=PAP;ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(238,66,102,.16)';
+  for(let y=0;y<H;y+=36)for(let x=(y/36%2)*18;x<W;x+=36){ctx.beginPath();ctx.arc(x,y,6+((y/H)*6),0,7);ctx.fill()}
+  ctx.strokeStyle=INK;ctx.lineWidth=14;ctx.strokeRect(14,14,W-28,H-28)}
+function panel(x,y,w,h,col,rot=0,k=1){ctx.save();ctx.translate(x+w/2,y+h/2);ctx.rotate(rot);ctx.scale(k,k);
+  ctx.fillStyle=INK;RR(-w/2+14,-h/2+14,w,h,10);ctx.fill();ctx.fillStyle=col;RR(-w/2,-h/2,w,h,10);ctx.fill();ctx.lineWidth=10;ctx.strokeStyle=INK;ctx.stroke();ctx.restore()}
+function ct(s,x,y,sz,col=INK,a=1,st){T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,stroke:st,lw:12})}
+function burst(cx,cy,r1,r2,n,col,rot=0){ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.beginPath();
+  for(let i=0;i<n*2;i++){const r=i%2?r1:r2,a=Math.PI*i/n;ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();
+  ctx.fillStyle=INK;ctx.save();ctx.translate(12,12);ctx.fill();ctx.restore();ctx.fillStyle=col;ctx.fill();ctx.lineWidth=10;ctx.strokeStyle=INK;ctx.stroke();ctx.restore()}
+function bubble(x,y,w,h,lines,tx,ty,k=1,sz=44){if(k<=0)return;ctx.save();ctx.translate(x+w/2,y+h/2);ctx.scale(k,k);ctx.translate(-x-w/2,-y-h/2);
+  ctx.fillStyle='#fff';ctx.strokeStyle=INK;ctx.lineWidth=9;RR(x,y,w,h,40);ctx.fill();ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x+w/2-30,y+h-4);ctx.lineTo(tx,ty);ctx.lineTo(x+w/2+30,y+h-4);ctx.fillStyle='#fff';ctx.fill();ctx.stroke();
+  ctx.fillStyle='#fff';ctx.fillRect(x+w/2-26,y+h-14,52,14);
+  lines.forEach((l,i)=>T(l,x+w/2,y+h/2+(i-(lines.length-1)/2)*(sz+8),{font:`900 ${sz}px Inter`,fill:INK}));ctx.restore()}
+function fade(t,a,b){return Math.min(prog(t,a,a+.3),1-prog(t,b-.25,b))}
+function monitor(cx,cy,s,t0,t){ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);
+  ctx.fillStyle=INK;RR(-250,-170,500,340,26);ctx.fill();ctx.fillStyle='#0f2a3a';RR(-228,-148,456,296,14);ctx.fill();
+  ctx.fillStyle=INK;ctx.fillRect(-30,170,60,60);RR(-110,226,220,26,12);ctx.fill();
+  const pts=[[-200,90],[-140,50],[-100,70],[-40,-10],[10,20],[70,-60],[130,-30],[200,-100]];
+  ctx.strokeStyle=GRN;ctx.lineWidth=10;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();
+  const f=eio(prog(t,t0,t0+1.4))*(pts.length-1);for(let i=0;i<=Math.floor(f);i++){i?ctx.lineTo(...pts[i]):ctx.moveTo(...pts[i])}
+  if(f<pts.length-1){const i=Math.floor(f),fr=f-i;ctx.lineTo(lerp(pts[i][0],pts[i+1][0],fr),lerp(pts[i][1],pts[i+1][1],fr))}ctx.stroke();
+  ctx.restore()}
+function icon(kind,cx,cy,s){ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);ctx.lineWidth=9;ctx.strokeStyle=INK;
+  if(kind==='target'){[70,46,22].forEach((r,i)=>{ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.fillStyle=i%2?'#fff':RED;ctx.fill();ctx.stroke()});}
+  if(kind==='chart'){ctx.fillStyle=GRN;[[-50,10,30,50],[-10,-30,30,90],[30,-10,30,70]].forEach(([x,y,w,h])=>{ctx.fillRect(x,y,w,h);ctx.strokeRect(x,y,w,h)})}
+  if(kind==='gear'){ctx.fillStyle=BLU;ctx.beginPath();for(let i=0;i<16;i++){const r=i%2?52:70,a=Math.PI*i/8;ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();ctx.fill();ctx.stroke();
+    ctx.beginPath();ctx.arc(0,0,22,0,7);ctx.fillStyle='#fff';ctx.fill();ctx.stroke()}
+  ctx.restore()}
+function arrow(x1,y,x2,col,k){if(k<=0)return;const x=lerp(x1,x2,k);ctx.save();ctx.strokeStyle=INK;ctx.lineWidth=12;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x,y);ctx.stroke();
+  if(k>.9){ctx.beginPath();ctx.moveTo(x2-30,y-30);ctx.lineTo(x2,y);ctx.lineTo(x2-30,y+30);ctx.stroke()}ctx.restore()}
+function draw(t){bg();
+  let a=1-prog(t,2.7,3.2);if(t<3.3){ctx.save();ctx.globalAlpha=a;const k=eback(prog(t,.1,.7));
+    ctx.translate(540,760);ctx.scale(k,k);burst(0,0,400,490,14,YEL,Math.sin(t*2)*.04);
+    ct('¿MULTIPLICAR',0,-190,80,INK);ct('TU POSICIÓN?',0,-60,86,RED);ct('X100',0,110,150,INK);
+    ctx.restore();bubble(560,1130,440,150,['¡Apalan-','camiento!'],760,1330,eback(prog(t,1.2,1.8)),50)}
+  a=fade(t,3.2,7.6);if(a>0){ctx.save();ctx.globalAlpha=a;const k=eback(prog(t,3.2,3.8));
+    panel(90,230,900,1130,BLU,-.012,k);
+    ct('APALANCAMIENTO',540,340,74,'#fff',a,INK);
+    const b=eback(prog(t,3.9,4.5));ctx.save();ctx.translate(300,720);ctx.scale(b,b);ctx.fillStyle=GRN;ctx.beginPath();ctx.arc(0,0,95,0,7);ctx.fill();ctx.lineWidth=10;ctx.strokeStyle=INK;ctx.stroke();T('$100',0,6,{font:'900 56px Inter',fill:INK});ctx.restore();
+    arrow(410,720,640,INK,eio(prog(t,4.6,5.4)));
+    const c=eback(prog(t,5.2,5.9));ctx.save();ctx.translate(780,720);ctx.scale(c,c);ctx.fillStyle=YEL;ctx.beginPath();ctx.arc(0,0,140,0,7);ctx.fill();ctx.lineWidth=10;ctx.strokeStyle=INK;ctx.stroke();T('$10.000',0,6,{font:'900 56px Inter',fill:INK});ctx.restore();
+    bubble(250,1020,580,150,['Ejemplo ilustrativo:','1:100'],540,1260,eback(prog(t,6.0,6.6)),40);
+    ctx.restore()}
+  a=fade(t,7.8,12.1);if(a>0){ctx.save();ctx.globalAlpha=a;
+    ct('DOS CARAS',540,260,96,INK);
+    const k1=eback(prog(t,8.0,8.5)),k2=eback(prog(t,9.4,9.9));
+    panel(90,360,420,700,GRN,-.02,k1);panel(570,360,420,700,RED,.02,k2);
+    if(k1>0){ctx.save();ctx.globalAlpha=a*clamp(k1);ct('VENTAJA',300,470,56,INK);ct('▲',300,660,200,INK);
+      const L=wrapLines('Operas con menos capital',340,'900 44px Inter');L.forEach((l,j)=>T(l,300,860+j*54,{font:'900 44px Inter',fill:INK}));ctx.restore()}
+    if(k2>0){ctx.save();ctx.globalAlpha=a*clamp(k2);ct('RIESGO',780,470,56,'#fff',1,INK);ct('▼',780,660,200,'#fff',1,INK);
+      const L=wrapLines('Las pérdidas también se amplifican',340,'900 44px Inter');L.forEach((l,j)=>T(l,780,840+j*54,{font:'900 44px Inter',fill:'#fff',stroke:INK,lw:9}));ctx.restore()}
+    bubble(200,1110,680,160,['Ganancias y pérdidas','se multiplican'],540,1330,eback(prog(t,10.8,11.4)),38);
+    ctx.restore()}
+  a=fade(t,12.3,17.0);if(a>0){ctx.save();ctx.globalAlpha=a;
+    ct('ÚSALO CON CABEZA',540,260,80,INK);
+    [['LOTAJE PEQUEÑO',BLU,12.6],['STOP LOSS SIEMPRE',YEL,13.8],['SIN PRISA',GRN,15.0]].forEach(([tx,col,ts],i)=>{const k=eback(prog(t,ts,ts+.5));const y=380+i*300;panel(140,y,800,230,col,(i-1)*.01,k);
+      if(k>0){ctx.save();ctx.globalAlpha=a*clamp(k);ctx.beginPath();ctx.arc(270,y+115,70,0,7);ctx.fillStyle='#fff';ctx.fill();ctx.lineWidth=9;ctx.strokeStyle=INK;ctx.stroke();T(String(i+1),270,y+121,{font:'900 90px Inter',fill:INK});
+        const L=wrapLines(tx,460,'900 62px Inter');L.forEach((l,j)=>T(l,650,y+115+(j-(L.length-1)/2)*70,{font:'900 62px Inter',fill:INK}));ctx.restore()}});
+    ctx.restore()}
+}
+function cover(){bg();ctx.save();ctx.translate(0,150);burst(540,760,430,510,16,YEL,.05);
+  ct('¿ESPADA DE',540,520,92,INK);ct('DOBLE FILO?',540,650,104,RED);
+  ct('X100',540,830,150,'#fff',1,INK);
+  RR(200,1210,680,120,60);ctx.fillStyle=INK;ctx.fill();RR(190,1198,680,120,60);ctx.fillStyle=RED;ctx.fill();ctx.lineWidth=9;ctx.strokeStyle=INK;ctx.stroke();T('VER REEL',530,1260,{font:'900 56px Inter',fill:'#fff'});ctx.restore()}
+</script></body></html>

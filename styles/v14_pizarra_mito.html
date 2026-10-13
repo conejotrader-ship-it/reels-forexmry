@@ -1,0 +1,65 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo: pizarra con tiza — tema: mito "un robot gana siempre"
+const SPEC={name:'MitoRobot',hook:'¿UN ROBOT GANA SIEMPRE?',bpm:100,prog:[[57,'m'],[53,'M'],[60,'M'],[55,'M']],
+ ev:[[0.3,'alert'],[3.3,'blip',660],[5.6,'down'],[7.8,'blip',784],[10.0,'ding'],[12.3,'blip',880],[14.4,'chime'],[17.2,'cta']],
+ subs:[[0.2,3.0,'¿Un robot de trading gana siempre? Es un mito.'],
+ [3.2,7.4,'Ningún robot acierta todas las operaciones. Habrá pérdidas, y es normal.'],
+ [7.7,11.8,'El mercado cambia: lo que funcionó antes puede dejar de funcionar.'],
+ [12.1,16.8,'Lo que cuenta es gestionar el riesgo: stop loss, lotaje prudente y revisión constante.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const CH='#f4f1e6',YL='#f6e08a',PK='#ff9aa8',BL='#9fd8ff',GR='#a8f0b8';
+const STY={subFont:'800 46px Inter',subBg:'rgba(14,32,26,.92)',subStroke:YL,subFill:'#fffbe8',ctaBg:'#14302a',ctaSub:YL,ctaGlow:'#000',
+ ctaAccent:YL,ctaBtnText:'#14302a',ctaFontS:'800 52px Inter',ctaFontL:'900 110px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+const rd=rng(3);const DUST=[];for(let i=0;i<260;i++)DUST.push([rd()*W,rd()*H,rd()*2.4+.6,rd()*.12]);
+function bg(){const g=ctx.createRadialGradient(540,900,200,540,900,1300);g.addColorStop(0,'#2a5547');g.addColorStop(1,'#12302a');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#fff';DUST.forEach(([x,y,r,a])=>{ctx.globalAlpha=a;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill()});ctx.globalAlpha=1;
+  ctx.strokeStyle='#6b4a2b';ctx.lineWidth=36;ctx.strokeRect(18,18,W-36,H-36);ctx.strokeStyle='#8a6439';ctx.lineWidth=6;ctx.strokeRect(36,36,W-72,H-72);
+  RR(120,1700,840,22,10);ctx.fillStyle='rgba(255,255,255,.1)';ctx.fill()}
+function ch(s,x,y,sz,col=CH,a=1,al='center',w=900){T(s,x,y,{font:`${w} ${sz}px Inter`,fill:col,a:a*.94,align:al,glow:col,gb:3})}
+// trazo de tiza con temblor
+function stroke(pts,k,col=CH,lw=9){const n=pts.length-1;const f=k*n;ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineCap='round';ctx.lineJoin='round';ctx.globalAlpha=.92;ctx.beginPath();
+  for(let i=0;i<=Math.floor(f)&&i<=n;i++){const [x,y]=pts[i];i?ctx.lineTo(x,y):ctx.moveTo(x,y)}
+  if(f<n){const i=Math.floor(f),fr=f-i;ctx.lineTo(lerp(pts[i][0],pts[i+1][0],fr),lerp(pts[i][1],pts[i+1][1],fr))}ctx.stroke();ctx.restore()}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+function num(n,x,y,col,t,ts){const k=eback(prog(t,ts,ts+.5));if(k<=0)return;ctx.save();ctx.translate(x,y);ctx.scale(k,k);ctx.beginPath();ctx.arc(0,0,70,0,7);ctx.strokeStyle=col;ctx.lineWidth=8;ctx.stroke();T(n,0,6,{font:'900 90px Inter',fill:col});ctx.restore()}
+function draw(t){bg();
+  const k=eio(prog(t,2.6,3.4));
+  if(k<1){const sc=1+.25*k;ctx.save();ctx.globalAlpha=1-k;ctx.translate(540,800);ctx.scale(sc,sc);
+    ch('MITO:',0,-200,120,YL);ch('"UN ROBOT',0,-40,110);ch('GANA SIEMPRE"',0,100,110,PK);
+    stroke([[-400,190],[-120,205],[130,185],[400,200]],eio(prog(t,.6,1.5)),YL,10);ctx.restore()}
+  if(k>0){ch('MITO · ROBOTS',540,330,52,YL,k);stroke([[200,370],[540,380],[880,368]],k,CH,6)}
+  // 1: pérdidas normales
+  let a=fade(t,3.2,7.5);if(a>0){ctx.save();ctx.globalAlpha=a;num('1',210,560,YL,t,3.3);
+    ch('HABRÁ',650,520,80,CH,1);ch('PÉRDIDAS',650,610,86,PK,1);
+    const bars=[[1,1],[1,1],[-1,1],[1,1],[-1,1],[1,1],[-1,1]];
+    bars.forEach(([d,_],i)=>{const kk=eout(prog(t,3.9+i*.25,4.3+i*.25));const h=(i%3+1)*70*kk;const x=210+i*100;
+      ctx.fillStyle=d>0?GR:PK;ctx.globalAlpha=a*.92;ctx.fillRect(x,900-(d>0?h:0),70,h);});
+    line(180,900,920,900,CH,5);
+    ch('es parte del juego',540,1180,54,BL,prog(t,6.0,6.6));ctx.restore()}
+  // 2: mercado cambia
+  a=fade(t,7.7,11.9);if(a>0){ctx.save();ctx.globalAlpha=a;num('2',210,560,YL,t,7.8);
+    ch('EL MERCADO',650,520,76,CH,1);ch('CAMBIA',650,610,90,PK,1);
+    const pts=[[220,1000],[300,940],[380,980],[460,880],[540,920],[620,820]];stroke(pts,eio(prog(t,8.4,9.4)),GR,10);
+    const pts2=[[620,820],[700,900],[780,960],[860,1060]];stroke(pts2,eio(prog(t,9.4,10.4)),PK,10);
+    ch('?',740,780,120,YL,prog(t,9.8,10.3));
+    ch('revisa tu robot a menudo',540,1230,50,BL,prog(t,10.4,11));ctx.restore()}
+  // 3: riesgo
+  a=fade(t,12.1,17.0);if(a>0){ctx.save();ctx.globalAlpha=a;num('3',210,560,YL,t,12.2);
+    ch('GESTIONA',650,520,76,CH,1);ch('EL RIESGO',650,610,86,PK,1);
+    [['stop loss',GR,12.9],['lotaje prudente',BL,13.9],['revisión semanal',YL,14.9]].forEach(([s,c,ts],i)=>{
+      const kk=eout(prog(t,ts,ts+.5));const y=800+i*150;ctx.save();ctx.globalAlpha=a*kk;
+      RR(190,y-55,700,110,26);ctx.strokeStyle=c;ctx.lineWidth=7;ctx.stroke();ch(s,540,y+4,56,c,1);
+      stroke([[220,y+0],[250,y+22],[300,y-24]],eio(prog(t,ts+.3,ts+.8)),c,8);ctx.restore()});
+    ctx.restore()}
+}
+function cover(){bg();ctx.save();ctx.translate(0,40);
+  ch('MITO:',540,420,110,YL);ch('"UN ROBOT',540,590,110,CH);ch('GANA SIEMPRE"',540,720,110,PK);
+  stroke([[130,790],[420,805],[700,785],[950,800]],1,YL,10);
+  ch('¿VERDAD O',540,930,80,CH);ch('MENTIRA?',540,1040,110,GR);
+  RR(220,1150,640,110,55);ctx.fillStyle=YL;ctx.fill();T('DESCÚBRELO →',540,1207,{font:'900 44px Inter',fill:'#14302a'});ctx.restore()}
+</script></body></html>
