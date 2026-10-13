@@ -1,0 +1,91 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:Orbitron;font-weight:900;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo: dashboard (tarjetas, gráfico con línea VWAP) — tema: qué es el VWAP y cómo se opera
+const SPEC={name:'VWAP',hook:'¿CUÁL ES EL PRECIO JUSTO DEL DÍA?',bpm:104,prog:[[57,'m'],[53,'M'],[60,'M'],[55,'M']],
+ ev:[[0.3,'hit'],[3.3,'blip',880],[5.0,'tick'],[5.8,'ding'],[7.9,'blip',660],[9.0,'tick'],[10.6,'ding'],[12.4,'blip',784],[13.8,'ding'],[15.2,'tick'],[17.2,'cta']],
+ subs:[[0.2,3.0,'¿Cuál es el precio justo del día? Muchos traders usan el VWAP.'],
+ [3.2,7.6,'El VWAP es el precio promedio del día, ponderado por el volumen negociado.'],
+ [7.9,12.0,'Precio sobre el VWAP sugiere fuerza compradora. Por debajo, fuerza vendedora.'],
+ [12.3,16.9,'Se opera el retroceso al VWAP, con confirmación y stop loss. Nada es garantía.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const BG='#0b1220',CARD='#142038',LN='#25365a',TX='#e8f0ff',MU='#8ea3c7',CY='#22d3ee',OR='#ffb020',RD='#ff5470',GR='#34d399';
+const STY={subFont:'800 46px Inter',subBg:'rgba(11,18,32,.94)',subStroke:CY,subFill:TX,ctaBg:'#0b1220',ctaSub:CY,ctaGlow:CY,
+ ctaAccent:OR,ctaBtnText:'#0b1220',ctaFontS:'800 52px Inter',ctaFontL:'900 110px Inter'};
+boot(['800 40px Inter','900 40px Inter','900 40px Orbitron']);
+function bg(){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(34,211,238,.06)';ctx.lineWidth=2;
+  for(let x=0;x<W;x+=60)line(x,0,x,H,'rgba(34,211,238,.06)',2);for(let y=0;y<H;y+=60)line(0,y,W,y,'rgba(34,211,238,.06)',2);
+  RR(60,70,960,70,20);ctx.fillStyle=CARD;ctx.fill();['#ff5470','#ffb020','#34d399'].forEach((c,i)=>{ctx.beginPath();ctx.arc(110+i*40,105,12,0,7);ctx.fillStyle=c;ctx.fill()});
+  T('PANEL DE CUENTA',620,105,{font:'800 30px Inter',fill:MU})}
+function card(x,y,w,h,k=1,bd=LN){if(k<=0)return;ctx.save();ctx.translate(x+w/2,y+h/2+(1-k)*40);ctx.globalAlpha*=clamp(k);ctx.translate(-x-w/2,-y-h/2);
+  RR(x,y,w,h,32);ctx.fillStyle=CARD;ctx.fill();ctx.lineWidth=3;ctx.strokeStyle=bd;ctx.stroke();ctx.restore()}
+function lab(s,x,y,col=MU,sz=34,al='left'){T(s,x,y,{font:`800 ${sz}px Inter`,fill:col,align:al})}
+function big(s,x,y,sz,col,al='center',glow){T(s,x,y,{font:`900 ${sz}px Orbitron`,fill:col,align:al,glow,gb:20})}
+function fade(t,a,b){return Math.min(prog(t,a,a+.3),1-prog(t,b-.25,b))}
+function fmt(n,d=0){return n.toLocaleString('es-ES',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function gauge(cx,cy,r,v,col){ctx.save();ctx.lineWidth=44;ctx.lineCap='round';ctx.strokeStyle=LN;ctx.beginPath();ctx.arc(cx,cy,r,Math.PI,2*Math.PI);ctx.stroke();
+  ctx.strokeStyle=col;ctx.beginPath();ctx.arc(cx,cy,r,Math.PI,Math.PI+Math.PI*v);ctx.stroke();ctx.restore()}
+// series ilustrativas: puntos ancla interpolados + ruido, volumen aleatorio
+function mk(anchors,n,seed){const r=rng(seed);const P=[],V=[];for(let i=0;i<n;i++){const f=i/(n-1)*(anchors.length-1),j=Math.min(anchors.length-2,Math.floor(f)),u=f-j;
+  P.push(lerp(anchors[j],anchors[j+1],u)+(r()-.5)*.9);V.push(.5+r())}
+  const W2=[];let sp=0,sv=0;for(let i=0;i<n;i++){sp+=P[i]*V[i];sv+=V[i];W2.push(sp/sv)}return [P,W2]}
+const S1=mk([50,53,51,56,54,58,57,60],90,5);
+const S2=mk([50,52,54,58,60,62,64,66],90,9);
+const S3=mk([50,54,58,62,59,56.5,60,66,70],110,13);
+function chart(x,y,w,h,S,k,opt={}){const [P,Wv]=S;const all=P.concat(Wv);const mn=Math.min(...all)-1,mx=Math.max(...all)+1;
+  const X=i=>x+i/(P.length-1)*w,Y=v=>y+h-(v-mn)/(mx-mn)*h;const n=Math.floor(clamp(k)*(P.length-1));
+  ctx.save();ctx.beginPath();ctx.rect(x-10,y-10,w+20,h+20);ctx.clip();
+  for(let g=0;g<5;g++)line(x,y+g*h/4,x+w,y+g*h/4,'rgba(142,163,199,.18)',2);
+  if(opt.zones&&n>2){ctx.globalAlpha=.9;for(let i=1;i<=n;i++){const up=P[i]>=Wv[i];ctx.fillStyle=up?'rgba(52,211,153,.16)':'rgba(255,84,112,.16)';ctx.fillRect(X(i-1),Math.min(Y(P[i]),Y(Wv[i])),X(i)-X(i-1)+1,Math.abs(Y(P[i])-Y(Wv[i])))}ctx.globalAlpha=1}
+  ctx.lineJoin='round';ctx.lineCap='round';
+  ctx.strokeStyle=OR;ctx.lineWidth=8;ctx.shadowColor=OR;ctx.shadowBlur=14;ctx.setLineDash([]);ctx.beginPath();for(let i=0;i<=n;i++)i?ctx.lineTo(X(i),Y(Wv[i])):ctx.moveTo(X(i),Y(Wv[i]));ctx.stroke();
+  ctx.strokeStyle=CY;ctx.lineWidth=6;ctx.shadowColor=CY;ctx.shadowBlur=10;ctx.beginPath();for(let i=0;i<=n;i++)i?ctx.lineTo(X(i),Y(P[i])):ctx.moveTo(X(i),Y(P[i]));ctx.stroke();ctx.restore();
+  return {X,Y,n}}
+function legend(x,y,al=1){ctx.save();ctx.globalAlpha*=al;ctx.fillStyle=CY;ctx.fillRect(x,y-4,50,8);lab('Precio',x+64,y,TX,32);ctx.fillStyle=OR;ctx.fillRect(x+260,y-4,50,8);lab('VWAP',x+324,y,TX,32);ctx.restore()}
+function draw(t){bg();
+  let a=1-prog(t,2.7,3.2);if(t<3.3){ctx.save();ctx.globalAlpha=a;const k=eout(prog(t,.1,.7));
+    card(70,300,940,1000,k,OR);
+    ctx.save();ctx.globalAlpha=a*k;T('¿EL PRECIO',540,470,{font:'900 92px Inter',fill:TX});T('JUSTO DEL DÍA?',540,580,{font:'900 92px Inter',fill:OR});
+    chart(130,680,820,340,S1,eio(prog(t,.5,2.4)));legend(130,1090);
+    big('VWAP',540,1220,100,OR,'center',OR);ctx.restore();ctx.restore()}
+  a=fade(t,3.2,7.7);if(a>0){ctx.save();ctx.globalAlpha=a;
+    card(70,230,940,520,eout(prog(t,3.2,3.8)),OR);
+    lab('FÓRMULA',120,300,MU,34);
+    T('VWAP =',540,400,{font:'900 64px Inter',fill:OR,a:prog(t,3.8,4.3)});
+    T('Σ (precio × volumen)',540,500,{font:'900 56px Inter',fill:TX,a:prog(t,4.3,4.9)});
+    line(150,555,930,555,MU,4);
+    T('Σ volumen',540,630,{font:'900 56px Inter',fill:CY,a:prog(t,4.9,5.5)});
+    lab('promedio ponderado por volumen',540,710,MU,34,'center');
+    card(70,800,940,640,eout(prog(t,5.4,6.0)));legend(120,870,prog(t,5.8,6.3));
+    chart(120,930,840,420,S1,eio(prog(t,5.6,7.2)));
+    ctx.restore()}
+  a=fade(t,7.9,12.1);if(a>0){ctx.save();ctx.globalAlpha=a;
+    card(70,230,940,1160,eout(prog(t,7.9,8.5)));legend(120,300,prog(t,8.3,8.8));
+    chart(120,360,840,560,S2,eio(prog(t,8.2,10.2)),{zones:true});
+    const g=eback(prog(t,10.2,10.8));
+    ctx.save();ctx.translate(310,1060);ctx.scale(g,g);RR(-190,-80,380,160,24);ctx.fillStyle='rgba(52,211,153,.15)';ctx.fill();ctx.strokeStyle=GR;ctx.lineWidth=4;ctx.stroke();
+    T('SOBRE VWAP',0,-28,{font:'900 40px Inter',fill:GR});T('fuerza compradora',0,32,{font:'800 30px Inter',fill:TX});ctx.restore();
+    const r=eback(prog(t,11.0,11.6));
+    ctx.save();ctx.translate(770,1060);ctx.scale(r,r);RR(-190,-80,380,160,24);ctx.fillStyle='rgba(255,84,112,.15)';ctx.fill();ctx.strokeStyle=RD;ctx.lineWidth=4;ctx.stroke();
+    T('BAJO VWAP',0,-28,{font:'900 40px Inter',fill:RD});T('fuerza vendedora',0,32,{font:'800 30px Inter',fill:TX});ctx.restore();
+    ctx.restore()}
+  a=fade(t,12.3,17.0);if(a>0){ctx.save();ctx.globalAlpha=a;
+    card(70,230,940,700,eout(prog(t,12.3,12.9)),GR);legend(120,300,prog(t,12.6,13.1));
+    const c=chart(120,350,840,520,S3,eio(prog(t,12.6,14.6)));
+    const m=eback(prog(t,14.4,15.0));if(m>0&&c.n>=70){const i=72;ctx.save();ctx.translate(c.X(i),c.Y(S3[0][i]));ctx.scale(m,m);ctx.beginPath();ctx.arc(0,0,26,0,7);ctx.fillStyle=GR;ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=BG;ctx.stroke();ctx.restore();
+      T('entrada',c.X(i)+70,c.Y(S3[0][i])-60,{font:'800 34px Inter',fill:GR,a:m});
+      ctx.save();ctx.globalAlpha=a*m;line(c.X(i)-70,c.Y(S3[1][i])+60,c.X(i)+190,c.Y(S3[1][i])+60,RD,5,[14,10]);T('stop loss',c.X(i)+60,c.Y(S3[1][i])+105,{font:'800 32px Inter',fill:RD});ctx.restore()}
+    card(70,980,940,430,eout(prog(t,13.4,14.0)));
+    [['Espera el retroceso al VWAP',GR,13.8],['Confirma con la vela',CY,14.8],['Define el stop loss',RD,15.8]].forEach(([s2,col,ts],i)=>{const k=eout(prog(t,ts,ts+.5));ctx.save();ctx.globalAlpha=a*k;
+      const y=1070+i*110;ctx.beginPath();ctx.arc(150,y,30,0,7);ctx.fillStyle=col;ctx.fill();T(String(i+1),150,y+3,{font:'900 40px Inter',fill:BG});lab(s2,205,y,TX,42);ctx.restore()});
+    ctx.restore()}
+}
+function cover(){bg();ctx.save();ctx.translate(0,150);card(70,330,940,1060,1,OR);
+  T('¿QUÉ ES EL',540,470,{font:'900 84px Inter',fill:TX});big('VWAP?',540,620,150,OR,'center',OR);
+  chart(130,720,820,320,S2,1);legend(130,1090);
+  T('Cómo se opera',540,1180,{font:'900 56px Inter',fill:CY});
+  RR(220,1230,640,100,50);ctx.fillStyle=OR;ctx.fill();T('VER REEL →',540,1281,{font:'900 46px Inter',fill:BG});ctx.restore()}
+</script></body></html>

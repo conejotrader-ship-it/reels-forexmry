@@ -47,3 +47,5 @@ Texto de cada reel termina con la línea del producto y luego los hashtags.
   Publicado: https://www.instagram.com/reel/DebNbn3jnUW/
 - Mar 13 oct — Las EMAs (medias móviles exponenciales): qué son, para qué sirven (57 s, estilo cuaderno claro/infografía naranja, `v17_ema_cuaderno.html`, escena 48). Contenido: pesa más lo reciente (k = 2/(n+1)), tendencia (precio vs EMA), cruces EMA 9/21, rebotes dinámicos, períodos comunes (9, 21, 50, 200), límites (rezago, laterales, falsas señales). Gráficos con datos simulados ilustrativos. Video `videos/2026-10-13_ema_cuaderno.mp4`, portada `covers/cover_ema.jpg`.
   Publicado: https://www.instagram.com/reel/DecI92ZAukx/
+
+- Mar 13 oct (a pedido, ~19:00) — Qué es el VWAP y cómo se opera (21 s, estilo dashboard con gráfico, `v18_dashboard_vwap.html`, escena 50). Series de precio ilustrativas. Video `videos/2026-10-13_vwap_dashboard.mp4`, portada `covers/cover_vwap.jpg`.
