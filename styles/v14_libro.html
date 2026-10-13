@@ -1,0 +1,90 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Mono;font-weight:400;src:url(node_modules/@fontsource/share-tech-mono/files/share-tech-mono-latin-400-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+const SPEC={name:'HFTSpoofing',hook:'TRADING DE ALTA FRECUENCIA Y SPOOFING',dur:60,cta:56,bpm:110,prog:[[57,'m'],[53,'M'],[48,'M'],[55,'M']],
+ ev:[[0.3,'hit'],[4.5,'wipe'],[13.5,'wipe'],[22.5,'wipe'],[32.5,'wipe'],[42.0,'wipe'],[50.5,'wipe'],[35.6,'alert'],[39.6,'down'],[56.0,'cta']],
+ subs:[
+ [0.2,4.4,'Trading de alta frecuencia y spoofing: qué son y por qué uno es ilegal.','Trading de alta frecuencia y spoofing: qué son, y por qué una de esas prácticas es ilegal.'],
+ [5.0,13.4,'1. Alta frecuencia: algoritmos que operan en milisegundos, con posiciones de segundos o menos.','Uno: alta frecuencia. Algoritmos que operan en milisegundos, con posiciones de segundos o menos.'],
+ [14.0,18.2,'2. Gana una fracción de centavo por operación, y lo compensa con un volumen enorme.','Dos: gana una fracción de centavo por operación, y lo compensa con un volumen enorme.'],
+ [18.4,22.4,'Típico: el creador de mercado, que pone compras y ventas para ganar el spread.','Típico: el creador de mercado, que pone compras y ventas para ganar el spread.'],
+ [23.0,27.6,'Sus defensores dicen que mejora la liquidez y reduce el spread.','Sus defensores dicen que mejora la liquidez y reduce el spread.'],
+ [27.8,32.4,'Pero se le vincula al Flash Crash de 2010, cuando la liquidez se retiró de golpe.','Pero se le vincula al Flash Crash de dos mil diez, cuando la liquidez se retiró de golpe.'],
+ [33.0,41.9,'3. Spoofing: poner órdenes grandes sin intención de ejecutarlas, para dar una falsa impresión de oferta o demanda.','Tres: spoofing. Poner órdenes grandes sin intención de ejecutarlas, para dar una falsa impresión de oferta o demanda.'],
+ [42.5,50.4,'4. Es ilegal: la ley Dodd-Frank de 2010 lo prohíbe en EE. UU. Navinder Sarao fue acusado en 2015.','Cuatro: es ilegal. La ley Dodd-Frank de dos mil diez lo prohíbe en Estados Unidos. Navinder Sarao fue acusado en dos mil quince.'],
+ [51.0,55.8,'La velocidad no es delito; engañar con órdenes falsas, sí.','La velocidad no es delito; engañar con órdenes falsas, sí.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const NV='#07131c',GR='#19c37d',RD='#ff4d5e',AM='#ffb020',CY='#38d6ff',TX='#d8e6ee',MU='#6f8794';
+const STY={subFont:'800 44px Inter',subBg:'rgba(7,19,28,.94)',subStroke:CY,subFill:'#fff',ctaBg:NV,ctaSub:CY,ctaMain:'#fff',ctaAccent:AM,ctaBtnText:NV,ctaFontS:'800 54px Inter',ctaFontL:'800 108px Inter'};
+boot(['400 30px Mono','800 40px Inter']);
+const IN=n=>`800 ${n}px Inter`,MO=n=>`400 ${n}px Mono`;const REG=[];const COL=()=>window.__collect;
+const reg=(t0,k='tick')=>REG.push([+t0.toFixed(2),k]);
+function bg(){ctx.fillStyle=NV;ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,900,50,540,900,1000);g.addColorStop(0,'rgba(56,214,255,.12)');g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ ctx.strokeStyle='rgba(56,214,255,.07)';ctx.lineWidth=2;for(let x=0;x<W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+ ctx.strokeStyle='rgba(56,214,255,.5)';ctx.lineWidth=3;ctx.strokeRect(34,34,W-68,H-68)}
+function tx(s,x,y,font,fill,t,t0,al='center',gl){if(COL()){reg(t0);return}const k=eout(prog(t,t0,t0+.4));if(k<=.001)return;ctx.save();ctx.globalAlpha*=k;T(s,x,y+24*(1-k),{font,fill,align:al,glow:gl,gb:20});ctx.restore()}
+function tag(s,t,t0){if(COL()){reg(t0);return}const k=eout(prog(t,t0,t0+.4));if(k<=0)return;ctx.save();ctx.globalAlpha=k;ctx.font=IN(30);const w=ctx.measureText(s).width+50;ctx.strokeStyle=AM;ctx.lineWidth=3;RR(90,300,w,60,30);ctx.stroke();T(s,90+w/2,332,{font:IN(30),fill:AM});ctx.restore()}
+// libro de órdenes. o:{y0,rowH,alpha,seed,sp,shift,spread,wall:{k,a,fake},res}
+function ladder(t,o){o=Object.assign({y0:640,rowH:56,alpha:1,seed:1,sp:5,shift:0,spread:1,wall:null,dim:0},o);const nA=6,nB=6;ctx.save();ctx.globalAlpha*=o.alpha;
+ const bestBid=100.00-o.shift*.01,bestAsk=bestBid+o.spread*.01;const yA=k=>o.y0+(nA-k)*o.rowH;const yB=k=>o.y0+nA*o.rowH+o.spread*0+ (k-1)*o.rowH+ (o.spread>1?(o.spread-1)*0:0);
+ const sz=(side,k)=>{const b=38+k*20;return Math.max(6,b*(.62+.38*Math.sin(t*o.sp*(1+k*.11)+k*1.9+o.seed+side*2.3)))};
+ for(let k=nA;k>=1;k--){const y=yA(k);let s=sz(1,k);let fake=false;if(o.wall&&o.wall.k==k){s=Math.max(s,o.wall.a*330);fake=true}
+  const len=Math.min(345,s/160*345);ctx.fillStyle=fake?'rgba(255,77,94,.95)':'rgba(255,77,94,.55)';ctx.fillRect(645,y+4,len,o.rowH-8);
+  if(fake&&o.wall.a>.02){ctx.save();ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.strokeRect(645,y+4,len,o.rowH-8);ctx.restore()}
+  T(String(Math.round(fake?s*3:s)),652,y+o.rowH/2,{font:MO(26),fill:'#fff',align:'left'});
+  T((bestAsk+(k-1)*.01).toFixed(2),540,y+o.rowH/2,{font:MO(30),fill:MU})}
+ for(let k=1;k<=nB;k++){const y=o.y0+nA*o.rowH+(k-1)*o.rowH;const s=sz(0,k);const len=Math.min(345,s/160*345);ctx.fillStyle='rgba(25,195,125,.55)';ctx.fillRect(435-len,y+4,len,o.rowH-8);
+  T(String(Math.round(s)),428,y+o.rowH/2,{font:MO(26),fill:'#fff',align:'right'});T((bestBid-(k-1)*.01).toFixed(2),540,y+o.rowH/2,{font:MO(30),fill:MU})}
+ ctx.fillStyle=AM;ctx.fillRect(90,o.y0+nA*o.rowH-2,900,4);ctx.restore()}
+function lbl(a,b,t,t0){tx(a,540,1400,IN(34),MU,t,t0);}
+function head(tg,title,t,t0){tag(tg,t,t0);tx(title,90,430,IN(60),'#fff',t,t0+.3,'left');tx('',0,0,IN(1),'#fff',t,t0)}
+function pIntro(t){tx('TRADING DE',540,460,IN(80),'#fff',t,.4);tx('ALTA FRECUENCIA',540,580,IN(88),CY,t,1.0,'center','rgba(56,214,255,.6)');tx('Y',540,690,IN(60),MU,t,1.7);tx('SPOOFING',540,830,IN(130),AM,t,2.0,'center','rgba(255,176,32,.6)');
+ if(COL()){reg(2.8)}else{const a=eout(prog(t,2.8,3.6));ladder(t,{y0:960,rowH:42,alpha:a*.9,sp:9})}}
+function pP1(t){head('01 · HFT','ALTA FRECUENCIA',t,5.0);tx('≤ 10 ms',540,540,IN(150),CY,t,5.8,'center','rgba(56,214,255,.6)');tx('TIEMPO TÍPICO DE IDA Y VUELTA DE UNA ORDEN',540,640,IN(26),MU,t,6.6);tx('(SISTEMAS ULTRARRÁPIDOS)',540,676,IN(26),MU,t,6.9);
+ if(COL()){reg(7.4);tx('POSICIONES DE SEGUNDOS O MENOS',540,1330,IN(36),AM,t,10.5);return}ladder(t,{y0:730,rowH:50,alpha:eout(prog(t,7.4,8.2)),sp:11});tx('POSICIONES DE SEGUNDOS O MENOS',540,1330,IN(36),AM,t,10.5)}
+function pP2(t){head('02 · CÓMO GANA','UNA FRACCIÓN DE CENTAVO',t,14.0);
+ if(COL()){reg(14.8);tx('× UN VOLUMEN ENORME',540,1330,IN(44),AM,t,16.0);tx('CREADOR DE MERCADO',540,1290,IN(40),CY,t,18.4);return}
+ ladder(t,{y0:560,rowH:50,alpha:eout(prog(t,14.8,15.4)),sp:8,spread:1});
+ for(let i=0;i<14;i++){const t0=15.4+i*.5,p=prog(t,t0,t0+1.1);if(p<=0||p>=1)continue;ctx.save();ctx.globalAlpha=1-p;T('+0,01¢',540+((i*97)%7-3)*70,860-p*120,{font:IN(34),fill:GR});ctx.restore()}
+ tx('× UN VOLUMEN ENORME',540,1230,IN(44),AM,t,16.0);
+ if(t>=18.4){const k=eout(prog(t,18.4,18.9));ctx.save();ctx.globalAlpha=k;T('CREADOR DE MERCADO',540,1300,{font:IN(40),fill:CY});T('COMPRA Y VENDE A LA VEZ → GANA EL SPREAD',540,1350,{font:IN(28),fill:MU});ctx.restore()}else{}}
+function pP3(t){head('02 · EN DEBATE','SUS EFECTOS',t,23.0);
+ if(COL()){reg(23.6);tx('MÁS LIQUIDEZ · SPREAD MENOR',540,560,IN(40),GR,t,23.8);tx('6 DE MAYO DE 2010',540,560,IN(40),RD,t,27.9);tx('DOW: −998,5 PUNTOS (≈ 9 %)',540,1280,IN(44),RD,t,29.6);tx('LA LIQUIDEZ SE RETIRÓ DE GOLPE',540,1340,IN(32),MU,t,30.6);return}
+ if(t<27.5){const a=eout(prog(t,23.6,24.2));ladder(t,{y0:640,rowH:56,alpha:a*(1-prog(t,27.1,27.5)),sp:7,spread:t<25.5?3:1});tx('MÁS LIQUIDEZ · SPREAD MENOR',540,560,IN(40),GR,t,23.8);
+  if(t<25.5&&t>23.9){T('SPREAD ANCHO',540,1370,{font:IN(30),fill:AM,a:.9})}else if(t>=25.5){T('SPREAD ESTRECHO',540,1370,{font:IN(30),fill:GR,a:.9})}}
+ else{tx('6 DE MAYO DE 2010',540,560,IN(40),RD,t,27.9);const x0=90,y0=640,w=900,h=560,a=eout(prog(t,28.0,28.5));ctx.save();ctx.globalAlpha=a;ctx.strokeStyle=CY;ctx.lineWidth=3;ctx.strokeRect(x0,y0,w,h);ctx.restore();
+  const p=prog(t,28.4,31.6),n=Math.floor(p*80);const R=rng(21);ctx.save();ctx.strokeStyle=CY;ctx.lineWidth=7;ctx.lineJoin='round';ctx.beginPath();
+  for(let i=0;i<=n;i++){const f=i/80;let y;if(f<.45)y=.28+Math.sin(f*40)*.015;else if(f<.6)y=.28+(f-.45)/.15*.55;else y=.83-(f-.6)/.4*.45;y+=(R()-.5)*.02;const X=x0+30+f*(w-60),Y=y0+40+y*(h-80);i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)}ctx.stroke();ctx.restore();
+  tx('DOW: −998,5 PUNTOS (≈ 9 %)',540,1280,IN(44),RD,t,29.6);tx('LA LIQUIDEZ SE RETIRÓ DE GOLPE',540,1340,IN(32),MU,t,30.6)}}
+function pP4(t){head('03 · SPOOFING','ÓRDENES FALSAS',t,33.0);
+ if(COL()){reg(33.8);tx('1 · ORDEN GRANDE, SIN INTENCIÓN DE EJECUTARLA',540,1290,IN(30),RD,t,35.6);tx('2 · LOS DEMÁS REACCIONAN',540,1290,IN(30),AM,t,37.6);tx('3 · SE CANCELA ANTES DE EJECUTARSE',540,1290,IN(30),CY,t,39.6);tx('FALSA IMPRESIÓN DE OFERTA O DEMANDA',540,1360,IN(36),'#fff',t,40.6);return}
+ let wall=null,shift=0,msg=null;
+ if(t>=35.6&&t<39.6){wall={k:3,a:eout(prog(t,35.6,36.4))};}
+ if(t>=39.6&&t<40.4){wall={k:3,a:1-eout(prog(t,39.6,40.4))}}
+ if(t>=37.6&&t<39.6)shift=1;
+ const a=eout(prog(t,33.8,34.4));ladder(t,{y0:560,rowH:56,alpha:a,sp:6,shift,wall});
+ if(t>=35.6&&t<37.6){msg=['1 · ORDEN GRANDE, SIN INTENCIÓN DE EJECUTARLA',RD]}else if(t>=37.6&&t<39.6){msg=['2 · LOS DEMÁS REACCIONAN: EL PRECIO CEDE',AM]}else if(t>=39.6){msg=['3 · SE CANCELA ANTES DE EJECUTARSE',CY]}
+ if(msg){const k=eout(prog(t,t<37.6?35.6:t<39.6?37.6:39.6,(t<37.6?35.6:t<39.6?37.6:39.6)+.35));ctx.save();ctx.globalAlpha=k;T(msg[0],540,1290,{font:IN(30),fill:msg[1]});ctx.restore()}
+ if(t>=35.8&&t<39.6){const k=.6+.4*Math.sin(t*10);ctx.save();ctx.globalAlpha=k;T('FALSA',820,640+3*56-28+0,{font:IN(26),fill:'#fff',a:1});ctx.restore()}
+ if(t>=39.7&&t<40.6){T('✕ CANCELADA',820,640+3*56-28+0,{font:IN(26),fill:CY})}
+ tx('FALSA IMPRESIÓN DE OFERTA O DEMANDA',540,1360,IN(36),'#fff',t,40.6)}
+function stamp(cx,cy,w,h,rot,s,col,t,t0,f){if(COL()){reg(t0,'hit');return}const p=prog(t,t0,t0+.3);if(p<=0)return;const k=1+.8*(1-eout(p));ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.scale(k,k);ctx.globalAlpha*=p;ctx.strokeStyle=col;ctx.lineWidth=8;ctx.strokeRect(-w/2,-h/2,w,h);T(s,0,3,{font:f,fill:col});ctx.restore()}
+function card(y,l1,l2,col,t,t0){if(COL()){reg(t0);return}const k=eout(prog(t,t0,t0+.45));if(k<=0)return;ctx.save();ctx.globalAlpha=k;ctx.translate(540,y);ctx.scale(k,1);ctx.fillStyle='rgba(56,214,255,.07)';ctx.fillRect(-450,-70,900,140);ctx.strokeStyle=col;ctx.lineWidth=4;ctx.strokeRect(-450,-70,900,140);T(l1,0,-20,{font:IN(44),fill:col});T(l2,0,32,{font:IN(28),fill:TX});ctx.restore()}
+function pP5(t){head('04 · LA LEY','ES ILEGAL',t,42.5);stamp(540,610,640,150,-.05,'PROHIBIDO',RD,t,43.2,IN(90));
+ card(860,'DODD-FRANK · 2010','PROHÍBE EL SPOOFING EN EE. UU.',CY,t,44.6);card(1050,'NAVINDER SARAO','ACUSADO EN 2015 · 22 CARGOS PENALES',AM,t,46.4);card(1240,'19.000 MODIFICACIONES','DE ÓRDENES, SEGÚN LA ACUSACIÓN (FLASH CRASH)',RD,t,48.2)}
+function pEnd(t){tx('VELOCIDAD',540,500,IN(100),CY,t,51.0,'center','rgba(56,214,255,.5)');tx('NO ES DELITO',540,620,IN(72),'#fff',t,51.6);
+ if(!COL()){const k=eout(prog(t,52.4,52.9));ctx.fillStyle=AM;ctx.fillRect(540-400*k,700,800*k,6)}else reg(52.4);
+ tx('ÓRDENES FALSAS',540,830,IN(86),RD,t,52.8,'center','rgba(255,77,94,.5)');tx('PARA ENGAÑAR AL MERCADO',540,930,IN(44),'#fff',t,53.5);tx('= ILEGAL',540,1040,IN(100),AM,t,54.2);
+ tx('FUENTES: WIKIPEDIA (HFT · SPOOFING)',540,1230,IN(28),MU,t,55.0)}
+const PG=[[0,4.5,pIntro],[5.0,13.5,pP1],[14.0,22.5,pP2],[23.0,32.5,pP3],[33.0,42.0,pP4],[42.5,50.5,pP5],[51.0,999,pEnd]];
+function sweep(x){ctx.save();const g=ctx.createLinearGradient(x-260,0,x+20,0);g.addColorStop(0,'rgba(56,214,255,0)');g.addColorStop(.9,'rgba(56,214,255,.5)');g.addColorStop(1,'rgba(255,255,255,.95)');ctx.fillStyle=g;ctx.fillRect(x-260,0,280,H);ctx.restore()}
+function draw(t){bg();let er=null;
+ PG.forEach(([s,e,fn],i)=>{if(t<s||(t>=e+.5&&i<PG.length-1))return;ctx.save();
+  if(t>=e&&i<PG.length-1){const sx=(W+300)*clamp((t-e)/.5)-150;ctx.beginPath();ctx.rect(sx,0,W,H);ctx.clip();er=sx}
+  fn(t);ctx.restore()});if(er!=null)sweep(er)}
+function cover(){bg();const q=(s,y,f,c,g)=>T(s,540,y,{font:f,fill:c,glow:g,gb:26});q('TRADING DE',390,IN(86),'#fff');q('ALTA FRECUENCIA',510,IN(94),CY,'rgba(56,214,255,.6)');q('Y',620,IN(60),MU);q('SPOOFING',770,IN(140),AM,'rgba(255,176,32,.6)');
+ ladder(2.2,{y0:880,rowH:56,sp:0,seed:2,wall:{k:3,a:.7}});ctx.fillStyle=AM;RR(250,1640,580,100,50);ctx.fill();T('EXPLICADO EN 1 MINUTO',540,1692,{font:IN(40),fill:NV})}
+window.__load=()=>{if(!SPEC._c){window.__collect=true;REG.length=0;PG.forEach(p=>p[2](0));window.__collect=false;REG.forEach(r=>SPEC.ev.push(r));SPEC._c=1}return JSON.stringify(Object.assign({dur:21},SPEC))};
+</script></body></html>
