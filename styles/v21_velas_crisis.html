@@ -1,0 +1,56 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:700;src:url(node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo: velas animadas — tema: por qué el oro suele subir en crisis
+const SPEC={name:'OroCrisis',hook:'¿POR QUÉ EL ORO SUBE EN CRISIS?',bpm:100,prog:[[57,'m'],[53,'M'],[48,'M'],[55,'M']],
+ ev:[[0.2,'rise',2.6],[3.2,'alert'],[3.6,'blip',880],[6.0,'chime'],[8.0,'blip',660],[9.5,'tick'],[11.0,'ding'],[12.3,'blip',520],[14.5,'down'],[15.5,'chime'],[17.2,'cta']],
+ subs:[[0.2,3.0,'¿Por qué el oro suele subir cuando hay una crisis?'],
+ [3.2,7.6,'Se le considera un activo refugio: con incertidumbre, muchos inversionistas buscan proteger su capital.'],
+ [7.8,12.0,'También influyen los tipos de interés, el dólar y las compras de los bancos centrales.'],
+ [12.2,16.9,'Pero no siempre sube: en algunas crisis también ha caído. Es una tendencia, no una garantía.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const STY={subFont:'800 46px Inter',subBg:'rgba(8,12,24,.86)',subStroke:'#2a3552',ctaBg:'#0b0f1a',ctaSub:'#ffb020',ctaGlow:'#ffb020',
+ ctaAccent:'#ffb020',ctaBtnText:'#0b0f1a',ctaFontS:'800 52px Inter',ctaFontL:'900 110px Inter'};
+boot(['700 40px Inter','800 40px Inter','900 40px Inter']);
+const BG='#0b0f1a',GR='#19c37d',RD='#ff4d5e',GD='#ffb020';
+// velas ilustrativas: caída (crisis) y refugio
+const Rr=rng(5);const C=[];{let p=60;for(let i=0;i<40;i++){const o=p;const trend=i<14?-.3:(i<28?1.1:.2);const c=o+(Rr()-.45)*3+trend;C.push({o,c,hi:Math.max(o,c)+Rr()*1.6,lo:Math.min(o,c)-Rr()*1.6});p=c}}
+const SC=[];{let p=60;for(let i=0;i<40;i++){const o=p;const c=o+(Rr()-.5)*3.2+(i<14?-1.6:(i<26?-.3:.9));SC.push({o,c,hi:Math.max(o,c)+Rr()*1.6,lo:Math.min(o,c)-Rr()*1.6});p=c}}
+const X0=100,X1=980,Y0=480,Y1=1180;
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+function bg(){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,700,50,540,700,1100);g.addColorStop(0,'#1d2540');g.addColorStop(1,BG);ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+function chart(arr,col,upto,a){const ymin=Math.min(...arr.map(k=>k.lo))-1.5,ymax=Math.max(...arr.map(k=>k.hi))+1.5;const n=arr.length,w=(X1-X0)/n;const Y=v=>Y1-(v-ymin)/(ymax-ymin)*(Y1-Y0);
+  ctx.save();ctx.globalAlpha=a;RR(60,Y0-40,960,Y1-Y0+80,28);ctx.fillStyle='rgba(17,24,39,.9)';ctx.fill();ctx.strokeStyle='#26324d';ctx.lineWidth=2;ctx.stroke();
+  for(let i=0;i<Math.ceil(upto*n);i++){const k=arr[i],x=X0+i*w+w/2,part=Math.min(1,upto*n-i);const c=k.c>=k.o?GR:RD;
+    line(x,Y(k.hi),x,Y(k.lo),c,2.5);ctx.fillStyle=c;const yo=Y(k.o),yc=Y(k.o+(k.c-k.o)*part);ctx.fillRect(x-w*.32,Math.min(yo,yc),w*.64,Math.max(4,Math.abs(yo-yc)))}ctx.restore();return Y}
+function pill(s,x,y,col,a,fs=34){ctx.save();ctx.globalAlpha=a;ctx.font=`900 ${fs}px Inter`;const w=ctx.measureText(s).width+60;RR(x-w/2,y-36,w,72,36);ctx.fillStyle=col;ctx.fill();ctx.restore();T(s,x,y+2,{font:`900 ${fs}px Inter`,fill:'#0b0f1a',a})}
+function draw(t){bg();
+  T('ORO EN CRISIS',540,270,{font:'900 84px Inter',fill:GD});T('¿POR QUÉ SUBE?',540,355,{font:'800 52px Inter',fill:'#fff'});
+  // gancho + incertidumbre
+  let a=fade(t,0,7.7);if(a>0){chart(C,GD,eout(prog(t,.2,3.0)),a);
+    const pk=prog(t,3.2,3.7);if(pk>0){const bl=(Math.floor(t*4)%2)?1:.6;pill('CRISIS',300,Y0+10,RD,a*pk*bl,38)}
+    if(t>4.2)pill('ORO · ACTIVO REFUGIO',640,Y1-60,GD,a*prog(t,4.2,4.8),34);
+    // escudo
+    const sk=eback(prog(t,4.8,5.5));if(sk>0){ctx.save();ctx.globalAlpha=a;ctx.translate(900,Y1-130);ctx.scale(sk,sk);ctx.beginPath();ctx.moveTo(0,-60);ctx.lineTo(55,-35);ctx.lineTo(45,35);ctx.lineTo(0,70);ctx.lineTo(-45,35);ctx.lineTo(-55,-35);ctx.closePath();ctx.fillStyle='rgba(255,176,32,.18)';ctx.fill();ctx.strokeStyle=GD;ctx.lineWidth=6;ctx.stroke();T('Au',0,2,{font:'900 40px Inter',fill:GD});ctx.restore()}
+    ctx.save();ctx.globalAlpha=a;T('incertidumbre → busca protección',540,1290,{font:'800 34px Inter',fill:'#cbd5e1',a:prog(t,5.8,6.4)});ctx.restore()}
+  // factores
+  a=fade(t,7.8,12.1);if(a>0){ctx.save();ctx.globalAlpha=a;RR(60,Y0-40,960,860,28);ctx.fillStyle='rgba(17,24,39,.9)';ctx.fill();ctx.strokeStyle='#26324d';ctx.lineWidth=2;ctx.stroke();ctx.restore();
+    [['TIPOS DE INTERÉS',8.2],['DÓLAR',9.4],['BANCOS CENTRALES',10.6]].forEach(([s,ts],i)=>{const k=eback(prog(t,ts,ts+.5));if(k<=0)return;const y=640+i*210;ctx.save();ctx.globalAlpha=a*Math.min(1,k);ctx.translate(540,y);ctx.scale(k,k);
+      RR(-400,-80,800,160,24);ctx.fillStyle='rgba(255,176,32,.08)';ctx.fill();ctx.strokeStyle=GD;ctx.lineWidth=4;ctx.stroke();T(s,0,0,{font:'900 50px Inter',fill:'#fff'});ctx.restore()})}
+  // no es garantía
+  a=fade(t,12.2,17.1);if(a>0){chart(SC,GD,eout(prog(t,12.4,14.6)),a);
+    pill('A VECES TAMBIÉN CAE',540,Y0-5,RD,a*prog(t,13.4,14),34);
+    T('TENDENCIA ≠ GARANTÍA',540,1290,{font:'900 56px Inter',fill:GD,a:a*prog(t,15.0,15.6),glow:GD,gb:20});
+    T('*velas ilustrativas',540,1230,{font:'700 28px Inter',fill:'#9fb0cc',a:a*.9})}
+}
+function cover(){bg();ctx.save();ctx.translate(0,40);
+  ctx.save();ctx.globalAlpha=.75;const n=C.length,w=1080/n;const mn=Math.min(...C.map(k=>k.lo)),mx=Math.max(...C.map(k=>k.hi));const Y=v=>1500-(v-mn)/(mx-mn)*700;C.forEach((k,i)=>{const x=i*w+w/2,c=k.c>=k.o?GR:RD;line(x,Y(k.hi),x,Y(k.lo),c,3);ctx.fillStyle=c;ctx.fillRect(x-w*.3,Math.min(Y(k.o),Y(k.c)),w*.6,Math.max(5,Math.abs(Y(k.o)-Y(k.c))))});ctx.restore();
+  ctx.fillStyle='rgba(8,12,24,.6)';ctx.fillRect(0,400,W,700);
+  T('¿POR QUÉ EL',540,520,{font:'900 90px Inter',fill:'#fff',stroke:BG,lw:14});
+  T('ORO SUBE',540,690,{font:'900 170px Inter',fill:GD,stroke:BG,lw:14,glow:GD,gb:36});
+  T('EN CRISIS?',540,860,{font:'900 150px Inter',fill:RD,stroke:BG,lw:14,glow:RD,gb:30});
+  RR(290,960,500,100,50);ctx.fillStyle=GD;ctx.fill();T('MÍRALO AHORA',540,1012,{font:'900 50px Inter',fill:'#0b0f1a'});ctx.restore()}
+</script></body></html>

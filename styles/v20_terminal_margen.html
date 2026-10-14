@@ -1,0 +1,70 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo: terminal tipo MetaTrader — tema: margen libre
+const SPEC={name:'MargenLibre',hook:'¿QUÉ ES EL MARGEN LIBRE?',bpm:108,prog:[[52,'m'],[48,'M'],[55,'M'],[50,'M']],
+ ev:[[0.3,'alert'],[3.3,'blip',880],[5.4,'ding'],[7.4,'tick'],[9.4,'down'],[11.5,'blip',784],[13.4,'down'],[15.1,'chime'],[17.2,'cta']],
+ subs:[[0.2,3.0,'¿Sabes qué es el margen libre? Es tu colchón para mantener operaciones abiertas.'],
+ [3.2,7.4,'El margen libre es el capital disponible: tu equity menos el margen usado por las operaciones abiertas.'],
+ [7.6,11.8,'Si abres más lotes, el margen usado sube y el margen libre baja.'],
+ [12.0,16.9,'Si se agota, el bróker puede cerrar tus operaciones. Por eso conviene un lotaje prudente.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const G='#26d07c',R='#ff4d4d',Y='#f2c94c',B='#4da3ff';
+const STY={subFont:'800 46px Inter',subBg:'rgba(5,8,12,.9)',subStroke:G,subFill:'#e9fff4',ctaBg:'#05080c',ctaSub:G,ctaGlow:G,
+ ctaAccent:G,ctaBtnText:'#05080c',ctaFontS:'800 52px Inter',ctaFontL:'900 110px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+const rnd=rng(11);const CND=[];let pr=0;for(let i=0;i<60;i++){const o=pr,c=o+(rnd()-.5)*34;CND.push([o,c,Math.max(o,c)+rnd()*16,Math.min(o,c)-rnd()*16]);pr=c}
+function bg(t){ctx.fillStyle='#0a0d12';ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(60,80,100,.28)';ctx.lineWidth=1;for(let x=0;x<W;x+=90){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+  for(let y=0;y<H;y+=90){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.save();ctx.globalAlpha=.16;const off=(t*14)%34;for(let i=0;i<34;i++){const [o,c,h,l]=CND[i+Math.floor(t*0.4)%20];const x=i*34-off+10,y0=900-o*4,y1=900-c*4;const up=c>=o;ctx.strokeStyle=ctx.fillStyle=up?G:R;ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(x+10,900-h*4);ctx.lineTo(x+10,900-l*4);ctx.stroke();ctx.fillRect(x,Math.min(y0,y1),20,Math.max(6,Math.abs(y1-y0)))}ctx.restore()}
+function win(x,y,w,h,title,col=G){RR(x,y,w,h,18);ctx.fillStyle='rgba(12,17,24,.94)';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=3;ctx.stroke();
+  ctx.save();RR(x,y,w,64,18);ctx.clip();ctx.fillStyle='#16202c';ctx.fillRect(x,y,w,64);ctx.restore();
+  [R,Y,G].forEach((c,i)=>{ctx.beginPath();ctx.arc(x+34+i*34,y+32,10,0,7);ctx.fillStyle=c;ctx.fill()});
+  T(title,x+w-24,y+33,{font:'700 30px "DejaVu Sans Mono",monospace',fill:'#9db3c8',align:'right'})}
+function tx(s,x,y,col,sz=34,a=1,al='left',w='700'){T(s,x,y,{font:`${w} ${sz}px "DejaVu Sans Mono",monospace`,fill:col,align:al,a})}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+const EQ=1000; // equity ilustrativo
+function usedAt(t){return 200+ 500*eio(prog(t,8.0,11.0))}
+// barra equity: usado (rojo) + libre (verde)
+function bar(x,y,w,h,used,a){ctx.save();ctx.globalAlpha*=a;RR(x,y,w,h,14);ctx.strokeStyle='#9db3c8';ctx.lineWidth=3;ctx.stroke();
+  ctx.save();RR(x,y,w,h,14);ctx.clip();const uw=w*used/EQ;ctx.fillStyle=R;ctx.fillRect(x,y,uw,h);ctx.fillStyle=G;ctx.fillRect(x+uw,y,w-uw,h);ctx.restore();ctx.restore()}
+function draw(t){bg(t);
+  tx('XAUUSD,M5   ●  Terminal',60,300,'#8fa6bb',30);
+  const hk=1-eio(prog(t,2.7,3.3));
+  if(hk>0){const bl=(Math.floor(t*4)%2)?1:.6;ctx.save();ctx.globalAlpha=hk;win(90,420,900,720,'MARGEN',B);
+    T('¿QUÉ ES EL',540,640,{font:'900 70px Inter',fill:'#fff'});T('MARGEN',540,790,{font:'900 130px Inter',fill:G,a:bl,glow:G,gb:30});T('LIBRE?',540,940,{font:'900 130px Inter',fill:'#fff'});
+    tx('Free Margin',540,1060,B,36,1,'center');ctx.restore()}
+  // definición
+  let a=fade(t,3.2,7.5);if(a>0){ctx.save();ctx.globalAlpha=a;win(70,420,940,860,'CUENTA.log');
+    tx('Equity',120,540,'#cfe3f5',36,prog(t,3.5,3.9));tx('$1.000',960,540,'#fff',40,prog(t,3.5,3.9),'right');
+    tx('Margen usado',120,640,R,36,prog(t,4.4,4.8));tx('$200',960,640,R,40,prog(t,4.4,4.8),'right');
+    line(120,700,960,700,'#9db3c8',3);
+    const k=eback(prog(t,5.3,5.9));ctx.save();ctx.translate(540,830);ctx.scale(k,k);RR(-400,-80,800,160,20);ctx.fillStyle='rgba(38,208,124,.12)';ctx.fill();ctx.strokeStyle=G;ctx.lineWidth=5;ctx.stroke();
+    T('MARGEN LIBRE = $800',0,-20,{font:'900 56px Inter',fill:G});T('equity − margen usado',0,40,{font:'800 34px Inter',fill:'#fff'});ctx.restore();
+    bar(120,990,840,80,200,prog(t,6.0,6.4));tx('*cifras ilustrativas',540,1190,'#6f879c',26,1,'center');ctx.restore()}
+  // más lotes
+  a=fade(t,7.6,11.9);if(a>0){ctx.save();ctx.globalAlpha=a;win(70,420,940,860,'ORDENES.cfg');
+    const u=usedAt(t);const lots=(0.1+(u-200)/500*0.4).toFixed(2);
+    tx('Lotes abiertos',120,540,'#cfe3f5',34);tx(lots,960,540,Y,44,1,'right');
+    tx('Margen usado',120,650,R,34);tx('$'+Math.round(u),960,650,R,44,1,'right');
+    tx('Margen libre',120,760,G,34);tx('$'+Math.round(EQ-u),960,760,G,44,1,'right');
+    bar(120,850,840,90,u,1);
+    tx('▲ más lotes → ▼ menos margen libre',540,1040,Y,30,prog(t,9.5,10.2),'center');
+    tx('*cifras ilustrativas',540,1190,'#6f879c',26,1,'center');ctx.restore()}
+  // riesgo
+  a=fade(t,12.0,17.1);if(a>0){ctx.save();ctx.globalAlpha=a;win(70,420,940,860,'ALERTA',R);
+    const bl=(Math.floor(t*3)%2)?1:.55;
+    bar(120,540,840,90,EQ*0.97,1);tx('Margen libre ≈ 0',540,700,R,40,bl,'center');
+    const k=eback(prog(t,13.4,14.0));ctx.save();ctx.translate(540,880);ctx.scale(k,k);RR(-380,-90,760,180,20);ctx.fillStyle='rgba(255,77,77,.12)';ctx.fill();ctx.strokeStyle=R;ctx.lineWidth=5;ctx.stroke();
+    T('OPERACIONES',0,-30,{font:'900 56px Inter',fill:R});T('PUEDEN CERRARSE',0,40,{font:'900 56px Inter',fill:'#fff'});ctx.restore();
+    T('LOTAJE PRUDENTE',540,1110,{font:'900 56px Inter',fill:G,a:prog(t,15.2,15.8),glow:G,gb:20});ctx.restore()}
+}
+function cover(){bg(3);ctx.save();win(80,330,920,880,'MARGEN',B);
+  T('¿QUÉ ES EL',540,540,{font:'900 70px Inter',fill:'#fff'});T('MARGEN',540,700,{font:'900 150px Inter',fill:G,glow:G,gb:30});T('LIBRE?',540,870,{font:'900 150px Inter',fill:'#fff'});
+  tx('Si se agota, cierran tus operaciones',540,1010,Y,30,1,'center');
+  RR(220,1090,640,100,50);ctx.fillStyle=G;ctx.fill();T('▶ ENTIÉNDELO YA',540,1142,{font:'900 38px Inter',fill:'#05080c'});ctx.restore()}
+</script></body></html>

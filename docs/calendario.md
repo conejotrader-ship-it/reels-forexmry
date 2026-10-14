@@ -7,7 +7,7 @@ Horarios (hora Bogotá): 9:00, 13:00 y 19:00 (fin de semana: 9:00 y 13:00).
 | Dom 11 (HECHO) | Cómo empezar con cuenta demo | Qué es una cuenta cent | – |
 | Lun 12 (HECHO) | ¿Qué es el spread y por qué importa? | Stop loss: dónde ponerlo en el oro | Qué es un pip en XAUUSD |
 | Mar 13 (HECHO) | Mito: "un robot gana siempre" | Qué es el slippage | Apalancamiento: ventaja y riesgo |
-| Mié 14 | Martingala vs grid | Qué es el margen libre | Por qué el oro sube en crisis |
+| Mié 14 (HECHO) | Martingala vs grid | Qué es el margen libre | Por qué el oro sube en crisis |
 | Jue 15 | Backtest vs cuenta real | Take profit fijo vs dinámico | Qué es la volatilidad |
 | Vie 16 | Miedo y avaricia al operar | Cómo revisar tu robot cada semana | Cierre de semana: qué esperar el lunes |
 | Sáb 17 | Qué es el swap | Cómo leer una vela japonesa | – |
@@ -28,6 +28,7 @@ Texto de cada reel termina con la línea del producto y luego los hashtags.
 - Lun 12: velas animadas (spread), infografía (stop loss), neón (pip).
 - Sáb 10: terminal tipo MetaTrader (bróker regulado, `v6_terminal.html`, escena 20), pizarra (errores al elegir un robot, `v7_pizarra.html`, escena 21); especial MT5 vs MT4 también en pizarra (`v5_pizarra.html`, escena 40, fuente Caveat Brush).
 - Mar 13: pizarra (mito robot, `v14_pizarra_mito.html`, escena 24), terminal MetaTrader (slippage, `v15_terminal_slippage.html`, escena 25), cómic (apalancamiento, `v16_comic_apalancamiento.html`, escena 26).
+- Mié 14: neón synthwave (martingala vs grid, `v19_neon_martingala.html`, escena 51), terminal MetaTrader (margen libre, `v20_terminal_margen.html`, escena 52), velas animadas (oro en crisis, `v21_velas_crisis.html`, escena 53).
 - Dom 11: cómic (cuenta demo, `v8_comic.html`, escena 22), dashboard (cuenta cent, `v9_dashboard.html`, escena 23).
 - Disponibles: pizarra, terminal tipo MetaTrader, cómic, lowpoly, dashboard, pixel-art 3D, y los tres anteriores.
 
