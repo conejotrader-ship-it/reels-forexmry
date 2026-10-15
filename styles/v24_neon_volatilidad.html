@@ -1,0 +1,65 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Orbitron;font-weight:700;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-700-normal.woff2)}
+@font-face{font-family:Orbitron;font-weight:900;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo: neón synthwave — tema: qué es la volatilidad
+const SPEC={name:'Volatilidad',hook:'¿QUÉ ES LA VOLATILIDAD?',bpm:124,prog:[[52,'m'],[48,'M'],[55,'M'],[50,'M']],
+ ev:[[0.3,'power'],[2.7,'rise',0.8],[3.4,'seq',[660,880,1320]],[5.4,'tick'],[5.9,'tick'],[6.4,'tick'],[8.2,'chime'],[9.4,'tick'],[10.0,'tick'],[10.6,'tick'],[12.9,'down'],[14.6,'ding'],[17.2,'cta']],
+ subs:[[0.2,3.0,'¿Qué es la volatilidad? Es cuánto se mueve el precio.'],
+ [3.2,7.6,'Alta volatilidad: velas grandes y movimientos rápidos. Más oportunidades, pero también más riesgo.'],
+ [7.8,12.0,'Baja volatilidad: velas pequeñas y precio tranquilo. Menos movimiento y menos margen.'],
+ [12.2,16.9,'El oro suele moverse mucho, sobre todo con noticias. Ajusta el stop y el lote al momento del mercado.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const CY='#28f0ff',MG='#ff2bd6',GD='#ffd23d',RDN='#ff4466';
+const STY={subFont:'700 38px Orbitron',subBg:'rgba(10,2,24,.86)',subStroke:'#ff2bd6',subFill:'#eaffff',ctaBg:'#07030f',ctaSub:'#28f0ff',ctaGlow:'#ff2bd6',
+ ctaAccent:'#ff2bd6',ctaBtnText:'#fff',ctaFontS:'700 46px Orbitron',ctaFontL:'900 96px Orbitron'};
+boot(['700 40px Orbitron','900 40px Orbitron','800 40px Inter']);
+const HZ=1000;
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#14012e');g.addColorStop(.52,'#2a0746');g.addColorStop(.53,'#07030f');g.addColorStop(1,'#07030f');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // sol retro
+  ctx.save();ctx.beginPath();ctx.rect(0,0,W,HZ);ctx.clip();const sg=ctx.createLinearGradient(0,HZ-300,0,HZ);sg.addColorStop(0,GD);sg.addColorStop(1,MG);ctx.fillStyle=sg;ctx.globalAlpha=.55;
+  ctx.beginPath();ctx.arc(540,HZ,300,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;ctx.fillStyle='#2a0746';for(let i=0;i<7;i++){ctx.fillRect(200,HZ-20-i*38,680,4+i*3)}ctx.restore();
+  // piso con perspectiva
+  ctx.save();ctx.beginPath();ctx.rect(0,HZ,W,H-HZ);ctx.clip();ctx.strokeStyle=MG;ctx.shadowColor=MG;ctx.shadowBlur=10;ctx.lineWidth=2.5;ctx.globalAlpha=.7;
+  for(let i=-14;i<=14;i++){ctx.beginPath();ctx.moveTo(540+i*18,HZ);ctx.lineTo(540+i*180,H);ctx.stroke()}
+  const ph=(t*.5)%1;for(let j=0;j<14;j++){const u=(j+ph)/14,y=HZ+Math.pow(u,2.2)*(H-HZ);ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.save();ctx.strokeStyle=CY;ctx.shadowColor=CY;ctx.shadowBlur=14;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(0,HZ);ctx.lineTo(W,HZ);ctx.stroke();ctx.restore()}
+function scan(){ctx.save();ctx.globalAlpha=.07;ctx.fillStyle='#000';for(let y=0;y<H;y+=6)ctx.fillRect(0,y,W,3);ctx.restore()}
+
+function neon(s,x,y,font,col,a=1,sc=1){T(s,x,y,{font,fill:'#fff',glow:col,gb:34,a,scale:sc});T(s,x,y,{font,fill:col,glow:col,gb:10,a:a*.55,scale:sc})}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+function panel(y,h,col,a){ctx.save();ctx.globalAlpha=a;RR(70,y,940,h,28);ctx.fillStyle='rgba(10,2,24,.82)';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=4;ctx.shadowColor=col;ctx.shadowBlur=22;ctx.stroke();ctx.restore()}
+function candles(x0,y0,w,n,amp,col,t,ts,seed){const r=rng(seed);const k=eout(prog(t,ts,ts+1.6));const step=w/n;
+  let p=y0;ctx.save();for(let i=0;i<n;i++){if(i/n>k)break;const o=p,c=o+(r()-.5)*amp*2,hi=Math.min(o,c)-r()*amp*.6,lo=Math.max(o,c)+r()*amp*.6;p=c;
+    const x=x0+i*step+step/2;ctx.strokeStyle=col;ctx.fillStyle=col;ctx.shadowColor=col;ctx.shadowBlur=12;ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(x,hi);ctx.lineTo(x,lo);ctx.stroke();ctx.fillRect(x-step*.28,Math.min(o,c),step*.56,Math.max(6,Math.abs(c-o)))}ctx.restore()}
+function draw(t){bg(t);
+  const k=eio(prog(t,2.6,3.5));
+  if(k<1){const sc=1+.2*k,a=1-k;
+    neon('¿QUÉ ES LA',540,520,'900 78px Orbitron',MG,a,sc);neon('VOLATILIDAD?',540,700,'900 100px Orbitron',CY,a,sc);neon('cuánto se mueve el precio',540,880,'900 38px Orbitron','#fff',a,sc)}
+  if(k>0)neon('VOLATILIDAD',540,300,'900 56px Orbitron',CY,k);
+  let a=fade(t,3.2,7.7);if(a>0){panel(400,860,RDN,a);ctx.save();ctx.globalAlpha=a;
+    neon('ALTA',540,480,'900 56px Orbitron',RDN,a);
+    candles(130,860,820,16,95,RDN,t,3.9,11);
+    T('velas grandes · movimientos rápidos',540,1215,{font:'700 28px Orbitron',fill:'#c9f7ff',a:prog(t,6.4,7.0)});ctx.restore()}
+  a=fade(t,7.8,12.1);if(a>0){panel(400,860,CY,a);ctx.save();ctx.globalAlpha=a;
+    neon('BAJA',540,480,'900 56px Orbitron',CY,a);
+    candles(130,860,820,16,22,CY,t,8.5,23);
+    T('velas pequeñas · precio tranquilo',540,1215,{font:'700 28px Orbitron',fill:'#c9f7ff',a:prog(t,10.6,11.2)});ctx.restore()}
+  a=fade(t,12.2,17.1);if(a>0){panel(420,820,GD,a);ctx.save();ctx.globalAlpha=a;
+    neon('ADÁPTATE',540,520,'900 56px Orbitron',GD,a);
+    [['STOP',CY,13.0,.8],['LOTE',MG,14.0,.45]].forEach(([s,c,ts,v],i)=>{const kk=eout(prog(t,ts,ts+.9));const y=700+i*190;
+      T(s,230,y,{font:'900 44px Orbitron',fill:c,glow:c,gb:16});
+      RR(340,y-30,540,60,30);ctx.strokeStyle=c;ctx.lineWidth=4;ctx.stroke();
+      RR(346,y-24,Math.max(10,528*v*kk),48,24);ctx.fillStyle=c;ctx.shadowColor=c;ctx.shadowBlur=18;ctx.fill();ctx.shadowBlur=0});
+    T('según el mercado del momento',540,1130,{font:'700 30px Orbitron',fill:'#c9f7ff',a:prog(t,15.0,15.6)});
+    T('NO HAY GARANTÍAS',540,1195,{font:'900 34px Orbitron',fill:GD,a:prog(t,15.8,16.4),glow:GD,gb:18});ctx.restore()}
+  scan()}
+function cover(){bg(3);ctx.save();ctx.translate(0,40);
+  neon('¿QUÉ ES LA',540,430,'900 80px Orbitron',MG);neon('VOLATI-',540,620,'900 150px Orbitron',CY);neon('LIDAD?',540,800,'900 170px Orbitron',CY);
+  neon('EL ORO SE MUEVE MUCHO',540,980,'900 40px Orbitron','#fff');
+  RR(210,1070,660,110,55);ctx.fillStyle=GD;ctx.shadowColor=GD;ctx.shadowBlur=26;ctx.fill();ctx.shadowBlur=0;T('DESCÚBRELO →',540,1126,{font:'900 42px Orbitron',fill:'#1a0a00'});
+  ctx.restore();scan()}
+</script></body></html>
