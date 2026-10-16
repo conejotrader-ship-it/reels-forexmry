@@ -1,0 +1,76 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo: terminal tipo MetaTrader — tema: cierre de semana y gap del lunes
+const SPEC={name:'CierreSemana',hook:'VIERNES: ¿QUÉ HACES CON TUS OPERACIONES ABIERTAS?',bpm:98,prog:[[50,'m'],[46,'M'],[53,'M'],[48,'M']],
+ ev:[[0.3,'alert'],[3.3,'blip',880],[5.0,'tick'],[6.4,'down'],[7.9,'blip',660],[9.4,'tick'],[11.0,'down'],[12.4,'blip',784],[13.4,'ding'],[14.6,'ding'],[15.8,'chime'],[17.2,'cta']],
+ subs:[[0.2,3.0,'Cierra la semana. ¿Qué haces con tus operaciones abiertas?'],
+ [3.2,7.6,'El mercado cierra el fin de semana. Si hay noticias, el lunes el precio puede abrir con un hueco, o gap.'],
+ [7.8,12.0,'Al reabrir, la liquidez es baja y el spread suele ser más amplio. Un stop loss puede ejecutarse peor.'],
+ [12.3,16.9,'Antes de cerrar: revisa posiciones, riesgo y calendario económico. Nadie sabe qué hará el lunes.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const G='#26d07c',R='#ff4d4d',Y='#f2c94c',B='#4da3ff';
+const STY={subFont:'800 44px Inter',subBg:'rgba(5,8,12,.9)',subStroke:Y,subFill:'#fff9e0',ctaBg:'#05080c',ctaSub:Y,ctaGlow:Y,
+ ctaAccent:Y,ctaBtnText:'#05080c',ctaFontS:'800 52px Inter',ctaFontL:'900 110px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+const rnd=rng(23);const CND=[];let pr=0;for(let i=0;i<60;i++){const o=pr,c=o+(rnd()-.5)*34;CND.push([o,c,Math.max(o,c)+rnd()*16,Math.min(o,c)-rnd()*16]);pr=c}
+function bg(t){ctx.fillStyle='#0a0d12';ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(60,80,100,.28)';ctx.lineWidth=1;for(let x=0;x<W;x+=90){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+  for(let y=0;y<H;y+=90){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.save();ctx.globalAlpha=.14;const off=(t*14)%34;for(let i=0;i<34;i++){const [o,c,h,l]=CND[i+Math.floor(t*0.4)%20];const x=i*34-off+10,y0=900-o*4,y1=900-c*4;const up=c>=o;ctx.strokeStyle=ctx.fillStyle=up?G:R;ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(x+10,900-h*4);ctx.lineTo(x+10,900-l*4);ctx.stroke();ctx.fillRect(x,Math.min(y0,y1),20,Math.max(6,Math.abs(y1-y0)))}ctx.restore()}
+function win(x,y,w,h,title,col=G){RR(x,y,w,h,18);ctx.fillStyle='rgba(12,17,24,.94)';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=3;ctx.stroke();
+  ctx.save();RR(x,y,w,64,18);ctx.clip();ctx.fillStyle='#16202c';ctx.fillRect(x,y,w,64);ctx.restore();
+  [R,Y,G].forEach((c,i)=>{ctx.beginPath();ctx.arc(x+34+i*34,y+32,10,0,7);ctx.fillStyle=c;ctx.fill()});
+  T(title,x+w-24,y+33,{font:'700 30px "DejaVu Sans Mono",monospace',fill:'#9db3c8',align:'right'})}
+function tx(s,x,y,col,sz=34,a=1,al='left',w='700'){T(s,x,y,{font:`${w} ${sz}px "DejaVu Sans Mono",monospace`,fill:col,align:al,a})}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+function candle(x,o,c,h,l,col,Y0,s,a=1){ctx.save();ctx.globalAlpha*=a;ctx.strokeStyle=ctx.fillStyle=col;ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(x,Y0-h*s);ctx.lineTo(x,Y0-l*s);ctx.stroke();
+  ctx.fillRect(x-14,Math.min(Y0-o*s,Y0-c*s),28,Math.max(6,Math.abs(c-o)*s));ctx.restore()}
+// velas del viernes y del lunes (ilustrativas): [o,c,h,l]
+const FRI=[[40,48,50,38],[48,44,52,42],[44,55,57,43],[55,52,58,50],[52,60,62,51],[60,58,63,56]];
+const MON=[[40,34,45,32],[34,38,41,31],[38,36,42,34],[36,41,43,35]];
+function draw(t){bg(t);
+  tx('XAUUSD,H1   ●  Terminal',60,300,'#8fa6bb',30);
+  const hk=1-eio(prog(t,2.7,3.3));
+  if(hk>0){const bl=(Math.floor(t*4)%2)?1:.6;ctx.save();ctx.globalAlpha=hk;win(90,420,900,720,'VIERNES',Y);
+    T('VIERNES: ¿QUÉ HACES',540,610,{font:'900 58px Inter',fill:'#fff'});T('CON TUS',540,700,{font:'900 58px Inter',fill:'#fff'});T('OPERACIONES',540,830,{font:'900 100px Inter',fill:Y,a:bl,glow:Y,gb:30});T('ABIERTAS?',540,950,{font:'900 100px Inter',fill:'#fff'});
+    tx('Open positions: 3',540,1060,B,36,1,'center');ctx.restore()}
+  // gap
+  let a=fade(t,3.2,7.7);if(a>0){ctx.save();ctx.globalAlpha=a;win(50,400,980,900,'FIN_DE_SEMANA.chart');
+    const Y0=1170,s=9,xs=[110,190,270,350,430,510];
+    FRI.forEach((c,i)=>candle(xs[i],c[0],c[1],c[2],c[3],c[1]>=c[0]?G:R,Y0,s,prog(t,3.6+i*.15,3.9+i*.15)));
+    // zona de mercado cerrado
+    const k=eout(prog(t,5.0,5.6));ctx.save();ctx.globalAlpha=a*k;ctx.fillStyle='rgba(242,201,76,.1)';ctx.fillRect(560,470,170,760);ctx.setLineDash([12,10]);ctx.strokeStyle=Y;ctx.lineWidth=3;ctx.strokeRect(560,470,170,760);
+    tx('MERCADO',645,820,Y,26,1,'center');tx('CERRADO',645,860,Y,26,1,'center');tx('sáb · dom',645,910,'#9db3c8',24,1,'center');ctx.restore();
+    const xm=[790,860,930,1000].map(x=>x-0);
+    MON.forEach((c,i)=>candle(xm[i]-10,c[0]+0,c[1],c[2],c[3],c[1]>=c[0]?G:R,Y0,s,prog(t,6.3+i*.15,6.6+i*.15)));
+    // línea de cierre y gap
+    const g=eout(prog(t,6.2,6.8));if(g>0){ctx.save();ctx.globalAlpha=a*g;line(510,Y0-58*s,870,Y0-58*s,Y,3,[10,8]);line(850,Y0-58*s,850,Y0-40*s,R,6);
+      RR(640,Y0-52*s-150,290,96,18);ctx.fillStyle='rgba(255,77,77,.14)';ctx.fill();ctx.strokeStyle=R;ctx.lineWidth=4;ctx.stroke();T('GAP',785,Y0-52*s-120,{font:'900 44px Inter',fill:R});tx('hueco al abrir',785,Y0-52*s-78,'#fff',24,1,'center');ctx.restore()}
+    tx('VIE',320,1260,'#9db3c8',26,1,'center');tx('LUN',900,1260,'#9db3c8',26,1,'center');
+    tx('*datos ilustrativos',540,1340,'#6f879c',24,1,'center');ctx.restore()}
+  // apertura
+  a=fade(t,7.8,12.1);if(a>0){ctx.save();ctx.globalAlpha=a;win(70,420,940,860,'APERTURA.log',Y);
+    tx('Liquidez',120,550,'#cfe3f5',36,prog(t,8.1,8.5));tx('BAJA',960,550,Y,44,prog(t,8.1,8.5),'right');
+    tx('Spread',120,660,'#cfe3f5',36,prog(t,9.0,9.4));
+    const sp=eio(prog(t,9.0,10.4));tx((0.3+0.9*sp).toFixed(1)+'  ▲',960,660,R,44,prog(t,9.0,9.4),'right');
+    tx('(spread ilustrativo, en dólares)',120,730,'#6f879c',24,prog(t,9.4,9.8));
+    line(120,780,960,780,'#9db3c8',3);
+    const k=eback(prog(t,10.6,11.2));ctx.save();ctx.translate(540,950);ctx.scale(k,k);RR(-400,-110,800,220,20);ctx.fillStyle='rgba(255,77,77,.12)';ctx.fill();ctx.strokeStyle=R;ctx.lineWidth=5;ctx.stroke();
+    T('STOP LOSS',0,-45,{font:'900 56px Inter',fill:R});T('PUEDE EJECUTARSE',0,25,{font:'900 50px Inter',fill:'#fff'});T('A UN PRECIO PEOR',0,82,{font:'900 50px Inter',fill:'#fff'});ctx.restore();ctx.restore()}
+  // checklist
+  a=fade(t,12.3,17.1);if(a>0){ctx.save();ctx.globalAlpha=a;win(70,380,940,950,'CHECKLIST_VIERNES.txt',G);
+    [['Revisa posiciones abiertas',13.0],['Revisa tu riesgo y stop loss',14.2],['Mira el calendario económico',15.4]].forEach(([s2,ts],i)=>{const k=eout(prog(t,ts,ts+.5));ctx.save();ctx.globalAlpha=a*k;const y=520+i*180;
+      RR(110,y,860,140,20);ctx.fillStyle='rgba(38,208,124,.1)';ctx.fill();ctx.strokeStyle=G;ctx.lineWidth=3;ctx.stroke();
+      ctx.beginPath();ctx.arc(190,y+70,34,0,7);ctx.fillStyle=G;ctx.fill();ctx.strokeStyle='#05080c';ctx.lineWidth=8;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(174,y+70);ctx.lineTo(186,y+83);ctx.lineTo(208,y+55);ctx.stroke();
+      const L=wrapLines(s2,640,'800 40px Inter');L.forEach((l,j)=>T(l,250,y+70+(j-(L.length-1)/2)*48,{font:'800 40px Inter',fill:'#fff',align:'left'}));ctx.restore()});
+    T('NADIE SABE QUÉ HARÁ EL LUNES',540,1150,{font:'900 40px Inter',fill:Y,a:prog(t,15.8,16.4)});ctx.restore()}
+}
+function cover(){bg(3);ctx.save();win(80,330,920,880,'VIERNES',Y);
+  T('VIERNES:',540,520,{font:'900 76px Inter',fill:'#fff'});T('¿CIERRAS O',540,670,{font:'900 120px Inter',fill:Y,glow:Y,gb:30});T('DEJAS ABIERTO?',540,810,{font:'900 100px Inter',fill:'#fff'});
+  tx('El gap del lunes existe',540,950,R,32,1,'center');
+  RR(220,1040,640,100,50);ctx.fillStyle=Y;ctx.fill();T('▶ VER ANTES DE CERRAR',540,1092,{font:'900 34px Inter',fill:'#05080c'});ctx.restore()}
+</script></body></html>

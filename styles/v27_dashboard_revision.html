@@ -1,0 +1,76 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:Orbitron;font-weight:900;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo: dashboard violeta/lima (tarjetas con indicadores) — tema: cómo revisar tu robot cada semana
+const SPEC={name:'RevisionSemanal',hook:'3 COSAS QUE DEBES REVISAR EN TU ROBOT CADA SEMANA',bpm:100,prog:[[52,'m'],[48,'M'],[55,'M'],[50,'M']],
+ ev:[[0.3,'hit'],[3.3,'blip',880],[4.4,'ding'],[6.6,'blip',784],[7.8,'ding'],[10.0,'blip',660],[11.4,'ding'],[13.2,'wipe'],[14.2,'tick'],[15.0,'tick'],[15.8,'ding'],[17.2,'cta']],
+ subs:[[0.2,3.0,'Tres cosas que debes revisar en tu robot cada semana.'],
+ [3.2,6.5,'Uno: el drawdown. Compáralo con el que viste en tus pruebas.'],
+ [6.6,9.9,'Dos: las operaciones. Que el lotaje, el spread y la ejecución sean los esperados.'],
+ [10.0,13.0,'Tres: la curva de capital, vista en conjunto, no un solo día.'],
+ [13.2,16.9,'Una semana es una muestra pequeña. No cambies parámetros por una mala racha.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const BG='#100c1f',CARD='#1b1536',LN='#3a2f6b',TX='#f1ecff',MU='#9a8fc9',VI='#a78bfa',LM='#b6f23a',RD='#ff5c7a',AM='#ffb84d';
+const STY={subFont:'800 46px Inter',subBg:'rgba(16,12,31,.94)',subStroke:VI,subFill:TX,ctaBg:'#100c1f',ctaSub:VI,ctaGlow:VI,
+ ctaAccent:LM,ctaBtnText:'#100c1f',ctaFontS:'800 52px Inter',ctaFontL:'900 110px Inter'};
+boot(['800 40px Inter','900 40px Inter','900 40px Orbitron']);
+function bg(){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  for(let x=0;x<W;x+=60)line(x,0,x,H,'rgba(167,139,250,.06)',2);for(let y=0;y<H;y+=60)line(0,y,W,y,'rgba(167,139,250,.06)',2);
+  RR(60,70,960,70,20);ctx.fillStyle=CARD;ctx.fill();[RD,AM,LM].forEach((c,i)=>{ctx.beginPath();ctx.arc(110+i*40,105,12,0,7);ctx.fillStyle=c;ctx.fill()});
+  T('REVISIÓN SEMANAL',640,105,{font:'800 30px Inter',fill:MU})}
+function card(x,y,w,h,k=1,bd=LN){if(k<=0)return;ctx.save();ctx.translate(x+w/2,y+h/2+(1-k)*40);ctx.globalAlpha*=clamp(k);ctx.translate(-x-w/2,-y-h/2);
+  RR(x,y,w,h,32);ctx.fillStyle=CARD;ctx.fill();ctx.lineWidth=3;ctx.strokeStyle=bd;ctx.stroke();ctx.restore()}
+function lab(s,x,y,col=MU,sz=34,al='left'){T(s,x,y,{font:`800 ${sz}px Inter`,fill:col,align:al})}
+function big(s,x,y,sz,col,al='center',glow){T(s,x,y,{font:`900 ${sz}px Orbitron`,fill:col,align:al,glow,gb:20})}
+function fade(t,a,b){return Math.min(prog(t,a,a+.3),1-prog(t,b-.25,b))}
+function gauge(cx,cy,r,v,col){ctx.save();ctx.lineWidth=46;ctx.lineCap='round';ctx.strokeStyle=LN;ctx.beginPath();ctx.arc(cx,cy,r,Math.PI,2*Math.PI);ctx.stroke();
+  ctx.strokeStyle=col;ctx.beginPath();ctx.arc(cx,cy,r,Math.PI,Math.PI+Math.PI*clamp(v));ctx.stroke();ctx.restore()}
+function pill(x,y,w,s,col,k){if(k<=0)return;ctx.save();ctx.globalAlpha*=clamp(k);RR(x,y,w,70,35);ctx.fillStyle=col;ctx.fill();T(s,x+w/2,y+36,{font:'900 30px Inter',fill:BG});ctx.restore()}
+function head(n,title,t,t0){T(String(n),130,300,{font:'900 90px Orbitron',fill:VI});lab(title,230,300,TX,52)}
+function draw(t){bg();
+  let a=1-prog(t,2.7,3.2);if(t<3.3){ctx.save();ctx.globalAlpha=a;const k=eout(prog(t,.1,.7));
+    card(70,300,940,1060,k,VI);ctx.save();ctx.globalAlpha=a*k;
+    T('REVISA TU ROBOT',540,460,{font:'900 86px Inter',fill:TX});T('CADA SEMANA',540,570,{font:'900 86px Inter',fill:LM});
+    ['DRAWDOWN','OPERACIONES','CURVA'].forEach((s,i)=>{const kk=eout(prog(t,.6+i*.45,1.1+i*.45));ctx.save();ctx.globalAlpha=a*kk;const y=700+i*190;
+      RR(130,y,820,150,28);ctx.fillStyle='#241b4a';ctx.fill();ctx.strokeStyle=VI;ctx.lineWidth=3;ctx.stroke();big(String(i+1),200,y+78,64,VI);lab(s,290,y+78,TX,52);ctx.restore()});
+    ctx.restore();ctx.restore()}
+  // 1 drawdown
+  a=fade(t,3.2,6.5);if(a>0){ctx.save();ctx.globalAlpha=a;card(70,230,940,1120,eout(prog(t,3.2,3.7)),VI);head(1,'DRAWDOWN',t);
+    gauge(540,820,280,.5*eio(prog(t,3.7,5.2)),AM);
+    big((18*eio(prog(t,3.7,5.2))).toFixed(1).replace('.',',')+'%',540,790,90,TX,'center',AM);lab('drawdown de la semana (ejemplo)',540,880,MU,32,'center');
+    const k=eout(prog(t,4.8,5.4));ctx.save();ctx.globalAlpha=a*k;line(540-280,820,540+280,820,'rgba(0,0,0,0)',1);
+    RR(130,1000,820,190,28);ctx.fillStyle='#241b4a';ctx.fill();ctx.strokeStyle=LM;ctx.lineWidth=3;ctx.stroke();
+    lab('¿Es parecido al de tus pruebas?',540,1070,TX,42,'center');lab('Si es mucho mayor, hay que investigar.',540,1135,LM,36,'center');ctx.restore();
+    lab('*cifras ilustrativas',540,1300,MU,26,'center');ctx.restore()}
+  // 2 operaciones
+  a=fade(t,6.6,9.9);if(a>0){ctx.save();ctx.globalAlpha=a;card(70,230,940,1120,eout(prog(t,6.6,7.1)),VI);head(2,'OPERACIONES',t);
+    [['Lotaje','el configurado',7.0],['Spread','normal para el oro',7.7],['Ejecución','sin errores ni rechazos',8.4]].forEach(([k1,v1,ts],i)=>{const k=eout(prog(t,ts,ts+.5));ctx.save();ctx.globalAlpha=a*k;const y=420+i*210;
+      RR(130,y,820,170,28);ctx.fillStyle='#241b4a';ctx.fill();lab(k1,170,y+55,VI,40);lab(v1,170,y+115,TX,40);
+      ctx.beginPath();ctx.arc(870,y+85,40,0,7);ctx.fillStyle=LM;ctx.fill();ctx.strokeStyle=BG;ctx.lineWidth=9;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(852,y+85);ctx.lineTo(866,y+100);ctx.lineTo(890,y+68);ctx.stroke();ctx.restore()});
+    lab('Revisa el historial y el registro de errores.',540,1130,MU,32,'center');ctx.restore()}
+  // 3 curva
+  a=fade(t,10.0,13.0);if(a>0){ctx.save();ctx.globalAlpha=a;card(70,230,940,1120,eout(prog(t,10.0,10.5)),VI);head(3,'CURVA DE CAPITAL',t);
+    const P=[[0,.7],[.1,.62],[.2,.66],[.3,.5],[.4,.55],[.5,.38],[.6,.45],[.7,.3],[.8,.36],[.9,.2],[1,.26]];
+    const x0=140,y0=440,w=800,h=560;for(let g=0;g<5;g++)line(x0,y0+g*h/4,x0+w,y0+g*h/4,'rgba(154,143,201,.2)',2);
+    const f=eio(prog(t,10.3,12.0))*(P.length-1);ctx.save();ctx.lineJoin='round';ctx.lineCap='round';ctx.strokeStyle=LM;ctx.lineWidth=8;ctx.shadowColor=LM;ctx.shadowBlur=14;ctx.beginPath();
+    for(let i=0;i<=Math.floor(f);i++)i?ctx.lineTo(x0+P[i][0]*w,y0+P[i][1]*h):ctx.moveTo(x0+P[0][0]*w,y0+P[0][1]*h);
+    if(f<P.length-1){const i=Math.floor(f),u=f-i;ctx.lineTo(x0+lerp(P[i][0],P[i+1][0],u)*w,y0+lerp(P[i][1],P[i+1][1],u)*h)}ctx.stroke();ctx.restore();
+    lab('semana 1 → 5 (ilustrativo)',540,1060,MU,30,'center');
+    const k=eout(prog(t,11.9,12.5));ctx.save();ctx.globalAlpha=a*k;lab('Mira la tendencia, no un día suelto.',540,1170,TX,42,'center');ctx.restore();ctx.restore()}
+  // 4 regla
+  a=fade(t,13.2,17.0);if(a>0){ctx.save();ctx.globalAlpha=a;card(70,230,940,1150,eout(prog(t,13.2,13.8)),LM);
+    T('UNA SEMANA =',540,370,{font:'900 64px Inter',fill:TX});T('MUESTRA PEQUEÑA',540,460,{font:'900 64px Inter',fill:AM});
+    [['Anota tus números',14.0],['Compáralos con tus pruebas',14.9],['No cambies parámetros por impulso',15.8]].forEach(([s2,ts],i)=>{const k=eout(prog(t,ts,ts+.5));ctx.save();ctx.globalAlpha=a*k;const y=620+i*210;
+      RR(130,y,820,160,28);ctx.fillStyle='#241b4a';ctx.fill();ctx.beginPath();ctx.arc(210,y+80,38,0,7);ctx.fillStyle=VI;ctx.fill();T(String(i+1),210,y+84,{font:'900 44px Inter',fill:BG});
+      const L=wrapLines(s2,560,'800 42px Inter');L.forEach((l,j)=>T(l,280,y+80+(j-(L.length-1)/2)*52,{font:'800 42px Inter',fill:TX,align:'left'}));ctx.restore()});
+    ctx.restore()}
+}
+function cover(){bg();ctx.save();ctx.translate(0,150);card(70,330,940,1060,1,VI);
+  T('¿REVISAS TU',540,490,{font:'900 84px Inter',fill:TX});T('ROBOT?',540,610,{font:'900 120px Inter',fill:LM});
+  gauge(540,880,200,.5,AM);big('3',540,850,110,VI);lab('cosas cada semana',540,960,TX,40,'center');
+  T('Drawdown · Operaciones · Curva',540,1100,{font:'800 40px Inter',fill:MU});
+  RR(220,1210,640,100,50);ctx.fillStyle=LM;ctx.fill();T('VER REEL →',540,1261,{font:'900 46px Inter',fill:BG});ctx.restore()}
+</script></body></html>

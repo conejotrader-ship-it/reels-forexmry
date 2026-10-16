@@ -1,0 +1,89 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo: cómic — tema: miedo y avaricia al operar
+const SPEC={name:'MiedoAvaricia',hook:'¿EL MIEDO O LA AVARICIA TE ARRUINAN MÁS?',bpm:120,prog:[[55,'m'],[51,'M'],[58,'M'],[53,'M']],
+ ev:[[0.3,'power'],[3.3,'blip',660],[4.8,'down'],[7.8,'blip',880],[9.3,'ding'],[12.4,'wipe'],[13.4,'ding'],[14.6,'ding'],[15.8,'chime'],[17.2,'cta']],
+ subs:[[0.2,3.0,'El miedo te saca de buenas operaciones. La avaricia te deja en las malas.'],
+ [3.2,7.5,'Miedo: cierras al primer susto y el precio sigue a tu favor sin ti.'],
+ [7.8,12.0,'Avaricia: alejas el take profit, no cierras a tiempo o subes el lotaje para recuperar.'],
+ [12.3,16.9,'La clave: un plan escrito antes de operar, con stop loss y take profit. Y respetarlo.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const INK='#14121c',YEL='#ffd23f',RED='#ee4266',BLU='#3bc1ff',GRN='#4cd98a',PAP='#fff4d6',PUR='#b388ff';
+const STY={subFont:'800 46px Inter',subBg:'#fff4d6',subStroke:INK,subFill:INK,ctaBg:'#b388ff',ctaSub:INK,ctaGlow:'rgba(0,0,0,0)',ctaMain:INK,
+ ctaAccent:YEL,ctaBtnText:INK,ctaFontS:'900 52px Inter',ctaFontL:'900 110px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+function bg(){ctx.fillStyle=PAP;ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(179,136,255,.22)';
+  for(let y=0;y<H;y+=36)for(let x=(y/36%2)*18;x<W;x+=36){ctx.beginPath();ctx.arc(x,y,6+((y/H)*6),0,7);ctx.fill()}
+  ctx.strokeStyle=INK;ctx.lineWidth=14;ctx.strokeRect(14,14,W-28,H-28)}
+function panel(x,y,w,h,col,rot=0,k=1){ctx.save();ctx.translate(x+w/2,y+h/2);ctx.rotate(rot);ctx.scale(k,k);
+  ctx.fillStyle=INK;RR(-w/2+14,-h/2+14,w,h,10);ctx.fill();ctx.fillStyle=col;RR(-w/2,-h/2,w,h,10);ctx.fill();ctx.lineWidth=10;ctx.strokeStyle=INK;ctx.stroke();ctx.restore()}
+function ct(s,x,y,sz,col=INK,a=1,st){T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,stroke:st,lw:12})}
+function burst(cx,cy,r1,r2,n,col,rot=0){ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.beginPath();
+  for(let i=0;i<n*2;i++){const r=i%2?r1:r2,a=Math.PI*i/n;ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();
+  ctx.fillStyle=INK;ctx.save();ctx.translate(12,12);ctx.fill();ctx.restore();ctx.fillStyle=col;ctx.fill();ctx.lineWidth=10;ctx.strokeStyle=INK;ctx.stroke();ctx.restore()}
+function bubble(x,y,w,h,lines,tx,ty,k=1,sz=44){if(k<=0)return;ctx.save();ctx.translate(x+w/2,y+h/2);ctx.scale(k,k);ctx.translate(-x-w/2,-y-h/2);
+  ctx.fillStyle='#fff';ctx.strokeStyle=INK;ctx.lineWidth=9;RR(x,y,w,h,40);ctx.fill();ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x+w/2-30,y+h-4);ctx.lineTo(tx,ty);ctx.lineTo(x+w/2+30,y+h-4);ctx.fillStyle='#fff';ctx.fill();ctx.stroke();
+  ctx.fillStyle='#fff';ctx.fillRect(x+w/2-26,y+h-14,52,14);
+  lines.forEach((l,i)=>T(l,x+w/2,y+h/2+(i-(lines.length-1)/2)*(sz+8),{font:`900 ${sz}px Inter`,fill:INK}));ctx.restore()}
+function fade(t,a,b){return Math.min(prog(t,a,a+.3),1-prog(t,b-.25,b))}
+// carita de cómic: kind = 'fear' | 'greed' | 'calm'
+function face(cx,cy,r,kind,t){ctx.save();ctx.translate(cx,cy);ctx.lineWidth=9;ctx.strokeStyle=INK;
+  ctx.fillStyle=kind==='fear'?'#bfe9ff':kind==='greed'?'#ffe27a':'#c8f7d8';ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.fill();ctx.stroke();
+  const e=r*.34,ey=-r*.18;
+  if(kind==='greed'){T('$',-e,ey,{font:`900 ${r*.62}px Inter`,fill:'#1a8f3c',stroke:INK,lw:6});T('$',e,ey,{font:`900 ${r*.62}px Inter`,fill:'#1a8f3c',stroke:INK,lw:6});
+    ctx.beginPath();ctx.arc(0,r*.12,r*.5,.1*Math.PI,.9*Math.PI);ctx.stroke();ctx.fillStyle='#fff';ctx.fill()}
+  else if(kind==='fear'){[-e,e].forEach(x=>{ctx.beginPath();ctx.arc(x,ey,r*.17,0,7);ctx.fillStyle='#fff';ctx.fill();ctx.stroke();ctx.beginPath();ctx.arc(x,ey,r*.06,0,7);ctx.fillStyle=INK;ctx.fill()});
+    ctx.beginPath();ctx.ellipse(0,r*.5,r*.22,r*.14+Math.sin(t*14)*r*.02,0,0,7);ctx.fillStyle=INK;ctx.fill();
+    ctx.beginPath();ctx.moveTo(r*.72,-r*.5);ctx.quadraticCurveTo(r*.9,-r*.15,r*.72,-r*.05);ctx.quadraticCurveTo(r*.54,-r*.15,r*.72,-r*.5);ctx.fillStyle=BLU;ctx.fill();ctx.stroke()}
+  else{[-e,e].forEach(x=>{ctx.beginPath();ctx.arc(x,ey,r*.08,0,7);ctx.fillStyle=INK;ctx.fill()});ctx.beginPath();ctx.arc(0,r*.12,r*.4,.15*Math.PI,.85*Math.PI);ctx.stroke()}
+  ctx.restore()}
+// mini gráfico con línea de precio; ancla = puntos [x,y] relativos
+function mini(x,y,w,h,pts,k,col=GRN){ctx.save();ctx.fillStyle='#fff';ctx.strokeStyle=INK;ctx.lineWidth=8;RR(x,y,w,h,18);ctx.fill();ctx.stroke();ctx.save();RR(x,y,w,h,18);ctx.clip();
+  ctx.strokeStyle='rgba(20,18,28,.12)';ctx.lineWidth=2;for(let g=1;g<4;g++){ctx.beginPath();ctx.moveTo(x,y+g*h/4);ctx.lineTo(x+w,y+g*h/4);ctx.stroke()}
+  const f=clamp(k)*(pts.length-1);ctx.strokeStyle=col;ctx.lineWidth=10;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();
+  for(let i=0;i<=Math.floor(f);i++){const p=pts[i];i?ctx.lineTo(x+p[0]*w,y+p[1]*h):ctx.moveTo(x+p[0]*w,y+p[1]*h)}
+  if(f<pts.length-1){const i=Math.floor(f),u=f-i;ctx.lineTo(x+lerp(pts[i][0],pts[i+1][0],u)*w,y+lerp(pts[i][1],pts[i+1][1],u)*h)}ctx.stroke();ctx.restore();ctx.restore()}
+const FEAR=[[.04,.8],[.2,.6],[.34,.66],[.46,.45],[.58,.34],[.72,.2],[.86,.1],[.96,.04]];
+const GREED=[[.04,.85],[.22,.6],[.36,.5],[.5,.3],[.62,.18],[.74,.4],[.86,.7],[.96,.9]];
+function draw(t){bg();
+  let a=1-prog(t,2.7,3.2);if(t<3.3){ctx.save();ctx.globalAlpha=a;const k=eback(prog(t,.1,.7));
+    ctx.translate(540,720);ctx.scale(k,k);burst(0,0,400,490,14,YEL,Math.sin(t*2)*.04);
+    ct('¿MIEDO O',0,-170,100,INK);ct('AVARICIA?',0,-30,110,RED);ct('¿CUÁL TE ARRUINA?',0,115,52,INK);
+    ctx.restore();face(300,1130,110,'fear',t);face(780,1130,110,'greed',t);ct('VS',540,1130,90,INK)}
+  a=fade(t,3.2,7.6);if(a>0){ctx.save();ctx.globalAlpha=a;const k=eback(prog(t,3.2,3.8));
+    panel(90,230,900,1130,BLU,-.012,k);
+    ct('EL MIEDO',540,330,84,'#fff',a,INK);
+    face(260,520,120,'fear',t);
+    bubble(420,430,520,150,['¡Cierro ya,','por si acaso!'],470,560,eback(prog(t,3.9,4.5)),44);
+    mini(150,700,780,420,FEAR,eio(prog(t,4.4,6.6)));
+    const x=eback(prog(t,4.9,5.5));if(x>0){ctx.save();ctx.translate(150+.34*780,700+.66*420);ctx.scale(x,x);ctx.beginPath();ctx.arc(0,0,24,0,7);ctx.fillStyle=RED;ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=INK;ctx.stroke();ctx.restore();
+      T('SALES AQUÍ',150+.34*780+10,700+.66*420+80,{font:'900 42px Inter',fill:RED,a:x,stroke:'#fff',lw:10})}
+    const y=eback(prog(t,6.2,6.8));T('…Y SIGUE SUBIENDO',540,1200,{font:'900 56px Inter',fill:INK,a:y,scale:.6+.4*y});
+    ctx.restore()}
+  a=fade(t,7.8,12.1);if(a>0){ctx.save();ctx.globalAlpha=a;const k=eback(prog(t,7.8,8.4));
+    panel(90,230,900,1130,YEL,.012,k);
+    ct('LA AVARICIA',540,330,84,INK,a);
+    face(260,520,120,'greed',t);
+    bubble(420,430,520,150,['¡Un poco más…!','¡Y más lotes!'],470,560,eback(prog(t,8.4,9.0)),42);
+    mini(150,700,780,420,GREED,eio(prog(t,8.8,11.0)),RED);
+    const tp=eio(prog(t,8.8,9.8));line(150,700+lerp(.45,.1,tp)*420,930,700+lerp(.45,.1,tp)*420,INK,7,[18,12]);
+    T('TAKE PROFIT ➜ cada vez más lejos',540,700+420+60,{font:'900 40px Inter',fill:INK,a:prog(t,9.4,10.0)});
+    const y=eback(prog(t,10.6,11.2));T('…Y EL PRECIO SE DA LA VUELTA',540,1230,{font:'900 46px Inter',fill:RED,a:y,scale:.6+.4*y});
+    ctx.restore()}
+  a=fade(t,12.3,17.0);if(a>0){ctx.save();ctx.globalAlpha=a;
+    face(540,330,100,'calm',t);ct('LA SOLUCIÓN: UN PLAN',540,520,66,INK);
+    [['ESCRÍBELO ANTES',GRN,13.0],['STOP LOSS Y TAKE PROFIT',BLU,14.2],['RESPÉTALO',PUR,15.4]].forEach(([tx,col,ts],i)=>{const k=eback(prog(t,ts,ts+.5));const y=620+i*230;panel(120,y,840,180,col,(i-1)*.01,k);
+      if(k>0){ctx.save();ctx.globalAlpha=a*clamp(k);ctx.beginPath();ctx.arc(220,y+90,54,0,7);ctx.fillStyle='#fff';ctx.fill();ctx.lineWidth=9;ctx.strokeStyle=INK;ctx.stroke();T(String(i+1),220,y+95,{font:'900 70px Inter',fill:INK});
+        const L=wrapLines(tx,560,'900 50px Inter');L.forEach((l,j)=>T(l,620,y+90+(j-(L.length-1)/2)*58,{font:'900 50px Inter',fill:INK}));ctx.restore()}});
+    ctx.restore()}
+}
+function cover(){bg();ctx.save();ctx.translate(0,150);burst(540,720,430,510,16,YEL,.05);
+  ct('¿MIEDO O',540,540,100,INK);ct('AVARICIA?',540,670,110,RED);
+  face(300,880,95,'fear',0);face(780,880,95,'greed',0);ct('VS',540,880,80,INK);
+  ct('¿CUÁL TE ARRUINA?',540,1010,54,'#fff',1,INK);
+  RR(200,1210,680,120,60);ctx.fillStyle=INK;ctx.fill();RR(190,1198,680,120,60);ctx.fillStyle=RED;ctx.fill();ctx.lineWidth=9;ctx.strokeStyle=INK;ctx.stroke();T('VER REEL',530,1260,{font:'900 56px Inter',fill:'#fff'});ctx.restore()}
+</script></body></html>
