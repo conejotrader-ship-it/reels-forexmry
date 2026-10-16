@@ -51,3 +51,7 @@ Texto de cada reel termina con la línea del producto y luego los hashtags.
   Publicado: https://www.instagram.com/reel/DecI92ZAukx/
 
 - Mar 13 oct (a pedido, ~19:00) — Qué es el VWAP y cómo se opera (21 s, estilo dashboard con gráfico, `v18_dashboard_vwap.html`, escena 50). Series de precio ilustrativas. Video `videos/2026-10-13_vwap_dashboard.mp4`, portada `covers/cover_vwap.jpg`.
+
+## Nueva línea de temas (desde 15 oct, a pedido de Cristian)
+Cadencia objetivo: 7 reels al día, uno cada 3,5 h. Temas del listado de historia/cifras/mecánica del oro (franco suizo 2015, Knight Capital 2012, hermanos Hunt 1980, Bretton Woods 1944, caída del oro 2013, LTCM 1998, matemática de pérdidas, oro vs bitcoin, toneladas de oro, 1% de riesgo, DXY, NFP, sesiones en hora Colombia, gap de fin de semana, swap, backtest vs realidad, VPS, psicología). Ganchos con cifra concreta y primer segundo fuerte (los reels con más de 9 s de retención media alcanzaron >280 personas).
+- Jue 15 oct 20:50 — Franco suizo 2015: el día que el SNB soltó el suelo de 1,20 (21 s, gráfico de línea rojo/blanco, `v25_franco_suizo.html`, escena 70). Fuentes: CRS (everycrsreport.com IN10230) y Fox News/AP (enero 2015): suelo desde sep. 2011, franco +30% vs euro en el pico y ~+15% al cierre; Alpari (Londres) insolvente, Global Brokers NZ no pudo reanudar. Video `videos/2026-10-15_2050_franco_suizo.mp4`, portada `covers/cover_franco_suizo.jpg`.

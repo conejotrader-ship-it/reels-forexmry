@@ -1,0 +1,88 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo: gráfico de línea con suelo, rojo/blanco suizo — tema: franco suizo, 15 de enero de 2015
+const SPEC={name:'FrancoSuizo',hook:'15 DE ENERO DE 2015: EL DÍA QUE EL FRANCO SUIZO ROMPIÓ EL FOREX',bpm:104,prog:[[57,'m'],[53,'M'],[48,'M'],[55,'M']],
+ ev:[[0.3,'hit'],[3.4,'wipe'],[4.6,'tick'],[8.2,'alert'],[8.3,'hit'],[10.0,'down'],[13.2,'wipe'],[14.0,'ding'],[15.0,'ding'],[17.2,'cta']],
+ subs:[[0.2,3.4,'15 de enero de 2015: el día que el franco suizo rompió el forex.'],
+ [3.6,8.0,'Desde 2011, el banco suizo sostenía el euro sobre 1,20 francos. Y sin avisar, abandonó ese límite.','Desde dos mil once, el banco suizo sostenía el euro sobre uno veinte francos. Y sin avisar, abandonó ese límite.'],
+ [8.2,13.0,'En minutos, el franco se disparó cerca de 30% frente al euro. Al cierre, subía alrededor de 15%.','En minutos, el franco se disparó cerca de treinta por ciento frente al euro. Al cierre, subía alrededor de quince por ciento.'],
+ [13.2,17.0,'Alpari, en Londres, entró en insolvencia. Global Brokers NZ no pudo reanudar operaciones.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const RED='#e30613',WHT='#ffffff',INK='#0b1220',GLD='#ffd23d',GRY='#8fa0bd',GRN='#2ee6a6';
+const STY={subFont:'800 40px Inter',subBg:'rgba(11,18,32,.92)',subStroke:RED,subFill:'#ffffff',ctaBg:'#0b1220',ctaSub:'#ffffff',ctaGlow:RED,
+ ctaAccent:RED,ctaBtnText:'#fff',ctaFontS:'800 46px Inter',ctaFontL:'800 96px Inter'};
+boot(['800 40px Inter']);
+function bg(){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0b1220');g.addColorStop(1,'#111d36');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(143,160,189,.07)';ctx.lineWidth=2;for(let x=0;x<=W;x+=90){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}
+  for(let y=0;y<=H;y+=90){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore()}
+function cross(x,y,s,a=1){ctx.save();ctx.globalAlpha*=a;RR(x-s/2,y-s/2,s,s,s*.1);ctx.fillStyle=RED;ctx.fill();ctx.fillStyle=WHT;
+  const w=s*.2,l=s*.6;ctx.fillRect(x-w/2,y-l/2,w,l);ctx.fillRect(x-l/2,y-w/2,l,w);ctx.restore()}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+// coordenadas del gráfico
+const X0=140,Y0=600,PX=17.33; // Y0 = 0%, PX píxeles por 1%
+const pts=[[X0,0],[300,.1],[420,-.1],[540,.05],[620,0],[640,-30],[690,-18],[740,-13],[820,-16],[900,-15]];
+function py(p){return Y0-p*PX}
+function trace(t0,t1){ // dibuja la polilínea hasta fracción
+  const n=pts.length;
+}
+function flat(t){ // tramo plano con ruido, de X0 a 620
+  const k=eout(prog(t,3.8,7.8));const r=rng(9);ctx.beginPath();ctx.moveTo(X0,Y0);
+  for(let x=X0;x<=X0+(620-X0)*k;x+=14){ctx.lineTo(x,Y0+(r()-.5)*10)}ctx.stroke();return X0+(620-X0)*k}
+function plunge(t){ // caída y recuperación
+  const k=prog(t,8.2,10.6);if(k<=0)return;
+  const seg=[[620,0],[640,-30],[690,-18],[740,-13],[820,-16],[900,-15]];
+  const dur=[.18,.22,.2,.2,.2];let acc=0;const r=rng(4);ctx.beginPath();ctx.moveTo(620,Y0);
+  for(let i=0;i<5;i++){const a=seg[i],b=seg[i+1];const s=clamp((k-acc)/dur[i]);if(s<=0)break;
+    const e=i==0?s:eout(s);const x=lerp(a[0],b[0],e),p=lerp(a[1],b[1],e);ctx.lineTo(x,py(p)+(i>0?(r()-.5)*6:0));acc+=dur[i]}ctx.stroke()}
+function chart(t,a){
+  ctx.save();ctx.globalAlpha=a;
+  RR(70,360,940,860,28);ctx.fillStyle='rgba(17,29,54,.92)';ctx.fill();ctx.strokeStyle=RED;ctx.lineWidth=4;ctx.stroke();
+  T('EUR/CHF',150,420,{font:'800 44px Inter',fill:WHT,align:'left'});
+  T('15 ENE 2015',930,420,{font:'800 30px Inter',fill:GRY,align:'right'});
+  // ejes en porcentaje
+  [0,-10,-20,-30].forEach(p=>{const y=py(p);line(X0-20,y,950,y,'rgba(143,160,189,.22)',2);T(p==0?'1,20':p+'%',112,y,{font:'800 24px Inter',fill:GRY,align:'right'})});
+  // suelo
+  const sk=prog(t,4.2,5.0);if(sk>0){ctx.save();ctx.globalAlpha*=sk;line(X0,Y0,950,Y0,GLD,3,[16,10]);
+    T('SUELO 1,20 · desde sep. 2011',950,Y0-30,{font:'800 26px Inter',fill:GLD,align:'right'});ctx.restore()}
+  ctx.lineJoin='round';ctx.lineCap='round';
+  ctx.save();ctx.strokeStyle=WHT;ctx.lineWidth=6;ctx.shadowColor=WHT;ctx.shadowBlur=8;
+  const kEnd=flat(t);plunge(t);ctx.restore();
+  // etiquetas
+  let k=eback(prog(t,9.0,9.5));if(k>0){T('−30%',640,py(-30)+58,{font:'800 66px Inter',fill:RED,glow:RED,gb:20,scale:k})}
+  k=eout(prog(t,11.4,12.0));if(k>0){T('≈ −15% al cierre',940,py(-15)+75,{font:'800 34px Inter',fill:GRN,a:k,align:'right'})}
+  k=eout(prog(t,4.8,5.4))*(1-prog(t,7.9,8.1));if(k>0){T('¿todo bajo control?',380,py(0)-110,{font:'800 32px Inter',fill:GRY,a:k})}
+  ctx.restore()}
+function broker(y,name,sub,tag,t0,t){const k=eout(prog(t,t0,t0+.5));if(k<=0)return;ctx.save();ctx.globalAlpha=k;const dx=lerp(120,0,k);
+  RR(110+dx,y,860,230,26);ctx.fillStyle='rgba(17,29,54,.96)';ctx.fill();ctx.strokeStyle=RED;ctx.lineWidth=4;ctx.stroke();
+  T(name,150+dx,y+70,{font:'800 52px Inter',fill:WHT,align:'left'});T(sub,150+dx,y+130,{font:'800 30px Inter',fill:GRY,align:'left'});
+  RR(150+dx,y+160,tag.w,50,25);ctx.fillStyle=RED;ctx.fill();T(tag.s,150+dx+tag.w/2,y+186,{font:'800 26px Inter',fill:WHT});ctx.restore()}
+function draw(t){
+  let sx=0,sy=0;if(t>8.2&&t<8.9){const m=(1-prog(t,8.2,8.9))*14;sx=Math.sin(t*90)*m;sy=Math.cos(t*70)*m}
+  ctx.save();ctx.translate(sx,sy);bg();
+  // intro
+  const ik=eio(prog(t,3.0,3.6));
+  if(ik<1){const a=1-ik;ctx.save();ctx.globalAlpha=a;cross(540,430,220,1);
+    T('15 · 01 · 2015',540,690,{font:'800 100px Inter',fill:WHT,scale:1+.1*ik});
+    T('EL DÍA QUE EL FRANCO',540,850,{font:'800 56px Inter',fill:GRY});
+    T('SUIZO ROMPIÓ EL FOREX',540,930,{font:'800 56px Inter',fill:RED});
+    ctx.restore()}
+  if(ik>0){cross(540,215,110,ik);T('FRANCO SUIZO 2015',540,310,{font:'800 36px Inter',fill:WHT,a:ik})}
+  const a1=fade(t,3.2,13.0);if(a1>0)chart(t,a1);
+  // flash rojo en la caída
+  if(t>8.2&&t<8.7){ctx.save();ctx.globalAlpha=(1-prog(t,8.2,8.7))*.35;ctx.fillStyle=RED;ctx.fillRect(0,0,W,H);ctx.restore()}
+  const a2=fade(t,13.1,17.1);if(a2>0){ctx.save();ctx.globalAlpha=a2;
+    T('BRÓKERS AFECTADOS',540,420,{font:'800 44px Inter',fill:GRY});
+    broker(520,'ALPARI','Londres',{s:'INSOLVENCIA',w:240},13.5,t);
+    broker(800,'GLOBAL BROKERS NZ','Nueva Zelanda',{s:'NO PUDO REANUDAR OPERACIONES',w:560},14.3,t);
+    const k=eout(prog(t,15.6,16.2));T('NINGÚN PRECIO ESTÁ GARANTIZADO',540,1150,{font:'800 38px Inter',fill:GLD,a:k});
+    T('Cifras aproximadas · contenido educativo',540,1215,{font:'800 26px Inter',fill:GRY,a:k});ctx.restore()}
+  ctx.restore()}
+function cover(){bg();cross(540,330,200);
+  T('15·01·2015',540,560,{font:'800 150px Inter',fill:WHT});
+  T('EL DÍA QUE EL FRANCO',540,760,{font:'800 66px Inter',fill:GRY});
+  T('SUIZO ROMPIÓ',540,850,{font:'800 84px Inter',fill:RED});T('EL FOREX',540,950,{font:'800 84px Inter',fill:RED});
+  T('−30% EN MINUTOS',540,1100,{font:'800 54px Inter',fill:GLD});
+  RR(210,1200,660,110,55);ctx.fillStyle=RED;ctx.fill();T('VER QUÉ PASÓ →',540,1256,{font:'800 42px Inter',fill:'#fff'})}
+</script></body></html>
