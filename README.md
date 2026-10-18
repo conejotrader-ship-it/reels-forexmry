@@ -33,3 +33,6 @@ Motor liviano (`common.js`) para reels de estilos distintos, sin WebGL. Cada pá
 - Carátulas en `covers/`; se usan como `videoThumbnailUrl` en Metricool. Deben ser llamativas y virales (reglas en `docs/calendario.md`, sección Carátulas).
 
 - Duración y tarjeta final configurables: `SPEC.dur` y `SPEC.cta` en cada página (por defecto 21 s y 17,1 s). En `subs` un 4.º elemento opcional es el texto hablado (por ejemplo números escritos en palabras).
+
+## Estilos
+`docs/estilos.md` tiene el catálogo de 50 estilos de animación y el registro de cuál se usó en cada video. Regla: cada video nuevo usa un estilo distinto (primero los marcados "Disponible").
