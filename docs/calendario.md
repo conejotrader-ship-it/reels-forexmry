@@ -11,7 +11,7 @@ Horarios (hora Bogotá): 9:00, 13:00 y 19:00 (fin de semana: 9:00 y 13:00).
 | Jue 15 (HECHO) | Backtest vs cuenta real | Take profit fijo vs dinámico | Qué es la volatilidad |
 | Vie 16 (HECHO) | Miedo y avaricia al operar | Cómo revisar tu robot cada semana | Cierre de semana: qué esperar el lunes |
 | Sáb 17 (HECHO) | Qué es el swap | Cómo leer una vela japonesa | – |
-| Dom 18 | Para qué sirve el break even | Por qué llevar un diario de trading | – |
+| Dom 18 (HECHO) | Para qué sirve el break even | Por qué llevar un diario de trading | – |
 
 ## Ya producidos (no repetir)
 Pixel-art: Grid, Drawdown, Lotaje, Noticias, Sesiones, EA y VPS.
@@ -32,6 +32,7 @@ Texto de cada reel termina con la línea del producto y luego los hashtags.
 - Jue 15: pizarra (backtest vs cuenta real, `v22_pizarra_backtest.html`, escena 60), infografía (take profit fijo vs dinámico, `v23_info_takeprofit.html`, escena 61), neón synthwave (volatilidad, `v24_neon_volatilidad.html`, escena 62).
 - Vie 16: cómic (miedo y avaricia, `v26_comic_miedo.html`, escena 71), dashboard violeta/lima (revisar tu robot cada semana, `v27_dashboard_revision.html`, escena 72), terminal MetaTrader (cierre de semana y gap del lunes, `v28_terminal_cierre.html`, escena 73).
 - Sáb 17: infografía verde azulado/naranja (swap, `v29_info_swap.html`, escena 80), velas animadas carbón/cian (cómo leer una vela japonesa, `v30_velas_japonesa.html`, escena 81).
+- Dom 18: pizarra (break even, `v31_pizarra_breakeven.html`, escena 90), terminal MetaTrader (diario de trading, `v32_terminal_diario.html`, escena 91).
 - Dom 11: cómic (cuenta demo, `v8_comic.html`, escena 22), dashboard (cuenta cent, `v9_dashboard.html`, escena 23).
 - Disponibles: pizarra, terminal tipo MetaTrader, cómic, lowpoly, dashboard, pixel-art 3D, y los tres anteriores.
 
