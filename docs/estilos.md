@@ -28,7 +28,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 22 | Noticiero de última hora | Cinta de titulares | Knight Capital 2012 (v40_noticiero_knight, escena 107, 18 oct) |
 | 23 | Mapa mundial con rutas de flujo | Oro y divisas | Oro COMEX vs LBMA (v41_mapa_comex_lbma, escena 108, 18 oct) |
 | 24 | Pantalla dividida antes/después | Dos mitades A vs B | Esperanza matemática (v39_split_esperanza, escena 106, 18 oct) |
-| 25 | Documental en blanco y negro con acento dorado |  | Disponible |
+| 25 | Documental en blanco y negro con acento dorado | Película con perforaciones y grano | Tasas reales (TIPS) y oro (v42_documental_tips, escena 109, 18 oct) |
 | 26 | Sala de operaciones con varios monitores |  | Disponible |
 | 27 | Cuenta regresiva o reloj gigante |  | Disponible |
 | 28 | Expediente "caso cerrado" | Carpetas y sellos | Disponible |

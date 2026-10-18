@@ -1,0 +1,101 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+
+// Estilo 25: documental en blanco y negro con acento dorado — tema: tasas reales (TIPS) y oro (60 s)
+const SPEC={name:'TasasRealesOro',hook:'EL ORO NO PAGA INTERESES: LAS TASAS REALES LO MUEVEN',dur:60,cta:56,bpm:80,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'hit'],[1.8,'ding'],[3.4,'tick'],[6.8,'wipe'],[8.6,'tick'],[11.2,'ding'],[15.6,'wipe'],[17.2,'tick'],[20.4,'tick'],[24.6,'wipe'],[26.4,'ding'],[29.2,'down'],[34.2,'wipe'],[36.0,'down'],[40.0,'tick'],[43.8,'wipe'],[45.4,'ding'],[47.2,'ding'],[48.8,'ding'],[50.6,'wipe'],[51.8,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.4,'El oro no paga intereses. Los bonos TIPS sí. Y esa diferencia mueve su precio.','El oro no paga intereses. Los bonos TIPS sí. Y esa diferencia mueve su precio.'],
+ [6.8,15.4,'Un bono TIPS ajusta su capital a la inflación. Su rendimiento real es lo que queda tras la inflación.','Un bono TIPS ajusta su capital con la inflación. Su rendimiento real es el interés que queda después de la inflación.'],
+ [15.6,24.4,'Si el rendimiento real sube, mantener oro cuesta más: renuncias a ese interés. Si baja, cuesta menos.','Si el rendimiento real sube, mantener oro cuesta más, porque renuncias a ese interés. Si baja, cuesta menos.'],
+ [24.6,34.0,'Según PIMCO (2004–2025), +100 puntos básicos en el rendimiento real a 10 años se asoció con −18% en el oro real.','Según PIMCO, de dos mil cuatro a dos mil veinticinco, cien puntos básicos más en el rendimiento real se asociaron con dieciocho por ciento menos en el oro real.'],
+ [34.2,43.6,'Abril de 2013: el oro cayó 15% tras comentarios de la Fed. En mayo, los rendimientos reales subieron 57 puntos básicos.','Abril de dos mil trece: el oro cayó quince por ciento tras comentarios de la Fed. En mayo, los rendimientos reales subieron cincuenta y siete puntos básicos.'],
+ [43.8,50.4,'Desde 2022 la relación se aflojó: compras récord de bancos centrales y demanda de refugio.','Desde dos mil veintidós la relación se aflojó: compras récord de bancos centrales y demanda de refugio.'],
+ [50.6,55.8,'Las tasas reales no lo explican todo, pero siguen siendo clave para el oro.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BK='#0d0d0d',FG='#e8e4da',MID='#8a8a8a',GLD='#e0ad2b',DK='#1b1b1b',PAN='rgba(20,20,20,.9)';
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,10,10,.95)',subStroke:GLD,subFill:'#fff',ctaBg:'#0d0d0d',ctaSub:FG,ctaGlow:GLD,
+ ctaAccent:GLD,ctaBtnText:'#0d0d0d',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+function lbl(s,x,y,sz,col=FG,a=1,al='center'){T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+function bg(t){ctx.fillStyle=BK;ctx.fillRect(0,0,W,H);
+  const g=ctx.createRadialGradient(540,800,150,540,900,1200);g.addColorStop(0,'#2a2a2a');g.addColorStop(1,'#060606');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // perforaciones de película
+  ctx.fillStyle='#050505';ctx.fillRect(0,0,46,H);ctx.fillRect(W-46,0,46,H);
+  const off=(t*60)%80;ctx.fillStyle='#2b2b2b';for(let y=-80;y<H+80;y+=80){RR(12,y+off,22,34,6);ctx.fill();RR(W-34,y+off,22,34,6);ctx.fill()}
+  // grano y rayas
+  const r=rng(Math.floor(t*12)+5);ctx.save();for(let i=0;i<500;i++){ctx.fillStyle=`rgba(255,255,255,${.03+r()*.07})`;ctx.fillRect(60+r()*(W-120),r()*H,1+r()*2,1+r()*2)}
+  if(r()<.4){const x=60+r()*(W-120);ctx.fillStyle='rgba(255,255,255,.07)';ctx.fillRect(x,0,2,H)}ctx.restore();
+  ctx.save();ctx.globalAlpha=.05+.03*Math.sin(t*23);ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.restore()}
+function panel(a,tag){ctx.save();ctx.globalAlpha=a;RR(80,360,920,880,10);ctx.fillStyle=PAN;ctx.fill();ctx.lineWidth=3;ctx.strokeStyle=FG;ctx.stroke();
+  RR(80+10,360+10,920-20,880-20,6);ctx.lineWidth=1.5;ctx.strokeStyle='rgba(224,173,43,.6)';ctx.stroke();
+  lbl(tag,540,410,28,GLD);ctx.restore()}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;
+  const k=eback(prog(t,.3,1.0));
+  lbl('EL ORO',540,520,120,FG,eout(prog(t,.3,.9)));lbl('NO PAGA',540,650,120,FG,eout(prog(t,.7,1.3)));
+  ctx.save();ctx.translate(540,800);ctx.scale(Math.max(k,0),Math.max(k,0));T('INTERESES',0,0,{font:'900 120px Inter',fill:GLD,glow:GLD,gb:24});ctx.restore();
+  // lingote
+  const ki=eout(prog(t,1.8,2.6));ctx.save();ctx.globalAlpha=a*ki;ctx.translate(540,1040);ctx.beginPath();ctx.moveTo(-180,70);ctx.lineTo(-130,-70);ctx.lineTo(130,-70);ctx.lineTo(180,70);ctx.closePath();
+  const gg=ctx.createLinearGradient(0,-70,0,70);gg.addColorStop(0,'#f6d36b');gg.addColorStop(1,'#b8861c');ctx.fillStyle=gg;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle=FG;ctx.stroke();
+  lbl('0 %',0,8,70,BK);ctx.restore();
+  lbl('rendimiento anual del oro físico',540,1160,32,MID,eout(prog(t,3.2,3.9)));
+  lbl('los bonos TIPS sí pagan interés',540,1215,34,GLD,eout(prog(t,4.2,4.8)));ctx.restore()}
+function tipsCard(t,a){panel(a,'LOS BONOS TIPS');ctx.save();ctx.globalAlpha=a;
+  lbl('EJEMPLO ILUSTRATIVO',540,480,26,MID,eout(prog(t,7.2,7.8)));
+  const R=[['rendimiento nominal','4 %',8.0,FG],['− inflación esperada','2 %',9.6,'#c9c4b8']];
+  R.forEach(([h,v,ts,col],i)=>{const k=eout(prog(t,ts,ts+.6));if(k<=0)return;const y=600+i*170;ctx.save();ctx.globalAlpha=a*k;RR(150,y-60,780,120,10);ctx.fillStyle=DK;ctx.fill();ctx.strokeStyle=MID;ctx.lineWidth=2;ctx.stroke();
+    lbl(h,190,y+4,38,col,1,'left');lbl(v,890,y+4,64,col,1,'right');ctx.restore()});
+  line(150,860,930,860,GLD,5);
+  const k=eback(prog(t,11.2,12.0));if(k>.02){ctx.save();ctx.translate(540,1010);ctx.scale(k,k);RR(-380,-90,760,180,16);ctx.fillStyle=GLD;ctx.fill();lbl('REAL ≈ 2 %',0,10,100,BK);ctx.restore()}
+  lbl('lo que queda después de la inflación',540,1160,32,FG,eout(prog(t,12.6,13.4)));ctx.restore()}
+function seeCard(t,a){panel(a,'COSTO DE OPORTUNIDAD');ctx.save();ctx.globalAlpha=a;
+  const ang=Math.sin(Math.max(0,t-17)*.9)*.22*eout(prog(t,16.4,17.2));
+  ctx.save();ctx.translate(540,720);
+  ctx.beginPath();ctx.moveTo(-70,200);ctx.lineTo(70,200);ctx.lineTo(0,14);ctx.closePath();ctx.fillStyle=MID;ctx.fill();
+  ctx.rotate(ang);RR(-380,-12,760,24,10);ctx.fillStyle=FG;ctx.fill();
+  // izquierda: rendimiento real
+  ctx.save();ctx.translate(-300,-12);ctx.rotate(-ang);RR(-110,-150,220,130,14);ctx.fillStyle=DK;ctx.fill();ctx.strokeStyle=FG;ctx.lineWidth=3;ctx.stroke();lbl('RENDIM.',0,-107,28,MID);lbl('REAL',0,-65,40,FG);ctx.restore();
+  ctx.save();ctx.translate(300,-12);ctx.rotate(-ang);ctx.beginPath();ctx.moveTo(-100,-10);ctx.lineTo(-70,-90);ctx.lineTo(70,-90);ctx.lineTo(100,-10);ctx.closePath();ctx.fillStyle=GLD;ctx.fill();lbl('ORO',0,-45,44,BK);ctx.restore();
+  ctx.restore();
+  lbl('rendimiento real ↑  →  oro suele presionarse',540,1100,32,FG,eout(prog(t,19.4,20.2)));
+  lbl('rendimiento real ↓  →  menor costo de tenerlo',540,1160,32,GLD,eout(prog(t,21.4,22.2)));ctx.restore()}
+function pimcoCard(t,a){panel(a,'PIMCO · 2004–2025');ctx.save();ctx.globalAlpha=a;
+  const k1=eback(prog(t,25.4,26.2));if(k1>.02){ctx.save();ctx.translate(540,600);ctx.scale(k1,k1);lbl('+100 pb',0,0,140,FG);ctx.restore()}
+  lbl('rendimiento real a 10 años',540,720,34,MID,eout(prog(t,26.4,27.0)));
+  const ka=eout(prog(t,28.0,28.8));ctx.save();ctx.globalAlpha=a*ka;ctx.fillStyle=GLD;ctx.beginPath();ctx.moveTo(480,780);ctx.lineTo(600,780);ctx.lineTo(540,860);ctx.closePath();ctx.fill();ctx.restore();
+  const k2=eback(prog(t,29.2,30.0));if(k2>.02){ctx.save();ctx.translate(540,990);ctx.scale(k2,k2);lbl('−18 %',0,0,170,GLD);ctx.restore()}
+  lbl('en el precio real del oro (asociación histórica)',540,1120,32,FG,eout(prog(t,30.6,31.4)));
+  lbl('no es una garantía ni una regla fija',540,1180,26,MID,eout(prog(t,32.0,32.8)));ctx.restore()}
+function y13Card(t,a){panel(a,'ABRIL–MAYO 2013');ctx.save();ctx.globalAlpha=a;
+  const k=eout(prog(t,35.0,35.8));RR(150,500,780,220,12);ctx.save();ctx.globalAlpha=a*k;ctx.fillStyle=DK;ctx.fill();ctx.strokeStyle=GLD;ctx.lineWidth=3;ctx.stroke();ctx.restore();
+  lbl('ABR 2013 · ORO',540,550,32,MID,k);lbl('−15 %',540,640,110,GLD,k);
+  const k2=eout(prog(t,38.2,39.0));RR(150,780,780,220,12);ctx.save();ctx.globalAlpha=a*k2;ctx.fillStyle=DK;ctx.fill();ctx.strokeStyle=FG;ctx.lineWidth=3;ctx.stroke();ctx.restore();
+  lbl('MAY 2013 · RENDIM. REALES 10 AÑOS',540,830,30,MID,k2);lbl('+57 pb',540,920,110,FG,k2);
+  lbl('tras comentarios de la Fed sobre reducir estímulos',540,1100,30,FG,eout(prog(t,40.4,41.2)));ctx.restore()}
+function loseCard(t,a){panel(a,'DESDE 2022');ctx.save();ctx.globalAlpha=a;
+  [[44.4,'1','Compras récord de bancos centrales'],[46.4,'2','Demanda de refugio (geopolítica)'],[48.2,'3','Máximos históricos en 2025']].forEach(([ts,n,s],i)=>{
+    const k=eout(prog(t,ts,ts+.6));if(k<=0)return;const y=470+i*230;ctx.save();ctx.globalAlpha=a*k;ctx.translate(lerp(50,0,k),0);
+    RR(130,y,820,180,12);ctx.fillStyle=DK;ctx.fill();ctx.strokeStyle=MID;ctx.lineWidth=2;ctx.stroke();ctx.beginPath();ctx.arc(215,y+90,48,0,7);ctx.fillStyle=GLD;ctx.fill();lbl(n,215,y+93,58,BK);
+    ctx.font='900 38px Inter';const L=wrapLines(s,560,'900 38px Inter');L.forEach((l,j)=>lbl(l,290,y+90+(j-(L.length-1)/2)*50,38,FG,1,'left'));ctx.restore()});ctx.restore()}
+function closing(t,a){panel(a,'CONCLUSIÓN');ctx.save();ctx.globalAlpha=a;
+  lbl('LAS TASAS REALES',540,570,76,FG,eout(prog(t,51.0,51.7)));lbl('NO LO EXPLICAN TODO',540,660,58,MID,eout(prog(t,51.6,52.3)));
+  lbl('PERO SIGUEN',540,800,70,FG,eout(prog(t,52.4,53.0)));lbl('SIENDO CLAVE',540,900,100,GLD,eout(prog(t,52.8,53.5)));
+  lbl('fuente: PIMCO · contenido educativo',540,1170,26,MID,eout(prog(t,54.2,54.8)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.4);if(t<.3)a=1;if(a>0)hook(t,a);
+  a=fade(t,6.8,15.4);if(a>0)tipsCard(t,a);
+  a=fade(t,15.6,24.4);if(a>0)seeCard(t,a);
+  a=fade(t,24.6,34.0);if(a>0)pimcoCard(t,a);
+  a=fade(t,34.2,43.6);if(a>0)y13Card(t,a);
+  a=fade(t,43.8,50.4);if(a>0)loseCard(t,a);
+  a=fade(t,50.6,55.8);if(a>0)closing(t,a)}
+function cover(){bg(3);
+  lbl('SI LAS TASAS REALES',540,330,56,FG);RR(250,380,580,100,50);ctx.fillStyle=FG;ctx.fill();lbl('SUBEN 1 PUNTO',540,433,56,BK);
+  T('−18%',540,760,{font:'900 300px Inter',fill:GLD,glow:GLD,gb:30});
+  lbl('EN EL ORO',540,1000,110,FG);
+  RR(190,1090,700,86,43);ctx.strokeStyle=GLD;ctx.lineWidth=5;ctx.stroke();lbl('SEGÚN PIMCO · 2004–2025',540,1135,38,GLD);
+  ctx.save();ctx.fillStyle=GLD;RR(170,1330,740,110,55);ctx.fill();ctx.restore();T('VER POR QUÉ →',540,1388,{font:'900 50px Inter',fill:BK})}
+</script></body></html>
