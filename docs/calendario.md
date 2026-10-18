@@ -70,3 +70,11 @@ Horarios (Bogotá): 6:00, 9:30, 13:00, 16:30, 20:00, 23:30, 3:00.
 6. Mecánica: tasas reales (TIPS) y oro.
 7. Técnica: perfil de volumen (POC y área de valor).
 Reserva: LTCM 1998, flash crash de la libra 2016, carry trade del yen 2024, Kelly, MAE/MFE, walk-forward, COT, puntos swap.
+
+## Carátulas (regla de Cristian, 17 oct): más llamativas y con potencial viral
+Aplica a todos los reels nuevos desde ahora (cada `cover()` de `styles/`):
+- Un solo gancho de máximo 5–6 palabras en letra enorme (≥120 px en la palabra clave), con cifra o fecha cuando exista ("−30% EN MINUTOS", "×24 EN 9 AÑOS").
+- Fondo de alto contraste con un color de acento vivo (amarillo, rojo o cian) y un elemento visual grande y reconocible (gráfico, símbolo, número), no solo texto.
+- Curiosidad o tensión en el titular (pregunta, contradicción, "el día que…"), sin prometer rentabilidad ni exagerar datos.
+- Todo el texto importante dentro de la zona central (cuadrícula del perfil recorta los bordes); sin letra pequeña.
+- Guardar como `covers/cover_<tema>.jpg` y usar como `videoThumbnailUrl` en Metricool.

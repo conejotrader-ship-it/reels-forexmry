@@ -30,6 +30,6 @@ Motor liviano (`common.js`) para reels de estilos distintos, sin WebGL. Cada pá
 - `v1_spread.html` — velas animadas (spread). `v2_stoploss.html` — infografía. `v3_pip.html` — neón synthwave.
 - Frames: `python3 styles/render_canvas.py <pagina.html> <escena>` (escenas 10+). Carátula: `... cover <pagina.html> <salida.png>`. Vista previa: `... sheet <pagina.html> 1,5,9 <salida.jpg>`.
 - Audio y ensamble: igual que pixel-art (`audio/gen_px5.py <escena>` y `pixel/build_pixel.py <escena> salida.mp4`).
-- Carátulas en `covers/`; se usan como `videoThumbnailUrl` en Metricool.
+- Carátulas en `covers/`; se usan como `videoThumbnailUrl` en Metricool. Deben ser llamativas y virales (reglas en `docs/calendario.md`, sección Carátulas).
 
 - Duración y tarjeta final configurables: `SPEC.dur` y `SPEC.cta` en cada página (por defecto 21 s y 17,1 s). En `subs` un 4.º elemento opcional es el texto hablado (por ejemplo números escritos en palabras).
