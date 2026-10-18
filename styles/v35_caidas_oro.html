@@ -1,0 +1,75 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+
+// Estilo: tablero de caídas negro/rojo/oro con barras a escala — tema: 4 caídas históricas del oro y su recuperación (60 s)
+const SPEC={name:'CaidasOro',hook:'EL ORO CAYÓ 70% Y TARDÓ 28 AÑOS EN RECUPERARSE',dur:60,cta:56,bpm:100,mus:'soft',prog:[[45,'m'],[41,'M'],[48,'M'],[43,'m']],
+ ev:[[0.3,'hit'],[1.2,'down'],[6.8,'wipe'],[7.3,'hit'],[8.6,'down'],[12.3,'ding'],[17.2,'wipe'],[17.7,'hit'],[19.0,'down'],[24.0,'ding'],[29.2,'wipe'],[29.7,'hit'],[31.0,'down'],[35.5,'ding'],[41.2,'wipe'],[41.7,'hit'],[43.0,'down'],[47.5,'alert'],[52.6,'wipe'],[56.2,'cta']],
+ subs:[[0.2,6.4,'El oro cayó 70% y tardó 28 años en recuperarse. Estas son cuatro de sus grandes caídas.','El oro cayó setenta por ciento y tardó veintiocho años en recuperarse. Estas son cuatro de sus grandes caídas.'],
+ [6.8,17.0,'1974 a 1976: de unos $197 a $103, cerca de 47% menos en 20 meses. Recuperó su máximo en unos 4 años.','Mil novecientos setenta y cuatro a setenta y seis: de unos ciento noventa y siete dólares a ciento tres, cerca de cuarenta y siete por ciento menos en veinte meses. Recuperó su máximo en unos cuatro años.'],
+ [17.2,29.0,'1980 a 1999: de $850 a $253, cerca de 70% menos. Cayó casi 20 años y no volvió a su máximo hasta 2008.','Mil novecientos ochenta a mil novecientos noventa y nueve: de ochocientos cincuenta dólares a doscientos cincuenta y tres, cerca de setenta por ciento menos. Cayó casi veinte años y no volvió a su máximo hasta dos mil ocho.'],
+ [29.2,41.0,'2011 a 2015: de $1.921 a $1.049, unos 45% menos. Solo en 2013 perdió 28%. Recuperó su máximo en 2020.','Dos mil once a dos mil quince: de mil novecientos veintiún dólares a mil cuarenta y nueve, unos cuarenta y cinco por ciento menos. Solo en dos mil trece perdió veintiocho por ciento. Recuperó su máximo en dos mil veinte.'],
+ [41.2,52.5,'2026: máximo de $5.608 en enero. El 16 de octubre rondaba $4.166, unos 26% menos y sin recuperar.','Dos mil veintiséis: máximo de cinco mil seiscientos ocho dólares en enero. El dieciséis de octubre rondaba cuatro mil ciento sesenta y seis, unos veintiséis por ciento menos y sin recuperar.'],
+ [52.6,55.8,'Las caídas del oro pueden durar años.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BK='#0b0b10',RD='#ff3b3b',GD='#ffc83d',CR='#fff2d6',GY='#9a93a6',DK='#1a1220';
+const STY={subFont:'800 42px Inter',subBg:'rgba(8,6,12,.94)',subStroke:RD,subFill:CR,ctaBg:'#08060c',ctaSub:CR,ctaGlow:RD,
+ ctaAccent:GD,ctaBtnText:'#08060c',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0b0b10');g.addColorStop(.6,'#150a12');g.addColorStop(1,'#2a0a10');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(255,59,59,.07)';ctx.lineWidth=2;for(let y=120;y<H;y+=120){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  // línea descendente decorativa
+  ctx.save();ctx.globalAlpha=.16;ctx.strokeStyle=RD;ctx.lineWidth=14;ctx.lineJoin='round';ctx.beginPath();
+  const r=rng(7);let y=240;for(let x=-20;x<=W+20;x+=60){y+=(r()-.42)*44+10;ctx.lineTo(x,Math.min(y,1750))}ctx.stroke();ctx.restore()}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+function panel(x,y,w,h,col=RD){RR(x,y,w,h,28);ctx.fillStyle='rgba(10,8,14,.9)';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=4;ctx.stroke()}
+// episodios: [años, caída, precios, caída(años), total hasta recuperar, texto recuperación, nota, t0, t1, n, prefijo]
+const EP=[['1974–76','−','$197 → $103',1.7,4,'recuperó su máximo en ≈ 4 años','20 meses de caída',6.8,17.0,47,''],
+ ['1980–99','−','$850 → $253',19.5,28,'recuperó su máximo en ≈ 28 años','casi 20 años de caída',17.2,29.0,70,''],
+ ['2011–15','−','$1.921 → $1.049',4.3,9,'recuperó su máximo en ≈ 9 años','solo en 2013: −28%',29.2,41.0,45,''],
+ ['2026','−','$5.608 → $4.166',0.75,null,'SIN RECUPERAR (al 16 oct)','máximo en enero de 2026',41.2,52.5,26,'≈ ']];
+const SC=25,BX=260; // píxeles por año
+function row(i,t,a){const e=EP[i];const y=950+i*108;const t0=e[7];const k=eout(prog(t,t0,t0+.5));if(k<=0)return;
+  ctx.save();ctx.globalAlpha=a*k;
+  T(e[0],100,y+25,{font:'800 28px Inter',fill:CR,align:'left'});
+  const fallW=e[3]*SC*eout(prog(t,t0+1.2,t0+3.2));
+  ctx.fillStyle=RD;RR(BX,y+8,Math.max(6,fallW),34,8);ctx.fill();
+  if(e[4]){const recW=(e[4]-e[3])*SC*eout(prog(t,t0+5.2,t0+7.6));if(recW>1){ctx.fillStyle=GD;ctx.beginPath();ctx.roundRect(BX+e[3]*SC,y+8,recW,34,8);ctx.fill()}}
+  else{const ph=(Math.sin(t*5)+1)/2;ctx.strokeStyle=RD;ctx.lineWidth=4;ctx.setLineDash([14,10]);ctx.globalAlpha=a*k*(.4+.6*ph);line(BX+fallW+10,y+25,BX+700,y+25,RD,4,[14,10]);ctx.globalAlpha=a*k;T('¿?',BX+720,y+26,{font:'900 34px Inter',fill:RD,align:'left'})}
+  const tail=e[4]?`${String(e[3]).replace('.',',')} a cayendo · ${e[4]} a hasta recuperar`:'9 meses cayendo · sin recuperar';
+  T(tail,BX,y+74,{font:'800 22px Inter',fill:GY,align:'left'});ctx.restore()}
+function main(e,t,a){const t0=e[7];ctx.save();ctx.globalAlpha=a;
+  let sx=0,sy=0;if(t>t0+.4&&t<t0+.9){const m=(1-prog(t,t0+.4,t0+.9))*10;sx=Math.sin(t*90)*m;sy=Math.cos(t*70)*m}
+  ctx.translate(sx,sy);panel(70,380,940,500);
+  T(e[0],540,445,{font:'900 44px Inter',fill:GD});
+  const n=Math.round(e[9]*eout(prog(t,t0+.4,t0+1.6)));
+  T(e[10]+'−'+n+'%',540,620,{font:'900 200px Inter',fill:RD,glow:RD,gb:28});
+  T(e[2],540,745,{font:'800 46px Inter',fill:CR,a:eout(prog(t,t0+1.6,t0+2.2))});
+  const k=eout(prog(t,t0+5.2,t0+5.9));if(k>0){RR(130,795,820,66,33);ctx.save();ctx.globalAlpha=a*k;ctx.fillStyle=e[4]?'rgba(255,200,61,.15)':'rgba(255,59,59,.18)';ctx.fill();ctx.strokeStyle=e[4]?GD:RD;ctx.lineWidth=3;ctx.stroke();ctx.restore();
+    T(e[5],540,829,{font:'900 30px Inter',fill:e[4]?GD:RD,a:k})}
+  ctx.restore()}
+function draw(t){bg(t);
+  const ik=eio(prog(t,6.2,6.9));
+  if(ik<1){const a=1-ik;ctx.save();ctx.globalAlpha=a;
+    T('EL ORO CAYÓ',540,520,{font:'900 76px Inter',fill:CR});
+    T('−70%',540,780,{font:'900 330px Inter',fill:RD,glow:RD,gb:40,scale:1+.05*Math.sin(t*3)});
+    T('Y TARDÓ',540,1010,{font:'900 76px Inter',fill:CR});
+    T('28 AÑOS',540,1190,{font:'900 190px Inter',fill:GD,glow:GD,gb:30});
+    T('EN RECUPERARSE',540,1330,{font:'900 64px Inter',fill:CR});ctx.restore()}
+  if(ik>0){T('CAÍDAS HISTÓRICAS DEL ORO',540,285,{font:'900 46px Inter',fill:CR,a:ik});T('precio spot en USD · cifras aproximadas',540,335,{font:'800 24px Inter',fill:GY,a:ik});
+    panel(70,910,940,480,'rgba(154,147,166,.5)');}
+  EP.forEach((e,i)=>{const a=fade(t,e[7],e[8]+.0);if(a>0)main(e,t,a)});
+  if(ik>0){const a=ik*(1-prog(t,55.6,55.9));ctx.save();ctx.globalAlpha=a;EP.forEach((e,i)=>row(i,t,1));ctx.restore()}
+  const kc=eout(prog(t,52.7,53.4));if(kc>0){ctx.save();ctx.globalAlpha=kc*(1-prog(t,55.6,55.9));panel(70,380,940,500,GD);
+    T('LAS CAÍDAS DEL ORO',540,560,{font:'900 64px Inter',fill:CR});T('PUEDEN DURAR',540,660,{font:'900 64px Inter',fill:CR});T('AÑOS',540,800,{font:'900 150px Inter',fill:GD,glow:GD,gb:30});
+    T('Fuentes: WGC, Trading Economics y otras · contenido educativo',540,1425,{font:'800 22px Inter',fill:GY});ctx.restore()}
+}
+function cover(){bg(3);
+  T('EL ORO CAYÓ',540,470,{font:'900 84px Inter',fill:CR});
+  T('−70%',540,760,{font:'900 330px Inter',fill:RD,glow:RD,gb:50});
+  T('Y TARDÓ',540,1010,{font:'900 84px Inter',fill:CR});
+  T('28 AÑOS',540,1230,{font:'900 230px Inter',fill:GD,glow:GD,gb:40});
+  RR(150,1370,780,120,60);ctx.fillStyle=RD;ctx.fill();T('VER LAS 4 CAÍDAS →',540,1432,{font:'900 50px Inter',fill:'#fff'})}
+</script></body></html>
