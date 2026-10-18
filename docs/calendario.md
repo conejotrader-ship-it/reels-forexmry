@@ -58,3 +58,15 @@ Texto de cada reel termina con la línea del producto y luego los hashtags.
 ## Nueva línea de temas (desde 15 oct, a pedido de Cristian)
 Cadencia objetivo: 7 reels al día, uno cada 3,5 h. Temas del listado de historia/cifras/mecánica del oro (franco suizo 2015, Knight Capital 2012, hermanos Hunt 1980, Bretton Woods 1944, caída del oro 2013, LTCM 1998, matemática de pérdidas, oro vs bitcoin, toneladas de oro, 1% de riesgo, DXY, NFP, sesiones en hora Colombia, gap de fin de semana, swap, backtest vs realidad, VPS, psicología). Ganchos con cifra concreta y primer segundo fuerte (los reels con más de 9 s de retención media alcanzaron >280 personas).
 - Jue 15 oct 20:50 — Franco suizo 2015: el día que el SNB soltó el suelo de 1,20 (21 s, gráfico de línea rojo/blanco, `v25_franco_suizo.html`, escena 70). Fuentes: CRS (everycrsreport.com IN10230) y Fox News/AP (enero 2015): suelo desde sep. 2011, franco +30% vs euro en el pico y ~+15% al cierre; Alpari (Londres) insolvente, Global Brokers NZ no pudo reanudar. Video `videos/2026-10-15_2050_franco_suizo.mp4`, portada `covers/cover_franco_suizo.jpg`.
+- Sáb 17 oct 22:10 — Acuerdo del Plaza 1985 (21 s, estilo billete verde y crema, `v33_plaza_billete.html`, escena 100). Fuente: Wikipedia (Plaza Accord): firmado el 22 sep 1985 en el hotel Plaza (Nueva York) por EE. UU., Japón, Alemania Occidental, Francia y Reino Unido; el dólar se había fortalecido cerca de 50% entre 1980 y 1985 frente a yen, marco, franco y libra; al hacerse público (lunes) cayó 4%; Acuerdo del Louvre (1987) para frenar la caída. El gráfico es ilustrativo, no datos reales. Video `videos/2026-10-17_2210_plaza_billete.mp4`, portada `covers/cover_plaza.jpg`.
+
+## Lista de 7 temas por día (a pedido de Cristian, 17 oct): una categoría por reel, nivel medio–avanzado
+Horarios (Bogotá): 6:00, 9:30, 13:00, 16:30, 20:00, 23:30, 3:00.
+1. Evento histórico: Acuerdo del Plaza 1985 (HECHO, 17 oct 22:10).
+2. Mecánica: perder 50% exige ganar 100% (asimetría del drawdown).
+3. Ranking: las 5 mayores pérdidas por trading rogue (Leeson, Kerviel, Hamanaka, ballena de Londres, Adoboli).
+4. Evento histórico: Knight Capital 2012.
+5. Comparación: oro COMEX vs oro físico LBMA.
+6. Mecánica: tasas reales (TIPS) y oro.
+7. Técnica: perfil de volumen (POC y área de valor).
+Reserva: LTCM 1998, flash crash de la libra 2016, carry trade del yen 2024, Kelly, MAE/MFE, walk-forward, COT, puntos swap.

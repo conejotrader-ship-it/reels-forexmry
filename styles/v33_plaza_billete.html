@@ -1,0 +1,82 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+
+// Estilo: billete verde y crema con guilloche — tema: Acuerdo del Plaza, 22 de septiembre de 1985
+const SPEC={name:'AcuerdoPlaza',hook:'22 DE SEPTIEMBRE DE 1985: CINCO PAÍSES ACORDARON BAJAR EL DÓLAR',bpm:96,prog:[[50,'m'],[46,'M'],[53,'M'],[48,'M']],
+ ev:[[0.3,'hit'],[3.4,'wipe'],[4.6,'tick'],[6.9,'ding'],[8.2,'hit'],[9.0,'ding'],[9.7,'ding'],[10.4,'ding'],[11.1,'ding'],[11.8,'ding'],[12.3,'down'],[13.2,'wipe'],[14.3,'alert'],[14.4,'hit'],[16.0,'ding'],[17.2,'cta']],
+ subs:[[0.2,4.0,'22 de septiembre de 1985: cinco países se unieron para bajar el dólar.','Septiembre del ochenta y cinco: cinco países se unieron para bajar el dólar.'],
+ [4.1,8.1,'De 1980 a 1985, el dólar subió cerca de 50%.','Del ochenta al ochenta y cinco, el dólar subió cerca de cincuenta por ciento.'],
+ [8.2,13.0,'En el hotel Plaza de Nueva York, cinco países acordaron intervenir para debilitar al dólar.'],
+ [13.2,17.1,'El lunes, el dólar cayó 4%. En 1987, el Louvre buscó frenarlo.','El lunes, el dólar cayó cuatro por ciento. En mil novecientos ochenta y siete, el Louvre buscó frenarlo.'],
+ [17.2,20.8,'Securus Apex. Link en bio.']]};
+const GR='#0e2b1f',GR2='#164431',CR='#f1e8cf',GD='#d9b24c',RD='#e2553f',MT='#8fb59f',INK='#0a1a12';
+const STY={subFont:'800 42px Inter',subBg:'rgba(8,24,17,.93)',subStroke:GD,subFill:CR,ctaBg:'#0a1a12',ctaSub:CR,ctaGlow:GD,
+ ctaAccent:GD,ctaBtnText:'#0a1a12',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,GR);g.addColorStop(1,GR2);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(241,232,207,.06)';ctx.lineWidth=2;
+  for(let i=0;i<22;i++){ctx.beginPath();ctx.ellipse(540,960,60+i*52,40+i*66,0,0,7);ctx.stroke()}
+  for(let i=0;i<14;i++){ctx.beginPath();ctx.ellipse(540,960,40+i*80,60+i*40,Math.PI/2,0,7);ctx.stroke()}ctx.restore();
+  ctx.save();ctx.strokeStyle=GD;ctx.globalAlpha=.55;ctx.lineWidth=4;RR(34,34,W-68,H-68,28);ctx.stroke();ctx.restore()}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+function panel(x,y,w,h,col=GD){RR(x,y,w,h,28);ctx.fillStyle='rgba(8,24,17,.88)';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=4;ctx.stroke()}
+// gráfico ilustrativo del dólar: sube hasta el pico (1985) y cae después
+const CX0=150,CX1=930,PK=600,BASE=1060,TOP=560; // PK = x del pico
+function yAt(x){ // curva ilustrativa
+  if(x<=PK){const k=(x-CX0)/(PK-CX0);return lerp(BASE,TOP,Math.pow(k,1.25))+Math.sin(x*.07)*7*k}
+  const k=(x-PK)/(CX1-PK);return lerp(TOP,BASE-120,eio(Math.min(1,k*1.05)))+Math.sin(x*.09)*6}
+function chart(t,a,mode){
+  ctx.save();ctx.globalAlpha=a;panel(70,380,940,780);
+  T('DÓLAR · ILUSTRATIVO',150,440,{font:'800 36px Inter',fill:CR,align:'left'});
+  T('1980 → 1987',930,440,{font:'800 30px Inter',fill:MT,align:'right'});
+  line(CX0-20,BASE+30,CX1+10,BASE+30,'rgba(241,232,207,.3)',2);
+  T('1980',CX0,BASE+70,{font:'800 26px Inter',fill:MT});T('1985',PK,BASE+70,{font:'800 26px Inter',fill:MT});T('1987',CX1,BASE+70,{font:'800 26px Inter',fill:MT});
+  ctx.lineJoin='round';ctx.lineCap='round';
+  // subida
+  const kUp=mode==1?eout(prog(t,3.8,7.2)):1;const xUp=CX0+(PK-CX0)*kUp;
+  ctx.save();ctx.strokeStyle=GD;ctx.lineWidth=8;ctx.shadowColor=GD;ctx.shadowBlur=12;ctx.beginPath();ctx.moveTo(CX0,yAt(CX0));
+  for(let x=CX0;x<=xUp;x+=8)ctx.lineTo(x,yAt(x));ctx.stroke();ctx.restore();
+  if(mode==1){const k=eback(prog(t,6.6,7.2));if(k>0)T('≈ +50%',PK-110,TOP+10-60,{font:'900 76px Inter',fill:GD,glow:GD,gb:18,scale:k});
+    const k2=eout(prog(t,7.0,7.6));if(k2>0)T('frente a yen, marco, franco y libra',540,BASE+120,{font:'800 28px Inter',fill:MT,a:k2})}
+  if(mode==2){
+    const kDn=prog(t,13.8,16.2);const xDn=PK+(CX1-PK)*eout(kDn);
+    ctx.save();ctx.strokeStyle=RD;ctx.lineWidth=8;ctx.shadowColor=RD;ctx.shadowBlur=12;ctx.beginPath();ctx.moveTo(PK,yAt(PK));
+    for(let x=PK;x<=xDn;x+=8)ctx.lineTo(x,yAt(x));ctx.stroke();ctx.restore();
+    const k=eback(prog(t,14.3,14.9));if(k>0){RR(150,TOP+10,290,120,22);ctx.fillStyle='rgba(226,85,63,.16)';ctx.fill();ctx.strokeStyle=RD;ctx.lineWidth=4;ctx.stroke();
+      T('−4%',295,TOP+60,{font:'900 76px Inter',fill:RD,scale:k});T('el lunes siguiente',295,TOP+108,{font:'800 24px Inter',fill:CR,a:k})}
+    const k3=eout(prog(t,15.6,16.2));if(k3>0){line(CX1-60,yAt(CX1)-190,CX1-60,yAt(CX1)+20,GD,3,[12,8]);T('1987 · LOUVRE: frenar la caída',540,BASE+120,{font:'800 30px Inter',fill:GD,a:k3})}}
+  // marca del pico
+  const kp=mode==1?prog(t,6.9,7.3):1;if(kp>0){ctx.beginPath();ctx.arc(PK,yAt(PK),12,0,7);ctx.fillStyle=CR;ctx.globalAlpha=a*kp;ctx.fill()}
+  ctx.restore()}
+const NAMES=['ESTADOS UNIDOS','JAPÓN','ALEMANIA OCCIDENTAL','FRANCIA','REINO UNIDO'];
+function countries(t,a){ctx.save();ctx.globalAlpha=a;panel(70,380,940,880);
+  T('HOTEL PLAZA · NUEVA YORK',540,450,{font:'900 40px Inter',fill:GD});
+  NAMES.forEach((n,i)=>{const ts=8.7+i*.7;const k=eout(prog(t,ts,ts+.45));if(k<=0)return;const y=540+i*112;ctx.save();ctx.globalAlpha=a*k;const dx=lerp(-120,0,k);
+    RR(120+dx,y,840,92,20);ctx.fillStyle='rgba(241,232,207,.09)';ctx.fill();ctx.strokeStyle=CR;ctx.lineWidth=2;ctx.stroke();
+    ctx.beginPath();ctx.arc(176+dx,y+46,22,0,7);ctx.fillStyle=GD;ctx.fill();T(String(i+1),176+dx,y+47,{font:'900 28px Inter',fill:INK});
+    T(n,225+dx,y+47,{font:'800 38px Inter',fill:CR,align:'left'});ctx.restore()});
+  const kk=eout(prog(t,12.0,12.6));if(kk>0){ctx.save();ctx.globalAlpha=a*kk;T('$',380,1210,{font:'900 90px Inter',fill:GD});
+    const dy=Math.sin(t*6)*4;ctx.fillStyle=RD;ctx.beginPath();ctx.moveTo(520,1170+dy);ctx.lineTo(600,1170+dy);ctx.lineTo(560,1240+dy);ctx.closePath();ctx.fill();
+    T('MENOS',720,1210,{font:'900 56px Inter',fill:RD});ctx.restore()}
+  ctx.restore()}
+function draw(t){bg(t);
+  const ik=eio(prog(t,3.0,3.6));
+  if(ik<1){const a=1-ik;ctx.save();ctx.globalAlpha=a;
+    T('$',540,430,{font:'900 300px Inter',fill:GD,glow:GD,gb:30});
+    T('22 · 09 · 1985',540,730,{font:'900 104px Inter',fill:CR,scale:1+.08*ik});
+    T('CINCO PAÍSES ACORDARON',540,880,{font:'800 52px Inter',fill:MT});
+    T('BAJAR EL DÓLAR',540,960,{font:'900 76px Inter',fill:GD});ctx.restore()}
+  if(ik>0){T('ACUERDO DEL PLAZA',540,280,{font:'900 50px Inter',fill:CR,a:ik});T('22 SEP 1985',540,335,{font:'800 28px Inter',fill:MT,a:ik})}
+  let a=fade(t,3.2,8.0);if(a>0)chart(t,a,1);
+  a=fade(t,8.2,13.0);if(a>0)countries(t,a);
+  a=fade(t,13.2,17.1);if(a>0){chart(t,a,2);T('Cifras aproximadas · contenido educativo',540,1250,{font:'800 26px Inter',fill:MT,a:a*prog(t,15.8,16.4)})}
+}
+function cover(){bg(3);T('$',540,380,{font:'900 260px Inter',fill:GD,glow:GD,gb:30});
+  T('22·09·1985',540,660,{font:'900 120px Inter',fill:CR});
+  T('CINCO PAÍSES ACORDARON',540,810,{font:'800 52px Inter',fill:MT});T('BAJAR EL DÓLAR',540,900,{font:'900 84px Inter',fill:GD});
+  T('ACUERDO DEL PLAZA',540,1040,{font:'800 46px Inter',fill:CR});
+  RR(210,1130,660,110,55);ctx.fillStyle=GD;ctx.fill();T('VER QUÉ PASÓ →',540,1186,{font:'900 42px Inter',fill:INK})}
+</script></body></html>
