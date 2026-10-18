@@ -85,11 +85,39 @@ Aplica a todos los reels nuevos desde ahora (cada `cover()` de `styles/`):
 - Todo el texto importante dentro de la zona central (cuadrícula del perfil recorta los bordes); sin letra pequeña.
 - Guardar como `covers/cover_<tema>.jpg` y usar como `videoThumbnailUrl` en Metricool.
 
-## Plan de 21 reels (18 al 20 oct, 7 por día, 60 s cada uno, carátula viral)
-Horarios (Bogotá): 6:00, 9:30, 13:00, 16:30, 20:00, 23:30 y 3:00 (el de las 3:00 sale de madrugada del día siguiente). Verificar cada cifra con fuente antes de producir.
-**Dom 18:** 6:00 LTCM 1998 (evento) · 9:30 perder 50% exige ganar 100% (mecánica) · 13:00 las 5 mayores pérdidas por trading rogue (ranking) · 16:30 Knight Capital 2012 (evento) · 20:00 oro COMEX vs oro físico LBMA (comparación) · 23:30 tasas reales (TIPS) y oro (mecánica) · 3:00 perfil de volumen POC (técnica).
-**Lun 19:** 6:00 hermanos Hunt y la plata 1980 (evento) · 9:30 MAE y MFE (técnica) · 13:00 monedas atadas que se rompieron: libra 1992, baht 1997, franco 2015 (comparación) · 16:30 flash crash de la libra 2016 (evento) · 20:00 criterio de Kelly (mecánica) · 23:30 Sharpe vs Sortino vs Calmar, cómo medir un robot (comparación) · 3:00 reporte COT del oro (técnica).
-**Mar 20:** 6:00 Bretton Woods 1944 (evento) · 9:30 walk-forward y sobreajuste (técnica) · 13:00 carry trade del yen, agosto 2024 (evento) · 16:30 puntos swap y paridad de tasas (mecánica) · 20:00 sesiones del día y comportamiento del oro (ranking) · 23:30 backtest con ticks reales vs velas de 1 minuto (mecánica) · 3:00 el fix de Londres y el fix de las 4 p.m. (evento).
+## NUEVA LISTA DE TEMAS (oro y trading) — reemplaza el "Plan de 21 reels" (decisión de Cristian, 18 oct 2026)
+Motivo: guarda mejor relación con el Robot De Oro Mr. Y 10.0 Securus Apex. Horarios Bogotá: 6:00, 9:30, 13:00, 16:30, 20:00, 23:30 y 3:00. Se produce en el orden de la lista (verificar cada cifra con fuentes antes de producir; los ganchos son orientativos).
+**Todos los videos nuevos incluyen:** la imagen del Robot (`styles/robot_oro.png`) y una escena de cierre con: seguir @forexmry en Instagram, activar las notificaciones, unirse al grupo de Telegram y visitar www.robotsdeforexmry.com (ver `styles/v44_expediente_orden6102.html`: funciones `outro` y `ctaCard`). Falta el enlace del grupo de Telegram para ponerlo explícito en el texto.
+Historia y eventos del oro:
+1. 1933: orden ejecutiva 6102 y la entrega del oro (HECHO, 18 oct, `v44_expediente_orden6102`, escena 111).
+2. London Gold Pool (1961–68): bancos centrales defienden el precio y fracasan.
+3. Enero de 1980: el oro llega a $850 en horas de euforia y tarda décadas en volver.
+4. "Brown's Bottom" (1999–2002): el Reino Unido vendió casi la mitad de sus reservas cerca del mínimo.
+5. Acuerdo de Washington sobre el oro (1999): los bancos centrales europeos limitan sus ventas.
+6. 2022: congelan las reservas de Rusia y se disparan las compras de oro de bancos centrales.
+7. Qué pasó tras el máximo de enero de 2026 ($5.608) y la caída posterior.
+8. Manipulación del "fix" de Londres y multas por spoofing en metales (JPMorgan, 2020).
+Mecánica y estructura del mercado:
+9. Backwardation en el oro: cuando el futuro cotiza por debajo del spot.
+10. Oro de papel vs oro físico: qué respalda a un ETF de oro.
+11. Por qué 1 lote de XAUUSD son 100 onzas: cuánto vale cada $1 y cómo cambia el riesgo.
+12. El costo real de operar oro: spread, swap y comisión en un día volátil.
+13. Subasta de oro de un banco central y compra de oro entre bancos.
+Correlaciones y macro:
+14. Oro vs dólar (DXY): cuándo se separan y por qué.
+15. Relación oro/plata como señal y cuándo falla.
+16. Oro vs S&P 500 vs bitcoin: quién es refugio en cada crisis.
+17. Oro y NFP: qué hace el precio en los minutos siguientes.
+18. Oro y petróleo: cuántos barriles compra una onza.
+Técnica y robots (conecta con Securus Apex):
+19. Niveles redondos ($3.000, $4.000, $5.000) y por qué atraen órdenes.
+20. Sesiones del día (Asia, Londres, Nueva York) y cómo se comporta el oro.
+21. Por qué un robot de scalping en oro sufre en noticias y qué defensas existen.
+22. Backtest en oro con ticks reales vs velas de 1 minuto.
+Rankings y comparaciones:
+23. Mayores compradores recientes de oro (países y bancos centrales).
+24. Oro físico, ETF, mineras y futuros: cuatro formas de exponerse, con riesgos y costos.
+Pendientes que ya estaban producidos y programados el 17 oct (no repetir): Lunes Negro 1987, Esperanza matemática, Knight Capital 2012, Oro COMEX vs LBMA, Tasas reales (TIPS) y oro, Perfil de volumen POC. Fuera de la lista: trading rogue (reserva).
 
 ## Estilos (regla de Cristian, 18 oct)
 Cada video nuevo usa un estilo distinto del catálogo `docs/estilos.md` (50 estilos). Marcar allí el estilo usado, el tema, la escena y la fecha.
@@ -103,3 +131,5 @@ Horarios Bogotá: 6:00, 9:30, 16:30, 20:00, 23:30 y 3:00 (del 19 oct). LTCM 1998
 - Dom 18 oct 23:30 — Tasas reales (TIPS) y oro (60 s, estilo documental blanco y negro con acento dorado, `v42_documental_tips.html`, escena 109, carátula "−18% EN EL ORO / SEGÚN PIMCO"). Fuente: PIMCO, "Understanding gold prices": el oro no genera flujo de caja, y cuando los rendimientos reales suben, mantenerlo cuesta más; regresión 2004–2025: +100 pb en el rendimiento real a 10 años se asoció con −18% en el precio real del oro; abril 2013 el oro cayó 15% tras comentarios de la Fed sobre reducir estímulos y en mayo los rendimientos reales subieron 57 pb; desde 2022 compras récord de bancos centrales y demanda de refugio aflojaron la relación y el oro llegó a máximos en 2025. Ejemplo 4% nominal − 2% inflación ≈ 2% real: ilustrativo. Video `videos/2026-10-18_2330_tasas_reales_oro.mp4`, portada `covers/cover_tasas_reales.jpg`.
 - Lun 19 oct 3:00 (el séptimo reel del día 18) — Perfil de volumen: POC y área de valor (60 s, estilo sala de operaciones con monitores, `v43_monitores_poc.html`, escena 110, carátula "POC / EL PRECIO DONDE MÁS SE OPERÓ"). Fuente: LuxAlgo (Volume Profile, Point of Control): el perfil de volumen distribuye el volumen por nivel de precio; el POC es el precio con más volumen (fila más larga); el área de valor rodea al POC y por convención contiene ≈70% del volumen (VAH y VAL como límites); usos: retesteo de POC previo como posible soporte/resistencia, POC sin testear como posible objetivo (no son certezas); con datos de barras es una aproximación (en forex y CFD de bróker el volumen suele ser de ticks); depende del periodo elegido. Gráfico ilustrativo (datos simulados). Video `videos/2026-10-19_0300_perfil_volumen_poc.mp4`, portada `covers/cover_poc.jpg`.
 - Reserva actualizada (18 oct): "Las 5 mayores pérdidas por trading rogue (Leeson, Kerviel, Hamanaka, ballena de Londres, Adoboli)" (ranking, estilo sugerido 28 expediente "caso cerrado") sigue pendiente. El día 18 quedó sin reel a las 13:00 por haber ya una publicación ("diario de trading").
+
+- Dom 18 oct (a pedido, primer video de la nueva lista) — Orden Ejecutiva 6102 de 1933: entregar el oro o hasta 10 años de prisión (60 s, estilo expediente "caso cerrado", `v44_expediente_orden6102.html`, escena 111, carátula "ENTREGA TU ORO O HASTA 10 AÑOS DE PRISIÓN"). Fuentes: Wikipedia (Executive Order 6102) y Federal Reserve History (Gold Reserve Act). Datos: firmada el 5 abr 1933; exigía entregar monedas, lingotes y certificados de oro a la Reserva Federal; exención de ~$100 en monedas (≈5 onzas troy); plazo 1 may 1933; compensación $20,67 por onza; pena máxima $10.000 y/o 10 años de prisión por incumplimiento deliberado; excepciones: usos profesionales (joyeros, dentistas), monedas de colección, oro de bancos centrales extranjeros, operaciones con licencia; Gold Reserve Act (30 ene 1934): $35 por onza (≈ +69% frente a $20,67) y valor del dólar en oro al 59% (≈ −41%); poseer oro volvió a ser legal desde 1974. Incluye Robot y cierre con seguir/Telegram/web. Video `videos/2026-10-18_1447_orden_6102.mp4`, portada `covers/cover_orden_6102.jpg`.
