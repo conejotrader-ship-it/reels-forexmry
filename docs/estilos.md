@@ -38,7 +38,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 32 | Pixel-art 2D de 8 bits con personajes |  | Disponible |
 | 33 | Ciudad isométrica | Edificios que son barras | Disponible |
 | 34 | Montañas lowpoly 3D | Forman el gráfico | Disponible |
-| 35 | Acuarela con tinta |  | Disponible |
+| 35 | Acuarela con tinta | Manchas de acuarela sobre papel con trazo de tinta | Perder 50% exige ganar 100% (v37_acuarela_drawdown, escena 104, 17 oct) |
 | 36 | Art déco dorado | Años veinte | Disponible |
 | 37 | Cinta de teletipo | Clásica de bolsa | Disponible |
 | 38 | Monitor CRT verde fósforo |  | Disponible |

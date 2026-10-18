@@ -1,0 +1,120 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+
+// Estilo: acuarela con tinta sobre papel — tema: por qué perder 50% exige ganar 100% (60 s)
+const SPEC={name:'AcuarelaDrawdown',hook:'PIERDES 50%: NECESITAS GANAR 100%',dur:60,cta:56,bpm:84,mus:'soft',prog:[[53,'M'],[48,'m'],[50,'M'],[55,'M']],
+ ev:[[0.3,'hit'],[1.6,'down'],[6.8,'wipe'],[7.6,'ding'],[9.2,'down'],[11.2,'ding'],[13.0,'tick'],[15.6,'wipe'],[18.0,'tick'],[20.4,'hit'],[24.6,'wipe'],[26.2,'tick'],[29.2,'tick'],[31.4,'hit'],[34.2,'wipe'],[35.4,'ding'],[37.8,'ding'],[40.2,'ding'],[43.8,'wipe'],[44.6,'tick'],[46.2,'ding'],[47.6,'alert'],[49.2,'wipe'],[50.2,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.4,'Si pierdes 50%, ganar 50% no te recupera. Necesitas ganar 100%.','Si pierdes cincuenta por ciento, ganar cincuenta no te recupera. Necesitas ganar cien por ciento.'],
+ [6.8,15.4,'Cuenta de $1.000: pierde 50% y queda en $500. Gana 50% y llega a $750, aún 25% por debajo.','Una cuenta de mil dólares pierde cincuenta por ciento y queda en quinientos. Si gana cincuenta por ciento, llega a setecientos cincuenta: sigue veinticinco por ciento por debajo.'],
+ [15.6,24.4,'Para volver a $1.000, esos $500 deben duplicarse: una ganancia de 100%.','Para volver a mil dólares, esos quinientos deben duplicarse. Eso es una ganancia de cien por ciento.'],
+ [24.6,34.0,'La fórmula: ganancia necesaria = 1 ÷ (1 − pérdida) − 1. Con 50% de pérdida, da 100%.','La fórmula: uno dividido entre uno menos la pérdida, menos uno. Con cincuenta por ciento de pérdida, da cien por ciento.'],
+ [34.2,43.6,'Pierdes 10%: necesitas 11%. Pierdes 20%: 25%. Pierdes 30%: 43%.','Si pierdes diez por ciento, necesitas ganar once. Con veinte, veinticinco. Con treinta, cuarenta y tres.'],
+ [43.8,49.0,'Con 75% de pérdida necesitas 300%. Con 90%, necesitas 900%.','Con setenta y cinco por ciento de pérdida, necesitas trescientos por ciento. Con noventa, novecientos.'],
+ [49.2,55.8,'Por eso, limitar las pérdidas pesa más que perseguir grandes ganancias.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const PAPER='#f4ecdc',INK='#2a2830',RED='#e0524a',BLU='#3b7fb5',GRN='#4f9d69',OCH='#e2a93b',BRN='#8a7a60';
+const STY={subFont:'800 42px Inter',subBg:'rgba(246,238,222,.96)',subStroke:INK,subFill:INK,ctaBg:'#2a2830',ctaSub:'#f4ecdc',ctaGlow:OCH,
+ ctaAccent:OCH,ctaBtnText:'#2a2830',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+const fr=x=>x-Math.floor(x),nz=(i,s)=>fr(Math.sin(i*12.9898+s*78.233)*43758.5453)-.5;
+function grainC(){if(window._g)return window._g;const c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');const r=rng(77);
+  for(let i=0;i<30000;i++){g.fillStyle=`rgba(120,90,50,${.03+r()*.05})`;g.fillRect(r()*W,r()*H,1+r()*2.5,1+r()*2.5)}
+  g.lineWidth=1;for(let i=0;i<500;i++){g.strokeStyle='rgba(120,90,50,.05)';const x=r()*W,y=r()*H;g.beginPath();g.moveTo(x,y);g.lineTo(x+r()*30-15,y+r()*30-15);g.stroke()}window._g=c;return c}
+function blobPath(cx,cy,rx,ry,seed){ctx.beginPath();const n=36;for(let i=0;i<=n;i++){const a=i/n*Math.PI*2;const r=1+.07*Math.sin(3*a+seed)+.05*Math.sin(5*a+seed*2)+.03*Math.sin(9*a+seed*3);
+  const x=cx+Math.cos(a)*rx*r,y=cy+Math.sin(a)*ry*r;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.closePath()}
+function wash(cx,cy,rx,ry,col,a,seed){ctx.save();const b=ctx.globalAlpha;ctx.globalCompositeOperation='multiply';ctx.fillStyle=col;ctx.strokeStyle=col;
+  for(let l=0;l<3;l++){blobPath(cx+nz(l,seed)*14,cy+nz(l+3,seed)*14,rx*(1-l*.07),ry*(1-l*.07),seed+l);ctx.globalAlpha=b*a*(l==0?.55:.3);ctx.fill()}
+  blobPath(cx,cy,rx,ry,seed);ctx.globalAlpha=b*a*.6;ctx.lineWidth=3;ctx.stroke();ctx.restore()}
+function wRect(x,y,w,h,seed){ctx.beginPath();const pts=[],st=30;for(let xx=0;xx<=w;xx+=st)pts.push([x+xx,y]);for(let yy=0;yy<=h;yy+=st)pts.push([x+w,y+yy]);
+  for(let xx=w;xx>=0;xx-=st)pts.push([x+xx,y+h]);for(let yy=h;yy>=0;yy-=st)pts.push([x,y+yy]);
+  pts.forEach((p,i)=>{const px=p[0]+nz(i,seed)*7,py=p[1]+nz(i+50,seed)*7;i?ctx.lineTo(px,py):ctx.moveTo(px,py)});ctx.closePath()}
+function barWash(x,y,w,h,col,seed,a=1){if(h<6)return;ctx.save();const b=ctx.globalAlpha;ctx.globalCompositeOperation='multiply';ctx.fillStyle=col;
+  wRect(x,y,w,h,seed);ctx.globalAlpha=b*a*.6;ctx.fill();wRect(x+8,y+8,w-16,Math.max(2,h-16),seed+1);ctx.globalAlpha=b*a*.3;ctx.fill();ctx.restore();
+  ctx.save();wRect(x,y,w,h,seed);ctx.strokeStyle=INK;ctx.lineWidth=4;ctx.globalAlpha*=.85*a;ctx.stroke();ctx.restore()}
+function ink(x1,y1,x2,y2,lw=4,col=INK,dash){ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineCap='round';ctx.lineJoin='round';if(dash)ctx.setLineDash(dash);ctx.beginPath();
+  const n=Math.max(2,Math.round(Math.hypot(x2-x1,y2-y1)/30));for(let i=0;i<=n;i++){const u=i/n;const x=lerp(x1,x2,u)+nz(i,x1)*3,y=lerp(y1,y2,u)+nz(i+9,y1)*3;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.restore()}
+function bg(t){ctx.fillStyle=PAPER;ctx.fillRect(0,0,W,H);
+  const v=ctx.createRadialGradient(540,960,400,540,960,1200);v.addColorStop(0,'rgba(120,90,50,0)');v.addColorStop(1,'rgba(120,90,50,.22)');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.14;wash(120,330+Math.sin(t*.4)*10,260,200,BLU,1,2);wash(960,1560,300,230,OCH,1,5);wash(980,260,220,170,RED,.8,9);ctx.restore();
+  ctx.drawImage(grainC(),0,0)}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+function ibox(x,y,w,h,seed){ctx.save();ctx.fillStyle='rgba(250,245,232,.9)';wRect(x,y,w,h,seed);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=4;ctx.stroke();ctx.restore()}
+function lbl(s,x,y,sz,col=INK,a=1,al='center'){T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+const BASE=1120,SCL=.55; // $1 = .55 px
+function chart1(t,a){ctx.save();ctx.globalAlpha=a;ibox(70,380,940,860,3);
+  lbl('CUENTA DE EJEMPLO (ilustrativo)',540,440,32,BRN);
+  ink(130,BASE,950,BASE,4);
+  const ty=BASE-1000*SCL;const kt=eout(prog(t,7.2,7.8));if(kt>0){ctx.save();ctx.globalAlpha=a*kt;ink(130,ty,950,ty,3,BRN,[16,12]);ctx.restore()}
+  const B=[[250,1000,BLU,7.6,'INICIO','$1.000'],[500,500,RED,9.2,'−50%','$500'],[750,750,OCH,11.2,'+50%','$750']];
+  B.forEach(([cx,v,col,ts,lab,val],i)=>{const k=eout(prog(t,ts,ts+.9));if(k<=0)return;const h=v*SCL*k;barWash(cx-75,BASE-h,150,h,col,i*3+1);
+    lbl(val,cx,BASE-h-34,50,INK,k);lbl(lab,cx,BASE+52,36,col==OCH?'#9a6a10':col,k)});
+  const k2=eout(prog(t,12.6,13.4));if(k2>0){ink(860,BASE-750*SCL-8,860,ty+12,4,RED);lbl('aún falta',945,ty+90,26,RED,k2);lbl('25%',945,ty+132,44,RED,k2)}
+  ctx.restore()}
+function chart2(t,a){ctx.save();ctx.globalAlpha=a;ibox(70,380,940,860,6);
+  lbl('PARA VOLVER AL INICIO',540,440,32,BRN);ink(130,BASE,950,BASE,4);
+  const h5=500*SCL,ty=BASE-1000*SCL;ink(130,ty,950,ty,3,BRN,[16,12]);lbl('$1.000',150,ty-26,28,BRN,1,'left');
+  barWash(250,BASE-h5,200,h5,RED,12);lbl('$500',350,BASE-h5-34,50);lbl('HOY',350,BASE+52,34,RED);
+  const k=eout(prog(t,17.4,20.0));if(k>0){const h=h5*k;barWash(250,BASE-h5-h,200,h,GRN,15,.9);ctx.save();ctx.globalAlpha=a*.7;ctx.setLineDash([14,10]);ctx.strokeStyle=INK;ctx.lineWidth=3;ctx.strokeRect(250,ty,200,h5);ctx.restore()}
+  const k2=eback(prog(t,20.3,21.1));if(k2>.02){ctx.save();ctx.translate(710,720);ctx.scale(k2,k2);wash(0,0,230,130,GRN,.9,21);lbl('+100%',0,10,110,INK);ctx.restore();
+    lbl('los $500 deben duplicarse',710,880,32,INK,eout(prog(t,21.4,22.2)))}
+  ctx.restore()}
+function formula(t,a){ctx.save();ctx.globalAlpha=a;ibox(70,380,940,860,9);
+  lbl('GANANCIA NECESARIA =',540,470,40,BRN,eout(prog(t,25.2,25.8)));
+  lbl('1 ÷ (1 − pérdida) − 1',540,600,80,INK,eout(prog(t,26.2,27.2)));
+  ink(150,690,930,690,3,BRN,[18,12]);
+  lbl('con pérdida = 50%',540,790,46,RED,eout(prog(t,29.0,29.7)));
+  lbl('1 ÷ (1 − 0,5) − 1',540,900,64,INK,eout(prog(t,30.0,30.8)));
+  const k=eback(prog(t,31.4,32.2));if(k>.02){ctx.save();ctx.translate(540,1075);ctx.scale(k,k);wash(0,0,300,100,GRN,.9,31);lbl('= 100%',0,12,130,INK);ctx.restore()}
+  ctx.restore()}
+function table(t,a){ctx.save();ctx.globalAlpha=a;ibox(70,380,940,860,12);
+  lbl('PIERDES',290,450,40,RED);lbl('NECESITAS GANAR',760,450,34,GRN);ink(130,490,950,490,3,BRN);
+  [[35.2,'−10%','+11%'],[37.6,'−20%','+25%'],[40.0,'−30%','+43%']].forEach(([ts,l,g],i)=>{const k=eout(prog(t,ts,ts+.6));if(k<=0)return;const y=640+i*190;
+    ctx.save();ctx.globalAlpha=a*k;wash(290,y,170,80,RED,.8,i+40);lbl(l,290,y+16,66,INK);ink(470,y,580,y,5);ink(555,y-16,582,y,5);ink(555,y+16,582,y,5);
+    wash(760,y,190,80,GRN,.85,i+50);lbl(g,760,y+16,72,INK);ctx.restore()});
+  lbl('valores redondeados',540,1200,24,BRN,eout(prog(t,41.0,41.6)));
+  ctx.restore()}
+function curve(t,a){ctx.save();ctx.globalAlpha=a;ibox(70,380,940,860,15);
+  lbl('GANANCIA NECESARIA',540,440,34,BRN);
+  const x0=170,x1=920,y0=1130,y1=500;ink(x0,y0,x1+10,y0,4);ink(x0,y0,x0,y1-20,4);
+  lbl('pérdida →',x1-40,y0+54,26,BRN);
+  const gx=l=>x0+(x1-x0)*l/90,gy=g=>y0-(y0-y1)*Math.min(g,900)/900;
+  const kk=prog(t,44.3,47.0);const lmax=90*kk;
+  ctx.save();ctx.globalCompositeOperation='multiply';ctx.fillStyle=RED;ctx.globalAlpha=a*.28;ctx.beginPath();ctx.moveTo(gx(0),y0);
+  for(let l=0;l<=lmax;l+=1.5)ctx.lineTo(gx(l),gy(100*(1/(1-l/100)-1)));ctx.lineTo(gx(lmax),y0);ctx.closePath();ctx.fill();ctx.restore();
+  ctx.save();ctx.strokeStyle=INK;ctx.lineWidth=7;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();
+  for(let l=0;l<=lmax;l+=1.5){const x=gx(l),y=gy(100*(1/(1-l/100)-1));l?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.restore();
+  const pts=[[75,300,46.0,'−75% → +300%'],[90,900,47.4,'−90% → +900%']];
+  pts.forEach(([l,g,ts,s],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=0)return;ctx.save();ctx.globalAlpha=a*k;ctx.beginPath();ctx.arc(gx(l),gy(g),14,0,7);ctx.fillStyle=RED;ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=4;ctx.stroke();
+    lbl(s,i?gx(l)-30:gx(l)-60,gy(g)+(i?-4:-50),i?36:36,INK,1,'right');ctx.restore()});
+  ctx.restore()}
+function closing(t,a){ctx.save();ctx.globalAlpha=a;ibox(70,380,940,860,18);
+  lbl('LIMITAR LA PÉRDIDA',540,490,56,INK,eout(prog(t,49.7,50.4)));lbl('PESA MÁS QUE',540,570,44,BRN,eout(prog(t,50.4,51.0)));lbl('PERSEGUIR GANANCIAS',540,650,56,INK,eout(prog(t,51.0,51.7)));
+  const k=eout(prog(t,51.8,52.6));ctx.save();ctx.globalAlpha=a*k;ctx.translate(540,930);ctx.beginPath();ctx.moveTo(0,-170);ctx.bezierCurveTo(130,-150,170,-130,170,-60);ctx.bezierCurveTo(170,80,80,150,0,190);ctx.bezierCurveTo(-80,150,-170,80,-170,-60);ctx.bezierCurveTo(-170,-130,-130,-150,0,-170);ctx.closePath();
+  ctx.save();ctx.globalCompositeOperation='multiply';ctx.fillStyle=BLU;ctx.globalAlpha=a*k*.55;ctx.fill();ctx.restore();ctx.strokeStyle=INK;ctx.lineWidth=7;ctx.stroke();
+  ink(-60,0,-15,48,9,INK);ink(-15,48,70,-50,9,INK);ctx.restore();
+  lbl('ejemplo ilustrativo · cálculo matemático · contenido educativo',540,1190,22,BRN,eout(prog(t,54.0,54.8)));
+  ctx.restore()}
+function draw(t){bg(t);
+  const ik=eio(prog(t,6.2,6.9));
+  if(ik<1){const a=1-ik;ctx.save();ctx.globalAlpha=a;
+    wash(540,580,440,230,RED,.95,3);lbl('−50%',540,610,250,INK);
+    lbl('ganar +50% NO te recupera',540,830,46,INK);lbl('NECESITAS',540,925,60,INK);
+    wash(540,1160,450,240,GRN,.95,7);lbl('+100%',540,1190,240,INK);ctx.restore()}
+  if(ik>0){lbl('PÉRDIDAS Y RECUPERACIÓN',540,285,44,INK,ik);T('ejemplo ilustrativo · cálculo matemático',540,335,{font:'800 24px Inter',fill:BRN,a:ik})}
+  let a=fade(t,6.9,15.4);if(a>0)chart1(t,a);
+  a=fade(t,15.6,24.4);if(a>0)chart2(t,a);
+  a=fade(t,24.6,34.0);if(a>0)formula(t,a);
+  a=fade(t,34.2,43.6);if(a>0)table(t,a);
+  a=fade(t,43.8,49.0);if(a>0)curve(t,a);
+  a=fade(t,49.2,55.8);if(a>0)closing(t,a);
+}
+function cover(){bg(2);
+  wash(540,450,450,230,RED,.95,3);lbl('PIERDES 50%',540,450,124,INK);
+  lbl('NECESITAS',540,740,66,INK);
+  wash(540,1010,450,250,GRN,.95,7);lbl('+100%',540,1040,230,INK);
+  lbl('PARA RECUPERARTE',540,1250,60,INK);
+  ctx.save();ctx.fillStyle=INK;RR(170,1350,740,110,55);ctx.fill();ctx.restore();T('VER POR QUÉ →',540,1408,{font:'900 48px Inter',fill:PAPER})}
+</script></body></html>
