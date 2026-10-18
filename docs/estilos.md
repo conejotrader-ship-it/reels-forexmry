@@ -24,7 +24,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 18 | Libro de órdenes | Compras y ventas que suben y bajan | HFT y spoofing (v14, 13 oct) |
 | 19 | Cuaderno | Hoja clara con anotaciones | EMA (v17, 13 oct) |
 | 20 | Pixel-art 3D | Bloques de colores en tres dimensiones | pixel/pixel5.html |
-| 21 | Línea de tiempo horizontal con hitos |  | Disponible |
+| 21 | Línea de tiempo horizontal con hitos | Hitos sobre un eje que se desplaza | Lunes Negro 1987 (v38_timeline_lunes_negro, escena 105, 18 oct) |
 | 22 | Noticiero de última hora | Cinta de titulares | Disponible |
 | 23 | Mapa mundial con rutas de flujo | Oro y divisas | Disponible |
 | 24 | Pantalla dividida antes/después |  | Disponible |

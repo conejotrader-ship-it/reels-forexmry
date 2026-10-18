@@ -93,3 +93,7 @@ Horarios (Bogotá): 6:00, 9:30, 13:00, 16:30, 20:00, 23:30 y 3:00 (el de las 3:0
 
 ## Estilos (regla de Cristian, 18 oct)
 Cada video nuevo usa un estilo distinto del catálogo `docs/estilos.md` (50 estilos). Marcar allí el estilo usado, el tema, la escena y la fecha.
+
+## Producción automática del domingo 18 oct (6 reels; el slot de 13:00 ya estaba ocupado por "diario de trading")
+Horarios Bogotá: 6:00, 9:30, 16:30, 20:00, 23:30 y 3:00 (del 19 oct). LTCM 1998 y "perder 50% exige ganar 100%" ya estaban producidos; se sustituyen por Lunes Negro 1987 y Esperanza matemática. "Las 5 mayores pérdidas por trading rogue" (ranking) queda en la reserva (no tuvo horario libre).
+- Dom 18 oct 6:00 — Lunes Negro 1987: el Dow cayó 22,6% en un día (60 s, estilo línea de tiempo horizontal, `v38_timeline_lunes_negro.html`, escena 105, carátula "−22,6% / 19 OCT 1987"). Fuentes: Federal Reserve History (Stock Market Crash of 1987) y Wikipedia (Black Monday 1987). Datos: lun 19 oct 1987 Dow −508 puntos (−22,6%, de 2.246,74 a 1.738,74), S&P 500 ≈ −20,5%; antes el Dow subió 44% en siete meses; Hong Kong ≈ −46% en dólares (aprox.); causas citadas: seguro de cartera (su peso se discute) y plazos de liquidación distintos (acciones 3 días, opciones/futuros 1 día); el 20 oct Greenspan prometió liquidez; en dos sesiones el Dow recuperó 288 puntos (57%); circuit breakers (NYSE 1988); S&P 500 recuperó su máximo el 26 jul 1989. Video `videos/2026-10-18_0600_lunes_negro_1987.mp4`, portada `covers/cover_lunes_negro.jpg`.

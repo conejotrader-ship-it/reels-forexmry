@@ -1,0 +1,107 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+
+// Estilo 21: línea de tiempo horizontal con hitos — tema: Lunes Negro, 19 oct 1987 (60 s)
+const SPEC={name:'LunesNegro1987',hook:'EL DOW CAYÓ 22,6% EN UN DÍA: 19 OCT 1987',dur:60,cta:56,bpm:90,mus:'soft',prog:[[45,'m'],[41,'M'],[48,'M'],[43,'m']],
+ ev:[[0.3,'hit'],[1.8,'down'],[7.2,'wipe'],[8.0,'ding'],[10.5,'tick'],[15.2,'wipe'],[16.4,'ding'],[18.4,'down'],[21.6,'ding'],[23.0,'wipe'],[24.4,'ding'],[27.0,'alert'],[31.0,'wipe'],[32.6,'tick'],[35.4,'tick'],[38.0,'tick'],[40.2,'wipe'],[42.0,'ding'],[45.4,'ding'],[48.0,'ding'],[50.0,'wipe'],[51.0,'ding'],[56.2,'cta']],
+ subs:[[0.2,7.2,'El Dow Jones cayó 22,6% en un solo día: el 19 de octubre de 1987.','El Dow Jones cayó veintidós coma seis por ciento en un solo día, el diecinueve de octubre de mil novecientos ochenta y siete.'],
+ [7.6,15.2,'Antes había subido 44% en siete meses, con más déficit comercial y un dólar más débil.','Antes había subido cuarenta y cuatro por ciento en siete meses, con más déficit comercial y un dólar más débil.'],
+ [15.4,23.0,'Ese lunes perdió 508 puntos, hasta 1.739. El S&P 500 cayó ≈ 20,5%.','Ese lunes perdió quinientos ocho puntos, hasta mil setecientos treinta y nueve. El S y P quinientos cayó cerca de veinte por ciento.'],
+ [23.2,31.0,'La caída fue mundial. Hong Kong fue el más golpeado: ≈ 46% abajo en dólares (aprox.).','La caída fue mundial. Hong Kong fue el mercado más golpeado: cerca de cuarenta y seis por ciento abajo, en dólares.'],
+ [31.2,40.2,'Se citan el seguro de cartera, que vendía al caer, y plazos de liquidación distintos. Su peso se discute.','Se citan el seguro de cartera, que vendía automáticamente al caer, y plazos de liquidación distintos. Su peso exacto se discute.'],
+ [40.4,50.0,'Greenspan prometió liquidez. En dos sesiones el Dow recuperó 57% de la caída; en 1989 el S&P volvió a su máximo.','Greenspan prometió liquidez. En dos sesiones el Dow recuperó cincuenta y siete por ciento de la caída. En mil novecientos ochenta y nueve, el S y P volvió a su máximo.'],
+ [50.2,55.8,'Los extremos ocurren. Por eso un robot necesita límites de riesgo claros.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BGC='#0b1822',PAN='#122a38',CREAM='#f1e8d0',CORAL='#ff5a3c',AMB='#ffc233',TEAL='#35d0c4',MUT='#9fb0b8';
+const STY={subFont:'800 42px Inter',subBg:'rgba(11,24,34,.94)',subStroke:AMB,subFill:'#fff',ctaBg:'#0b1822',ctaSub:CREAM,ctaGlow:AMB,
+ ctaAccent:AMB,ctaBtnText:'#0b1822',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+const BL=[[7.6,15.2],[15.4,23.0],[23.2,31.0],[31.2,40.2],[40.4,50.0],[50.2,55.8]];
+const NX=[0,1,2,3,4,5].map(i=>i*760),NLAB=['MAR–AGO 1987','LUN 19 OCT','19 OCT · MUNDO','CAUSAS','20 OCT →','LECCIÓN'];
+const Y0=1320;
+function lbl(s,x,y,sz,col=CREAM,a=1,al='center'){T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+function cam(t){let c=NX[0];for(let i=1;i<6;i++)c=lerp(c,NX[i],eio(prog(t,BL[i][0]-1.0,BL[i][0]-.15)));return c}
+function bg(t){ctx.fillStyle=BGC;ctx.fillRect(0,0,W,H);
+  const g=ctx.createRadialGradient(540,700,100,540,900,1300);g.addColorStop(0,'#173244');g.addColorStop(1,'#07111a');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.07;for(let x=0;x<=W;x+=60)line(x,0,x,H,CREAM,1);for(let y=0;y<=H;y+=60)line(0,y,W,y,CREAM,1);ctx.restore()}
+function axis(t,ax){ctx.save();ctx.globalAlpha=ax;const c=cam(t);line(0,Y0,W,Y0,CREAM,6);
+  for(let x=-400;x<=NX[5]+900;x+=95){const sx=540+x-c;if(sx<-20||sx>W+20)continue;line(sx,Y0-10,sx,Y0+10,'rgba(241,232,208,.4)',3)}
+  NX.forEach((wx,i)=>{const sx=540+wx-c;if(sx<-260||sx>W+260)return;const act=t>=BL[i][0]-.6&&t<BL[i][1]+.3;
+    ctx.beginPath();ctx.arc(sx,Y0,act?26:15,0,7);ctx.fillStyle=act?CORAL:BGC;ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=act?AMB:CREAM;ctx.stroke();
+    lbl(NLAB[i],sx,Y0+70,act?34:28,act?AMB:MUT)});
+  ctx.restore()}
+function panel(a,chip){ctx.save();ctx.globalAlpha=a;RR(70,350,940,890,36);ctx.fillStyle=PAN;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle='rgba(241,232,208,.35)';ctx.stroke();
+  RR(100,380,10+chip.length*21,56,28);ctx.fillStyle=AMB;ctx.fill();T(chip,105+(10+chip.length*21)/2,409,{font:'900 28px Inter',fill:BGC});ctx.restore()}
+function pill(s,x,y,w,col,a=1){ctx.save();ctx.globalAlpha*=a;RR(x-w/2,y-34,w,68,34);ctx.fillStyle=col;ctx.fill();ctx.restore();T(s,x,y+1,{font:'900 28px Inter',fill:BGC,a})}
+function card0(t,a){panel(a,'ANTES · 1987');ctx.save();ctx.globalAlpha=a;
+  lbl('+44%',540,540,170,TEAL,eout(prog(t,8.0,8.8)));lbl('Dow Jones · siete meses',540,660,40,CREAM,eout(prog(t,8.4,9.2)));
+  const r=rng(9);
+  const P=[];for(let i=0;i<=48;i++){const u=i/48;P.push([150+u*780,1130-Math.pow(u,1.4)*330-(r()-.5)*40*(i>0)])}
+  const k=prog(t,9.0,13.0);ctx.beginPath();const n=Math.floor(k*48);for(let i=0;i<=n;i++)i?ctx.lineTo(P[i][0],P[i][1]):ctx.moveTo(P[i][0],P[i][1]);
+  ctx.strokeStyle=TEAL;ctx.lineWidth=9;ctx.lineJoin='round';ctx.stroke();
+  if(n>0){ctx.beginPath();ctx.arc(P[n][0],P[n][1],14,0,7);ctx.fillStyle=AMB;ctx.fill()}
+  pill('déficit comercial ↑',320,1185,420,AMB,eout(prog(t,12.0,12.6)));pill('dólar ↓',760,1185,260,CORAL,eout(prog(t,12.8,13.4)));
+  T('trazo ilustrativo',900,720,{font:'800 22px Inter',fill:MUT,align:'right'});ctx.restore()}
+function card1(t,a){panel(a,'LUNES 19 OCT');ctx.save();ctx.globalAlpha=a;
+  const B=1120,S=.15,h1=2247*S,h2=1739*S;
+  line(150,B,930,B,CREAM,5);
+  const k1=eout(prog(t,15.8,16.6)),k2=eout(prog(t,17.6,18.8));
+  RR(230,B-h1*k1,200,h1*k1,10);ctx.fillStyle=TEAL;ctx.fill();lbl('2.247',330,B-h1*k1-36,48,CREAM,k1);lbl('VIE 16',330,B+50,32,MUT,k1);
+  RR(650,B-h2*k2,200,h2*k2,10);ctx.fillStyle=CORAL;ctx.fill();lbl('1.739',750,B-h2*k2-36,48,CREAM,k2);lbl('LUN 19',750,B+50,32,MUT,k2);
+  if(k2>0){ctx.save();ctx.globalAlpha=a*.7;ctx.setLineDash([14,10]);ctx.strokeStyle=CREAM;ctx.lineWidth=3;ctx.strokeRect(650,B-h1,200,h1-h2*k2);ctx.restore()}
+  const kb=eback(prog(t,19.0,19.8));if(kb>.02){ctx.save();ctx.translate(540,540);ctx.scale(kb,kb);RR(-330,-95,660,190,40);ctx.fillStyle=CORAL;ctx.fill();lbl('−22,6%',0,18,150,'#fff');ctx.restore()}
+  lbl('−508 puntos · Dow Jones',540,700,36,CREAM,eout(prog(t,19.8,20.6)));
+  pill('S&P 500: ≈ −20,5%',540,1190,520,AMB,eout(prog(t,21.0,21.6)));ctx.restore()}
+function card2(t,a){panel(a,'EL MUNDO · 19 OCT');ctx.save();ctx.globalAlpha=a;
+  const cx=540,cy=830;
+  for(let i=0;i<4;i++){const u=((t-23.6)*.35+i/4)%1;if(t<23.6)break;ctx.beginPath();ctx.arc(cx,cy,60+u*340,0,7);ctx.strokeStyle=CORAL;ctx.globalAlpha=a*(1-u)*.8;ctx.lineWidth=8;ctx.stroke()}
+  ctx.globalAlpha=a;const kk=eback(prog(t,24.0,24.8));
+  ctx.beginPath();ctx.arc(cx,cy,56*Math.max(kk,0),0,7);ctx.fillStyle=CORAL;ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=AMB;ctx.stroke();
+  lbl('HONG KONG',540,cy-110,44,AMB,eout(prog(t,24.6,25.2)));
+  lbl('≈ −46%',540,570,150,CORAL,eout(prog(t,26.0,26.8)));
+  lbl('en dólares · cifra aproximada',540,1130,34,CREAM,eout(prog(t,27.4,28.2)));
+  lbl('la caída fue mundial',540,1190,34,MUT,eout(prog(t,28.4,29.2)));ctx.restore()}
+function card3(t,a){panel(a,'CAUSAS CITADAS');ctx.save();ctx.globalAlpha=a;
+  const R=[[32.0,'1','Seguro de cartera','ventas automáticas al caer',CORAL],[34.8,'2','Liquidación desigual','acciones 3 días · futuros 1 día',AMB],[37.2,'3','Subida previa','+44% en siete meses',TEAL]];
+  R.forEach(([ts,n,h,s,col],i)=>{const k=eout(prog(t,ts,ts+.6));if(k<=0)return;const y=470+i*230;ctx.save();ctx.globalAlpha=a*k;ctx.translate(lerp(60,0,k),0);
+    RR(110,y,860,190,28);ctx.fillStyle='#183849';ctx.fill();ctx.beginPath();ctx.arc(200,y+95,50,0,7);ctx.fillStyle=col;ctx.fill();lbl(n,200,y+97,60,BGC);
+    lbl(h,290,y+66,44,CREAM,1,'left');lbl(s,290,y+130,32,MUT,1,'left');ctx.restore()});
+  lbl('su peso exacto se discute',540,1185,32,MUT,eout(prog(t,38.4,39.2)));ctx.restore()}
+function card4(t,a){panel(a,'20 OCT · DESPUÉS');ctx.save();ctx.globalAlpha=a;
+  lbl('57%',540,560,190,TEAL,eout(prog(t,41.2,42.0)));lbl('de la caída, recuperado en 2 sesiones',540,690,36,CREAM,eout(prog(t,41.8,42.6)));
+  RR(130,780,820,90,45);ctx.fillStyle='#183849';ctx.fill();
+  const k=eio(prog(t,42.6,44.8));ctx.save();RR(130,780,820,90,45);ctx.clip();ctx.fillStyle=TEAL;ctx.fillRect(130,780,820*.57*k,90);ctx.restore();
+  lbl('288 de 508 puntos',540,825,36,k>.5?BGC:CREAM,eout(prog(t,43.0,43.8)));
+  const k2=eout(prog(t,45.6,46.4));if(k2>0){RR(130,930,820,110,28);ctx.save();ctx.globalAlpha=a*k2;ctx.fillStyle='#183849';ctx.fill();ctx.restore();lbl('Greenspan: la Fed dará liquidez',540,985,36,AMB,k2)}
+  const k3=eout(prog(t,47.2,48.0));if(k3>0){RR(130,1070,820,110,28);ctx.save();ctx.globalAlpha=a*k3;ctx.fillStyle='#183849';ctx.fill();ctx.restore();lbl('S&P 500: máximo recuperado el 26 jul 1989',540,1125,32,CREAM,k3)}
+  ctx.restore()}
+function card5(t,a){panel(a,'LECCIÓN');ctx.save();ctx.globalAlpha=a;
+  lbl('LOS EXTREMOS',540,560,86,CREAM,eout(prog(t,50.6,51.3)));lbl('OCURREN',540,670,110,CORAL,eout(prog(t,51.2,51.9)));
+  const k=eback(prog(t,52.2,53.0));if(k>.02){ctx.save();ctx.translate(540,920);ctx.scale(k,k);ctx.beginPath();ctx.moveTo(0,-130);ctx.lineTo(110,-90);ctx.lineTo(110,10);ctx.quadraticCurveTo(110,100,0,150);ctx.quadraticCurveTo(-110,100,-110,10);ctx.lineTo(-110,-90);ctx.closePath();ctx.fillStyle=TEAL;ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=CREAM;ctx.stroke();
+    ctx.beginPath();ctx.moveTo(-45,5);ctx.lineTo(-12,42);ctx.lineTo(50,-30);ctx.lineWidth=16;ctx.strokeStyle=BGC;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();ctx.restore()}
+  lbl('riesgo definido antes de operar',540,1130,36,AMB,eout(prog(t,53.2,54.0)));
+  lbl('contenido educativo · cifras aproximadas',540,1195,24,MUT,eout(prog(t,54.2,54.8)));ctx.restore()}
+function draw(t){bg(t);
+  const ik=eio(prog(t,6.6,7.4));
+  if(ik<1){const a=1-ik;ctx.save();ctx.globalAlpha=a;
+    RR(250,330,580,84,42);ctx.fillStyle=AMB;ctx.fill();T('19 OCT 1987',540,372,{font:'900 50px Inter',fill:BGC});
+    const kk=eback(prog(t,0.3,1.1));ctx.save();ctx.translate(540,660);ctx.scale(Math.max(kk,0),Math.max(kk,0));T('−22,6%',0,0,{font:'900 215px Inter',fill:CORAL,glow:CORAL,gb:40});ctx.restore();
+    lbl('EN UN SOLO DÍA',540,860,76,CREAM,eout(prog(t,1.4,2.1)));lbl('el Dow Jones: su mayor caída diaria',540,950,38,AMB,eout(prog(t,2.4,3.1)));
+    const kd=prog(t,3.0,6.0);ctx.beginPath();for(let i=0;i<=40;i++){const u=i/40;if(u>kd)break;const x=110+u*860,y=1010+(u<.55?u*60:60*.55+(u-.55)*1000)+Math.sin(u*40)*8*(u<.55);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}
+    ctx.strokeStyle=CORAL;ctx.lineWidth=12;ctx.lineJoin='round';ctx.stroke();ctx.restore()}
+  const ax=ik;if(ax>0)axis(t,ax);
+  const F=[card0,card1,card2,card3,card4,card5];
+  BL.forEach(([a,b],i)=>{const al=fade(t,a,b);if(al>0)F[i](t,al)})}
+function cover(){bg(2);
+  ctx.save();RR(190,260,700,100,50);ctx.fillStyle=AMB;ctx.fill();T('19 OCT 1987',540,312,{font:'900 64px Inter',fill:BGC});ctx.restore();
+  T('−22,6%',540,640,{font:'900 225px Inter',fill:CORAL,glow:CORAL,gb:50});
+  T('EN UN SOLO DÍA',540,830,{font:'900 92px Inter',fill:CREAM});
+  ctx.beginPath();ctx.moveTo(110,980);ctx.lineTo(330,1000);ctx.lineTo(430,960);ctx.lineTo(560,1010);ctx.lineTo(650,1030);ctx.lineTo(740,1260);ctx.lineTo(970,1290);
+  ctx.strokeStyle=CORAL;ctx.lineWidth=18;ctx.lineJoin='round';ctx.stroke();ctx.beginPath();ctx.arc(970,1290,22,0,7);ctx.fillStyle=AMB;ctx.fill();
+  line(110,1340,970,1340,CREAM,6);[110,330,540,750,970].forEach((x,i)=>{ctx.beginPath();ctx.arc(x,1340,i==3?20:12,0,7);ctx.fillStyle=i==3?CORAL:BGC;ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=CREAM;ctx.stroke()});
+  ctx.save();ctx.fillStyle=AMB;RR(170,1420,740,110,55);ctx.fill();ctx.restore();T('VER QUÉ PASÓ →',540,1478,{font:'900 50px Inter',fill:BGC})}
+</script></body></html>
