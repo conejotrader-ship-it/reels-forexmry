@@ -30,7 +30,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 24 | Pantalla dividida antes/después | Dos mitades A vs B | Esperanza matemática (v39_split_esperanza, escena 106, 18 oct) |
 | 25 | Documental en blanco y negro con acento dorado | Película con perforaciones y grano | Tasas reales (TIPS) y oro (v42_documental_tips, escena 109, 18 oct) |
 | 26 | Sala de operaciones con varios monitores | Monitores con gráfico y leyendas | Perfil de volumen POC (v43_monitores_poc, escena 110, 19 oct 3:00) |
-| 27 | Cuenta regresiva o reloj gigante |  | Disponible |
+| 27 | Cuenta regresiva o reloj gigante | Reloj con años 1961–68 | London Gold Pool (v45_reloj_london_gold_pool, escena 112, 18 oct) |
 | 28 | Expediente "caso cerrado" | Carpetas y sellos | Orden Ejecutiva 6102 de 1933 (v44_expediente_orden6102, escena 111, 18 oct) |
 | 29 | Radar o sonar | Detecta movimientos | Disponible |
 | 30 | Velocímetro de riesgo |  | Disponible |
