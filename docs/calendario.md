@@ -80,3 +80,9 @@ Aplica a todos los reels nuevos desde ahora (cada `cover()` de `styles/`):
 - Curiosidad o tensión en el titular (pregunta, contradicción, "el día que…"), sin prometer rentabilidad ni exagerar datos.
 - Todo el texto importante dentro de la zona central (cuadrícula del perfil recorta los bordes); sin letra pequeña.
 - Guardar como `covers/cover_<tema>.jpg` y usar como `videoThumbnailUrl` en Metricool.
+
+## Plan de 21 reels (18 al 20 oct, 7 por día, 60 s cada uno, carátula viral)
+Horarios (Bogotá): 6:00, 9:30, 13:00, 16:30, 20:00, 23:30 y 3:00 (el de las 3:00 sale de madrugada del día siguiente). Verificar cada cifra con fuente antes de producir.
+**Dom 18:** 6:00 LTCM 1998 (evento) · 9:30 perder 50% exige ganar 100% (mecánica) · 13:00 las 5 mayores pérdidas por trading rogue (ranking) · 16:30 Knight Capital 2012 (evento) · 20:00 oro COMEX vs oro físico LBMA (comparación) · 23:30 tasas reales (TIPS) y oro (mecánica) · 3:00 perfil de volumen POC (técnica).
+**Lun 19:** 6:00 hermanos Hunt y la plata 1980 (evento) · 9:30 MAE y MFE (técnica) · 13:00 monedas atadas que se rompieron: libra 1992, baht 1997, franco 2015 (comparación) · 16:30 flash crash de la libra 2016 (evento) · 20:00 criterio de Kelly (mecánica) · 23:30 Sharpe vs Sortino vs Calmar, cómo medir un robot (comparación) · 3:00 reporte COT del oro (técnica).
+**Mar 20:** 6:00 Bretton Woods 1944 (evento) · 9:30 walk-forward y sobreajuste (técnica) · 13:00 carry trade del yen, agosto 2024 (evento) · 16:30 puntos swap y paridad de tasas (mecánica) · 20:00 sesiones del día y comportamiento del oro (ranking) · 23:30 backtest con ticks reales vs velas de 1 minuto (mecánica) · 3:00 el fix de Londres y el fix de las 4 p.m. (evento).
