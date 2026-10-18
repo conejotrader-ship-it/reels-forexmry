@@ -1,0 +1,117 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+
+// Estilo: terminal ámbar sobre negro (tipo pantalla financiera) — tema: LTCM 1998 (60 s)
+const SPEC={name:'LTCM',hook:'UN FONDO CON 2 NOBEL PERDIÓ $4.600 MILLONES EN 4 MESES',dur:60,cta:56,bpm:88,mus:'soft',prog:[[45,'m'],[40,'M'],[48,'m'],[43,'M']],
+ ev:[[0.3,'hit'],[1.4,'alert'],[6.8,'wipe'],[8.0,'ding'],[9.6,'ding'],[11.2,'ding'],[15.6,'wipe'],[16.6,'tick'],[17.6,'ding'],[19.0,'ding'],[20.4,'ding'],[24.6,'wipe'],[25.4,'down'],[28.6,'hit'],[30.4,'ding'],[34.2,'wipe'],[35.0,'alert'],[38.4,'down'],[41.6,'ding'],[43.8,'wipe'],[44.8,'down'],[46.6,'hit'],[49.2,'wipe'],[50.0,'ding'],[51.4,'ding'],[52.8,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.4,'Un fondo con dos premios Nobel perdió $4.600 millones en menos de cuatro meses.','Un fondo con dos premios Nobel perdió cuatro mil seiscientos millones de dólares en menos de cuatro meses.'],
+ [6.8,15.4,'Long-Term Capital Management nació en 1994 con John Meriwether. Entre sus socios, Scholes y Merton, Nobel de Economía en 1997.','Long-Term Capital Management nació en mil novecientos noventa y cuatro con John Meriwether. Entre sus socios, Scholes y Merton, Nobel de Economía en mil novecientos noventa y siete.'],
+ [15.6,24.4,'Sus rendimientos fueron cerca de 20%, 43%, 41% y 17% en sus primeros cuatro años.','Sus rendimientos fueron cerca de veinte, cuarenta y tres, cuarenta y uno y diecisiete por ciento en sus primeros cuatro años.'],
+ [24.6,34.0,'Su secreto era el apalancamiento: más de 25 dólares prestados por cada dólar propio. Con $4.700 millones de capital manejaba unos $129.000 millones.','Su secreto era el apalancamiento: más de veinticinco dólares prestados por cada dólar propio. Con cuatro mil setecientos millones de capital, manejaba unos ciento veintinueve mil millones.'],
+ [34.2,43.6,'El 17 de agosto de 1998, Rusia dejó de pagar su deuda. Las apuestas de convergencia de LTCM se movieron en contra.','El diecisiete de agosto de mil novecientos noventa y ocho, Rusia dejó de pagar su deuda. Las apuestas de convergencia de LTCM se movieron en contra.'],
+ [43.8,49.0,'En septiembre, su capital cayó de $2.300 a $400 millones.','En septiembre, su capital cayó de dos mil trescientos a cuatrocientos millones.'],
+ [49.2,55.8,'El 23 de septiembre, 14 entidades pusieron $3.625 millones por el 90% del fondo.','El veintitrés de septiembre, catorce entidades pusieron tres mil seiscientos veinticinco millones por el noventa por ciento del fondo.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BK='#07070a',AM='#ffb000',AM2='#ffd36b',RD='#ff4a3d',CR='#f4efe3',GY='#8a8578';
+const STY={subFont:'800 42px Inter',subBg:'rgba(6,6,8,.94)',subStroke:AM,subFill:CR,ctaBg:'#050507',ctaSub:CR,ctaGlow:AM,
+ ctaAccent:AM,ctaBtnText:'#050507',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+function bg(t){ctx.fillStyle=BK;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(255,176,0,.06)';ctx.lineWidth=2;for(let y=0;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  for(let x=0;x<W;x+=120){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}ctx.restore();
+  // cinta superior
+  ctx.save();ctx.fillStyle='rgba(255,176,0,.12)';ctx.fillRect(0,60,W,56);const s='LTCM ▲▼  1994–2000  ·  LONG-TERM CAPITAL MANAGEMENT  ·  ';ctx.font='800 28px Inter';ctx.fillStyle=AM;ctx.textBaseline='middle';
+  const off=(t*60)%ctx.measureText(s).width;for(let x=-off;x<W;x+=ctx.measureText(s).width)ctx.fillText(s,x,88);ctx.restore()}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+function panel(x,y,w,h,col=AM){RR(x,y,w,h,18);ctx.fillStyle='rgba(12,10,6,.92)';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=4;ctx.stroke()}
+function head(t,a,txt){T(txt,540,300,{font:'900 44px Inter',fill:AM,a});}
+function medal(x,y,r,a=1){ctx.save();ctx.globalAlpha*=a;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fillStyle=AM;ctx.fill();ctx.strokeStyle=AM2;ctx.lineWidth=5;ctx.stroke();
+  T('N',x,y+2,{font:`900 ${r*1.1}px Inter`,fill:BK});ctx.restore()}
+function person(t,a){ctx.save();ctx.globalAlpha=a;panel(70,380,940,860);
+  T('LOS SOCIOS',540,445,{font:'900 38px Inter',fill:CR});
+  const rows=[['JOHN MERIWETHER','exdirectivo de Salomon Brothers · fundador',7.6,'JM'],['MYRON SCHOLES','Nobel de Economía 1997',9.2,'N'],['ROBERT MERTON','Nobel de Economía 1997',10.8,'N']];
+  rows.forEach(([n,s2,ts,ic],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=0)return;const y=490+i*210;ctx.save();ctx.globalAlpha=a*k;const dx=lerp(120,0,k);
+    RR(110+dx,y,860,180,16);ctx.fillStyle='rgba(255,176,0,.07)';ctx.fill();ctx.strokeStyle='rgba(255,176,0,.5)';ctx.lineWidth=2;ctx.stroke();
+    if(ic=='N')medal(220+dx,y+90,52);else{ctx.beginPath();ctx.arc(220+dx,y+90,52,0,7);ctx.strokeStyle=AM;ctx.lineWidth=5;ctx.stroke();T('JM',220+dx,y+92,{font:'900 40px Inter',fill:AM})}
+    T(n,310+dx,y+68,{font:'900 44px Inter',fill:CR,align:'left'});const L=wrapLines(s2,600,'800 28px Inter');L.forEach((l,j)=>T(l,310+dx,y+118+j*34,{font:'800 28px Inter',fill:GY,align:'left'}));ctx.restore()});
+  const k=eout(prog(t,12.8,13.4));T('≈ $1.000 M de capital inicial (1994)',540,1165,{font:'900 38px Inter',fill:AM,a:k});
+  ctx.restore()}
+function returns(t,a){ctx.save();ctx.globalAlpha=a;panel(70,380,940,860);
+  T('RENDIMIENTO ANUAL APROXIMADO',540,445,{font:'900 38px Inter',fill:CR});
+  const B=[['1994',20],['1995',43],['1996',41],['1997',17]];const base=1130,sc=12;
+  line(130,base,950,base,'rgba(244,239,227,.35)',2);
+  B.forEach(([yr,v],i)=>{const ts=16.2+i*.9;const k=eout(prog(t,ts,ts+.8));const cx=235+i*190,h=v*sc*k;
+    ctx.fillStyle=AM;RR(cx-65,base-h,130,Math.max(4,h),10);ctx.fill();
+    T(Math.round(v*k)+'%',cx,base-h-44,{font:'900 56px Inter',fill:AM2,a:k});T(yr,cx,base+44,{font:'800 30px Inter',fill:GY})});
+  T('tras comisiones · aprox.',540,1215,{font:'800 24px Inter',fill:GY,a:prog(t,21.6,22.2)});
+  ctx.restore()}
+function leverage(t,a){ctx.save();ctx.globalAlpha=a;panel(70,380,940,860);
+  T('INICIOS DE 1998',540,445,{font:'900 38px Inter',fill:CR});
+  const gk=eout(prog(t,25.0,27.2));const hA=620*gk;const base=1150;
+  ctx.fillStyle='rgba(255,176,0,.2)';RR(150,base-hA,380,hA,10);ctx.fill();ctx.strokeStyle=AM;ctx.lineWidth=4;ctx.stroke();
+  if(gk>.6){T('ACTIVOS',340,base-hA/2-30,{font:'900 40px Inter',fill:CR,a:gk});T('≈ $129.000 M',340,base-hA/2+20,{font:'900 44px Inter',fill:AM,a:gk})}
+  const ek=eout(prog(t,28.4,29.0));const pul=.6+.4*Math.sin(t*8);
+  ctx.fillStyle=AM;ctx.globalAlpha=a*(ek>0?1:0);ctx.fillRect(150,base-24,380,24);ctx.globalAlpha=a;
+  if(ek>0){line(530,base-12,620,base-12,AM,3);T('CAPITAL ≈ $4.700 M',640,base-12,{font:'900 34px Inter',fill:AM,align:'left',a:ek*(.7+.3*pul)})}
+  const rk=eback(prog(t,30.2,30.9));if(rk>0){T('25 : 1',760,640,{font:'900 120px Inter',fill:RD,scale:rk,glow:RD,gb:24});T('APALANCAMIENTO',760,730,{font:'900 34px Inter',fill:CR,a:rk});
+    T('más de $25 prestados',760,790,{font:'800 26px Inter',fill:GY,a:rk});T('por cada $1 propio',760,826,{font:'800 26px Inter',fill:GY,a:rk})}
+  ctx.restore()}
+function russia(t,a){ctx.save();ctx.globalAlpha=a;panel(70,380,940,860);
+  const k0=eout(prog(t,34.6,35.2));T('17 · 08 · 1998',540,470,{font:'900 76px Inter',fill:AM,a:k0});T('RUSIA DEJA DE PAGAR SU DEUDA',540,545,{font:'900 36px Inter',fill:CR,a:k0});
+  // gráfico divergente
+  const x0=150,x1=930,yb=1040;line(x0-20,yb,x1+10,yb,'rgba(244,239,227,.3)',2);
+  T('ilustrativo',x1,1085,{font:'800 24px Inter',fill:GY,align:'right'});
+  const kk=prog(t,36.2,40.4);
+  ctx.lineCap='round';ctx.lineJoin='round';
+  // esperado: converge
+  ctx.save();ctx.setLineDash([16,12]);ctx.strokeStyle=AM;ctx.lineWidth=6;ctx.beginPath();
+  for(let x=x0;x<=x0+(x1-x0)*Math.min(1,kk*1.4);x+=10){const u=(x-x0)/(x1-x0);ctx.lineTo(x,lerp(780,yb-10,eio(u)))}ctx.stroke();ctx.restore();
+  // real: diverge
+  ctx.save();ctx.strokeStyle=RD;ctx.lineWidth=8;ctx.shadowColor=RD;ctx.shadowBlur=14;ctx.beginPath();
+  const r=rng(11);for(let x=x0;x<=x0+(x1-x0)*kk;x+=10){const u=(x-x0)/(x1-x0);const yy=u<.35?lerp(780,770,u/.35):lerp(770,640,Math.pow((u-.35)/.65,1.6));ctx.lineTo(x,yy+(r()-.5)*5)}ctx.stroke();ctx.restore();
+  T('LA APUESTA: convergen',420,830,{font:'800 28px Inter',fill:AM,a:eout(prog(t,37.0,37.6))});
+  T('LO QUE PASÓ: divergen',700,610,{font:'900 30px Inter',fill:RD,a:eout(prog(t,39.0,39.6))});
+  const k=eback(prog(t,41.4,42.0));if(k>0.02){RR(180,1110,720,80,40);ctx.fillStyle='rgba(255,74,61,.15)';ctx.fill();ctx.strokeStyle=RD;ctx.lineWidth=3;ctx.stroke();T('−44% en agosto',540,1152,{font:'900 44px Inter',fill:RD,scale:k})}
+  ctx.restore()}
+function collapse(t,a){ctx.save();ctx.globalAlpha=a;panel(70,380,940,700);
+  T('CAPITAL DEL FONDO · SEPTIEMBRE',540,445,{font:'900 36px Inter',fill:CR});
+  const k1=eout(prog(t,44.4,45.2)),k2=eout(prog(t,46.0,47.4));
+  T('1 SEP',150,545,{font:'800 30px Inter',fill:GY,align:'left'});ctx.fillStyle=AM;RR(150,570,780*k1,70,10);ctx.fill();T('$2.300 M',150+10,680,{font:'900 44px Inter',fill:AM,align:'left',a:k1});
+  T('25 SEP',150,770,{font:'800 30px Inter',fill:GY,align:'left'});ctx.fillStyle=RD;RR(150,795,Math.max(8,780*(400/2300)*k2+0),70,10);ctx.fill();T('$400 M',150+10,905,{font:'900 44px Inter',fill:RD,align:'left',a:k2});
+  const k=eback(prog(t,47.2,47.9));if(k>0)T('≈ −83%',780,905,{font:'900 100px Inter',fill:RD,glow:RD,gb:24,scale:k});
+  ctx.restore()}
+function rescue(t,a){ctx.save();ctx.globalAlpha=a;panel(70,380,940,860);
+  T('23 · 09 · 1998',540,470,{font:'900 76px Inter',fill:AM});T('RESCATE ORGANIZADO POR LA FED DE NUEVA YORK',540,540,{font:'900 28px Inter',fill:CR});
+  [[49.9,'14','ENTIDADES'],[51.3,'$3.625 M','APORTARON'],[52.7,'90%','DEL FONDO']].forEach(([ts,big,small],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=0)return;const y=600+i*170;ctx.save();ctx.globalAlpha=a*k;const dx=lerp(100,0,k);
+    RR(110+dx,y,860,140,16);ctx.fillStyle='rgba(255,176,0,.08)';ctx.fill();ctx.strokeStyle=AM;ctx.lineWidth=3;ctx.stroke();
+    T(big,150+dx,y+70,{font:'900 76px Inter',fill:AM,align:'left'});T(small,930+dx,y+72,{font:'900 36px Inter',fill:CR,align:'right'});ctx.restore()});
+  T('La Fed no puso dinero propio · liquidado a inicios de 2000',540,1150,{font:'800 26px Inter',fill:GY,a:eout(prog(t,53.6,54.4))});
+  T('Fuentes: Federal Reserve History y Wikipedia · cifras aproximadas · contenido educativo',540,1200,{font:'800 22px Inter',fill:GY,a:eout(prog(t,54.0,54.8))});
+  ctx.restore()}
+function draw(t){bg(t);
+  const ik=eio(prog(t,6.2,6.9));
+  if(ik<1){const a=1-ik;ctx.save();ctx.globalAlpha=a;
+    T('UN FONDO CON',540,420,{font:'900 64px Inter',fill:CR});
+    T('2 NOBEL',540,640,{font:'900 220px Inter',fill:AM,glow:AM,gb:34});
+    T('PERDIÓ',540,830,{font:'900 76px Inter',fill:CR});
+    T('$4.600 M',540,1050,{font:'900 200px Inter',fill:RD,glow:RD,gb:34,scale:1+.04*Math.sin(t*3)});
+    T('EN MENOS DE 4 MESES',540,1230,{font:'900 56px Inter',fill:CR});ctx.restore()}
+  if(ik>0){T('LTCM · 1998',540,230,{font:'900 50px Inter',fill:AM,a:ik});T('el fondo de los dos Nobel',540,285,{font:'800 26px Inter',fill:GY,a:ik})}
+  let a=fade(t,6.9,15.4);if(a>0)person(t,a);
+  a=fade(t,15.6,24.4);if(a>0)returns(t,a);
+  a=fade(t,24.6,34.0);if(a>0)leverage(t,a);
+  a=fade(t,34.2,43.6);if(a>0)russia(t,a);
+  a=fade(t,43.8,49.0);if(a>0)collapse(t,a);
+  a=fade(t,49.2,55.8);if(a>0)rescue(t,a);
+}
+function cover(){bg(2);
+  T('UN FONDO CON',540,470,{font:'900 70px Inter',fill:CR});
+  T('2 NOBEL',540,720,{font:'900 250px Inter',fill:AM,glow:AM,gb:40});
+  T('PERDIÓ',540,930,{font:'900 84px Inter',fill:CR});
+  T('$4.600 M',540,1150,{font:'900 210px Inter',fill:RD,glow:RD,gb:40});
+  T('EN 4 MESES',540,1300,{font:'900 76px Inter',fill:CR});
+  RR(170,1390,740,110,55);ctx.fillStyle=AM;ctx.fill();T('VER QUÉ PASÓ →',540,1448,{font:'900 48px Inter',fill:BK})}
+</script></body></html>
