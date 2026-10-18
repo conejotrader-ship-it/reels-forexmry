@@ -27,7 +27,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 21 | Línea de tiempo horizontal con hitos | Hitos sobre un eje que se desplaza | Lunes Negro 1987 (v38_timeline_lunes_negro, escena 105, 18 oct) |
 | 22 | Noticiero de última hora | Cinta de titulares | Disponible |
 | 23 | Mapa mundial con rutas de flujo | Oro y divisas | Disponible |
-| 24 | Pantalla dividida antes/después |  | Disponible |
+| 24 | Pantalla dividida antes/después | Dos mitades A vs B | Esperanza matemática (v39_split_esperanza, escena 106, 18 oct) |
 | 25 | Documental en blanco y negro con acento dorado |  | Disponible |
 | 26 | Sala de operaciones con varios monitores |  | Disponible |
 | 27 | Cuenta regresiva o reloj gigante |  | Disponible |

@@ -1,0 +1,96 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+
+// Estilo 24: pantalla dividida antes/después (A vs B) — tema: esperanza matemática, ganar 40% y aun así ganar dinero (60 s)
+const SPEC={name:'EsperanzaMatematica',hook:'ACIERTA 60% Y PIERDE: EL 40% GANA',dur:60,cta:56,bpm:100,mus:'soft',prog:[[50,'M'],[47,'m'],[43,'M'],[48,'M']],
+ ev:[[0.3,'hit'],[2.0,'ding'],[3.8,'alert'],[6.8,'wipe'],[8.0,'tick'],[10.5,'tick'],[15.6,'wipe'],[16.8,'tick'],[19.4,'tick'],[21.4,'down'],[24.6,'wipe'],[25.8,'tick'],[28.4,'tick'],[30.6,'ding'],[34.2,'wipe'],[36.0,'tick'],[38.4,'tick'],[40.8,'tick'],[43.8,'wipe'],[45.4,'tick'],[47.0,'tick'],[48.6,'tick'],[50.6,'wipe'],[51.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.4,'Acertar 60% de tus operaciones puede hacerte perder dinero. Y acertar 40%, ganarlo.','Acertar seis de cada diez operaciones puede hacerte perder dinero. Y acertar cuatro de cada diez, ganarlo.'],
+ [6.8,15.4,'La esperanza matemática: (% aciertos × ganancia media) − (% errores × pérdida media).','La esperanza matemática es el porcentaje de aciertos por la ganancia media, menos el porcentaje de errores por la pérdida media.'],
+ [15.6,24.4,'Trader A: acierta 60%, gana $50 y pierde $100. 0,6 × 50 − 0,4 × 100 = −$10 por operación.','Trader A: acierta sesenta por ciento, gana cincuenta dólares y pierde cien. El resultado: menos diez dólares por operación.'],
+ [24.6,34.0,'Trader B: acierta solo 40%, gana $150 y pierde $50. 0,4 × 150 − 0,6 × 50 = +$30 por operación.','Trader B: acierta solo cuarenta por ciento, gana ciento cincuenta dólares y pierde cincuenta. El resultado: más treinta dólares por operación.'],
+ [34.2,43.6,'Acierto mínimo para empatar: si ganas el doble de lo que pierdes, 33%; igual, 50%; la mitad, 67%.','Acierto mínimo para empatar: si ganas el doble de lo que pierdes, treinta y tres por ciento. Si ganas igual, cincuenta. Si ganas la mitad, sesenta y siete.'],
+ [43.8,50.4,'Con pocas operaciones domina el azar, y hay que restar spread y comisiones.','Con pocas operaciones domina el azar, y hay que restar el spread y las comisiones.'],
+ [50.6,55.8,'Mide tu esperanza con datos reales, no solo tu tasa de aciertos.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const CREAM='#f3eee3',INK='#111a22',RED='#d6403a',LIME='#b6f24a',GOLD='#ffb020',GRN='#1c8c4a',PAN='#1b2a36',SOFT='#e6dfcf';
+const STY={subFont:'800 42px Inter',subBg:'rgba(17,26,34,.95)',subStroke:LIME,subFill:'#fff',ctaBg:'#111a22',ctaSub:CREAM,ctaGlow:LIME,
+ ctaAccent:LIME,ctaBtnText:'#111a22',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+function lbl(s,x,y,sz,col=INK,a=1,al='center'){T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+function bg(t){ctx.fillStyle=CREAM;ctx.fillRect(0,0,540,H);ctx.fillStyle=INK;ctx.fillRect(540,0,540,H);
+  ctx.save();ctx.globalAlpha=.08;for(let i=-20;i<40;i++){line(i*70+(t*8)%70,0,i*70+(t*8)%70+H*.3,H,INK,2)}ctx.restore();
+  ctx.save();ctx.beginPath();ctx.rect(540,0,540,H);ctx.clip();ctx.globalAlpha=.07;for(let i=-20;i<40;i++){line(i*70+(t*8)%70,0,i*70+(t*8)%70+H*.3,H,LIME,2)}ctx.restore();
+  ctx.fillStyle=GOLD;ctx.fillRect(534,0,12,H)}
+function chip(s,x,y,w,fill,tc){RR(x-w/2,y-34,w,68,34);ctx.fillStyle=fill;ctx.fill();lbl(s,x,y+2,32,tc)}
+function vs(a=1){ctx.save();ctx.globalAlpha=a;ctx.beginPath();ctx.arc(540,620,62,0,7);ctx.fillStyle=GOLD;ctx.fill();ctx.lineWidth=8;ctx.strokeStyle=INK;ctx.stroke();ctx.restore();lbl('VS',540,624,54,INK,a)}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;
+  const k=eback(prog(t,.3,1.0));
+  chip('TRADER A',270,400,300,RED,'#fff');chip('TRADER B',810,400,300,LIME,INK);
+  ctx.save();ctx.translate(270,640);ctx.scale(Math.max(k,0),Math.max(k,0));T('60%',0,0,{font:'900 150px Inter',fill:RED});ctx.restore();
+  ctx.save();ctx.translate(810,640);ctx.scale(Math.max(k,0),Math.max(k,0));T('40%',0,0,{font:'900 150px Inter',fill:LIME});ctx.restore();
+  lbl('de aciertos',270,790,40,INK,eout(prog(t,1.2,1.8)));lbl('de aciertos',810,790,40,CREAM,eout(prog(t,1.2,1.8)));
+  vs(eout(prog(t,1.0,1.6)));
+  const kb=eback(prog(t,3.6,4.4));if(kb>.02){ctx.save();ctx.translate(540,1010);ctx.scale(kb,kb);RR(-440,-80,880,160,40);ctx.fillStyle=GOLD;ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=INK;ctx.stroke();lbl('¿QUIÉN GANA DINERO?',0,6,56,INK);ctx.restore()}
+  ctx.restore()}
+function gpanel(a,x,w,fill=PAN,stroke=GOLD){ctx.save();ctx.globalAlpha=a;RR(x,350,w,890,36);ctx.fillStyle=fill;ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=stroke;ctx.stroke();ctx.restore()}
+function formula(t,a){gpanel(a,90,900);ctx.save();ctx.globalAlpha=a;
+  lbl('ESPERANZA POR OPERACIÓN',540,440,38,GOLD,eout(prog(t,7.2,7.8)));
+  const k1=eout(prog(t,8.0,8.8));RR(130,520,820,150,30);ctx.save();ctx.globalAlpha=a*k1;ctx.fillStyle='#223f2a';ctx.fill();ctx.restore();lbl('% aciertos × ganancia media',540,595,44,LIME,k1);
+  lbl('−',540,740,100,CREAM,eout(prog(t,9.4,10.0)));
+  const k2=eout(prog(t,10.2,11.0));RR(130,810,820,150,30);ctx.save();ctx.globalAlpha=a*k2;ctx.fillStyle='#4a1f1d';ctx.fill();ctx.restore();lbl('% errores × pérdida media',540,885,44,'#ff8a80',k2);
+  line(150,1040,930,1040,'rgba(241,232,208,.4)',3);
+  lbl('positiva = ventaja · negativa = pérdida',540,1100,34,CREAM,eout(prog(t,12.4,13.2)));
+  lbl('promedio por operación, antes de costos',540,1160,28,'#9fb0b8',eout(prog(t,13.4,14.2)));ctx.restore()}
+function sideCard(t,a,side,t0,name,acc,wl,fill,txt,pos,neg,res){
+  const x=side==0?40:580,cx=x+230;ctx.save();ctx.globalAlpha=a;RR(x,350,460,890,36);ctx.fillStyle=fill;ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=GOLD;ctx.stroke();
+  chip(name,cx,410,300,acc,side?INK:'#fff');
+  wl.forEach((s,i)=>lbl(s,cx,500+i*70,38,txt,eout(prog(t,t0+.3+i*.5,t0+.9+i*.5))));
+  lbl(pos[0],cx,745,42,pos[1],eout(prog(t,t0+2.4,t0+3.0)));
+  lbl(neg[0],cx,825,42,neg[1],eout(prog(t,t0+3.8,t0+4.4)));
+  line(x+40,885,x+420,885,txt,4);
+  const k=eback(prog(t,t0+5.4,t0+6.2));if(k>.02){ctx.save();ctx.translate(cx,1030);ctx.scale(k,k);T(res[0],0,0,{font:'900 150px Inter',fill:res[1]});ctx.restore()}
+  lbl('por operación',cx,1150,32,txt,eout(prog(t,t0+6.2,t0+6.8)));ctx.restore()}
+function dimSide(a,side,s){const x=side==0?40:580;ctx.save();ctx.globalAlpha=a*.35;RR(x,350,460,890,36);ctx.fillStyle=side?PAN:SOFT;ctx.fill();ctx.restore();lbl(s,x+230,800,160,side?LIME:RED,a*.35)}
+function traderA(t,a){sideCard(t,a,0,15.6,'TRADER A',RED,['acierta 60%','gana $50','pierde $100'],SOFT,INK,['0,6 × 50 = +30',GRN],['0,4 × 100 = −40',RED],['−$10',RED]);dimSide(a,1,'?')}
+function traderB(t,a){
+  ctx.save();ctx.globalAlpha=a*.35;RR(40,350,460,890,36);ctx.fillStyle=SOFT;ctx.fill();ctx.restore();lbl('−$10',270,800,130,RED,a*.35);
+  sideCard(t,a,1,24.6,'TRADER B',LIME,['acierta 40%','gana $150','pierde $50'],PAN,CREAM,['0,4 × 150 = +60',LIME],['0,6 × 50 = −30','#ff8a80'],['+$30',LIME])}
+function table(t,a){gpanel(a,90,900);ctx.save();ctx.globalAlpha=a;
+  lbl('ACIERTO MÍNIMO PARA EMPATAR',540,440,36,GOLD,eout(prog(t,34.6,35.2)));
+  [[35.8,'ganas el doble','2 : 1',1/3,'33%'],[38.2,'ganas igual','1 : 1',.5,'50%'],[40.6,'ganas la mitad','0,5 : 1',2/3,'67%']].forEach(([ts,l,r,v,s],i)=>{
+    const k=eout(prog(t,ts,ts+.5));if(k<=0)return;const y=560+i*210;ctx.save();ctx.globalAlpha=a*k;
+    lbl(r,160,y,54,CREAM,1,'left');lbl(l,160,y+56,28,'#9fb0b8',1,'left');
+    RR(420,y-40,500,80,40);ctx.fillStyle='#0d1820';ctx.fill();const bw=500*v*eio(prog(t,ts+.3,ts+1.3));ctx.save();RR(420,y-40,500,80,40);ctx.clip();ctx.fillStyle=i==1?GOLD:(i==0?LIME:'#ff8a80');ctx.fillRect(420,y-40,bw,80);ctx.restore();
+    lbl(s,420+Math.max(bw,150)-20,y+3,44,INK,1,'right');ctx.restore()});
+  lbl('ganancia media ÷ pérdida media',540,1170,30,'#9fb0b8',eout(prog(t,41.6,42.4)));ctx.restore()}
+function caveats(t,a){gpanel(a,90,900);ctx.save();ctx.globalAlpha=a;
+  [[44.4,'1','Pocas operaciones','el azar domina el resultado'],[46.6,'2','Costos reales','resta spread y comisiones'],[48.4,'3','Ejemplos ilustrativos','no garantizan resultados']].forEach(([ts,n,h,s],i)=>{
+    const k=eout(prog(t,ts,ts+.6));if(k<=0)return;const y=420+i*260;ctx.save();ctx.globalAlpha=a*k;ctx.translate(lerp(60,0,k),0);
+    RR(130,y,820,210,30);ctx.fillStyle='#223645';ctx.fill();ctx.beginPath();ctx.arc(225,y+105,52,0,7);ctx.fillStyle=GOLD;ctx.fill();lbl(n,225,y+108,62,INK);
+    lbl(h,310,y+80,44,CREAM,1,'left');lbl(s,310,y+142,32,'#9fb0b8',1,'left');ctx.restore()});ctx.restore()}
+function closing(t,a){gpanel(a,90,900);ctx.save();ctx.globalAlpha=a;
+  lbl('MIDE TU',540,560,90,CREAM,eout(prog(t,51.0,51.7)));lbl('ESPERANZA',540,690,120,LIME,eout(prog(t,51.6,52.3)));
+  const k=eback(prog(t,52.6,53.4));if(k>.02){ctx.save();ctx.translate(540,900);ctx.scale(k,k);ctx.fillStyle=GOLD;RR(-200,-70,400,140,36);ctx.fill();lbl('E = P×G − Q×L',0,6,48,INK);ctx.restore()}
+  lbl('no solo tu % de aciertos',540,1080,40,CREAM,eout(prog(t,53.6,54.4)));
+  lbl('ejemplos ilustrativos · contenido educativo',540,1180,24,'#9fb0b8',eout(prog(t,54.4,55.0)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0.0,6.4);if(t<.3)a=1;if(a>0)hook(t,a);
+  a=fade(t,6.8,15.4);if(a>0)formula(t,a);
+  a=fade(t,15.6,24.4);if(a>0)traderA(t,a);
+  a=fade(t,24.6,34.0);if(a>0)traderB(t,a);
+  a=fade(t,34.2,43.6);if(a>0)table(t,a);
+  a=fade(t,43.8,50.4);if(a>0)caveats(t,a);
+  a=fade(t,50.6,55.8);if(a>0)closing(t,a)}
+function cover(){bg(2);
+  chip('TRADER A',270,330,300,RED,'#fff');chip('TRADER B',810,330,300,LIME,INK);
+  T('60%',270,590,{font:'900 150px Inter',fill:RED});T('40%',810,590,{font:'900 150px Inter',fill:LIME});
+  lbl('de aciertos',270,740,42,INK);lbl('de aciertos',810,740,42,CREAM);
+  lbl('−$10',270,930,120,RED);lbl('+$30',810,930,120,LIME);lbl('por operación',270,1020,34,INK);lbl('por operación',810,1020,34,CREAM);
+  vs();
+  ctx.save();ctx.translate(540,1230);RR(-460,-110,920,220,50);ctx.fillStyle=GOLD;ctx.fill();ctx.lineWidth=8;ctx.strokeStyle=INK;ctx.stroke();lbl('¿QUIÉN GANA?',0,10,104,INK);ctx.restore();
+  ctx.save();ctx.fillStyle=INK;RR(170,1420,740,110,55);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=LIME;ctx.stroke();ctx.restore();T('VER POR QUÉ →',540,1478,{font:'900 50px Inter',fill:LIME})}
+</script></body></html>
