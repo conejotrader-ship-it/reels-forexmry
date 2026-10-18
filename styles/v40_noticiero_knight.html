@@ -1,0 +1,93 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+
+// Estilo 22: noticiero de última hora (cinta de titulares) — tema: Knight Capital 2012 (60 s)
+const SPEC={name:'KnightCapital2012',hook:'45 MINUTOS: −$460 M POR UN ERROR DE SOFTWARE',dur:60,cta:56,bpm:104,mus:'soft',prog:[[45,'m'],[43,'M'],[40,'m'],[43,'M']],
+ ev:[[0.3,'hit'],[1.6,'alert'],[3.0,'ding'],[6.8,'wipe'],[8.4,'tick'],[10.0,'tick'],[11.6,'tick'],[15.6,'wipe'],[17.2,'ding'],[20.0,'ding'],[24.6,'wipe'],[26.4,'tick'],[29.0,'alert'],[31.6,'tick'],[34.2,'wipe'],[36.0,'tick'],[38.0,'tick'],[40.0,'tick'],[43.8,'wipe'],[45.4,'ding'],[47.0,'ding'],[50.6,'wipe'],[52.0,'alert'],[56.2,'cta']],
+ subs:[[0.2,6.4,'En 45 minutos, Knight Capital perdió más de $460 millones por un error de software.','En cuarenta y cinco minutos, Knight Capital perdió más de cuatrocientos sesenta millones de dólares por un error de software.'],
+ [6.8,15.4,'1 de agosto de 2012: al abrir el mercado, su sistema automático empezó a enviar órdenes sin control.','Primero de agosto de dos mil doce: al abrir el mercado, su sistema automático empezó a enviar órdenes sin control.'],
+ [15.6,24.4,'Más de 4 millones de órdenes para cumplir solo 212 pedidos de clientes. Más de 397 millones de acciones.','Más de cuatro millones de órdenes para cumplir solo doscientos doce pedidos de clientes. Más de trescientos noventa y siete millones de acciones.'],
+ [24.6,34.0,'La causa: código nuevo mal desplegado reactivó una función antigua que no debía usarse.','La causa: código nuevo mal desplegado reactivó una función antigua que no debía usarse, y el sistema no reconocía órdenes ya ejecutadas.'],
+ [34.2,43.6,'Antes de la apertura, 97 correos automáticos advertían del error. No se actuó sobre ellos.','Antes de la apertura, noventa y siete correos automáticos advertían del error. No se actuó sobre ellos.'],
+ [43.8,50.4,'En 2013 la SEC la multó con $12 millones por incumplir la regla de acceso al mercado.','En dos mil trece la SEC la multó con doce millones de dólares por incumplir la regla de acceso al mercado.'],
+ [50.6,55.8,'Un robot necesita límites de riesgo y un botón de apagado.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const NAVY='#0a1a33',BLU='#0f3a7a',RED='#e11d2e',YEL='#ffd23f',WHT='#ffffff',MUT='#9db4d6',PAN='#10264a';
+const STY={subFont:'800 42px Inter',subBg:'rgba(6,14,30,.95)',subStroke:YEL,subFill:'#fff',ctaBg:'#0a1a33',ctaSub:WHT,ctaGlow:RED,
+ ctaAccent:YEL,ctaBtnText:'#0a1a33',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+function lbl(s,x,y,sz,col=WHT,a=1,al='center'){T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+const TICK='KNIGHT CAPITAL · 1 AGO 2012 · 45 MINUTOS · MÁS DE $460 M · 4 MILLONES DE ÓRDENES · SEC: MULTA DE $12 M ·  ';
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0b2146');g.addColorStop(1,'#050d1c');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.08;for(let i=0;i<12;i++){ctx.beginPath();ctx.arc(900,200,120+i*110,0,7);ctx.strokeStyle=WHT;ctx.lineWidth=2;ctx.stroke()}ctx.restore();
+  // barra superior
+  ctx.fillStyle=RED;ctx.fillRect(0,230,W,88);T('ÚLTIMA HORA',60,274,{font:'900 50px Inter',fill:WHT,align:'left'});
+  const on=Math.floor(t*2)%2==0;ctx.beginPath();ctx.arc(1000,274,16,0,7);ctx.fillStyle=on?WHT:'#ff9aa2';ctx.fill();T('EN VIVO',960,274,{font:'800 28px Inter',fill:WHT,align:'right'});
+  // cinta
+  ctx.fillStyle=YEL;ctx.fillRect(0,1275,W,76);ctx.save();ctx.beginPath();ctx.rect(0,1275,W,76);ctx.clip();
+  ctx.font='900 34px Inter';const tw=ctx.measureText(TICK).width;const off=(t*140)%tw;for(let k=-1;k<3;k++)T(TICK,k*tw-off,1314,{font:'900 34px Inter',fill:NAVY,align:'left'});ctx.restore()}
+function panel(a,tag){ctx.save();ctx.globalAlpha=a;RR(70,360,940,880,30);ctx.fillStyle=PAN;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle='rgba(255,255,255,.3)';ctx.stroke();
+  RR(70,360,300,64,30);ctx.fillStyle=BLU;ctx.fill();lbl(tag,220,393,28,WHT);ctx.restore()}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;
+  const k=eback(prog(t,.3,1.1));ctx.save();ctx.translate(540,640);ctx.scale(Math.max(k,0),Math.max(k,0));T('−$460 M',0,0,{font:'900 200px Inter',fill:RED,glow:RED,gb:30,stroke:WHT,lw:6});ctx.restore();
+  lbl('EN SOLO 45 MINUTOS',540,820,70,YEL,eout(prog(t,1.5,2.2)));
+  RR(130,890,820,180,28);ctx.fillStyle=PAN;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle=YEL;ctx.stroke();
+  lbl('KNIGHT CAPITAL',540,950,58,WHT,eout(prog(t,2.6,3.2)));lbl('un error de software en Wall Street',540,1020,34,MUT,eout(prog(t,3.2,3.8)));
+  ctx.restore()}
+function clockCard(t,a){panel(a,'1 AGO 2012');ctx.save();ctx.globalAlpha=a;
+  const k=prog(t,8.0,14.0),m=Math.floor(k*45),s=Math.floor((k*45-m)*60);const str='09:'+String(30+m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  const hh=30+m>=60?'10:'+String(30+m-60).padStart(2,'0')+':'+String(s).padStart(2,'0'):str;
+  RR(150,470,780,240,30);ctx.fillStyle='#050d1c';ctx.fill();T(hh,540,590,{font:'900 150px Inter',fill:'#7dffb2',glow:'#7dffb2',gb:20});
+  lbl('hora de Nueva York · apertura del mercado',540,760,30,MUT,eout(prog(t,8.4,9.0)));
+  const R=[['ALGORITMO','EN MARCHA',9.0],['ÓRDENES','SIN CONTROL',11.2]];
+  R.forEach(([h,s,ts],i)=>{const kk=eout(prog(t,ts,ts+.5));if(kk<=0)return;const y=900+i*150;ctx.save();ctx.globalAlpha=a*kk;RR(150,y,780,110,26);ctx.fillStyle='#183461';ctx.fill();
+    lbl(h,190,y+56,38,MUT,1,'left');const bl=Math.floor(t*3)%2==0;lbl(s,890,y+56,44,i?(bl?RED:'#ff7a85'):'#7dffb2',1,'right');ctx.restore()});
+  lbl('primeros 45 minutos tras la apertura',540,1190,30,YEL,eout(prog(t,13.0,13.8)));ctx.restore()}
+function ordersCard(t,a){panel(a,'LAS CIFRAS');ctx.save();ctx.globalAlpha=a;
+  lbl('ÓRDENES ENVIADAS',540,490,34,MUT,eout(prog(t,16.0,16.6)));
+  const k1=eio(prog(t,16.4,19.4));RR(130,530,820,80,40);ctx.fillStyle='#183461';ctx.fill();ctx.save();RR(130,530,820,80,40);ctx.clip();ctx.fillStyle=RED;ctx.fillRect(130,530,820*k1,80);ctx.restore();
+  lbl('+4.000.000',540,571,52,WHT,k1>.5?1:eout(prog(t,16.6,17.2)));
+  lbl('PEDIDOS DE CLIENTES',540,700,34,MUT,eout(prog(t,19.6,20.2)));
+  const k2=eout(prog(t,19.9,20.6));RR(130,740,820,80,40);ctx.fillStyle='#183461';ctx.fill();RR(130,740,Math.max(6,820*k2*.0005),80,6);ctx.fillStyle=YEL;ctx.fill();
+  lbl('212',540,781,52,WHT,k2);
+  const k3=eback(prog(t,21.4,22.2));if(k3>.02){ctx.save();ctx.translate(540,1000);ctx.scale(k3,k3);RR(-400,-110,800,220,36);ctx.fillStyle=RED;ctx.fill();lbl('+397 MILLONES',0,-22,76,WHT);lbl('de acciones negociadas',0,50,38,WHT);ctx.restore()}
+  lbl('escala ilustrativa',540,1190,26,MUT,eout(prog(t,22.6,23.2)));ctx.restore()}
+function causeCard(t,a){panel(a,'LA CAUSA');ctx.save();ctx.globalAlpha=a;
+  const B=[[25.4,'CÓDIGO NUEVO','mal desplegado (jul 2012)',BLU],[28.0,'FUNCIÓN ANTIGUA','reactivada',RED],[30.6,'ÓRDENES REPETIDAS','no reconoce las ejecutadas',RED]];
+  B.forEach(([ts,h,s,col],i)=>{const k=eout(prog(t,ts,ts+.6));if(k<=0)return;const y=470+i*235;ctx.save();ctx.globalAlpha=a*k;ctx.translate(lerp(-60,0,k),0);
+    RR(130,y,820,170,28);ctx.fillStyle=col;ctx.fill();lbl(h,540,y+66,50,WHT);lbl(s,540,y+122,32,'rgba(255,255,255,.85)');ctx.restore();
+    if(i<2){const ka=eout(prog(t,ts+.5,ts+1));ctx.save();ctx.globalAlpha=a*ka;ctx.fillStyle=YEL;ctx.beginPath();ctx.moveTo(500,y+180);ctx.lineTo(580,y+180);ctx.lineTo(540,y+222);ctx.closePath();ctx.fill();ctx.restore()}});
+  ctx.restore()}
+function mailCard(t,a){panel(a,'LAS ALERTAS');ctx.save();ctx.globalAlpha=a;
+  const n=Math.floor(97*eio(prog(t,35.0,40.0)));
+  for(let i=0;i<97;i++){if(i>=n)break;const c=i%10,r=Math.floor(i/10);const x=150+c*80,y=440+r*64;
+    ctx.fillStyle=WHT;RR(x,y,56,40,6);ctx.fill();ctx.strokeStyle=RED;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x+4,y+6);ctx.lineTo(x+28,y+24);ctx.lineTo(x+52,y+6);ctx.stroke()}
+  lbl(String(n),300,1160,110,RED,1,'left');lbl('correos automáticos',460,1135,36,WHT,1,'left');lbl('sin acción',460,1185,36,YEL,1,'left');ctx.restore()}
+function secCard(t,a){panel(a,'LA SANCIÓN');ctx.save();ctx.globalAlpha=a;
+  lbl('SEC',540,520,70,MUT,eout(prog(t,44.2,44.8)));lbl('16 de octubre de 2013',540,590,36,WHT,eout(prog(t,44.6,45.2)));
+  const k=eback(prog(t,45.4,46.2));if(k>.02){ctx.save();ctx.translate(540,800);ctx.scale(k,k);RR(-360,-110,720,220,36);ctx.fillStyle=RED;ctx.fill();lbl('MULTA $12 M',0,6,98,WHT);ctx.restore()}
+  RR(130,980,820,150,28);ctx.save();ctx.globalAlpha=a*eout(prog(t,47.2,47.9));ctx.fillStyle='#183461';ctx.fill();ctx.restore();
+  lbl('Regla de acceso al mercado',540,1040,42,YEL,eout(prog(t,47.4,48.1)));lbl('(Regla 15c3-5)',540,1092,32,WHT,eout(prog(t,47.8,48.5)));ctx.restore()}
+function lessonCard(t,a){panel(a,'LECCIÓN');ctx.save();ctx.globalAlpha=a;
+  const k=eback(prog(t,51.0,51.8));if(k>.02){ctx.save();ctx.translate(540,640);ctx.scale(k,k);ctx.beginPath();ctx.arc(0,0,150,0,7);ctx.fillStyle=RED;ctx.fill();ctx.lineWidth=14;ctx.strokeStyle=WHT;ctx.stroke();RR(-70,-70,140,140,20);ctx.fillStyle=WHT;ctx.fill();ctx.restore()}
+  lbl('LÍMITES DE RIESGO',540,930,66,WHT,eout(prog(t,52.0,52.7)));lbl('+ BOTÓN DE APAGADO',540,1020,60,YEL,eout(prog(t,52.6,53.3)));
+  lbl('cifras SEC · contenido educativo',540,1190,26,MUT,eout(prog(t,54.2,54.8)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.4);if(t<.3)a=1;if(a>0)hook(t,a);
+  a=fade(t,6.8,15.4);if(a>0)clockCard(t,a);
+  a=fade(t,15.6,24.4);if(a>0)ordersCard(t,a);
+  a=fade(t,24.6,34.0);if(a>0)causeCard(t,a);
+  a=fade(t,34.2,43.6);if(a>0)mailCard(t,a);
+  a=fade(t,43.8,50.4);if(a>0)secCard(t,a);
+  a=fade(t,50.6,55.8);if(a>0)lessonCard(t,a)}
+function cover(){bg(3);
+  T('−$460 M',540,640,{font:'900 190px Inter',fill:RED,glow:RED,gb:30,stroke:WHT,lw:8});
+  T('EN 45 MINUTOS',540,850,{font:'900 112px Inter',fill:YEL});
+  ctx.save();RR(110,950,860,170,30);ctx.fillStyle=PAN;ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=YEL;ctx.stroke();ctx.restore();
+  lbl('UN ERROR DE SOFTWARE',540,1010,52,WHT);lbl('KNIGHT CAPITAL · 2012',540,1075,36,MUT);
+  ctx.save();ctx.fillStyle=YEL;RR(170,1420,740,110,55);ctx.fill();ctx.restore();T('VER QUÉ PASÓ →',540,1478,{font:'900 50px Inter',fill:NAVY})}
+</script></body></html>
