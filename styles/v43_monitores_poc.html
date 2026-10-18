@@ -1,0 +1,85 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+
+// Estilo 26: sala de operaciones con varios monitores — tema: perfil de volumen, POC y área de valor (60 s)
+const SPEC={name:'PerfilVolumenPOC',hook:'POC: EL PRECIO DONDE MÁS SE NEGOCIÓ',dur:60,cta:56,bpm:108,mus:'soft',prog:[[46,'m'],[42,'M'],[39,'M'],[44,'m']],
+ ev:[[0.3,'hit'],[1.0,'tick'],[2.0,'tick'],[3.0,'tick'],[4.4,'ding'],[6.8,'wipe'],[9.0,'tick'],[11.0,'tick'],[13.0,'tick'],[15.6,'wipe'],[17.0,'ding'],[19.6,'ding'],[24.6,'wipe'],[26.0,'ding'],[28.6,'ding'],[31.0,'tick'],[34.2,'wipe'],[37.0,'tick'],[39.4,'ding'],[41.0,'ding'],[43.8,'wipe'],[45.0,'tick'],[47.0,'tick'],[50.6,'wipe'],[51.8,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.4,'¿Dónde se negoció más volumen? Ese precio se llama POC, y muchos traders lo vigilan.','¿Dónde se negoció más volumen? Ese precio se llama P O C, y muchos traders lo vigilan.'],
+ [6.8,15.4,'El perfil de volumen reparte el volumen por nivel de precio, no por tiempo, en un histograma horizontal.','El perfil de volumen reparte el volumen por nivel de precio, no por tiempo, en un histograma horizontal.'],
+ [15.6,24.4,'El POC, punto de control, es el precio con más volumen: la fila más larga del histograma.','El P O C, punto de control, es el precio con más volumen: la fila más larga del histograma.'],
+ [24.6,34.0,'El área de valor rodea al POC y concentra ≈ 70% del volumen. Sus bordes: VAH arriba y VAL abajo.','El área de valor rodea al P O C y concentra cerca de setenta por ciento del volumen. Sus bordes: valor alto arriba y valor bajo abajo.'],
+ [34.2,43.6,'Uso común: retesteo del POC previo como posible soporte o resistencia. Son referencias, no certezas.','Uso común: el retesteo del P O C previo como posible soporte o resistencia. Son referencias, no certezas.'],
+ [43.8,50.4,'En forex y oro de bróker, el volumen suele ser de ticks: una aproximación. Y cambia según el periodo.','En forex y oro de bróker, el volumen suele ser de ticks: una aproximación. Y cambia según el periodo.'],
+ [50.6,55.8,'El POC es una referencia para armar escenarios, no un nivel que deba sostenerse.','El P O C es una referencia para armar escenarios, no un nivel que deba sostenerse.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BG1='#060b14',BEZ='#1a2230',SCR='#0a1420',GRN='#2ee6a6',RDC='#ff5c6c',BLU='#3a7bd5',GLD='#ffcc33',WHT='#eaf2ff',MUT='#7f93ad';
+const STY={subFont:'800 42px Inter',subBg:'rgba(6,11,20,.95)',subStroke:GLD,subFill:'#fff',ctaBg:'#060b14',ctaSub:WHT,ctaGlow:GLD,
+ ctaAccent:GLD,ctaBtnText:'#060b14',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+boot(['800 40px Inter','900 40px Inter']);
+function lbl(s,x,y,sz,col=WHT,a=1,al='center'){T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
+// datos ilustrativos
+const N0=52,NR=12,NB=26;const C=[];(function(){const r=rng(31);let p=100;for(let i=0;i<N0+NR;i++){const o=p;
+  let tgt=100+Math.sin(i*.35)*2.2;if(i>=N0){const j=i-N0;tgt=[101,103,105,106.5,107,106,104,102,100.6,100.2,100.9,102.4][j]}
+  p=o+(tgt-o)*.35+(r()-.5)*(i>=N0?.35:1.7);const hi=Math.max(o,p)+r()*.7,lo=Math.min(o,p)-r()*.7;C.push({o,c:p,h:hi,l:lo,v:1+r()*2})}})();
+let PMIN=1e9,PMAX=-1e9;C.forEach(c=>{PMIN=Math.min(PMIN,c.l);PMAX=Math.max(PMAX,c.h)});PMIN-=.5;PMAX+=.5;
+const BIN=(PMAX-PMIN)/NB,VOL=new Array(NB).fill(0);
+C.slice(0,N0).forEach(c=>{const a=Math.max(0,Math.floor((c.l-PMIN)/BIN)),b=Math.min(NB-1,Math.floor((c.h-PMIN)/BIN));for(let k=a;k<=b;k++)VOL[k]+=c.v/(b-a+1)});
+let POC=0;VOL.forEach((v,i)=>{if(v>VOL[POC])POC=i});const TOT=VOL.reduce((a,b)=>a+b,0);
+let LO=POC,HI=POC,acc=VOL[POC];while(acc<.7*TOT&&(LO>0||HI<NB-1)){const dn=LO>0?VOL[LO-1]:-1,up=HI<NB-1?VOL[HI+1]:-1;if(up>=dn){HI++;acc+=VOL[HI]}else{LO--;acc+=VOL[LO]}}
+const VMAX=VOL[POC];
+// geometría monitor principal
+const CX0=110,CX1=720,CY0=425,CY1=950,HX0=745,HX1=980;
+const py=p=>CY1-(p-PMIN)/(PMAX-PMIN)*(CY1-CY0),by=i=>CY1-(i+1)*(CY1-CY0)/NB,bh=(CY1-CY0)/NB;
+function bg(t){ctx.fillStyle=BG1;ctx.fillRect(0,0,W,H);
+  const g=ctx.createRadialGradient(540,700,100,540,800,1100);g.addColorStop(0,'#10213a');g.addColorStop(1,'#04070d');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const r=rng(8);for(let i=0;i<26;i++){const x=r()*W,y=40+r()*260,s=6+r()*18;ctx.beginPath();ctx.arc(x,y,s,0,7);ctx.fillStyle=`rgba(${r()<.5?'80,140,255':'255,200,80'},${.06+r()*.08})`;ctx.fill()}}
+function mon(x,y,w,h,glow){ctx.save();ctx.shadowColor=glow||'rgba(58,123,213,.5)';ctx.shadowBlur=40;RR(x,y,w,h,22);ctx.fillStyle=BEZ;ctx.fill();ctx.restore();
+  RR(x+14,y+14,w-28,h-28,12);ctx.fillStyle=SCR;ctx.fill()}
+function small(x,w,a,s1,s2,col){ctx.save();ctx.globalAlpha=a;mon(x,1050,w,200,col);lbl(s1,x+w/2,1130,s1.length>9?40:52,col||GLD);lbl(s2,x+w/2,1195,28,MUT);ctx.restore()}
+function chart(t,nC,hk,pocK,vaK,rtK,tick){ctx.save();
+  for(let i=0;i<=5;i++){line(CX0,CY0+i*(CY1-CY0)/5,HX1,CY0+i*(CY1-CY0)/5,'rgba(127,147,173,.15)',1)}
+  C.forEach((c,i)=>{if(i>=nC)return;if(i>=N0&&rtK<=0)return;const x=CX0+8+i*9.3;const up=c.c>=c.o,col=up?GRN:RDC;
+    line(x,py(c.h),x,py(c.l),col,2);ctx.fillStyle=col;const y1=py(Math.max(c.o,c.c)),y2=py(Math.min(c.o,c.c));ctx.fillRect(x-3.5,y1,7,Math.max(2,y2-y1))});
+  // histograma
+  VOL.forEach((v,i)=>{const k=eout(prog(hk,i/NB*.7,i/NB*.7+.3));if(k<=0)return;const w=(HX1-HX0)*v/VMAX*k;ctx.fillStyle=(pocK>0&&i==POC)?GLD:BLU;ctx.globalAlpha=(pocK>0&&i==POC)?1:.8;ctx.fillRect(HX0,by(i)+1.5,w,bh-3);ctx.globalAlpha=1});
+  // área de valor
+  if(vaK>0){const yt=by(HI),yb=by(LO)+bh;ctx.save();ctx.globalAlpha=.16*vaK;ctx.fillStyle=BLU;ctx.fillRect(CX0,yt,HX1-CX0,yb-yt);ctx.restore();
+    ctx.save();ctx.globalAlpha=vaK;line(CX0,yt,HX1,yt,'#8fb7ff',3,[10,8]);line(CX0,yb,HX1,yb,'#8fb7ff',3,[10,8]);ctx.restore();
+    lbl('VAH',CX0+34,yt-18,26,'#8fb7ff',vaK);lbl('VAL',CX0+34,yb+22,26,'#8fb7ff',vaK);lbl('≈ 70 %',CX0+(HX0-CX0)/2,(yt+yb)/2+10,56,'#cfe0ff',vaK*.9)}
+  // POC
+  if(pocK>0){const y=by(POC)+bh/2;ctx.save();ctx.globalAlpha=pocK;line(CX0,y,HX1,y,GLD,4,[16,10]);ctx.restore();
+    RR(CX0+8,y-52*pocK,130,44,10);ctx.save();ctx.globalAlpha=pocK;ctx.fillStyle=GLD;ctx.fill();ctx.restore();lbl('POC',CX0+73,y-30*pocK,34,'#060b14',pocK)}
+  if(rtK>0&&tick){ctx.save();ctx.globalAlpha=rtK;const y=by(POC)+bh/2;ctx.beginPath();ctx.arc(CX0+8+(N0+9)*9.3,y,26,0,7);ctx.strokeStyle=GLD;ctx.lineWidth=5;ctx.stroke();lbl('retesteo',CX0+8+(N0+9)*9.3-40,y+70,30,GLD,1,'right');ctx.restore()}
+  ctx.restore()}
+function main(t,a,nC,hk,pocK,vaK,rtK,tick){ctx.save();ctx.globalAlpha=a;mon(70,340,940,680);
+  lbl('XAUUSD · ILUSTRATIVO',110+170,392,26,MUT,1);lbl('PERFIL DE VOLUMEN',HX0+117,392,24,MUT,1);chart(t,nC,hk,pocK,vaK,rtK,tick);ctx.restore()}
+function draw(t){bg(t);lbl('PERFIL DE VOLUMEN',540,270,60,WHT);
+  // hook y bloques
+  const hookA=1;
+  let nC=N0*eio(prog(t,.4,5.4));nC=Math.floor(nC);
+  const hk=prog(t,7.2,13.8);
+  const pocK=t<6.6?(t>4.2?eout(prog(t,4.2,4.8)):0):(t<15.6?0:eout(prog(t,16.2,16.9)));
+  const pocOn=(t>=4.2&&t<6.8)||t>=16.2;
+  const vaK=eout(prog(t,25.2,26.0))*(t<34.2?1:1-prog(t,34.2,34.8)*.7);
+  const rtK=eout(prog(t,35.0,35.6));const nCx=t>=6.8?(t<35?N0:Math.min(N0+NR,N0+Math.floor(NR*eio(prog(t,35.2,40.0))))):nC;
+  const tickOn=t>=39.0;
+  const histK=t<6.8?0:hk;
+  const mA=t<50.6?1:1-prog(t,50.6,51.2)*.65;
+  main(t,mA,nCx,histK,t<6.8?(t>4.2?eout(prog(t,4.2,4.8)):0):(t<16.2?0:eout(prog(t,16.2,16.9))),vaK,rtK,tickOn);
+  // monitores pequeños (leyenda del bloque)
+  const S=[[0.2,6.4,'¿DÓNDE?','se negoció más'],[6.8,15.4,'HISTOGRAMA','volumen por precio'],[15.6,24.4,'POC','fila más larga'],[24.6,34.0,'VA ≈ 70 %','VAH · VAL'],[34.2,43.6,'RETESTEO','posible reacción'],[43.8,50.4,'TICKS','volumen aprox.'],[50.6,55.8,'ESCENARIOS','no certezas']];
+  S.forEach(([a,b,s1,s2],i)=>{const al=fade(t,a,b);if(al>0){small(70,450,al,s1,s2,i==2?GLD:'#8fb7ff');small(560,450,al,i==0?'POC':i==1?'POR NIVEL':i==2?'+ VOLUMEN':i==3?'70 %':i==4?'REFERENCIA':i==5?'SESIÓN/SEMANA':'POC',i==0?'se llama':i==1?'no por tiempo':i==2?'del periodo':i==3?'del volumen':i==4?'no promesa':i==5?'cambia el perfil':'una guía',GLD)}});
+  // cierre
+  const kc=fade(t,51.0,55.8);if(kc>0){ctx.save();ctx.globalAlpha=kc*.95;RR(110,520,860,420,30);ctx.fillStyle='rgba(6,11,20,.94)';ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=GLD;ctx.stroke();ctx.restore();
+    lbl('EL POC ES UNA',540,640,64,WHT,kc);lbl('REFERENCIA',540,760,110,GLD,kc);lbl('no un nivel obligado',540,860,38,MUT,kc);lbl('ilustrativo · contenido educativo',540,1010,24,MUT,kc)}}
+function cover(){bg(4);
+  lbl('EL PRECIO DONDE',540,330,70,WHT);lbl('MÁS SE OPERÓ',540,420,70,WHT);
+  T('POC',540,700,{font:'900 300px Inter',fill:GLD,glow:GLD,gb:30});
+  // histograma grande
+  const h=26;VOL.forEach((v,i)=>{const y=880+(NB-1-i)*(14),w=Math.max(20,v/VMAX*760);ctx.fillStyle=i==POC?GLD:BLU;ctx.globalAlpha=i==POC?1:.85;ctx.fillRect(160,y,w,11);ctx.globalAlpha=1});
+  ctx.save();ctx.fillStyle=GLD;RR(170,1330,740,110,55);ctx.fill();ctx.restore();T('VER CÓMO USARLO →',540,1388,{font:'900 46px Inter',fill:BG1})}
+</script></body></html>
