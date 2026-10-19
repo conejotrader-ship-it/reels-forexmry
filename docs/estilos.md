@@ -33,7 +33,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 27 | Cuenta regresiva o reloj gigante | Reloj con años 1961–68 | London Gold Pool (v45_reloj_london_gold_pool, escena 112, 18 oct) |
 | 28 | Expediente "caso cerrado" | Carpetas y sellos | Orden Ejecutiva 6102 de 1933 (v44_expediente_orden6102, escena 111, 18 oct) |
 | 29 | Radar o sonar | Detecta movimientos | Disponible |
-| 30 | Velocímetro de riesgo |  | Disponible |
+| 30 | Velocímetro de riesgo |  | El oro llega a $850 (v46_velocimetro_oro1980, escena 113, 19 oct 6:00) |
 | 31 | Semáforo o termómetro de riesgo |  | Disponible |
 | 32 | Pixel-art 2D de 8 bits con personajes |  | Disponible |
 | 33 | Ciudad isométrica | Edificios que son barras | Disponible |
