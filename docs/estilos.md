@@ -34,7 +34,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 28 | Expediente "caso cerrado" | Carpetas y sellos | Orden Ejecutiva 6102 de 1933 (v44_expediente_orden6102, escena 111, 18 oct) |
 | 29 | Radar o sonar | Detecta movimientos | Disponible |
 | 30 | Velocímetro de riesgo |  | El oro llega a $850 (v46_velocimetro_oro1980, escena 113, 19 oct 6:00) |
-| 31 | Semáforo o termómetro de riesgo |  | Disponible |
+| 31 | Semáforo o termómetro de riesgo |  | Acuerdo de Washington sobre el oro 1999 (v48_semaforo_washington, escena 115, 19 oct 13:00) |
 | 32 | Pixel-art 2D de 8 bits con personajes |  | Brown's Bottom, venta de oro del Reino Unido (v47_pixel8_browns_bottom, escena 114, 19 oct 9:30) |
 | 33 | Ciudad isométrica | Edificios que son barras | Disponible |
 | 34 | Montañas lowpoly 3D | Forman el gráfico | Disponible |
