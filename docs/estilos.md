@@ -36,7 +36,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 30 | Velocímetro de riesgo |  | El oro llega a $850 (v46_velocimetro_oro1980, escena 113, 19 oct 6:00) |
 | 31 | Semáforo o termómetro de riesgo |  | Acuerdo de Washington sobre el oro 1999 (v48_semaforo_washington, escena 115, 19 oct 13:00) |
 | 32 | Pixel-art 2D de 8 bits con personajes |  | Brown's Bottom, venta de oro del Reino Unido (v47_pixel8_browns_bottom, escena 114, 19 oct 9:30) |
-| 33 | Ciudad isométrica | Edificios que son barras | Disponible |
+| 33 | Ciudad isométrica | Edificios que son barras | Oro tras el máximo de enero de 2026 (v50_isometrica_oro2026, escena 117, 19 oct 20:00) |
 | 34 | Montañas lowpoly 3D | Forman el gráfico | Disponible |
 | 35 | Acuarela con tinta | Manchas de acuarela sobre papel con trazo de tinta | Perder 50% exige ganar 100% (v37_acuarela_drawdown, escena 104, 17 oct) |
 | 36 | Art déco dorado | Años veinte | Disponible |
