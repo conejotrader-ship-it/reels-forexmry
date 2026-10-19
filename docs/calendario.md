@@ -70,11 +70,11 @@ Cadencia objetivo: 7 reels al día, uno cada 3,5 h. Temas del listado de histori
 Horarios (Bogotá): 6:00, 9:30, 13:00, 16:30, 20:00, 23:30, 3:00.
 1. Evento histórico: Acuerdo del Plaza 1985 (HECHO, 17 oct 22:20, 60 s).
 2. Mecánica: perder 50% exige ganar 100% (asimetría del drawdown).
-3. Ranking: las 5 mayores pérdidas por trading rogue (Leeson, Kerviel, Hamanaka, ballena de Londres, Adoboli).
-4. Evento histórico: Knight Capital 2012.
-5. Comparación: oro COMEX vs oro físico LBMA.
-6. Mecánica: tasas reales (TIPS) y oro.
-7. Técnica: perfil de volumen (POC y área de valor).
+3. (HECHO 19 oct 6:00, v46) Ranking: las 5 mayores pérdidas por trading rogue (Leeson, Kerviel, Hamanaka, ballena de Londres, Adoboli).
+4. (HECHO 19 oct 9:30, v47) Evento histórico: Knight Capital 2012.
+5. (HECHO 19 oct 13:00, v48) Comparación: oro COMEX vs oro físico LBMA.
+6. (HECHO 19 oct 16:30, v49) Mecánica: tasas reales (TIPS) y oro.
+7. (HECHO 19 oct 20:00, v50) Técnica: perfil de volumen (POC y área de valor).
 Reserva: LTCM 1998, flash crash de la libra 2016, carry trade del yen 2024, Kelly, MAE/MFE, walk-forward, COT, puntos swap.
 
 ## Carátulas (regla de Cristian, 17 oct): más llamativas y con potencial viral
@@ -96,9 +96,9 @@ Historia y eventos del oro:
 5. Acuerdo de Washington sobre el oro (1999): los bancos centrales europeos limitan sus ventas.
 6. 2022: congelan las reservas de Rusia y se disparan las compras de oro de bancos centrales.
 7. Qué pasó tras el máximo de enero de 2026 ($5.608) y la caída posterior.
-8. Manipulación del "fix" de Londres y multas por spoofing en metales (JPMorgan, 2020).
+8. (HECHO 19 oct 23:30, v51) Manipulación del "fix" de Londres y multas por spoofing en metales (JPMorgan, 2020).
 Mecánica y estructura del mercado:
-9. Backwardation en el oro: cuando el futuro cotiza por debajo del spot.
+9. (HECHO 20 oct 3:00, v52) Backwardation en el oro: cuando el futuro cotiza por debajo del spot.
 10. Oro de papel vs oro físico: qué respalda a un ETF de oro.
 11. Por qué 1 lote de XAUUSD son 100 onzas: cuánto vale cada $1 y cómo cambia el riesgo.
 12. El costo real de operar oro: spread, swap y comisión en un día volátil.
@@ -135,3 +135,16 @@ Horarios Bogotá: 6:00, 9:30, 16:30, 20:00, 23:30 y 3:00 (del 19 oct). LTCM 1998
 - Dom 18 oct (a pedido, primer video de la nueva lista) — Orden Ejecutiva 6102 de 1933: entregar el oro o hasta 10 años de prisión (60 s, estilo expediente "caso cerrado", `v44_expediente_orden6102.html`, escena 111, carátula "ENTREGA TU ORO O HASTA 10 AÑOS DE PRISIÓN"). Fuentes: Wikipedia (Executive Order 6102) y Federal Reserve History (Gold Reserve Act). Datos: firmada el 5 abr 1933; exigía entregar monedas, lingotes y certificados de oro a la Reserva Federal; exención de ~$100 en monedas (≈5 onzas troy); plazo 1 may 1933; compensación $20,67 por onza; pena máxima $10.000 y/o 10 años de prisión por incumplimiento deliberado; excepciones: usos profesionales (joyeros, dentistas), monedas de colección, oro de bancos centrales extranjeros, operaciones con licencia; Gold Reserve Act (30 ene 1934): $35 por onza (≈ +69% frente a $20,67) y valor del dólar en oro al 59% (≈ −41%); poseer oro volvió a ser legal desde 1974. Incluye Robot y cierre con seguir/Telegram/web. Video `videos/2026-10-18_1447_orden_6102.mp4`, portada `covers/cover_orden_6102.jpg`.
 
 - Dom 18 oct (a pedido, video 2 de la nueva lista) — London Gold Pool 1961–68 (60 s, estilo 27 reloj gigante, `v45_reloj_london_gold_pool.html`, escena 112, portada "8 BANCOS CONTRA EL ORO"). Publicado 15:08 Bogotá (Metricool id 399388786). Fuentes: Wikipedia (London Gold Pool), Federal Reserve History, APMEX. Datos: pool creado 1 nov 1961 por 8 bancos centrales tras el pico de $40 del 20 oct 1960; defendía $35/oz; aportes ≈ EE. UU. 50%, Alemania 11%, Reino Unido/Francia/Italia 9% c/u, Bélgica/Países Bajos/Suiza 4% c/u; Francia se retiró en jun 1967; libra devaluada ≈14,3% el 18 nov 1967; mercado de Londres cerrado desde el 15 mar 1968 unas 2 semanas; sistema de dos niveles; ventanilla del oro de EE. UU. cerrada en ago 1971. Gráfico de ventas del pool marcado "ilustrativo". Video `videos/2026-10-18_london_gold_pool.mp4`, portada `covers/cover_london_gold_pool.jpg`.
+
+
+## Producción automática del lunes 19 oct (7 reels, temas 3 a 9 de la nueva lista; horarios Bogotá, ninguno ocupado)
+Todos con Robot y cierre de seguir/notificaciones/Telegram/web, 60 s, carátula viral. Fuentes y cifras aproximadas indicadas en el texto de cada post.
+- Lun 19 oct 6:00 — Enero de 1980: oro a $850 (estilo 30 velocímetro, `v46_velocimetro_oro1980.html`, escena 113, Metricool id 399568483). Fuentes: SD Bullion (tabla de fixes 1980: 2 ene PM $559,50; 21 ene PM $850; 22 ene AM $763; 23 ene AM $650; 18 mar AM $474 = −44%; 31 dic AM $589,50) y Wikipedia (mínimo $252,80 el 20 jul 1999; ≈ 28 años hasta superar $850 en 2008). Video `videos/2026-10-19_0600_oro_850_1980.mp4`, portada `covers/cover_oro_1980.jpg`.
+- Lun 19 oct 9:30 — "Brown's Bottom" (estilo 32 pixel-art 8 bits, `v47_pixel8_browns_bottom.html`, escena 114, id 399570566). Fuentes: Wikipedia (1999–2002 sale of British gold reserves) y gov.uk FOI: 395 t (cerca de la mitad), 17 subastas jul 1999–mar 2002, precio medio ≈ $275, ≈ $3.500 M, anuncio 7 may 1999 con oro a $282,40, mínimo $252,80; hipotético ≈ $56.000 M a $4.400/oz. Video `videos/2026-10-19_0930_browns_bottom.mp4`, portada `covers/cover_browns_bottom.jpg`.
+- Lun 19 oct 13:00 — Acuerdo de Washington sobre el oro 1999 (estilo 31 semáforo, `v48_semaforo_washington.html`, escena 115, id 399572448). Fuentes: WGC (First Central Bank Gold Agreement: 26 sep 1999, 15 firmantes, ≈ 400 t/año y 2.000 t en 5 años, ≈ 45% de las reservas, préstamos y derivados sin aumentar, 2.119 t prestadas), Wikipedia (renovaciones 2004: 500 t/año, 2009, 2014; no renovado en 2019) y APMEX (≈ $255 → > $320 a inicios de 2000, ≈ +25%; cronología, no causa). Video `videos/2026-10-19_1300_acuerdo_washington_oro.mp4`, portada `covers/cover_acuerdo_washington.jpg`.
+- Lun 19 oct 16:30 — 2022: reservas de Rusia congeladas y compras de oro (estilo 29 radar, `v49_radar_rusia2022.html`, escena 116, id 399574208). Fuentes: Reuters factbox (≈ $300.000 M congelados, reservas totales $612.000 M, ≈ 49%), WGC vía Kitco y Central Banking (1.136 t en 2022, mayor total anual registrado, +150% vs 2021; Turquía 148, China 62, Egipto 47, Catar 35, Irak 34, Uzbekistán 34, India 33, EAU 25; gran parte sin declarar). Video `videos/2026-10-19_1630_rusia_2022_compras_oro.mp4`, portada `covers/cover_rusia_2022.jpg`.
+- Lun 19 oct 20:00 — Qué pasó tras el máximo de enero de 2026 (estilo 33 ciudad isométrica, `v50_isometrica_oro2026.html`, escena 117, id 399575902). Fuentes: SD Bullion (fix LBMA AM: 29 ene $5.501,70; 30 ene $5.063,45 = −8%; 25 jun $3.994,50 ≈ −27%; 1 jul $3.978,55; 7 sep $4.404,15 ≈ −20%); máximo intradía varía ($5.589–5.608: IG, Finance Magnates, Metalsmine); factores citados por IG, Finance Magnates y Goldman (dólar, rendimientos reales > 2%, menos tensión geopolítica, menos entradas a ETF). Video `videos/2026-10-19_2000_oro_tras_maximo_2026.mp4`, portada `covers/cover_oro_2026.jpg`.
+- Lun 19 oct 23:30 — Fix de Londres y multas por spoofing (estilo 36 art déco, `v51_deco_fix_spoofing.html`, escena 118, id 399577806). Fuentes: CFTC 8260-20 (JPMorgan $920,2 M: restitución $311.737.008, devolución $172.034.790, multa civil $436.431.811; 2008–2016; metales y bonos del Tesoro), LBMA (fix desde 12 sep 1919, 5 miembros, reemplazado el 20 mar 2015 por LBMA Gold Price con ICE Benchmark Administration, de 5 a 16 participantes) y FinancialAdvice (Barclays £26 M, FCA, 22 may 2014). Video `videos/2026-10-19_2330_fix_londres_spoofing.mp4`, portada `covers/cover_fix_spoofing.jpg`.
+- Mar 20 oct 3:00 (séptimo reel del día 19) — Backwardation en el oro (estilo 34 lowpoly, `v52_lowpoly_backwardation.html`, escena 119, id 399579986). Fuentes: MetalCharts (contango normal por costo de carry; backwardation rara = escasez física/estrés), Tom Fischer, Univ. Würzburg (tasa de arrendamiento vs tasa en dólares; episodios breves 1999, 2001, 2008). Video `videos/2026-10-20_0300_backwardation_oro.mp4`, portada `covers/cover_backwardation.jpg`.
+- Siguientes temas de la lista: 10 (oro de papel vs físico) en adelante; reserva: trading rogue (ranking), LTCM ya hecho, flash crash de la libra, carry trade del yen, Kelly, MAE/MFE, walk-forward, COT, puntos swap. Estilos disponibles: 37 teletipo, 38 CRT, 39 holograma, 40 glitch, 41 rayos X, 42 dominó, 43 montaña rusa, 44 ajedrez, 45 libro, 46 VHS, 47 mapa de calor, 48 burbujas, 49 cámara, 50 pizarra blanca.
+- Nota técnica: las páginas de pixel-art 8 bits y art déco usan fuentes Press Start 2P y Limelight (sin acentos en mayúsculas: se escriben sin tilde). `setup.sh` instala las fuentes adicionales.
