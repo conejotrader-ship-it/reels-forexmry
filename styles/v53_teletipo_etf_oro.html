@@ -1,0 +1,112 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:Elite;src:url(node_modules/@fontsource/special-elite/files/special-elite-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 37: cinta de teletipo — tema: oro de papel vs físico, qué respalda a un ETF de oro (60 s). Incluye al Robot y llamado a seguir/Telegram/web.
+const SPEC={name:'ETFOroFisico',hook:'UN ETF DE ORO NO ES ORO EN TU CASA',dur:60,cta:56,bpm:104,mus:'soft',prog:[[45,'m'],[41,'M'],[48,'m'],[43,'M']],
+ ev:[[0.3,'type',2.4],[3.4,'hit'],[4.6,'hit'],[6.4,'wipe'],[6.8,'type',2],[9.2,'ding'],[10.6,'ding'],[13.6,'wipe'],[14.0,'type',2],[16.6,'hit'],[18.0,'ding'],[20.6,'wipe'],[21.2,'ding'],[23.4,'ding'],[25.4,'ding'],[28.4,'wipe'],[29.0,'type',2],[31.4,'hit'],[33.0,'down'],[35.2,'wipe'],[36.2,'hit'],[38.6,'hit'],[41.0,'hit'],[43.6,'wipe'],[45.0,'ding'],[47.0,'alert'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Un ETF de oro no guarda oro en tu casa: son acciones que representan lingotes en una bóveda.','Un E T F de oro no guarda oro en tu casa: son acciones que representan lingotes en una bóveda.'],
+ [6.4,13.4,'Un ETF físico, como SPDR Gold Shares, compra lingotes y emite acciones que cotizan en bolsa.','Un E T F físico, como S P D R Gold Shares, compra lingotes y emite acciones que cotizan en bolsa.'],
+ [13.6,20.4,'Barras de unas 400 onzas, guardadas en Londres por HSBC en cuenta asignada.','Barras de unas cuatrocientas onzas, guardadas en Londres por H S B C en cuenta asignada.'],
+ [20.6,28.2,'Instituciones autorizadas entregan oro al fideicomiso y reciben acciones. Tú solo compras acciones.','Instituciones autorizadas entregan oro al fideicomiso y reciben acciones. Tú solo compras acciones en bolsa.'],
+ [28.4,35.0,'La comisión es 0,40% anual y se paga con oro: cada acción respalda menos oro con los años.','La comisión es cero coma cuarenta por ciento anual y se paga con oro: cada acción respalda menos oro con los años.'],
+ [35.2,43.4,'Riesgos: no paga ingresos, puede cotizar con prima o descuento y no la canjeas tú por barras.','Riesgos: no paga ingresos, puede cotizar con prima o descuento, y no la canjeas tú por barras.'],
+ [43.6,49.6,'Y el XAUUSD de tu plataforma suele ser un contrato con el bróker, no lingotes tuyos.','Y el X A U U S D de tu plataforma suele ser un contrato con el bróker, no lingotes tuyos.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#14110d',ACC='#f2b705',FAM='Inter',PAPER='#efe4c4',INK='#1c1a17',RED='#c0392b',GRY='#bfae85',BLU='#1f4e79';
+window.FONTS=['40px Elite'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(20,17,13,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+const EL='Elite, "Courier New", monospace';
+function ty(s,t,t0,cps=30){return s.slice(0,Math.floor(Math.max(0,t-t0)*cps))}
+function bg(t){ctx.fillStyle=DK;ctx.fillRect(0,0,W,H);
+  // banda de cotizaciones (sin precios)
+  ctx.save();ctx.beginPath();ctx.rect(0,40,W,86);ctx.clip();ctx.fillStyle='#000';ctx.fillRect(0,40,W,86);
+  const msg='ORO · GOLD · LINGOTE 400 OZ · LONDRES · HSBC · ETF FÍSICO · CUENTA ASIGNADA · ';ctx.font='44px '+EL;const L=ctx.measureText(msg).width+90;
+  for(let k=-1;k<3;k++)T(msg,-((t*170)%L)+k*L,84,{font:'44px '+EL,fill:ACC,align:'left'});ctx.restore();
+  // papel con borde dentado
+  const x0=60,x1=1020,y0=170,y1=1440;ctx.save();ctx.shadowColor='rgba(0,0,0,.6)';ctx.shadowBlur=30;ctx.beginPath();ctx.moveTo(x0,y0);
+  for(let x=x0;x<x1;x+=24){ctx.lineTo(x+12,y0-10);ctx.lineTo(x+24,y0)}ctx.lineTo(x1,y1);
+  for(let x=x1;x>x0;x-=24){ctx.lineTo(x-12,y1+10);ctx.lineTo(x-24,y1)}ctx.closePath();ctx.fillStyle=PAPER;ctx.fill();ctx.restore();
+  ctx.fillStyle='rgba(120,90,40,.08)';for(let y=y0+30;y<y1;y+=54)ctx.fillRect(x0,y,x1-x0,2);
+  const off=(t*40)%70;for(let y=y0+20-70;y<y1;y+=70){const yy=y+off;if(yy>y0&&yy<y1-10){[100,980].forEach(x=>{ctx.beginPath();ctx.arc(x,yy,10,0,7);ctx.fillStyle=DK;ctx.fill()})}}}
+function stamp(t,t0,s,x,y,sz,col,rot=-.05){const k=eback(prog(t,t0,t0+.4));if(k<=0.02)return;ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.scale(k,k);ctx.globalAlpha*=Math.min(1,k*2);
+  ctx.font=`900 ${sz}px Inter`;const w=ctx.measureText(s).width+50;ctx.lineWidth=7;ctx.strokeStyle=col;RR(-w/2,-sz*.75,w,sz*1.5,14);ctx.stroke();T(s,0,0,{font:`900 ${sz}px Inter`,fill:col});ctx.restore()}
+function para(lines,x,y,sz,t,t0,cps=30,lh){lh=lh||sz*1.35;let c=0;lines.forEach((l,i)=>{const s=ty(l,t,t0+c/cps,cps);c+=l.length+4;if(s)T(s,x,y+i*lh,{font:`${sz}px ${EL}`,fill:INK,align:'left'})})}
+function bar(x,y,w,h,k=1,lab,sz=34){if(k<=0.02)return;ctx.save();ctx.translate(x,y+(1-k)*-60);ctx.globalAlpha*=k;
+  let g=ctx.createLinearGradient(0,0,0,h);g.addColorStop(0,'#ffe27a');g.addColorStop(.5,'#e0a800');g.addColorStop(1,'#a87400');
+  ctx.beginPath();ctx.moveTo(w*.1,0);ctx.lineTo(w*.9,0);ctx.lineTo(w,h);ctx.lineTo(0,h);ctx.closePath();ctx.fillStyle=g;ctx.fill();ctx.lineWidth=5;ctx.strokeStyle='#6d4a00';ctx.stroke();
+  ctx.beginPath();ctx.moveTo(w*.1,0);ctx.lineTo(w*.9,0);ctx.lineTo(w*.8,-h*.28);ctx.lineTo(w*.2,-h*.28);ctx.closePath();ctx.fillStyle='#fff0a8';ctx.fill();ctx.stroke();
+  if(lab)T(lab,w/2,h*.52,{font:`900 ${sz}px Inter`,fill:'#5a3c00'});ctx.restore()}
+function ticket(x,y,w,h,k,s1,s2,col=BLU){if(k<=0.02)return;ctx.save();ctx.translate(x+w/2,y+h/2);ctx.scale(k,k);ctx.globalAlpha*=Math.min(1,k*2);
+  RR(-w/2,-h/2,w,h,14);ctx.fillStyle='#fff';ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();
+  ctx.setLineDash([8,8]);ctx.strokeStyle=col;ctx.lineWidth=2;ctx.strokeRect(-w/2+10,-h/2+10,w-20,h-20);ctx.setLineDash([]);
+  let fs=Math.min(52,h*.34);ctx.font=`900 ${fs}px Inter`;while(ctx.measureText(s1).width>w-40)fs-=2,ctx.font=`900 ${fs}px Inter`;T(s1,0,s2?-18:0,{font:`900 ${fs}px Inter`,fill:col});let f2=Math.min(32,h*.2);ctx.font=`800 ${f2}px Inter`;while(s2&&ctx.measureText(s2).width>w-40)f2-=2,ctx.font=`800 ${f2}px Inter`;if(s2)T(s2,0,h*.26,{font:`800 ${f2}px Inter`,fill:INK});ctx.restore()}
+function vault(x,y,w,h,k,lab){if(k<=0.02)return;ctx.save();ctx.globalAlpha*=k;RR(x,y,w,h,22);ctx.fillStyle='#2b3440';ctx.fill();ctx.lineWidth=8;ctx.strokeStyle='#8b97a6';ctx.stroke();
+  RR(x+18,y+18,w-36,h-36,14);ctx.fillStyle='#161c24';ctx.fill();ctx.restore()}
+function arr(x1,y1,x2,y2,col,k=1,lw=10){if(k<=0.02)return;const ex=lerp(x1,x2,k),ey=lerp(y1,y2,k);line(x1,y1,ex,ey,col,lw);const a=Math.atan2(y2-y1,x2-x1);
+  ctx.save();ctx.fillStyle=col;ctx.translate(ex,ey);ctx.rotate(a);ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-30,-18);ctx.lineTo(-30,18);ctx.closePath();ctx.fill();ctx.restore()}
+function hd(t,t0,s,sub){stamp(t,t0,s,540,270,66,RED,-.03);if(sub)T(sub,540,350,{font:`40px ${EL}`,fill:INK,a:eout(prog(t,t0+.3,t0+.8))})}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  para(['UN ETF DE ORO','NO ES ORO','EN TU CASA'],110,300,70,t,.3,22,90);
+  const k1=eback(prog(t,1.6,2.2));ticket(130,640,280,220,k1,'ETF','acciones');
+  arr(430,750,570,750,RED,eout(prog(t,2.2,2.8)));
+  vault(600,610,380,330,eout(prog(t,2.6,3.0)));
+  bar(660,770,260,110,eback(prog(t,3.0,3.5)),'');
+  T('BÓVEDA · LONDRES',790,1000,{font:`32px ${EL}`,fill:INK,a:eout(prog(t,3.0,3.6))});
+  stamp(t,3.4,'~400 OZ POR BARRA',540,1130,56,BLU);stamp(t,4.6,'0,40% AL AÑO',540,1280,64,RED,.04);ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'ETF FÍSICO','compra lingotes · emite acciones');
+  para(['1. El fondo compra lingotes.','2. Emite acciones en bolsa.','3. Cada una = fracción de onza.'],110,480,46,t,7.0,26);
+  for(let i=0;i<3;i++)bar(130+i*30,1010-i*0,260,110,eback(prog(t,8.8+i*.3,9.3+i*.3)),'');
+  arr(450,950,560,950,RED,eout(prog(t,10.2,10.8)));
+  for(let r=0;r<2;r++)for(let c=0;c<3;c++)ticket(600+c*130,830+r*130,115,100,eback(prog(t,10.8+(r*3+c)*.18,11.3+(r*3+c)*.18)),'ETF','',BLU);
+  T('1/10 de onza por acción al inicio (GLD)',540,1340,{font:`32px ${EL}`,fill:INK,a:eout(prog(t,12,12.6))});ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'¿DÓNDE ESTÁ EL ORO?','barras London Good Delivery');
+  para(['Barras de ~400 onzas','en cuenta asignada:','cada barra identificada.'],110,480,46,t,14.2,26);
+  vault(110,740,860,480,eout(prog(t,15.4,15.9)));
+  for(let r=0;r<2;r++)for(let c=0;c<3;c++)bar(170+c*270,880+r*170,230,100,eback(prog(t,15.9+(r*3+c)*.22,16.4+(r*3+c)*.22)),r==0&&c==0?'400 OZ':'',30);
+  stamp(t,17.4,'HSBC · LONDRES',540,1330,52,BLU);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'CREAR Y REDIMIR','participantes autorizados');
+  ticket(110,470,300,170,eback(prog(t,21.4,21.9)),'PARTICIPANTE','autorizado',GRY==0?BLU:'#6a4c93');
+  ticket(670,470,300,170,eback(prog(t,21.8,22.3)),'FIDEICOMISO','ETF de oro',BLU);
+  arr(430,520,650,520,'#b8860b',eout(prog(t,22.6,23.3)));T('entrega oro',540,480,{font:`30px ${EL}`,fill:INK,a:eout(prog(t,22.8,23.4))});
+  arr(650,600,430,600,RED,eout(prog(t,23.6,24.3)));T('recibe acciones',540,650,{font:`30px ${EL}`,fill:INK,a:eout(prog(t,23.8,24.4))});
+  bar(150,820,230,100,eback(prog(t,23.0,23.5)),'ORO',34);
+  ticket(110,1020,300,150,eback(prog(t,25.0,25.5)),'TÚ','compras en bolsa',BLU);
+  arr(430,1095,650,1095,RED,eout(prog(t,25.6,26.2)));
+  ticket(670,1000,300,190,eback(prog(t,26.0,26.5)),'ACCIÓN','sin tocar el oro',BLU);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'EL COSTO: 0,40% ANUAL','se paga con oro');
+  para(['El fondo vende un poco de oro','para pagar gastos: cada acción','respalda menos oro con los años.'],110,480,44,t,29.0,26);
+  const k=eio(prog(t,31.0,34.2));const w=lerp(380,300,k);T('hoy',300,880,{font:`36px ${EL}`,fill:INK});T('años después',760,880,{font:`36px ${EL}`,fill:INK});
+  bar(110,960,380,200,eback(prog(t,30.6,31.1)),'más oro',40);
+  bar(570,960+ (380-w)/380*100,w+50,200-(380-w)/380*100,eback(prog(t,31.4,31.9)),'menos',36);
+  arr(500,1090,570,1090,RED,eout(prog(t,31.6,32.2)));
+  stamp(t,33.0,'ILUSTRATIVO',540,1330,46,GRY=='x'?RED:'#7a6a3a');ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'RIESGOS','lo que el ETF no te da');
+  [['NO PAGA INGRESOS','el oro no genera intereses',36.2],['PRIMA / DESCUENTO','en estrés puede cotizar distinto al oro',38.6],['NO CANJEAS BARRAS','solo los participantes autorizados',41.0]].forEach(([h,s,ts],i)=>{
+    const y=540+i*300;stamp(t,ts,h,540,y,56,RED,i%2?.03:-.03);T(s,540,y+95,{font:`32px ${EL}`,fill:INK,a:eout(prog(t,ts+.3,ts+.9))})});ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'ORO DE PAPEL','dos formas distintas');
+  ticket(110,480,860,200,eback(prog(t,45.0,45.5)),'ETF FÍSICO','acciones con lingotes detrás',BLU);
+  ticket(110,740,860,200,eback(prog(t,46.8,47.3)),'XAUUSD (CFD)','contrato con tu bróker',RED);
+  ticket(110,1000,860,200,eback(prog(t,48.0,48.5)),'LINGOTES PROPIOS','oro que sí posees y custodias','#6a4c93');
+  T('Contenido educativo, no es asesoría',540,1300,{font:`32px ${EL}`,fill:'#7a6a3a',a:eout(prog(t,48.6,49.2))});ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);bg(2);
+  // papel a pantalla casi completa
+  ctx.fillStyle='rgba(0,0,0,.35)';ctx.fillRect(0,0,W,H);
+  T('ETF DE ORO',540,330,{font:'900 150px Inter',fill:'#fff',stroke:'#000',lw:14});
+  T('¿DÓNDE ESTÁ',540,520,{font:'900 120px Inter',fill:ACC,stroke:'#000',lw:12});T('EL ORO?',540,660,{font:'900 170px Inter',fill:ACC,stroke:'#000',lw:14});
+  vault(250,780,580,420,1);bar(330,980,420,170,1,'400 OZ',64);
+  coverBtn('VER QUÉ HAY DETRÁS →',ACC,DK)}
+</script></body></html>

@@ -40,7 +40,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 34 | Montañas lowpoly 3D | Forman el gráfico | Backwardation en el oro (v52_lowpoly_backwardation, escena 119, 20 oct 3:00) |
 | 35 | Acuarela con tinta | Manchas de acuarela sobre papel con trazo de tinta | Perder 50% exige ganar 100% (v37_acuarela_drawdown, escena 104, 17 oct) |
 | 36 | Art déco dorado | Años veinte | Fix de Londres y multas por spoofing (v51_deco_fix_spoofing, escena 118, 19 oct 23:30) |
-| 37 | Cinta de teletipo | Clásica de bolsa | Disponible |
+| 37 | Cinta de teletipo | Clásica de bolsa | Oro de papel vs físico: qué respalda a un ETF de oro (v53_teletipo_etf_oro, escena 120, 20 oct 6:00) |
 | 38 | Monitor CRT verde fósforo |  | Disponible |
 | 39 | Holograma azul futurista |  | Disponible |
 | 40 | Glitch cyberpunk | Distorsión de color | Disponible |
