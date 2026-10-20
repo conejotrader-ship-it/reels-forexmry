@@ -1,0 +1,81 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:VT;src:url(node_modules/@fontsource/vt323/files/vt323-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 38: monitor CRT verde fósforo — tema: cuánto vale 1 lote de XAUUSD (100 onzas), valor de $1 y tamaño de posición (60 s). Incluye al Robot y llamado a seguir/Telegram/web.
+const SPEC={name:'LoteXAUUSD',hook:'1 LOTE DE ORO SON 100 ONZAS: CADA $1 VALE $100',dur:60,cta:56,bpm:112,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'type',2.0],[1.6,'tick'],[2.4,'tick'],[3.2,'tick'],[4.4,'hit'],[6.4,'wipe'],[7.0,'type',2],[9.4,'ding'],[11.0,'ding'],[13.6,'wipe'],[14.6,'ding'],[16.4,'ding'],[18.2,'ding'],[20.6,'wipe'],[22.0,'rise',1.6],[25.0,'hit'],[28.4,'wipe'],[29.4,'ding'],[31.2,'ding'],[33.0,'hit'],[35.2,'wipe'],[36.6,'ding'],[38.4,'ding'],[40.4,'hit'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Un lote de XAUUSD son 100 onzas: cada $1 que se mueve el oro, tu cuenta se mueve $100.','Un lote de X A U U S D son cien onzas: cada dólar que se mueve el oro, tu cuenta se mueve cien dólares.'],
+ [6.4,13.4,'Un lote son 100 onzas. 0,10 son 10 onzas, y 0,01 es una onza.','Un lote son cien onzas. Cero coma diez son diez onzas, y cero coma cero uno es una onza.'],
+ [13.6,20.4,'Con un lote, $1 vale $100. Con 0,10, vale $10. Con 0,01, vale $1.','Con un lote, un dólar vale cien. Con cero coma diez, vale diez. Con cero coma cero uno, un dólar.'],
+ [20.6,28.2,'Un movimiento de $10 con un lote son $1.000 a favor o en contra; con 0,10 lote, $100.','Un movimiento de diez dólares con un lote son mil dólares a favor o en contra; con cero coma diez lote, cien.'],
+ [28.4,35.0,'Ilustrativo: con el oro a $4.000, un lote vale $400.000; con 1:100, el margen es $4.000.','Ilustrativo: oro a cuatro mil, un lote vale cuatrocientos mil dólares; con uno a cien, el margen es cuatro mil.'],
+ [35.2,43.4,'Lote = riesgo ÷ (stop en $ × 100). Riesgo $100 y stop de $5: 0,20 lote.','Lote igual a riesgo, dividido entre stop en dólares por cien. Riesgo cien dólares, stop cinco dólares: cero coma veinte lotes.'],
+ [43.6,49.6,'Cambia según el bróker: revisa tamaño del contrato, decimales del precio y valor del punto.','Cambia según el bróker: revisa tamaño del contrato, decimales del precio y valor del punto.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#020a04',ACC='#39ff6a',FAM='Inter',GRN='#39ff6a',DIM='#1f9a45',AMB='#ffb000',RED='#ff5252';
+window.FONTS=['40px VT'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(2,10,4,.96)',subStroke:ACC,subFill:'#d8ffe3',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+const VT='VT, "Courier New", monospace';
+function ty(s,t,t0,cps=30){return s.slice(0,Math.floor(Math.max(0,t-t0)*cps))}
+function G(s,x,y,sz,col=GRN,a=1,al='left'){T(s,x,y,{font:`${sz}px ${VT}`,fill:col,a,align:al,glow:col,gb:14})}
+function bg(t){ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
+  ctx.save();RR(30,110,1020,1360,60);ctx.clip();const g=ctx.createRadialGradient(540,780,200,540,780,900);g.addColorStop(0,'#0a2a12');g.addColorStop(1,'#020a04');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='rgba(0,0,0,.28)';for(let y=110;y<1470;y+=6)ctx.fillRect(0,y,W,3);
+  ctx.fillStyle=`rgba(57,255,106,${.025+.015*Math.sin(t*37)})`;ctx.fillRect(0,0,W,H);ctx.restore();
+  ctx.lineWidth=14;ctx.strokeStyle='#1c2a20';RR(30,110,1020,1360,60);ctx.stroke();
+  G('C:\\ORO> LOTE.EXE',80,160,40,DIM)}
+function prompt(t,t0,s){G('> '+ty(s,t,t0,24)+(Math.floor(t*3)%2?'_':' '),80,250,54,GRN)}
+function lines(arr,x,y,sz,t,t0,cps=26,lh,col=GRN){lh=lh||sz*1.25;let c=0;arr.forEach((l,i)=>{const s=ty(l,t,t0+c/cps,cps);c+=l.length+3;if(s)G(s,x,y+i*lh,sz,Array.isArray(col)?col[i]:col)})}
+function grid(x,y,n,cell,filled,col=GRN,on=1,gap=6){for(let i=0;i<n;i++){const r=Math.floor(i/10),c=i%10;const f=i<filled;ctx.save();ctx.globalAlpha=f?on:.15;ctx.fillStyle=col;ctx.shadowColor=col;ctx.shadowBlur=f?10:0;ctx.fillRect(x+c*(cell+gap),y+r*(cell+gap),cell,cell);ctx.restore()}}
+function box(x,y,w,h,col=GRN,k=1){if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.lineWidth=4;ctx.strokeStyle=col;ctx.shadowColor=col;ctx.shadowBlur=12;ctx.strokeRect(x,y,w,h);ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;prompt(t,.3,'1 LOTE XAUUSD');
+  const f=Math.floor(eio(prog(t,1.2,3.6))*100);grid(150,330,100,64,f);
+  G('= '+f+' ONZAS',540,1130,100,GRN,1,'center');
+  const k=eout(prog(t,4.2,4.8));G('$1 => $100',540,1290,110,AMB,k,'center');ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;prompt(t,6.6,'TAMAÑOS DE LOTE');
+  const R=[['1,00 LOTE','100 OZ',100,7.2],['0,10 LOTE','10 OZ',10,9.2],['0,01 LOTE','1 OZ',1,11.0]];
+  R.forEach(([n,o,f,ts],i)=>{const y=380+i*330,k=eout(prog(t,ts,ts+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;G(n,90,y,84,GRN);G(o,990,y,84,AMB,1,'right');
+    const cell=Math.max(4,Math.min(16,Math.floor(850/100*2)-2));for(let j=0;j<100;j++){const filled=j<f;ctx.fillStyle=filled?GRN:'rgba(57,255,106,.14)';ctx.shadowColor=GRN;ctx.shadowBlur=filled?8:0;ctx.fillRect(90+j*8.6,y+50,7,60)}ctx.restore()});ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;prompt(t,13.8,'VALOR DE $1 DE MOVIMIENTO');
+  [['1,00 LOTE','$100',14.6],['0,10 LOTE','$10',16.4],['0,01 LOTE','$1',18.2]].forEach(([n,v,ts],i)=>{const y=470+i*270,k=eout(prog(t,ts,ts+.5));if(k<=.02)return;box(70,y-90,940,200,i==0?AMB:GRN,k);ctx.save();ctx.globalAlpha*=k;G(n,110,y,80,GRN);G(v,970,y,120,i==0?AMB:GRN,1,'right');ctx.restore()});
+  G('por cada $1 que se mueve el oro',540,1320,48,DIM,eout(prog(t,19,19.6)),'center');ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;prompt(t,20.8,'MOVIMIENTO DE $10');
+  // gráfico de línea que sube $10
+  const p=eio(prog(t,21.6,24.4));const pts=[[110,900],[250,860],[380,880],[520,800],[660,760],[800,690],[950,600]];ctx.save();ctx.strokeStyle=GRN;ctx.shadowColor=GRN;ctx.shadowBlur=14;ctx.lineWidth=8;ctx.beginPath();
+  const n=pts.length-1;pts.forEach((q,i)=>{if(i/n<=p){i?ctx.lineTo(...q):ctx.moveTo(...q)}});ctx.stroke();ctx.restore();
+  line(110,900,950,900,DIM,3,[12,10]);const k=eout(prog(t,24.4,25));if(k>0){G('+$10',990,750,70,AMB,k,'right')}
+  box(70,1010,440,210,GRN,eout(prog(t,25.2,25.8)));box(570,1010,440,210,GRN,eout(prog(t,26.2,26.8)));
+  G('1,00 LOTE',290,1060,44,DIM,eout(prog(t,25.4,26),1),'center');G('$1.000',290,1150,84,GRN,eout(prog(t,25.4,26)),'center');
+  G('0,10 LOTE',790,1060,44,DIM,eout(prog(t,26.4,27)),'center');G('$100',790,1150,84,GRN,eout(prog(t,26.4,27)),'center');
+  G('a favor o en contra',540,1320,48,DIM,eout(prog(t,27,27.6)),'center');ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;prompt(t,28.6,'MARGEN (EJEMPLO)');
+  lines(['PRECIO ILUSTRATIVO: $4.000','x 100 OZ = $400.000','/ 100 (APALANC. 1:100)','MARGEN = $4.000'],90,450,74,t,29.2,22,175,[GRN,GRN,GRN,AMB]);
+  box(70,1100,940,130,AMB,eout(prog(t,32.6,33.2)));G('ILUSTRATIVO · VARÍA POR BRÓKER',540,1170,52,AMB,eout(prog(t,32.8,33.4)),'center');ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;prompt(t,35.4,'TAMAÑO DE POSICIÓN');
+  lines(['LOTE = RIESGO $','       / (STOP $ x 100)'],90,430,76,t,36.0,24,110);
+  lines(['RIESGO  = $100','STOP    = $5'],90,760,76,t,38.0,24,110,[GRN,GRN]);
+  const k=eback(prog(t,40.4,41));G('LOTE = 0,20',540,1100,130,AMB,Math.min(1,k*2),'center');
+  G('0,20 x 100 x $5 = $100',540,1250,52,DIM,eout(prog(t,41.4,42)),'center');ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;prompt(t,43.8,'REVISA EN TU BRÓKER');
+  [['TAMAÑO DEL CONTRATO',45.0],['DECIMALES DEL PRECIO',46.6],['VALOR DEL PUNTO',48.2]].forEach(([s,ts],i)=>{const y=470+i*250,k=eout(prog(t,ts,ts+.5));if(k<=.02)return;box(70,y-80,940,170,GRN,k);ctx.save();ctx.globalAlpha*=k;G('[X] '+s,110,y,58,GRN);ctx.restore()});
+  G('Contenido educativo, no es asesoría',540,1300,40,DIM,eout(prog(t,48.6,49.2)),'center');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(1);
+  G('1 LOTE DE ORO',540,320,150,'#d8ffe3',1,'center');
+  G('$1',540,560,270,AMB,1,'center');G('= $100',540,810,250,GRN,1,'center');
+  grid(360,1000,100,30,100,GRN,1,6);
+  coverBtn('VER EL CÁLCULO →',ACC,DK)}
+</script></body></html>
