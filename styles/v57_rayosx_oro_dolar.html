@@ -1,0 +1,90 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:STM;src:url(node_modules/@fontsource/share-tech-mono/files/share-tech-mono-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 41: escáner de rayos X sobre el gráfico — tema: oro vs dólar (DXY): cuándo se separan y por qué (60 s). Incluye al Robot y llamado a seguir/Telegram/web.
+const SPEC={name:'OroVsDolarDXY',hook:'EL ORO Y EL DÓLAR SUELEN IR EN SENTIDO CONTRARIO, PERO NO SIEMPRE',dur:60,cta:56,bpm:100,mus:'soft',prog:[[43,'m'],[39,'M'],[46,'m'],[41,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'ding'],[6.4,'wipe'],[7.4,'rise',1.2],[10.0,'ding'],[13.6,'wipe'],[15.0,'rise',1.4],[18.0,'ding'],[20.6,'wipe'],[22.0,'rise',1.8],[25.0,'alert'],[28.4,'wipe'],[29.8,'ding'],[31.4,'ding'],[33.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.6,'hit'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'El oro y el dólar suelen moverse en sentido contrario, pero no siempre. Veamos cuándo se separan.','El oro y el dólar suelen moverse en sentido contrario, pero no siempre. Veamos cuándo se separan.'],
+ [6.4,13.4,'El oro cotiza en dólares: un dólar más fuerte suele presionarlo y uno más débil suele apoyarlo.','El oro cotiza en dólares: un dólar más fuerte suele presionarlo y uno más débil suele apoyarlo.'],
+ [13.6,20.4,'Correlación a 60 días en 5 años: promedio −0,41, negativa casi siempre.','Correlación a sesenta días en cinco años: promedio menos cero coma cuarenta y uno, negativa casi siempre.'],
+ [20.6,28.2,'En 2023 la correlación se volvió positiva por momentos: oro y dólar llegaron a subir juntos.','En dos mil veintitrés la correlación se volvió positiva por momentos: oro y dólar llegaron a subir juntos.'],
+ [28.4,35.0,'Si mandan el riesgo geopolítico, la inflación esperada o los bancos centrales, la relación se rompe.','Si mandan el riesgo geopolítico, la inflación esperada o los bancos centrales, la relación se rompe.'],
+ [35.2,43.4,'Para operar, el índice del dólar sirve de contexto, no de señal infalible: la correlación cambia con el tiempo.','Para operar, el índice del dólar sirve de contexto, no de señal infalible: la correlación cambia con el tiempo.'],
+ [43.6,49.6,'Antes de operar XAUUSD, revisa el dólar, los rendimientos y el calendario de noticias.','Antes de operar X A U U S D, revisa el dólar, los rendimientos y el calendario de noticias.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#02070d',ACC='#9fdcff',FAM='Inter',XR='#bfe6ff',GD='#ffcf5a',US='#66e0ff',RD='#ff6b6b',GR='#7dffb2',DIM='#4a6b82';
+window.FONTS=['40px STM'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(2,7,13,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function X(s,x,y,sz,col=XR,a=1,al='center',w=900){T(s,x,y,{font:`${w} ${sz}px Inter`,fill:col,a,align:al,glow:col,gb:14})}
+function M(s,x,y,sz,col=DIM,a=1,al='left'){T(s,x,y,{font:`${sz}px STM`,fill:col,a,align:al})}
+function bg(t){const g=ctx.createRadialGradient(540,800,100,540,800,1100);g.addColorStop(0,'#0b1a28');g.addColorStop(1,'#02070d');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // regla de radiografía
+  ctx.save();ctx.strokeStyle='rgba(159,220,255,.25)';ctx.lineWidth=2;for(let y=160;y<1460;y+=26){const L=(y-160)%130==0?40:20;ctx.beginPath();ctx.moveTo(50,y);ctx.lineTo(50+L,y);ctx.stroke();ctx.beginPath();ctx.moveTo(1030,y);ctx.lineTo(1030-L,y);ctx.stroke()}ctx.restore();
+  ctx.save();ctx.fillStyle='rgba(159,220,255,.03)';for(let y=0;y<H;y+=4)if((y/4+Math.floor(t*12))%7==0)ctx.fillRect(0,y,W,2);ctx.restore();
+  M('RX · ORO / DXY',70,112,30,DIM);M('ESCÁNER',1010,112,30,DIM,1,'right')}
+function frame(y=300,h=760){ctx.save();ctx.strokeStyle='rgba(159,220,255,.5)';ctx.lineWidth=3;RR(90,y,900,h,24);ctx.stroke();ctx.restore()}
+// series ilustrativas
+function ser(seed,n,f,amp=.35){const r=rng(seed);const o=[];let v=0;for(let i=0;i<n;i++){v+=(r()-.5)*.35;o.push(f(i/(n-1))+v*amp)}return o}
+const N=60;const D1=ser(11,N,u=>.5+.28*Math.sin(u*5.2)+.18*u);const G1=D1.map((v,i)=>1-v+ (rng(i*13+3)()-.5)*.08);
+const D2=ser(5,N,u=>.3+.5*u,.1);const G2=D2.map((v,i)=>.3+.9*(v-.35)+(rng(i*17+9)()-.5)*.1);
+function plot(S,x,y,w,h,col,upto=1,lw=7,glow=true){const n=Math.floor(S.length*upto);if(n<2)return;ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineJoin='round';if(glow){ctx.shadowColor=col;ctx.shadowBlur=16}ctx.beginPath();
+  for(let i=0;i<n;i++){const px=x+w*i/(S.length-1),py=y+h*(1-Math.min(1.1,Math.max(-.1,S[i])));i?ctx.lineTo(px,py):ctx.moveTo(px,py)}ctx.stroke();ctx.restore()}
+function tri(x,y,s,up,col){ctx.save();ctx.fillStyle=col;ctx.shadowColor=col;ctx.shadowBlur=14;ctx.beginPath();if(up){ctx.moveTo(x,y-s);ctx.lineTo(x+s,y+s*.7);ctx.lineTo(x-s,y+s*.7)}else{ctx.moveTo(x,y+s);ctx.lineTo(x+s,y-s*.7);ctx.lineTo(x-s,y-s*.7)}ctx.closePath();ctx.fill();ctx.restore()}
+function hd(t,t0,s,col=XR){X(s,540,240,58,col,eout(prog(t,t0,t0+.5)))}
+function beam(t,t0,t1,y0,y1){const p=prog(t,t0,t1);if(p<=0||p>=1)return;const y=lerp(y0,y1,p);ctx.save();const g=ctx.createLinearGradient(0,y-40,0,y+4);g.addColorStop(0,'rgba(159,220,255,0)');g.addColorStop(1,'rgba(159,220,255,.55)');ctx.fillStyle=g;ctx.fillRect(90,y-40,900,44);line(90,y,990,y,'#fff',4);ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  X('ORO',540,300,150,GD,eout(prog(t,.2,.8)));X('vs DÓLAR',540,440,110,US,eout(prog(t,.6,1.2)));
+  frame(520,640);const p=eio(prog(t,1.2,4.6));plot(D1,110,590,860,500,US,p);plot(G1,110,590,860,500,GD,p);beam(t,1.2,4.6,520,1160);
+  X('¿SIEMPRE OPUESTOS?',540,1280,64,XR,eout(prog(t,4.6,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'EL ORO COTIZA EN DÓLARES');
+  // balancín
+  const k=eio(prog(t,7.4,9.0));const ang=lerp(0,-.22,k)+lerp(0,.44,eio(prog(t,10.4,12)));
+  ctx.save();ctx.translate(540,820);ctx.rotate(ang);ctx.strokeStyle=XR;ctx.lineWidth=14;ctx.shadowColor=XR;ctx.shadowBlur=16;line(-380,0,380,0,XR,14);ctx.restore();
+  ctx.save();ctx.fillStyle='rgba(159,220,255,.25)';ctx.beginPath();ctx.moveTo(540,820);ctx.lineTo(480,960);ctx.lineTo(600,960);ctx.closePath();ctx.fill();ctx.strokeStyle=XR;ctx.lineWidth=4;ctx.stroke();ctx.restore();
+  const yL=820+Math.sin(ang)*-380,yR=820+Math.sin(ang)*380,xL=540-Math.cos(ang)*380,xR=540+Math.cos(ang)*380;
+  X('$',xL,yL-100,120,US,eout(prog(t,7.2,7.8)));X('ORO',xR,yR-100,90,GD,eout(prog(t,7.2,7.8)));
+  const k2=eout(prog(t,9.2,9.8)),k3=eout(prog(t,11.6,12.2));
+  if(t<10.8){X('DÓLAR MÁS FUERTE',540,1160,50,US,k2);X('presiona al oro',540,1230,44,XR,k2,'center',800)}else{X('DÓLAR MÁS DÉBIL',540,1160,50,US,k3);X('apoya al oro',540,1230,44,XR,k3,'center',800)}ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'CORRELACIÓN A 60 DÍAS');
+  // escala -1..1
+  const x0=110,x1=970,y=640;ctx.save();const g=ctx.createLinearGradient(x0,0,x1,0);g.addColorStop(0,'rgba(255,107,107,.7)');g.addColorStop(.5,'rgba(159,220,255,.25)');g.addColorStop(1,'rgba(125,255,178,.7)');ctx.fillStyle=g;RR(x0,y-30,x1-x0,60,30);ctx.fill();ctx.restore();
+  M('-1',x0,y+80,40,XR,1,'left');M('0',540,y+80,40,XR,1,'center');M('+1',x1,y+80,40,XR,1,'right');
+  const mx=lerp(540,x0+(x1-x0)*(1-.41)/2*(0)+ (540-(x1-x0)/2*.41),1,0);const px=540-(x1-x0)/2*.41;const k=eout(prog(t,15.0,16.2));
+  const cx=lerp(540,px,k);ctx.save();ctx.fillStyle='#fff';ctx.shadowColor='#fff';ctx.shadowBlur=20;ctx.beginPath();ctx.arc(cx,y,30,0,7);ctx.fill();ctx.restore();
+  X('-0,41',540,880,190,RD,eout(prog(t,16,16.8)));X('PROMEDIO · 5 AÑOS',540,1010,44,XR,eout(prog(t,16.4,17)));X('NEGATIVA CASI SIEMPRE',540,1110,52,GR,eout(prog(t,18,18.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'2023: SE SEPARAN',GR);
+  frame();const p=eio(prog(t,21.6,25));plot(D2,110,330+90,860,520,US,p);plot(G2,110,330+90,860,520,GD,p);beam(t,21.6,25,330,1050);
+  const k=eout(prog(t,25,25.6));if(k>0){ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=GR;ctx.lineWidth=6;ctx.setLineDash([16,12]);ctx.beginPath();ctx.ellipse(540,700,420,250,0,0,7);ctx.stroke();ctx.restore()}
+  X('ORO Y DÓLAR JUNTOS',540,1180,60,GR,eout(prog(t,25.6,26.2)));X('correlación positiva por momentos',540,1250,38,XR,eout(prog(t,26.4,27),1,'center',800),'center',800);
+  M('gráfico ilustrativo',540,1030,30,DIM,eout(prog(t,25.8,26.4)),'center');ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'¿QUÉ ROMPE LA RELACIÓN?');
+  [['RIESGO GEOPOLÍTICO',29.8],['INFLACIÓN ESPERADA',31.4],['BANCOS CENTRALES',33.0]].forEach(([s,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=470+i*260;ctx.save();ctx.globalAlpha*=k;ctx.translate((1-k)*60,0);RR(110,y-80,860,170,20);ctx.fillStyle='rgba(159,220,255,.08)';ctx.fill();ctx.lineWidth=4;ctx.strokeStyle=XR;ctx.stroke();
+    ctx.beginPath();ctx.arc(190,y+5,30,0,7);ctx.strokeStyle=GD;ctx.lineWidth=5;ctx.stroke();X(String(i+1),190,y+8,34,GD);X(s,570,y+5,52,XR,1,'center',900);ctx.restore()});ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'EL DÓLAR (DXY)');
+  const k1=eback(prog(t,36.6,37.3)),k2=eback(prog(t,39.4,40.1));
+  [[k1,'CONTEXTO',GR,520,'✓'],[k2,'SEÑAL INFALIBLE',RD,860,'x']].forEach(([k,s,c,y,m])=>{if(k<=.02)return;ctx.save();ctx.globalAlpha*=Math.min(1,k);ctx.translate(540,y);ctx.scale(k,k);RR(-420,-110,840,220,24);ctx.fillStyle='rgba(159,220,255,.07)';ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=c;ctx.shadowColor=c;ctx.shadowBlur=18;ctx.stroke();
+    X(s,-40,0,70,c);ctx.lineWidth=14;ctx.strokeStyle=c;ctx.lineCap='round';ctx.beginPath();if(m=='✓'){ctx.moveTo(310,0);ctx.lineTo(345,35);ctx.lineTo(395,-35)}else{ctx.moveTo(320,-35);ctx.lineTo(390,35);ctx.moveTo(390,-35);ctx.lineTo(320,35)}ctx.stroke();ctx.restore()});
+  X('la correlación cambia con el tiempo',540,1150,42,XR,eout(prog(t,41.2,41.8),1),'center',800);ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'ANTES DE OPERAR XAUUSD');
+  [['EL DÓLAR (DXY)',45.0],['LOS RENDIMIENTOS',46.6],['EL CALENDARIO DE NOTICIAS',48.2]].forEach(([s,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=470+i*230;ctx.save();ctx.globalAlpha*=k;RR(110,y-70,860,150,20);ctx.fillStyle='rgba(159,220,255,.08)';ctx.fill();ctx.lineWidth=4;ctx.strokeStyle=XR;ctx.stroke();ctx.lineWidth=10;ctx.strokeStyle=GR;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(150,y+5);ctx.lineTo(180,y+35);ctx.lineTo(225,y-25);ctx.stroke();X(s,590,y+5,s.length>20?44:52,XR);ctx.restore()});
+  M('Contenido educativo, no es asesoría',540,1230,32,DIM,eout(prog(t,48.6,49.2)),'center');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  X('ORO Y DÓLAR',540,300,120,'#fff');X('SUBIENDO',540,500,150,GR);X('JUNTOS',540,660,170,GR);
+  ctx.save();RR(110,760,860,560,24);ctx.strokeStyle='rgba(159,220,255,.5)';ctx.lineWidth=3;ctx.stroke();ctx.restore();plot(D2,140,800,800,460,US,1,10);plot(G2,140,800,800,460,GD,1,10);
+  tri(850,860,34,true,GD);X('¿POR QUÉ?',540,1380,64,GD);
+  coverBtn('VER POR QUÉ →',ACC,DK)}
+</script></body></html>

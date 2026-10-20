@@ -44,7 +44,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 38 | Monitor CRT verde fósforo |  | Cuánto vale 1 lote de XAUUSD: 100 onzas (v54_crt_lote_oro, escena 121, 20 oct 9:30) |
 | 39 | Holograma azul futurista |  | El costo real de operar oro: spread, comisión y swap (v55_holo_costos_oro, escena 122, 20 oct 13:00) |
 | 40 | Glitch cyberpunk | Distorsión de color | Subasta de oro de un banco central y compras entre bancos (v56_glitch_bancos_centrales, escena 123, 20 oct 16:30) |
-| 41 | Escáner de rayos X | Sobre el gráfico | Disponible |
+| 41 | Escáner de rayos X | Sobre el gráfico | Oro vs dólar (DXY): cuándo se separan (v57_rayosx_oro_dolar, escena 124, 20 oct 20:00) |
 | 42 | Dominó en cadena | Crisis en cascada | Disponible |
 | 43 | Montaña rusa | El gráfico como riel | Disponible |
 | 44 | Tablero de ajedrez y estrategia |  | Disponible |
