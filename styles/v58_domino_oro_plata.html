@@ -1,0 +1,74 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 42: dominó en cadena — tema: relación oro/plata como señal y cuándo falla (60 s). Incluye al Robot y llamado a seguir/Telegram/web.
+const SPEC={name:'RelacionOroPlata',hook:'RELACIÓN ORO/PLATA: CUÁNTAS ONZAS DE PLATA COMPRA UNA DE ORO',dur:60,cta:56,bpm:108,mus:'soft',prog:[[45,'m'],[41,'M'],[48,'m'],[43,'M']],
+ ev:[[0.3,'tick'],[0.7,'tick'],[1.1,'tick'],[1.5,'tick'],[1.9,'tick'],[2.3,'tick'],[2.7,'tick'],[3.1,'tick'],[3.5,'hit'],[6.4,'wipe'],[7.6,'hit'],[9.0,'hit'],[10.4,'hit'],[13.6,'wipe'],[15.2,'ding'],[17.0,'ding'],[20.6,'wipe'],[22.0,'down'],[24.6,'rise',1.6],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[36.6,'tick'],[37.0,'tick'],[37.4,'tick'],[37.8,'tick'],[38.2,'alert'],[40.4,'hit'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'La relación oro-plata dice cuántas onzas de plata compra una de oro. Hoy ronda 73.','La relación oro-plata dice cuántas onzas de plata compra una de oro. Hoy ronda setenta y tres.'],
+ [6.4,13.4,'Se divide el precio del oro entre el de la plata. Hoy: $4.123 entre ≈ $57.','Se divide el precio del oro entre el de la plata. Hoy: cuatro mil ciento veintitrés entre unos cincuenta y siete.'],
+ [13.6,20.4,'Desde 1971, el promedio anual es de unos 60; muchos lo usan como referencia.','Desde mil novecientos setenta y uno, el promedio anual es de unos sesenta; muchos lo usan como referencia.'],
+ [20.6,28.2,'Su máximo: más de 125 en marzo de 2020. Su mínimo: cerca de 17 en enero de 1980.','Su máximo: más de ciento veinticinco en marzo de dos mil veinte. Su mínimo: cerca de diecisiete en enero de mil novecientos ochenta.'],
+ [28.4,35.0,'Idea clásica: relación alta, plata barata frente al oro; baja, al revés. Es una hipótesis.','Idea clásica: relación alta, plata barata frente al oro; baja, al revés. Es una hipótesis.'],
+ [35.2,43.4,'Falla porque puede persistir años: promedio de 86 en 2020 y de 45 en 2011.','Falla porque puede persistir años: promedio de ochenta y seis en dos mil veinte, y de cuarenta y cinco en dos mil once.'],
+ [43.6,49.6,'No la uses sola: confirma con el precio, el riesgo y el contexto antes de operar.','No la uses sola: confirma con el precio, el riesgo y el contexto antes de operar.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0d1f1b',ACC='#ffcf5a',FAM='Inter',IV='#f4efe2',INK='#20201c',OR='#ff5a36',GD='#ffcf5a',SV='#cfd6dd',GRN='#2fd08a';
+window.FONTS=[];
+const STY={subFont:'800 42px Inter',subBg:'rgba(13,31,27,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function bg(t){const g=ctx.createRadialGradient(540,800,100,540,800,1100);g.addColorStop(0,'#16402f');g.addColorStop(1,'#07120f');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.fillStyle='rgba(255,255,255,.025)';for(let i=0;i<260;i++){const r=rng(i*7+1);ctx.fillRect(r()*W,r()*1500,2,2)}ctx.restore()}
+function pips(cx,cy,n,s){const P={0:[],1:[[0,0]],2:[[-1,-1],[1,1]],3:[[-1,-1],[0,0],[1,1]],4:[[-1,-1],[1,-1],[-1,1],[1,1]],5:[[-1,-1],[1,-1],[0,0],[-1,1],[1,1]],6:[[-1,-1],[1,-1],[-1,0],[1,0],[-1,1],[1,1]]}[n];P.forEach(([a,b])=>{ctx.beginPath();ctx.arc(cx+a*s,cy+b*s,s*.34,0,7);ctx.fill()})}
+// ficha de dominó: pivote en esquina inferior derecha, cae hacia la derecha
+function tile(x,y,w,h,ang,idx,col=IV){ctx.save();ctx.translate(x+w,y+h);ctx.rotate(ang);ctx.shadowColor='rgba(0,0,0,.5)';ctx.shadowBlur=14;RR(-w,-h,w,h,10);ctx.fillStyle=col;ctx.fill();ctx.shadowBlur=0;ctx.lineWidth=3;ctx.strokeStyle='#8a8574';ctx.stroke();
+  line(-w+8,-h/2,-8,-h/2,'#8a8574',3);ctx.fillStyle=INK;pips(-w/2,-h*.75,(idx*2+1)%7,w*.18);pips(-w/2,-h*.25,(idx*3+2)%7,w*.18);ctx.restore()}
+function fall(t,ts){return eio(prog(t,ts,ts+.55))*1.3}
+function chain(t,t0,n,x0,y,w,h,gap,d,stopAt=99){for(let i=0;i<n;i++){const a=i>=stopAt?0:fall(t,t0+i*d);tile(x0+i*gap,y,w,h,a,i)}}
+function big(t,t0,col,s1,s2,x,y,w,h){const k=eback(prog(t,t0,t0+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=Math.min(1,k);ctx.translate(x+w/2,y+h/2);ctx.scale(k,k);RR(-w/2,-h/2,w,h,22);ctx.fillStyle=IV;ctx.fill();ctx.lineWidth=8;ctx.strokeStyle=col;ctx.stroke();
+  T(s1,0,s2?-26:0,{font:`900 ${s2?(h>200?92:70):80}px Inter`,fill:col});if(s2)T(s2,0,h*.28,{font:'800 36px Inter',fill:INK});ctx.restore()}
+function hd(t,t0,s,col=ACC){lbl(s,540,250,56,col,eout(prog(t,t0,t0+.5)))}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  lbl('ORO / PLATA',540,320,120,'#fff',eout(prog(t,.2,.8)));lbl('≈ 73',540,500,200,ACC,eout(prog(t,.8,1.4)));
+  chain(t,.4,10,100,900,70,190,95,.33);
+  lbl('cuántas onzas de plata compra una de oro',540,1260,38,'#d9e8e2',eout(prog(t,4,4.6)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'SE CALCULA ASÍ');
+  big(t,7.4,GD,'ORO','$4.123',90,400,420,230);big(t,8.8,SV,'PLATA','$56,61',570,400,420,230);
+  lbl('÷',540,515,110,'#fff',eout(prog(t,8.6,9.2)));
+  big(t,10.4,GRN,'72,8','oro ÷ plata',270,760,540,260);
+  lbl('20 oct 2026 · cifras aproximadas',540,1120,34,'#d9e8e2',eout(prog(t,11.4,12)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'PROMEDIO DESDE 1971');
+  chain(t,14.6,9,150,520,70,200,86,.45,99);
+  big(t,17.0,ACC,'≈ 60','promedio anual 1971-2026',200,860,680,260);
+  lbl('una referencia, no una regla',540,1210,38,'#d9e8e2',eout(prog(t,18.6,19.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'LOS EXTREMOS');
+  big(t,21.6,OR,'> 125','18 MAR 2020 · máximo',90,420,450,300);big(t,24.0,GRN,'≈ 17','18 ENE 1980 · mínimo',560,420,430,300);
+  const k=eio(prog(t,25.4,27)),k2=eout(prog(t,25.2,25.8));ctx.save();ctx.globalAlpha*=k2;ctx.fillStyle=IV;ctx.fillRect(110,1000,860,24);ctx.fillStyle=OR;ctx.fillRect(110,1000,860*(1-k*(1-17/125)),24);ctx.restore();
+  lbl('de 17 a más de 125 en 40 años',540,1120,40,'#d9e8e2',eout(prog(t,25.8,26.4)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'LA IDEA CLÁSICA');
+  big(t,29.6,OR,'ALTA','plata barata vs oro',90,420,420,260);big(t,31.4,GRN,'BAJA','plata cara vs oro',570,420,420,260);
+  lbl('HIPÓTESIS, NO GARANTÍA',540,860,56,ACC,eout(prog(t,33.2,33.8)));
+  chain(t,33.6,10,100,1000,70,170,95,.18);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'¿CUÁNDO FALLA?',OR);
+  chain(t,36.6,10,100,500,70,190,95,.4,6);
+  const k=eout(prog(t,38.2,38.8));ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=OR;ctx.lineWidth=8;ctx.setLineDash([14,10]);ctx.strokeRect(500,470,120,260);ctx.restore();lbl('CADENA ROTA',560,790,40,OR,k);
+  big(t,40.2,OR,'86','promedio 2020',90,900,440,260);big(t,41.2,GRN,'45','promedio 2011',560,900,430,260);ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'NO LA USES SOLA');
+  [['EL PRECIO',45.0,GD],['EL RIESGO',46.6,SV],['EL CONTEXTO',48.2,GRN]].forEach(([s,ts,c],i)=>big(t,ts,c,s,'',140,420+i*250,800,200));
+  lbl('Contenido educativo, no es asesoría',540,1230,34,'#d9e8e2',eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  lbl('ORO ÷ PLATA',540,300,130,'#fff');lbl('17 A 125',540,520,230,ACC);lbl('¿SEÑAL O TRAMPA?',540,720,84,OR);
+  for(let i=0;i<9;i++)tile(110+i*98,940,70,200,i<5?1.25*(1-i*.05):0,i);
+  coverBtn('VER CUÁNDO FALLA →',ACC,DK)}
+</script></body></html>
