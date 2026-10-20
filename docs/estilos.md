@@ -43,7 +43,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 37 | Cinta de teletipo | Clásica de bolsa | Oro de papel vs físico: qué respalda a un ETF de oro (v53_teletipo_etf_oro, escena 120, 20 oct 6:00) |
 | 38 | Monitor CRT verde fósforo |  | Cuánto vale 1 lote de XAUUSD: 100 onzas (v54_crt_lote_oro, escena 121, 20 oct 9:30) |
 | 39 | Holograma azul futurista |  | El costo real de operar oro: spread, comisión y swap (v55_holo_costos_oro, escena 122, 20 oct 13:00) |
-| 40 | Glitch cyberpunk | Distorsión de color | Disponible |
+| 40 | Glitch cyberpunk | Distorsión de color | Subasta de oro de un banco central y compras entre bancos (v56_glitch_bancos_centrales, escena 123, 20 oct 16:30) |
 | 41 | Escáner de rayos X | Sobre el gráfico | Disponible |
 | 42 | Dominó en cadena | Crisis en cascada | Disponible |
 | 43 | Montaña rusa | El gráfico como riel | Disponible |

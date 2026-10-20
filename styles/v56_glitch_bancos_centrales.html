@@ -1,0 +1,88 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:Orb;font-weight:900;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-900-normal.woff2)}
+@font-face{font-family:STM;src:url(node_modules/@fontsource/share-tech-mono/files/share-tech-mono-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 40: glitch cyberpunk — tema: subasta de oro de un banco central (Banco de Inglaterra) vs compras de oro entre bancos (60 s). Incluye al Robot y llamado a seguir/Telegram/web.
+const SPEC={name:'SubastaYComprasBancosCentrales',hook:'UN BANCO CENTRAL VENDE ORO EN SUBASTA O LO COMPRA EN SILENCIO',dur:60,cta:56,bpm:118,mus:'soft',prog:[[41,'m'],[37,'M'],[44,'m'],[39,'M']],
+ ev:[[0.3,'hit'],[2.0,'down'],[3.4,'hit'],[6.4,'wipe'],[8.4,'hit'],[9.6,'tick'],[10.4,'tick'],[11.2,'tick'],[13.6,'wipe'],[15.0,'ding'],[16.0,'ding'],[17.0,'ding'],[18.0,'ding'],[20.6,'wipe'],[21.6,'ding'],[24.0,'ding'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[31.2,'ding'],[32.4,'ding'],[35.2,'wipe'],[36.6,'ding'],[39.4,'ding'],[41.6,'hit'],[43.6,'wipe'],[45.0,'rise',1.6],[47.4,'hit'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Un banco central puede vender oro en una subasta o comprarlo en silencio. Son mecánicas muy distintas.','Un banco central puede vender oro en una subasta o comprarlo en silencio. Son mecánicas muy distintas.'],
+ [6.4,13.4,'Banco de Inglaterra: 17 subastas (1999-2002) y unas 395 toneladas vendidas.','Banco de Inglaterra: diecisiete subastas y unas trescientas noventa y cinco toneladas vendidas.'],
+ [13.6,20.4,'Ofertas por SWIFT, de miembros de la LBMA, a precio uniforme: todos los ganadores pagan igual.','Ofertas por SWIFT, de miembros de la LBMA, a precio uniforme: todos los ganadores pagan el mismo precio.'],
+ [20.6,28.2,'Anunciada el 7 de mayo de 1999, se vendió a un precio medio de unos $275 por onza.','Anunciada el siete de mayo de mil novecientos noventa y nueve, se vendió a un precio medio de unos doscientos setenta y cinco dólares por onza.'],
+ [28.4,35.0,'Los bancos centrales suelen comprar en el mercado extrabursátil, el OTC, sin subasta pública.','Los bancos centrales suelen comprar en el mercado extrabursátil, el O T C, sin subasta pública.'],
+ [35.2,43.4,'Algunos compran a minas locales: Tanzania exige reservar al menos 20% de la producción y Ghana acordó 20%.','Algunos compran a minas locales: Tanzania exige reservar al menos veinte por ciento de la producción y Ghana acordó veinte por ciento.'],
+ [43.6,49.6,'Récord en 2022: 1.136 toneladas, frente a un promedio de 473 de 2010 a 2021.','Récord en dos mil veintidós: mil ciento treinta y seis toneladas, frente a un promedio de cuatrocientas setenta y tres.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0b0614',ACC='#00f0ff',FAM='Inter',CY='#00f0ff',MG='#ff2bd6',YL='#f5ff3b',WH='#f3eaff',DM='#6a5a8a';
+window.FONTS=['900 40px Orb','40px STM'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(11,6,20,.96)',subStroke:MG,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:MG,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+let GL=0;
+function gx(t){return GL}
+function O(s,x,y,sz,col=WH,a=1,al='center',w=900,fam='Orb'){const j=GL*14;
+  [[-j-3,CY],[j+3,MG]].forEach(([dx,c])=>T(s,x+dx,y,{font:`${w} ${sz}px ${fam}`,fill:c,a:a*.85,align:al}));
+  T(s,x,y,{font:`${w} ${sz}px ${fam}`,fill:col,a,align:al})}
+function M(s,x,y,sz,col=WH,a=1,al='left'){T(s,x,y,{font:`${sz}px STM`,fill:col,a,align:al})}
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0b0614');g.addColorStop(1,'#1d0b33');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(255,43,214,.10)';ctx.lineWidth=2;for(let x=0;x<W;x+=60){line(x,0,x,H,'rgba(255,43,214,.09)',2)}for(let y=((t*30)%60);y<H;y+=60){line(0,y,W,y,'rgba(0,240,255,.07)',2)}ctx.restore();
+  // esquinas HUD
+  ctx.save();ctx.strokeStyle=MG;ctx.lineWidth=6;ctx.shadowColor=MG;ctx.shadowBlur=14;[[50,150,1,1],[1030,150,-1,1],[50,1470,1,-1],[1030,1470,-1,-1]].forEach(([x,y,sx,sy])=>{ctx.beginPath();ctx.moveTo(x,y+sy*90);ctx.lineTo(x,y);ctx.lineTo(x+sx*90,y);ctx.stroke()});ctx.restore();
+  M('//BANCOS_CENTRALES.ORO',70,110,34,CY)}
+function slices(t){const n=Math.floor(t*14);const r=rng(n*7919+13);if(GL<=.05)return;const k=3+Math.floor(r()*4);
+  for(let i=0;i<k;i++){const y=Math.floor(150+r()*1250),h=Math.floor(20+r()*90),dx=Math.floor((r()-.5)*160*GL);ctx.drawImage(cv,0,y,W,h,dx,y,W,h)}}
+function glitchAt(t){let g=0;[6.4,13.6,20.6,28.4,35.2,43.6,49.8].forEach(b=>{g=Math.max(g,1-prog(Math.abs(t-b),0,.45))});g=Math.max(g,(t<.9?1-prog(t,0,.9):0));
+  const n=Math.floor(t*6);if(rng(n*31+5)()>.93)g=Math.max(g,.6);return g}
+function hd(t,t0,s,col=YL){O(s,540,250,56,col,eout(prog(t,t0,t0+.5)))}
+function panel(x,y,w,h,k,col=CY){if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.translate((1-k)*40,0);ctx.beginPath();ctx.moveTo(x+30,y);ctx.lineTo(x+w,y);ctx.lineTo(x+w,y+h-30);ctx.lineTo(x+w-30,y+h);ctx.lineTo(x,y+h);ctx.lineTo(x,y+30);ctx.closePath();ctx.fillStyle='rgba(20,8,40,.85)';ctx.fill();ctx.lineWidth=4;ctx.strokeStyle=col;ctx.shadowColor=col;ctx.shadowBlur=14;ctx.stroke();ctx.restore()}
+function gavel(x,y,ang){ctx.save();ctx.translate(x,y);ctx.rotate(ang);ctx.fillStyle=YL;ctx.shadowColor=YL;ctx.shadowBlur=18;RR(-110,-50,220,100,18);ctx.fill();ctx.fillStyle=MG;ctx.fillRect(-12,50,24,260);ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  O('SUBASTA',540,380,150,WH,eout(prog(t,.2,.8)));O('O',540,520,90,YL,eout(prog(t,.8,1.4)));O('COMPRA SILENCIOSA',540,640,76,CY,eout(prog(t,1.2,1.8)));
+  const k=eback(prog(t,2.0,2.6));gavel(340,1000,lerp(-.9,-.1,eio(prog(t,2.0,3.3))));
+  const k2=eout(prog(t,3.4,4.0));ctx.save();ctx.globalAlpha*=k2;ctx.strokeStyle=CY;ctx.lineWidth=6;ctx.shadowColor=CY;ctx.shadowBlur=16;[0,1,2].forEach(i=>{ctx.beginPath();ctx.arc(780,1060,50+i*34+prog(t,3.4,5)*30,0,7);ctx.stroke()});ctx.restore();
+  O('ORO · BANCOS CENTRALES',540,1360,40,WH,eout(prog(t,4.2,4.8)),'center',900);ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'BANCO DE INGLATERRA');
+  const n1=Math.round(17*eio(prog(t,8.0,10.4))),n2=Math.round(395*eio(prog(t,8.6,12)));
+  panel(70,360,940,300,eout(prog(t,7.2,7.8)));O(String(n1),330,520,170,CY,eout(prog(t,7.4,8)));O('SUBASTAS',330,620,40,WH,eout(prog(t,7.6,8.2)));O('1999-2002',700,500,66,YL,eout(prog(t,7.6,8.2)));
+  panel(70,720,940,300,eout(prog(t,8.0,8.6)),MG);O(String(n2),330,880,170,MG,eout(prog(t,8.2,8.8)));O('TONELADAS',330,980,40,WH,eout(prog(t,8.4,9)));O('~395 t',700,860,76,YL,eout(prog(t,12,12.6)));
+  gavel(540,1230,lerp(-.7,-.1,eio(prog(t,12,12.8)))*0.6);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'PRECIO UNIFORME',CY);
+  const bars=[[.92,15.0],[.78,16.0],[.62,17.0],[.46,18.0],[.32,18.8]];const base=1230,hh=520,cl=.55;
+  bars.forEach(([v,ts],i)=>{const k=eback(prog(t,ts,ts+.5));if(k<=.02)return;const x=130+i*170,h=v*hh*k;const win=v>=cl;ctx.save();ctx.fillStyle=win?'rgba(0,240,255,.5)':'rgba(255,43,214,.25)';ctx.fillRect(x,base-h,120,h);ctx.lineWidth=4;ctx.strokeStyle=win?CY:MG;ctx.shadowColor=ctx.strokeStyle;ctx.shadowBlur=12;ctx.strokeRect(x,base-h,120,h);ctx.restore();M('OFERTA',x+60,base+36,26,WH,1,'center')});
+  const k=eout(prog(t,19,19.6));if(k>0){const y=base-cl*hh;line(100,y,980,y,YL,5,[14,10]);O('PRECIO ÚNICO',540,y-34,34,YL,k);}
+  O('ILUSTRATIVO',540,1340,34,DM==0?WH:'#b9a3ff',eout(prog(t,19.4,20)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'LA VENTA DE 1999-2002');
+  [['7 MAY 1999','anuncio',21.6],['JUL 1999','1.ª subasta',23.0],['MAR 2002','última',24.4]].forEach(([d,s,ts],i)=>{const k=eout(prog(t,ts,ts+.5));const y=420+i*200;panel(70,y-70,940,150,k,i==1?MG:CY);O(d,300,y,64,WH,k);O(s,780,y,40,YL,k,'center',900)});
+  const k=eback(prog(t,26,26.6));O('~$275 / OZ',540,1170,130,YL,Math.min(1,k*2));O('precio medio de las subastas',540,1260,36,WH,eout(prog(t,26.6,27.2)),'center',900);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'COMPRAS: MERCADO OTC',MG);
+  const cx=540,cy=820;const nodes=[[200,560],[880,560],[200,1080],[880,1080]];
+  nodes.forEach(([x,y],i)=>{const k=eout(prog(t,29.8+i*.4,30.4+i*.4));if(k>0){ctx.save();ctx.globalAlpha*=k;ctx.setLineDash([14,10]);line(cx,cy,x,y,CY,4);ctx.setLineDash([]);ctx.beginPath();ctx.arc(x,y,60,0,7);ctx.fillStyle='rgba(20,8,40,.9)';ctx.fill();ctx.lineWidth=4;ctx.strokeStyle=CY;ctx.stroke();ctx.restore();O('BANCO',x,y,28,WH,k)}});
+  const k=eout(prog(t,29.0,29.6));ctx.save();ctx.globalAlpha*=k;ctx.beginPath();ctx.arc(cx,cy,110,0,7);ctx.fillStyle='rgba(255,43,214,.25)';ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=MG;ctx.shadowColor=MG;ctx.shadowBlur=18;ctx.stroke();ctx.restore();O('BANCO',cx,cy-16,30,WH,k);O('CENTRAL',cx,cy+22,30,WH,k);
+  O('SIN SUBASTA PÚBLICA',540,1300,50,YL,eout(prog(t,33,33.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'COMPRA A MINAS LOCALES',CY);
+  [['TANZANIA','>= 20% DE LA PRODUCCIÓN',36.4,CY],['GHANA','20% DE LA PRODUCCIÓN',38.6,MG]].forEach(([c,s,ts,col],i)=>{const k=eout(prog(t,ts,ts+.5));panel(70,420+i*330,940,270,k,col);O(c,540,520+i*330,76,WH,k);O(s,540,625+i*330,40,col,k,'center',900)});
+  O('PAGO EN MONEDA LOCAL',540,1150,48,YL,eout(prog(t,40.4,41)));M('Fuente: WGC / Advisor Perspectives (2025)',540,1260,30,'#b9a3ff',eout(prog(t,41.2,41.8)),'center');ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'COMPRAS NETAS ANUALES');
+  const base=1230,sc=560/1136;const k1=eout(prog(t,45,46.6)),k2=eout(prog(t,46.6,48.2));
+  ctx.save();ctx.fillStyle='rgba(0,240,255,.45)';ctx.fillRect(160,base-473*sc*k1,300,473*sc*k1);ctx.strokeStyle=CY;ctx.lineWidth=5;ctx.strokeRect(160,base-473*sc*k1,300,473*sc*k1);
+  ctx.fillStyle='rgba(255,43,214,.45)';ctx.fillRect(620,base-1136*sc*k2,300,1136*sc*k2);ctx.strokeStyle=MG;ctx.strokeRect(620,base-1136*sc*k2,300,1136*sc*k2);ctx.restore();
+  O(String(Math.round(473*k1))+' t',310,base-473*sc*k1-50,64,CY,k1>0?1:0);O(String(Math.round(1136*k2)).replace(/\B(?=(\d{3})+(?!\d))/g,'.')+' t',770,base-1136*sc*k2-50,64,MG,k2>0?1:0);
+  O('PROMEDIO 2010-21',310,base+50,32,WH,eout(prog(t,45,45.6)));O('RÉCORD 2022',770,base+50,32,WH,eout(prog(t,46.6,47.2)));ctx.restore()}
+function draw(t){GL=glitchAt(t);bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  slices(t);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){GL=.25;bg(2);
+  O('BANCOS CENTRALES',540,300,70,WH);O('1.136 t',540,560,250,YL);O('DE ORO EN UN AÑO',540,760,70,CY);O('RÉCORD 2022',540,900,98,MG);
+  ctx.save();ctx.strokeStyle=CY;ctx.lineWidth=8;ctx.shadowColor=CY;ctx.shadowBlur=18;ctx.strokeRect(190,1010,700,320);ctx.restore();ctx.save();ctx.translate(540,1130);ctx.scale(.55,.55);gavel(0,-60,-.3);ctx.restore();
+  coverBtn('VER CÓMO COMPRAN →',ACC,DK)}
+</script></body></html>
