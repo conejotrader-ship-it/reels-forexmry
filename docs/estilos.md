@@ -46,7 +46,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 40 | Glitch cyberpunk | Distorsión de color | Subasta de oro de un banco central y compras entre bancos (v56_glitch_bancos_centrales, escena 123, 20 oct 16:30) |
 | 41 | Escáner de rayos X | Sobre el gráfico | Oro vs dólar (DXY): cuándo se separan (v57_rayosx_oro_dolar, escena 124, 20 oct 20:00) |
 | 42 | Dominó en cadena | Crisis en cascada | Relación oro/plata como señal y cuándo falla (v58_domino_oro_plata, escena 125, 20 oct 23:30) |
-| 43 | Montaña rusa | El gráfico como riel | Disponible |
+| 43 | Montaña rusa | El gráfico como riel | Oro vs S&P 500 vs bitcoin: quién es refugio (v59_montana_rusa_refugios, escena 126, 21 oct 3:00) |
 | 44 | Tablero de ajedrez y estrategia |  | Disponible |
 | 45 | Libro o enciclopedia | Pasa páginas | Disponible |
 | 46 | Televisión retro VHS | Años ochenta | Disponible |

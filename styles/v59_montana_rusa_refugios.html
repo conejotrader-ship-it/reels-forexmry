@@ -1,0 +1,78 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 43: montaña rusa (el gráfico como riel) — tema: oro vs S&P 500 vs bitcoin, quién es refugio en cada crisis (60 s). Incluye al Robot y llamado a seguir/Telegram/web.
+const SPEC={name:'RefugiosOroSP500Bitcoin',hook:'ORO, S&P 500 O BITCOIN: ¿QUIÉN ES EL REFUGIO EN UNA CRISIS?',dur:60,cta:56,bpm:116,mus:'soft',prog:[[43,'m'],[39,'M'],[46,'m'],[41,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[7.6,'rise',1.8],[10.6,'down'],[13.6,'wipe'],[15.0,'down'],[17.6,'ding'],[20.6,'wipe'],[22.0,'ding'],[24.0,'ding'],[26.0,'ding'],[28.4,'wipe'],[30.0,'down'],[32.0,'hit'],[33.4,'ding'],[35.2,'wipe'],[36.6,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'¿Quién es el refugio en una crisis: el oro, el S&P 500 o el bitcoin? Depende de la crisis.','¿Quién es el refugio en una crisis: el oro, el S y P quinientos o el bitcoin? Depende de la crisis.'],
+ [6.4,13.4,'Marzo de 2020: el S&P 500 cayó 34% en 23 sesiones.','Marzo de dos mil veinte: el S y P quinientos cayó treinta y cuatro por ciento en veintitrés sesiones.'],
+ [13.6,20.4,'El bitcoin perdió cerca de 50% en dos días; el oro cayó un día y recortó pérdidas después.','El bitcoin perdió cerca de cincuenta por ciento en dos días; el oro cayó un día y recortó pérdidas después.'],
+ [20.6,28.2,'La Fed de Kansas City halló que en marzo de 2020 el bitcoin siguió a las acciones; el oro, solo débilmente.','La Reserva Federal de Kansas City halló que en marzo de dos mil veinte el bitcoin siguió a las acciones; el oro, solo débilmente.'],
+ [28.4,35.0,'En 2022: S&P 500, −19%; bitcoin, −64%; oro, −0,6%.','En dos mil veintidós: S y P quinientos, menos diecinueve; bitcoin, menos sesenta y cuatro; oro, menos cero coma seis.'],
+ [35.2,43.4,'En pánicos de liquidez todo se vende; en 2022, el oro resistió mejor que acciones y bitcoin.','En pánicos de liquidez todo se vende; en dos mil veintidós, el oro resistió mejor que acciones y bitcoin.'],
+ [43.6,49.6,'El pasado no garantiza el futuro: diversifica y define tu riesgo antes de operar.','El pasado no garantiza el futuro: diversifica y define tu riesgo antes de operar.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0b1b3a',ACC='#ffd23f',FAM='Inter',SP='#4da3ff',BT='#ff9f1c',GD='#ffd23f',RL='#e8eef7',RD='#ff5d73',GN='#3ddc97';
+window.FONTS=[];
+const STY={subFont:'800 42px Inter',subBg:'rgba(11,27,58,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0b1b3a');g.addColorStop(.7,'#3a2a6b');g.addColorStop(1,'#a8486a');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.fillStyle='rgba(255,255,255,.5)';for(let i=0;i<60;i++){const r=rng(i*9+4);ctx.globalAlpha=.3+.3*Math.sin(t*2+i);ctx.fillRect(r()*W,r()*900,3,3)}ctx.restore()}
+function mkPath(P){const L=[0];for(let i=1;i<P.length;i++)L.push(L[i-1]+Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]));return {P,L,tot:L[L.length-1]}}
+function at(pa,u){const d=clamp(u)*pa.tot;let i=1;while(i<pa.L.length-1&&pa.L[i]<d)i++;const a=pa.P[i-1],b=pa.P[i];const k=(d-pa.L[i-1])/((pa.L[i]-pa.L[i-1])||1);return [lerp(a[0],b[0],k),lerp(a[1],b[1],k),Math.atan2(b[1]-a[1],b[0]-a[0])]}
+function smooth(P,n=6){const o=[];for(let i=0;i<P.length-1;i++){const p0=P[Math.max(0,i-1)],p1=P[i],p2=P[i+1],p3=P[Math.min(P.length-1,i+2)];for(let s=0;s<n;s++){const t=s/n,t2=t*t,t3=t2*t;o.push([.5*((2*p1[0])+(-p0[0]+p2[0])*t+(2*p0[0]-5*p1[0]+4*p2[0]-p3[0])*t2+(-p0[0]+3*p1[0]-3*p2[0]+p3[0])*t3),.5*((2*p1[1])+(-p0[1]+p2[1])*t+(2*p0[1]-5*p1[1]+4*p2[1]-p3[1])*t2+(-p0[1]+3*p1[1]-3*p2[1]+p3[1])*t3)])}}o.push(P[P.length-1]);return o}
+function rail(pa,upto,col=RL,sup=true){const d=clamp(upto)*pa.tot;if(d<=0)return;ctx.save();
+  if(sup){ctx.strokeStyle='rgba(232,238,247,.25)';ctx.lineWidth=4;for(let s=0;s<d;s+=46){const p=at(pa,s/pa.tot);line(p[0],p[1],p[0],1300,'rgba(232,238,247,.22)',4)}}
+  ctx.strokeStyle=col;ctx.lineWidth=12;ctx.lineJoin='round';ctx.shadowColor=col;ctx.shadowBlur=12;ctx.beginPath();let first=true;for(let i=0;i<pa.P.length;i++){if(pa.L[i]>d){const p=at(pa,upto);ctx.lineTo(p[0],p[1]);break}first?ctx.moveTo(...pa.P[i]):ctx.lineTo(...pa.P[i]);first=false}ctx.stroke();ctx.restore()}
+function cart(x,y,ang,col,lab,a=1){ctx.save();ctx.globalAlpha*=a;ctx.translate(x,y);ctx.rotate(ang);ctx.fillStyle=col;ctx.shadowColor=col;ctx.shadowBlur=18;RR(-60,-62,120,54,14);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#1a1a2e';ctx.beginPath();ctx.arc(-34,-4,13,0,7);ctx.arc(34,-4,13,0,7);ctx.fill();ctx.restore();
+  if(lab)T(lab,x,y-90,{font:'900 30px Inter',fill:'#fff',stroke:'#000',lw:7,a})}
+function hd(t,t0,s,col=ACC){lbl(s,540,250,56,col,eout(prog(t,t0,t0+.5)))}
+const PA=mkPath(smooth([[80,560],[220,470],[340,430],[470,520],[600,820],[760,1080],[880,1130],[1000,1040]]));
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  lbl('¿QUIÉN ES',540,280,90,'#fff',eout(prog(t,.2,.8)));lbl('EL REFUGIO?',540,400,120,ACC,eout(prog(t,.6,1.2)));
+  ctx.save();ctx.translate(0,260);const u=eio(prog(t,.6,4.4));rail(PA,1);const p=at(PA,u);cart(p[0],p[1],p[2],SP,'S&P 500');
+  const p2=at(PA,clamp(u-.12));cart(p2[0],p2[1],p2[2],BT,'BITCOIN',u>.12?1:0);const p3=at(PA,clamp(u-.24));cart(p3[0],p3[1],p3[2],GD,'ORO',u>.24?1:0);ctx.restore();ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'MARZO DE 2020');
+  const u=eio(prog(t,7.4,11));rail(PA,1);const p=at(PA,u*.78);cart(p[0],p[1],p[2],SP,'');
+  lbl('3.386',330,320,64,'#fff',eout(prog(t,7.6,8.2)));lbl('19 FEB',330,378,34,'#cfd8ff',eout(prog(t,7.6,8.2)));
+  lbl('2.237',760,1180,64,'#fff',eout(prog(t,10.8,11.4)));lbl('23 MAR',760,1240,34,'#cfd8ff',eout(prog(t,10.8,11.4)));
+  const k=eback(prog(t,11.4,12));lbl('-34%',540,1330,150,RD,Math.min(1,k*2));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'BITCOIN VS ORO');
+  const PB=mkPath(smooth([[100,480],[260,500],[430,640],[560,1050],[700,1110]]));rail(PB,1,BT);const u=eio(prog(t,14.6,17.4));const p=at(PB,u);cart(p[0],p[1],p[2],BT,'BITCOIN');
+  const k=eback(prog(t,17.6,18.2));lbl('-50% EN 2 DÍAS',540,1260,76,RD,Math.min(1,k*2));
+  const PG=mkPath(smooth([[100,380],[300,390],[460,430],[600,420],[760,400]]));const k2=eout(prog(t,18.6,19.2));ctx.save();ctx.globalAlpha*=k2;rail(PG,1,GD,false);cart(at(PG,.62)[0],at(PG,.62)[1],at(PG,.62)[2],GD,'ORO');ctx.restore();
+  lbl('cayó un día y recortó pérdidas',800,520,34,'#fff',k2,'center');ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'FED DE KANSAS CITY');
+  lbl('MARZO DE 2020',540,370,44,'#cfd8ff',eout(prog(t,21.4,22)));
+  [['BITCOIN','con las acciones: relación moderada',22.0,BT,.9],['ORO','con las acciones: relación débil',24.0,GD,.3]].forEach(([s,s2,ts,c,v],i)=>{const k=eout(prog(t,ts,ts+.6));const y=520+i*330;ctx.save();ctx.globalAlpha*=k;RR(90,y-80,900,260,24);ctx.fillStyle='rgba(255,255,255,.08)';ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=c;ctx.stroke();
+    lbl(s,540,y-10,64,c,1);lbl(s2,540,y+60,34,'#fff',1);ctx.fillStyle='rgba(255,255,255,.15)';RR(200,y+110,680,30,15);ctx.fill();ctx.fillStyle=c;RR(200,y+110,680*v*k,30,15);ctx.fill();ctx.restore()});
+  lbl('correlación con el S&P 500',540,1260,32,'#cfd8ff',eout(prog(t,26,26.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'TODO EL AÑO 2022');
+  const S=[140,430],base=420;const defs=[['S&P 500',SP,-.19],['BITCOIN',BT,-.64],['ORO',GD,-.006]];
+  defs.forEach(([lab,c,v],i)=>{const endY=base+(-v/.64)*640;const pa=mkPath(smooth([[120,base],[300,base+(endY-base)*.18],[560,base+(endY-base)*.6],[860,endY]]));rail(pa,1,c,false);const u=eio(prog(t,29.6+i*.4,32.6+i*.4));const p=at(pa,u);cart(p[0],p[1],p[2],c,lab)});
+  [['-19%',SP,32.2,1010,720],['-64%',BT,33.0,900,1170],['-0,6%',GD,33.8,1010,500]].forEach(([s,c,ts,x,y])=>{const k=eback(prog(t,ts,ts+.5));lbl(s,x,y,s=='-64%'?96:80,c,Math.min(1,k*2),'right')});
+  lbl('rendimiento en el año (USD)',540,1330,34,'#cfd8ff',eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'PÁNICO DE LIQUIDEZ',RD);
+  const PL=mkPath(smooth([[60,420],[200,380],[320,700],[430,980],[560,760],[700,980],[820,900],[1000,1100]]));rail(PL,1);const u=eio(prog(t,36.2,41.6));const p=at(PL,u);cart(p[0],p[1],p[2],RD,'TODO SE VENDE');
+  lbl('2020: todo se vende',540,1230,56,'#fff',eout(prog(t,38,38.6)));lbl('2022: el oro resistió mejor',540,1320,52,GD,eout(prog(t,40.6,41.2)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'ABRÓCHATE EL CINTURÓN');
+  [['EL PASADO NO GARANTIZA EL FUTURO',45.0],['DIVERSIFICA',46.6],['DEFINE TU RIESGO',48.2]].forEach(([s,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=470+i*240;ctx.save();ctx.globalAlpha*=k;RR(90,y-80,900,170,24);ctx.fillStyle='rgba(255,255,255,.1)';ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=ACC;ctx.stroke();lbl(s,540,y+5,s.length>20?44:60,'#fff',1);ctx.restore()});
+  lbl('Contenido educativo, no es asesoría',540,1240,34,'#cfd8ff',eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  lbl('CRISIS 2022',540,290,110,'#fff');lbl('¿QUIÉN RESISTIÓ?',540,430,84,ACC);
+  const defs=[['BITCOIN','-64%',BT,640],['S&P 500','-19%',SP,880],['ORO','-0,6%',GD,1120]];
+  defs.forEach(([l,v,c,y],i)=>{ctx.save();RR(110,y-90,860,200,28);ctx.fillStyle='rgba(255,255,255,.1)';ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=c;ctx.stroke();ctx.restore();lbl(l,330,y+5,56,'#fff',1);lbl(v,760,y+8,i==0?110:96,c,1)});
+  coverBtn('VER LOS 3 RESULTADOS →',ACC,DK)}
+</script></body></html>
