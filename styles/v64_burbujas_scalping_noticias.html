@@ -1,0 +1,71 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 48: burbujas flotantes que cambian de tamaño — tema: por qué un robot de scalping sufre en noticias y qué defensas existen (60 s).
+const SPEC={name:'ScalpingNoticias',hook:'POR QUÉ UN ROBOT DE SCALPING SUFRE EN LAS NOTICIAS Y QUÉ DEFENSAS EXISTEN',dur:60,cta:56,bpm:118,mus:'soft',prog:[[45,'m'],[41,'M'],[43,'m'],[40,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[7.6,'ding'],[9.6,'ding'],[13.6,'wipe'],[15.0,'down'],[17.6,'ding'],[20.6,'wipe'],[22.0,'ding'],[24.0,'ding'],[26.0,'ding'],[28.4,'wipe'],[30.0,'down'],[32.0,'hit'],[33.4,'ding'],[35.2,'wipe'],[36.6,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Por qué un robot de scalping sufre en las noticias, y qué defensas existen.'],
+ [6.4,13.4,'En el NFP de octubre de 2026, el spread del euro-dólar subió entre 5 y 54% según el bróker.','En el ene efe pe de octubre, el spread del euro-dólar subió entre cinco y cincuenta y cuatro por ciento, según el bróker.'],
+ [13.6,20.4,'En picos puntuales superó el 130%. Con objetivos pequeños, un spread más amplio pesa mucho.','En picos puntuales superó el ciento treinta por ciento. Con objetivos pequeños, un spread más amplio pesa mucho.'],
+ [20.6,28.2,'Después, el deslizamiento: la orden puede ejecutarse a un precio peor. Con stops pequeños, eso cambia el resultado.'],
+ [28.4,35.0,'Los primeros 30 segundos son los más caros; tras una decisión de tasas, la volatilidad puede durar hasta una hora.','Los primeros treinta segundos son los más caros; tras una decisión de tasas, la volatilidad puede durar hasta una hora.'],
+ [35.2,43.4,'Defensas habituales: filtro de noticias, spread máximo, desviación máxima, menor tamaño y cuenta ECN.','Defensas habituales: filtro de noticias, spread máximo, desviación máxima, menor tamaño y cuenta e ce ene.'],
+ [43.6,49.6,'Ninguna defensa elimina el riesgo: pruébalas en demo y mide tu robot.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#07243a',ACC='#ffd23f',FAM='Inter',CY='#4fe3ff',PK='#ff6fb5',GN='#5cf0a8',RD='#ff6b6b',OR='#ffa94d';
+window.FONTS=[];
+const STY={subFont:'800 42px Inter',subBg:'rgba(7,36,58,.96)',subStroke:CY,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0a3a5e');g.addColorStop(.6,'#07243a');g.addColorStop(1,'#041320');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const r=rng(5);for(let i=0;i<26;i++){const x=r()*W,sp=20+r()*40,rr=8+r()*26;const y=((r()*H-t*sp)%H+H)%H;ctx.beginPath();ctx.arc(x,y,rr,0,7);ctx.strokeStyle='rgba(120,220,255,.18)';ctx.lineWidth=3;ctx.stroke()}}
+function bub(x,y,r,col,a=1){if(r<=0||a<=0)return;ctx.save();ctx.globalAlpha*=a;const g=ctx.createRadialGradient(x-r*.35,y-r*.35,r*.1,x,y,r);g.addColorStop(0,'rgba(255,255,255,.85)');g.addColorStop(.25,col+'cc');g.addColorStop(1,col+'55');ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fillStyle=g;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle='rgba(255,255,255,.7)';ctx.stroke();
+  ctx.beginPath();ctx.ellipse(x-r*.4,y-r*.5,r*.22,r*.12,-.6,0,7);ctx.fillStyle='rgba(255,255,255,.55)';ctx.fill();ctx.restore()}
+function hd(t,t0,s,col=ACC){lbl(s,540,230,56,col,eout(prog(t,t0,t0+.5)))}
+function bob(t,i,amp=16){return Math.sin(t*1.6+i*1.7)*amp}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  lbl('SCALPING',540,260,110,'#fff',eout(prog(t,.2,.8)));lbl('VS NOTICIAS',540,390,110,ACC,eout(prog(t,.6,1.2)));
+  [[250,800,150,CY,'SPREAD'],[760,760,120,PK,'SLIPPAGE'],[470,1090,170,OR,'VOLATILIDAD'],[860,1120,100,GN,'DEFENSAS']].forEach(([x,y,r,c,s],i)=>{const k=eback(prog(t,1.4+i*.5,2.2+i*.5));if(k<=.02)return;bub(x,y+bob(t,i),r*Math.min(1,k),c);lbl(s,x,y+bob(t,i),r>130?36:28,'#06202f',Math.min(1,k))});
+  lbl('¿QUÉ DEFENSAS EXISTEN?',540,1350,48,CY,eout(prog(t,4,4.6)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'SPREAD EN EL NFP');
+  lbl('EURUSD · OCT 2026 · ±2 MIN · 6 BRÓKERES',540,320,30,'#9fd8ee',eout(prog(t,7,7.6)));
+  const D=[['A',4.9],['B',9.9],['C',15.6],['D',20.3],['E',32.9],['F',53.8]];const P=[[190,520],[480,500],[780,520],[230,860],[560,900],[880,1040]];
+  D.forEach(([n,v],i)=>{const k=eback(prog(t,7.6+i*.7,8.4+i*.7));if(k<=.02)return;const r=Math.sqrt(v)*26*Math.min(1,k);const c=v>30?RD:(v>15?OR:CY);bub(P[i][0],P[i][1]+bob(t,i),r,c);lbl('+'+v+'%',P[i][0],P[i][1]+bob(t,i)-4,r>130?56:(r>100?40:(r>70?32:26)),'#06202f',Math.min(1,k));lbl('Bróker '+n,P[i][0],P[i][1]+r+34+bob(t,i),26,'#cfe',Math.min(1,k))});
+  lbl('aumento promedio del spread',540,1340,34,'#9fd8ee',eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'PICOS DE SPREAD',RD);
+  const gx=540,gy=760;const k=eout(prog(t,14.6,19));const rs=lerp(60,210,k);bub(gx,gy+bob(t,1,10),rs,RD);lbl('SPREAD',gx,gy-20+bob(t,1,10),44,'#06202f',1);lbl('+130%',gx,gy+40+bob(t,1,10),64,'#06202f',k>.7?1:0);
+  const k2=eback(prog(t,15.2,15.8));bub(gx+230,gy+250,70*Math.min(1,k2),ACC);if(k2>.3)lbl('OBJETIVO',gx+230,gy+250,24,'#3a2a00',1);
+  lbl('objetivo del scalper',gx+230,gy+350,28,ACC,eout(prog(t,16,16.6)));
+  lbl('picos puntuales superaron 130%',540,1230,40,'#fff',eout(prog(t,17.4,18)));
+  lbl('según un bróker de la muestra · una sola noticia',540,1300,28,'#9fd8ee',eout(prog(t,18.4,19)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'DESLIZAMIENTO',PK);
+  const k=eout(prog(t,21.6,23));bub(300,760+bob(t,2),130,CY);lbl('PEDIDO',300,730+bob(t,2),36,'#06202f',1);lbl('1.1170',300,790+bob(t,2),44,'#06202f',1);
+  const k2=eback(prog(t,23.4,24.4));bub(780,760+bob(t,3),130*Math.min(1,k2),RD);if(k2>.5){lbl('EJECUTADO',780,730+bob(t,3),32,'#06202f',1);lbl('1.1175',780,790+bob(t,3),44,'#06202f',1)}
+  const k3=eout(prog(t,25,25.6));ctx.save();ctx.globalAlpha*=k3;line(430,900,650,900,'#fff',4);lbl('5 pips peor',540,950,40,'#fff',1);ctx.restore();
+  lbl('ejemplo de Offbeat Forex',540,1090,30,'#9fd8ee',eout(prog(t,26,26.6)));lbl('con stops pequeños, cambia el resultado',540,1170,40,ACC,eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'¿CUÁNTO DURA?');
+  const k1=eback(prog(t,29.4,30.4));bub(300,820+bob(t,1),150*Math.min(1,k1),RD);lbl('30 s',300,800+bob(t,1),60,'#06202f',Math.min(1,k1));lbl('los más caros',300,860+bob(t,1),28,'#06202f',Math.min(1,k1));
+  const k2=eout(prog(t,31.6,34));bub(750,880+bob(t,2),lerp(40,240,k2),OR);lbl('hasta 1 h',750,860+bob(t,2),k2>.5?60:0,'#06202f',1);lbl('tras tasas',750,920+bob(t,2),k2>.5?32:0,'#06202f',1);
+  lbl('Offbeat Forex',540,1220,30,'#9fd8ee',eout(prog(t,33.6,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'DEFENSAS HABITUALES',GN);
+  [['FILTRO DE','NOTICIAS',230,560,150],['SPREAD','MÁXIMO',800,540,130],['DESVIACIÓN','MÁXIMA',300,900,140],['MENOR','TAMAÑO',780,920,125],['CUENTA','ECN',540,1180,110]].forEach(([a1,a2,x,y,r],i)=>{const k=eback(prog(t,36.4+i*1.2,37.2+i*1.2));if(k<=.02)return;const yy=y+bob(t,i);bub(x,yy,r*Math.min(1,k),[CY,GN,PK,OR,ACC][i]);lbl(a1,x,yy-18,r>130?34:30,'#06202f',Math.min(1,k));lbl(a2,x,yy+22,r>130?38:32,'#06202f',Math.min(1,k))});ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'RECUERDA');
+  [['NINGUNA DEFENSA ELIMINA EL RIESGO',45.0,CY],['PRUÉBALAS EN DEMO',46.6,GN],['MIDE TU ROBOT',48.2,PK]].forEach(([s,ts,c],i)=>{const k=eback(prog(t,ts,ts+.5));if(k<=.02)return;const y=480+i*250;ctx.save();ctx.globalAlpha*=Math.min(1,k);RR(110,y-80,860,170,85);ctx.fillStyle=c+'55';ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=c;ctx.stroke();lbl(s,540,y+5,s.length>22?38:50,'#fff',1);ctx.restore()});
+  lbl('Contenido educativo, no es asesoría',540,1260,34,'#9fd8ee',eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  lbl('SCALPING EN NOTICIAS',540,250,76,'#fff');lbl('+130%',540,520,230,RD);lbl('SPREAD EN EL PICO',540,720,84,ACC);
+  bub(260,1010,130,CY);bub(560,1080,100,PK);bub(850,990,150,OR);bub(420,1230,70,GN);
+  lbl('EURUSD · NFP OCT 2026 · UN BRÓKER',540,1360,32,'#9fd8ee');
+  coverBtn('VER LAS DEFENSAS →',ACC,DK)}
+</script></body></html>

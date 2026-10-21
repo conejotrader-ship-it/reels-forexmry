@@ -51,6 +51,6 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 45 | Libro o enciclopedia | Pasa páginas | Oro y petróleo: cuántos barriles compra una onza (v61_libro_oro_petroleo, escena 128, 21 oct 9:30) |
 | 46 | Televisión retro VHS | Años ochenta | Niveles redondos del oro: por qué atraen órdenes (v62_vhs_niveles_redondos, escena 129, 21 oct 13:00) |
 | 47 | Mapa de calor animado |  | Sesiones del día (Asia, Londres, Nueva York) y el oro (v63_mapacalor_sesiones_oro, escena 130, 21 oct 16:30) |
-| 48 | Burbujas flotantes | Cambian de tamaño | Disponible |
+| 48 | Burbujas flotantes | Cambian de tamaño | Robot de scalping en noticias y sus defensas (v64_burbujas_scalping_noticias, escena 131, 21 oct 20:00) |
 | 49 | Cámara que desciende por un gráfico gigante |  | Disponible |
 | 50 | Pizarra blanca con marcador a mano alzada |  | Disponible |
