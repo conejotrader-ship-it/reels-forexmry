@@ -53,4 +53,4 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 47 | Mapa de calor animado |  | Sesiones del día (Asia, Londres, Nueva York) y el oro (v63_mapacalor_sesiones_oro, escena 130, 21 oct 16:30) |
 | 48 | Burbujas flotantes | Cambian de tamaño | Robot de scalping en noticias y sus defensas (v64_burbujas_scalping_noticias, escena 131, 21 oct 20:00) |
 | 49 | Cámara que desciende por un gráfico gigante |  | Backtest en oro: ticks reales vs velas de 1 minuto (v65_camara_backtest_ticks, escena 132, 21 oct 23:30) |
-| 50 | Pizarra blanca con marcador a mano alzada |  | Disponible |
+| 50 | Pizarra blanca con marcador a mano alzada |  | Mayores compradores de oro 2025: bancos centrales (v66_pizarrablanca_compradores_oro, escena 133, 22 oct 3:00) |
