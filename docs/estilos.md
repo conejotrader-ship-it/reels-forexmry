@@ -50,7 +50,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 44 | Tablero de ajedrez y estrategia |  | Oro y NFP: qué hace el precio en los minutos siguientes (v60_ajedrez_nfp_oro, escena 127, 21 oct 6:00) |
 | 45 | Libro o enciclopedia | Pasa páginas | Oro y petróleo: cuántos barriles compra una onza (v61_libro_oro_petroleo, escena 128, 21 oct 9:30) |
 | 46 | Televisión retro VHS | Años ochenta | Niveles redondos del oro: por qué atraen órdenes (v62_vhs_niveles_redondos, escena 129, 21 oct 13:00) |
-| 47 | Mapa de calor animado |  | Disponible |
+| 47 | Mapa de calor animado |  | Sesiones del día (Asia, Londres, Nueva York) y el oro (v63_mapacalor_sesiones_oro, escena 130, 21 oct 16:30) |
 | 48 | Burbujas flotantes | Cambian de tamaño | Disponible |
 | 49 | Cámara que desciende por un gráfico gigante |  | Disponible |
 | 50 | Pizarra blanca con marcador a mano alzada |  | Disponible |

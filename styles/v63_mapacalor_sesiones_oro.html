@@ -1,0 +1,72 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 47: mapa de calor animado — tema: sesiones del día (Asia, Londres, Nueva York) y cómo se comporta el oro (60 s).
+const SPEC={name:'SesionesOro',hook:'¿A QUÉ HORA SE MUEVE EL ORO? ASIA, LONDRES Y NUEVA YORK',dur:60,cta:56,bpm:108,mus:'soft',prog:[[45,'m'],[41,'M'],[43,'m'],[40,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[7.6,'ding'],[9.6,'ding'],[13.6,'wipe'],[15.0,'down'],[17.6,'ding'],[20.6,'wipe'],[22.0,'ding'],[24.0,'ding'],[26.0,'ding'],[28.4,'wipe'],[30.0,'down'],[32.0,'hit'],[33.4,'ding'],[35.2,'wipe'],[36.6,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'El oro cotiza casi las 24 horas, pero no se mueve igual a todas horas.','El oro cotiza casi las veinticuatro horas, pero no se mueve igual a todas horas.'],
+ [6.4,13.4,'Los futuros del COMEX operan 23 horas al día, de domingo a viernes, con una pausa de una hora.','Los futuros del COMEX operan veintitrés horas al día, de domingo a viernes, con una pausa de una hora.'],
+ [13.6,20.4,'En 2018, Asia ya pesaba más de un tercio del volumen de futuros; en 2012, menos de un cuarto.','En dos mil dieciocho, Asia ya pesaba más de un tercio del volumen de futuros; en dos mil doce, menos de un cuarto.'],
+ [20.6,28.2,'MQL5 ubica los movimientos más limpios en el solape Londres–Nueva York, de 8:00 a 11:30, hora de Nueva York.','Eme ku ele cinco ubica los movimientos más limpios en el solape Londres Nueva York, de ocho a once y media, hora de Nueva York.'],
+ [28.4,35.0,'Y los datos de Estados Unidos salen a las 8:30 de Nueva York, justo dentro de esa ventana.','Y los datos de Estados Unidos salen a las ocho y media de Nueva York, justo dentro de esa ventana.'],
+ [35.2,43.4,'En horas de baja liquidez, como el cierre de Nueva York y el rollover, el spread puede ampliarse.'],
+ [43.6,49.6,'Revisa tu robot por sesión, y recuerda: ninguna hora garantiza resultados.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0e1018',ACC='#ffd23f',FAM='Inter';
+window.FONTS=[];
+const STY={subFont:'800 42px Inter',subBg:'rgba(14,16,24,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+const LV=[.25,.2,.25,.6,.5,.5,.5,.55,.95,1,.9,.7,.4,.4,.35,.3,.3,.15,.2,.25,.3,.3,.25,.2];
+function heat(v){const st=[[0,[27,42,107]],[.35,[42,120,190]],[.6,[255,150,40]],[.85,[255,70,50]],[1,[255,226,90]]];for(let i=1;i<st.length;i++)if(v<=st[i][0]){const k=(v-st[i-1][0])/(st[i][0]-st[i-1][0]);const a=st[i-1][1],b=st[i][1];return `rgb(${a.map((x,j)=>Math.round(lerp(x,b[j],k))).join(',')})`}return 'rgb(255,226,90)'}
+function bg(t){ctx.fillStyle='#0e1018';ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,800,50,540,800,950);g.addColorStop(0,'rgba(255,120,40,.12)');g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+function hd(t,t0,s,col=ACC){lbl(s,540,230,56,col,eout(prog(t,t0,t0+.5)))}
+// rejilla 4x6 de 24 horas (hora de Nueva York)
+function grid(t,ts,per,opts={}){const x0=70,y0=330,cw=235,ch=125;for(let h=0;h<24;h++){const c=h%4,r=Math.floor(h/4);const k=eout(prog(t,ts+h*per,ts+h*per+.4));if(k<=.02)continue;
+  let v=LV[h];if(opts.pulse)v=clamp(v+.06*Math.sin(t*4+h));let dim=opts.hi?(opts.hi(h)?1:.18):1;
+  ctx.save();ctx.globalAlpha*=k*dim;RR(x0+c*(cw+10),y0+r*(ch+10),cw,ch,14);ctx.fillStyle=heat(v);ctx.fill();ctx.restore();
+  T(String(h).padStart(2,'0')+':00',x0+c*(cw+10)+cw/2,y0+r*(ch+10)+ch/2,{font:'800 36px Inter',fill:v>.6?'#1a1000':'#fff',a:k*Math.max(dim,.4)})}}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  lbl('¿A QUÉ HORA',540,175,84,'#fff',eout(prog(t,.2,.8)));lbl('SE MUEVE EL ORO?',540,262,70,ACC,eout(prog(t,.6,1.2)));
+  grid(t,1.0,.12,{pulse:1});lbl('hora de Nueva York (ET) · ILUSTRATIVO, no son datos medidos',540,1180,28,'#aab',eout(prog(t,4,4.6)));
+  lbl('ASIA · LONDRES · NUEVA YORK',540,1260,40,ACC,eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'FUTUROS DEL COMEX');
+  lbl('DOMINGO A VIERNES',540,360,44,'#fff',eout(prog(t,7.2,7.8)));
+  const x0=60,w=38;for(let h=0;h<24;h++){const k=eout(prog(t,7.8+h*.06,8.3+h*.06));if(k<=.02)continue;const off=h==23;ctx.save();ctx.globalAlpha*=k;RR(x0+(h%12)*(w+43),520+Math.floor(h/12)*180,w+30,150,12);ctx.fillStyle=off?'#333':heat(.7+.3*Math.sin(h));ctx.fill();ctx.restore()}
+  lbl('23 H DE NEGOCIACIÓN',540,940,76,ACC,eout(prog(t,10,10.6)));
+  lbl('+ 1 H DE PAUSA DIARIA',540,1040,48,'#fff',eout(prog(t,11,11.6)));lbl('fuente: CME Group',540,1130,30,'#aab',eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'EL PESO DE ASIA');
+  lbl('% DEL VOLUMEN DE FUTUROS DE ORO',540,330,36,'#aab',eout(prog(t,14.2,14.8)));
+  const base=1100;line(160,base,920,base,'#fff',4);
+  [['2012','< 25%',24,15,'#2a78be'],['2018','> 33%',34,22,'#ff9628']].forEach(([y,v,h,ts,c],i)=>{const k=eout(prog(t,ts-.5+i*3,ts+1.5+i*3));const hh=h*22*k;ctx.fillStyle=c;RR(230+i*370,base-hh,260,hh,14);ctx.fill();lbl(y,360+i*370,base+50,44,'#fff',eout(prog(t,ts-.5+i*3,ts+i*3)));if(k>.9)lbl(v,360+i*370,base-h*22-50,84,i?ACC:'#fff',1)});
+  lbl('Asia = 8 a. m. a 8 p. m. en Singapur',540,1260,34,'#aab',eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'SOLAPE LONDRES–NUEVA YORK');
+  grid(t,20.8,.02,{hi:h=>h>=8&&h<=11});
+  const k=eback(prog(t,23,23.6));lbl('8:00–11:30 ET',540,1210,80,ACC,Math.min(1,k*2));lbl('opinión de MQL5, no una regla',540,1290,32,'#aab',eout(prog(t,25,25.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'DATOS DE EE. UU.');
+  grid(t,28.6,.02,{hi:h=>h==8});
+  const k=eback(prog(t,30,30.6));lbl('8:30 AM ET',540,1190,110,ACC,Math.min(1,k*2));lbl('empleo · inflación · y más',540,1290,36,'#fff',eout(prog(t,32,32.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'LIQUIDEZ BAJA',RD2());
+  grid(t,35.4,.02,{hi:h=>h==17||h>=12&&h<=16||h>=18&&h<=20});
+  lbl('CIERRE DE NY · ROLLOVER 17:00 ET',540,1190,46,'#fff',eout(prog(t,37,37.6)));lbl('el spread puede ampliarse',540,1270,56,RD2(),eout(prog(t,39.5,40.1)));ctx.restore()}
+function RD2(){return '#ff6b6b'}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'ANTES DE OPERAR');
+  [['REVISA TU ROBOT POR SESIÓN',45.0],['MIDE SPREAD Y VOLATILIDAD',46.6],['NINGUNA HORA GARANTIZA NADA',48.2]].forEach(([s,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=470+i*240;ctx.save();ctx.globalAlpha*=k;RR(90,y-80,900,170,24);ctx.fillStyle='rgba(255,255,255,.08)';ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=heat(.4+i*.25);ctx.stroke();lbl(s,540,y+5,s.length>25?40:46,'#fff',1);ctx.restore()});
+  lbl('Contenido educativo, no es asesoría',540,1240,34,'#aab',eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  lbl('¿A QUÉ HORA',540,260,100,'#fff');lbl('SE MUEVE',540,410,150,ACC);lbl('EL ORO?',540,560,150,ACC);
+  const x0=170,y0=700;for(let h=0;h<24;h++){const c=h%6,r=Math.floor(h/6);RR(x0+c*130,y0+r*130,120,120,14);ctx.fillStyle=heat(LV[h]);ctx.fill()}
+  lbl('8:30 AM ET',540,1310,76,'#fff');
+  coverBtn('VER EL MAPA DE CALOR →',ACC,DK)}
+</script></body></html>
