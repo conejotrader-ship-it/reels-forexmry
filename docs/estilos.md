@@ -49,7 +49,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 43 | Montaña rusa | El gráfico como riel | Oro vs S&P 500 vs bitcoin: quién es refugio (v59_montana_rusa_refugios, escena 126, 21 oct 3:00) |
 | 44 | Tablero de ajedrez y estrategia |  | Oro y NFP: qué hace el precio en los minutos siguientes (v60_ajedrez_nfp_oro, escena 127, 21 oct 6:00) |
 | 45 | Libro o enciclopedia | Pasa páginas | Oro y petróleo: cuántos barriles compra una onza (v61_libro_oro_petroleo, escena 128, 21 oct 9:30) |
-| 46 | Televisión retro VHS | Años ochenta | Disponible |
+| 46 | Televisión retro VHS | Años ochenta | Niveles redondos del oro: por qué atraen órdenes (v62_vhs_niveles_redondos, escena 129, 21 oct 13:00) |
 | 47 | Mapa de calor animado |  | Disponible |
 | 48 | Burbujas flotantes | Cambian de tamaño | Disponible |
 | 49 | Cámara que desciende por un gráfico gigante |  | Disponible |

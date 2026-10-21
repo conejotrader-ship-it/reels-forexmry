@@ -1,0 +1,83 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:VT;src:url(node_modules/@fontsource/vt323/files/vt323-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 46: televisión retro VHS — tema: niveles redondos del oro ($3.000, $4.000, $5.000) y por qué atraen órdenes (60 s).
+const SPEC={name:'NivelesRedondosOro',hook:'NIVELES REDONDOS DEL ORO: ¿POR QUÉ ATRAEN ÓRDENES?',dur:60,cta:56,bpm:112,mus:'soft',prog:[[45,'m'],[41,'M'],[43,'m'],[40,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[7.6,'ding'],[9.6,'ding'],[13.6,'wipe'],[15.0,'down'],[17.6,'ding'],[20.6,'wipe'],[22.0,'ding'],[24.0,'ding'],[26.0,'ding'],[28.4,'wipe'],[30.0,'down'],[32.0,'hit'],[33.4,'ding'],[35.2,'wipe'],[36.6,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'¿Por qué los niveles redondos llaman tanto la atención en el oro?'],
+ [6.4,13.4,'Dos mil en 2020, tres mil en marzo de 2025, cuatro mil en octubre y cinco mil en enero de 2026.','Dos mil en dos mil veinte, tres mil en marzo de dos mil veinticinco, cuatro mil en octubre y cinco mil en enero de dos mil veintiséis.'],
+ [13.6,20.4,'Son números fáciles de recordar, y allí pueden concentrarse stops, órdenes de ruptura y objetivos.'],
+ [20.6,28.2,'En julio de 2026, investingLive advertía: perder 4.000 un instante podía ser solo un barrido de liquidez.','En julio de dos mil veintiséis, investingLive advertía: perder cuatro mil un instante podía ser solo un barrido de liquidez.'],
+ [28.4,35.0,'Ojo: un nivel redondo no es un muro. Puede romperse, y la ruptura no siempre se sostiene.'],
+ [35.2,43.4,'Cerca de esos niveles el precio puede acelerar. Deja margen a tus stops en vez de ponerlos pegados al número redondo.'],
+ [43.6,49.6,'Úsalos como referencia, no como garantía, y define tu riesgo antes de operar.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0a0a1c',ACC='#ffd23f',FAM='Inter',CY='#35f0ff',MG='#ff3ea5',GN='#3ddc97',RD='#ff5d73',VT='VT';
+window.FONTS=['40px VT'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,10,28,.96)',subStroke:CY,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#150a34');g.addColorStop(.6,'#0b1236');g.addColorStop(1,'#1d0a2e');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+function post(t){ // scanlines + ruido + barra de tracking
+  ctx.save();ctx.fillStyle='rgba(0,0,0,.16)';for(let y=0;y<H;y+=6)ctx.fillRect(0,y,W,2);
+  const r=rng(Math.floor(t*30)*7+3);for(let i=0;i<14;i++){ctx.fillStyle='rgba(255,255,255,'+(.05+r()*.08)+')';ctx.fillRect(r()*W,r()*H,60+r()*200,2)}
+  const ty=((t*260)%(H+300))-150;ctx.fillStyle='rgba(255,255,255,.05)';ctx.fillRect(0,ty,W,60);ctx.restore()}
+function osd(t,txt){T(txt,70,120,{font:'56px VT',fill:'#fff',align:'left',stroke:'#000',lw:6});const s=Math.floor(t);T('SP  0:00:'+String(s).padStart(2,'0'),1010,120,{font:'48px VT',fill:'#fff',align:'right',stroke:'#000',lw:6});
+  if(Math.floor(t*2)%2==0){ctx.save();ctx.fillStyle='#ff2d2d';ctx.beginPath();ctx.arc(1010-190,100,12,0,7);ctx.fill();ctx.restore()}}
+function rgb(s,x,y,sz,col,a=1,al='center'){lbl(s,x-5,y,sz,MG,a*.8,al);lbl(s,x+5,y,sz,CY,a*.8,al);lbl(s,x,y,sz,col,a,al)}
+function hd(t,t0,s,col=ACC){rgb(s,540,250,56,col,eout(prog(t,t0,t0+.5)))}
+function rew(t,t0){const k=prog(t,t0,t0+.5);if(k<=0||k>=1)return;const r=rng(Math.floor(t*40));for(let i=0;i<10;i++){const y=r()*H;ctx.fillStyle='rgba(255,255,255,'+(.2+r()*.4)+')';ctx.fillRect(0,y,W,8+r()*40)}ctx.fillStyle='rgba(0,0,0,.35)';ctx.fillRect(0,0,W,H);T('◄◄ REW',540,960,{font:'120px VT',fill:'#fff',stroke:'#000',lw:8})}
+function panel(x,y,w,h,col,a=1){ctx.save();ctx.globalAlpha*=a;RR(x,y,w,h,18);ctx.fillStyle='rgba(8,8,30,.9)';ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();ctx.restore()}
+function chart(x0,y0,x1,y1,fn,up,col,lw=9){ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineJoin='round';ctx.shadowColor=col;ctx.shadowBlur=14;ctx.beginPath();const n=100;for(let i=0;i<=n*up;i++){const f=i/n;const x=lerp(x0,x1,f),y=lerp(y1,y0,fn(f));i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.restore()}
+function lvl(x0,x1,y,txt,a=1){ctx.save();ctx.globalAlpha*=a;line(x0,y,x1,y,ACC,5,[18,12]);ctx.restore();lbl(txt,x1-10,y-34,38,ACC,a,'right')}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;osd(t,'PLAY ►');
+  rgb('NIVELES',540,380,120,'#fff',eout(prog(t,.2,.8)));rgb('REDONDOS',540,520,120,ACC,eout(prog(t,.6,1.2)));
+  ['$3.000','$4.000','$5.000'].forEach((s,i)=>{const k=eback(prog(t,1.6+i*.5,2.2+i*.5));if(k<=.02)return;const y=780+i*190;panel(150,y-70,780,150,i==1?ACC:CY,Math.min(1,k));ctx.save();ctx.globalAlpha*=Math.min(1,k);rgb(s,540,y+5,100,'#fff');ctx.restore()});
+  const kk=eout(prog(t,4,4.6));lbl('¿POR QUÉ ATRAEN ÓRDENES?',540,1390,44,CY,kk);ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;osd(t,'PLAY ►');hd(t,6.6,'PRIMEROS CRUCES');
+  [['AGO 2020','$2.000','spot',7.4],['MAR 2025','$3.000','futuros',9.2],['OCT 2025','$4.000','futuros',11.0],['ENE 2026','$5.000','spot',12.2]].forEach(([d,v,tp,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=400+i*250;panel(90,y-90,900,200,i%2?CY:MG,k);ctx.save();ctx.globalAlpha*=k;lbl(d,300,y-25,40,'#cfd8ff',1);lbl(tp,300,y+40,34,'#9aa4d8',1);rgb(v,730,y+5,96,ACC);ctx.restore()});
+  lbl('el contrato y la fuente pueden variar',540,1400,30,'#9aa4d8',eout(prog(t,12.4,13)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;osd(t,'PLAY ►');hd(t,13.8,'¿QUÉ SE ACUMULA?');
+  panel(70,330,940,900,CY);const y=700;lvl(110,970,y,'$4.000',eout(prog(t,14.4,15)));
+  [['STOPS',15.2,100,y+90,RD],['RUPTURAS',16.4,300,y-80,GN],['OBJETIVOS',17.6,520,y+110,ACC],['ÓRDENES',18.6,740,y-100,CY]].forEach(([s,ts,x,yy,c],i)=>{const k=eback(prog(t,ts,ts+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=Math.min(1,k);for(let j=0;j<5;j++){ctx.fillStyle=c;ctx.beginPath();ctx.arc(x+j*26-50,yy+(j%2?14:-14),11,0,7);ctx.fill()}lbl(s,x,yy+(yy>y?72:-60),32,c,1);ctx.restore()});
+  lbl('ILUSTRATIVO',540,1160,30,'#9aa4d8',eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;osd(t,'PLAY ►');hd(t,20.8,'BARRIDO DE LIQUIDEZ',MG);
+  lbl('investingLive · 30 jul 2026',540,325,34,'#9aa4d8',eout(prog(t,21.2,21.8)));
+  panel(70,380,940,780,CY);const y=700;lvl(110,970,y,'$4.000',1);
+  chart(110,430,970,1110,f=>f<.3?.62-(f/.3)*.05:(f<.5?.57-(f-.3)/.2*.42:(f<.6?.15+(f-.5)/.1*.5:.65+(f-.6)*.1)),prog(t,22,27),'#fff');
+  const k=eback(prog(t,24.2,24.8));if(k>.02)lbl('BARRIDO',470,1050,64,MG,Math.min(1,k));
+  lbl('ILUSTRATIVO',540,1210,30,'#9aa4d8',eout(prog(t,26,26.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;osd(t,'PLAY ►');hd(t,28.6,'NO ES UN MURO');
+  panel(70,330,940,860,CY);const y=640;lvl(110,970,y,'NIVEL',1);
+  chart(110,380,970,1150,f=>f<.45?.2+f*.6:(f<.62?.47+(f-.45)*2.6:(.91-(f-.62)*1.75)),prog(t,29.6,34),'#fff');
+  const k=eback(prog(t,31.6,32.2));if(k>.02)lbl('RUPTURA',420,560,54,GN,Math.min(1,k));const k2=eback(prog(t,33.2,33.8));if(k2>.02)lbl('NO SE SOSTUVO',780,1010,44,RD,Math.min(1,k2));
+  lbl('ILUSTRATIVO',540,1240,30,'#9aa4d8',eout(prog(t,30,30.6)));ctx.restore()}
+function dipPanel(y0,stopOff,ok,ts,t,title,col){const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;panel(90,y0,900,330,col,1);
+  lbl(title,540,y0+40,34,col,1);const ly=y0+110;line(130,ly,950,ly,ACC,4,[16,10]);lbl('$4.000',930,ly-24,30,ACC,1,'right');
+  chart(130,y0+80,950,y0+300,f=>f<.3?.82-f*.15:(f<.55?.775-(f-.3)/.25*.55:(f<.8?.225+(f-.55)/.25*.6:.825)),prog(t,ts+.3,ts+3),'#fff',7);
+  const sy=y0+110+stopOff;line(130,sy,950,sy,col,5);lbl('STOP',190,sy+(stopOff>100?-24:24),30,col,1);
+  lbl(ok?'✓':'✕',880,y0+265,90,col,eout(prog(t,ts+2.6,ts+3.1)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;osd(t,'PLAY ►');hd(t,35.4,'DEJA MARGEN');
+  dipPanel(330,50,false,36.2,t,'STOP JUSTO BAJO EL NÚMERO',RD);dipPanel(700,150,true,39.2,t,'STOP CON MARGEN',GN);
+  lbl('ILUSTRATIVO',540,1090,30,'#9aa4d8',eout(prog(t,41,41.6)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;osd(t,'PLAY ►');hd(t,43.8,'RECUERDA');
+  [['REFERENCIA, NO GARANTÍA',45.0],['DEFINE TU RIESGO ANTES',46.6],['USA STOPS CON MARGEN',48.2]].forEach(([s,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=470+i*240;panel(90,y-80,900,170,i%2?CY:MG,k);ctx.save();ctx.globalAlpha*=k;lbl(s,540,y+5,s.length>22?42:48,'#fff',1);ctx.restore()});
+  lbl('Contenido educativo, no es asesoría',540,1240,34,'#9aa4d8',eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a);
+  post(t);[6.4,13.6,20.6,28.4,35.2,43.6].forEach(x=>rew(t,x-.3))}
+function cover(){bg(2);osd(2,'PLAY ►');
+  rgb('$4.000',540,420,250,ACC);rgb('¿IMÁN O',540,700,110,'#fff');rgb('TRAMPA?',540,830,130,MG);
+  panel(120,980,840,260,CY);line(160,1110,920,1110,ACC,6,[20,14]);chart(160,1000,920,1220,f=>f<.4?.55-f*.2:(f<.55?.47-(f-.4)*2:(.17+(f-.55)*1.6)),1,'#fff',8);
+  coverBtn('VER POR QUÉ →',ACC,DK);post(2)}
+</script></body></html>
