@@ -1,0 +1,84 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 49: cámara que desciende por un gráfico gigante — tema: backtest en oro con ticks reales vs velas de 1 minuto (60 s).
+const SPEC={name:'BacktestTicks',hook:'BACKTEST EN ORO: TICKS REALES VS VELAS DE UN MINUTO',dur:60,cta:56,bpm:100,mus:'soft',prog:[[45,'m'],[41,'M'],[43,'m'],[40,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[7.6,'ding'],[9.6,'ding'],[13.6,'wipe'],[15.0,'down'],[17.6,'ding'],[20.6,'wipe'],[22.0,'ding'],[24.0,'ding'],[26.0,'ding'],[28.4,'wipe'],[30.0,'down'],[32.0,'hit'],[33.4,'ding'],[35.2,'wipe'],[36.6,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'¿Backtest con ticks reales o con velas de un minuto? En oro puede cambiar el resultado.'],
+ [6.4,13.4,'Con velas de un minuto, el probador revisa solo cuatro precios por minuto: apertura, máximo, mínimo y cierre.'],
+ [13.6,20.4,'Los ticks generados inventan el camino dentro del minuto: más suave y amable que la realidad.'],
+ [20.6,28.2,'Así pueden perderse toques y resolverse primero el objetivo o el stop, a favor del robot.'],
+ [28.4,35.0,'Los ticks reales repiten el historial registrado por el bróker, con saltos y ráfagas.'],
+ [35.2,43.4,'Más sensibles: scalpers con stops ajustados y objetivos a pocos puntos. Menos: robots con stops muy lejos del spread.'],
+ [43.6,49.6,'Prueba con ticks reales, compara modos, y recuerda: un backtest no garantiza el futuro.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#06141a',ACC='#ffd23f',FAM='Inter',TL='#2fd6c6',OR='#ff9f43',RD='#ff5d73',GN='#3ddc97';
+window.FONTS=[];
+const STY={subFont:'800 42px Inter',subBg:'rgba(6,20,26,.96)',subStroke:TL,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+// mundo: gráfico gigante de velas; la cámara desciende y se acerca
+const CN=[];{const r=rng(21);let p=500;for(let i=0;i<70;i++){const o=p,c=p+(r()-.5)*160,h=Math.max(o,c)+r()*80,l=Math.min(o,c)-r()*80;CN.push([o,c,h,l]);p=c+(r()-.45)*30}}
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0a2430');g.addColorStop(1,'#041016');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const k=eio(t/58);const z=lerp(.55,3.2,k),fx=lerp(600,2300,k),fy=lerp(300,820,k);
+  ctx.save();ctx.translate(540,900);ctx.scale(z,z);ctx.translate(-fx,-fy);ctx.globalAlpha=.6;
+  ctx.strokeStyle='rgba(47,214,198,.15)';ctx.lineWidth=2/z;for(let y=-400;y<1800;y+=100){ctx.beginPath();ctx.moveTo(-200,y);ctx.lineTo(5200,y);ctx.stroke()}
+  CN.forEach(([o,c,h,l],i)=>{const x=i*70+60;const up=c>=o;ctx.strokeStyle=ctx.fillStyle=up?TL:'#ff7a8a';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x,1000-h);ctx.lineTo(x,1000-l);ctx.stroke();ctx.fillRect(x-17,1000-Math.max(o,c),34,Math.max(6,Math.abs(c-o)))});ctx.restore();
+  ctx.fillStyle='rgba(6,20,26,.2)';ctx.fillRect(0,0,W,H)}
+function hd(t,t0,s,col=ACC){lbl(s,540,230,56,col,eout(prog(t,t0,t0+.5)))}
+function pan(a=1){ctx.save();ctx.globalAlpha*=a;RR(60,320,960,880,26);ctx.fillStyle='rgba(6,20,26,.9)';ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=TL;ctx.stroke();ctx.restore()}
+const PX=[110,970],PY=[400,1150]; // área del gráfico dentro del panel
+function pp(f,v){return [lerp(PX[0],PX[1],f),lerp(PY[1],PY[0],v)]} // f tiempo 0..1, v precio 0..1
+// puntos O,H,L,C (tiempo, precio)
+const OHLC={O:[0,.45],H:[.62,.92],L:[.3,.08],C:[1,.7]};
+function path(pts,up,col,lw,glow){ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineJoin='round';if(glow){ctx.shadowColor=col;ctx.shadowBlur=14}ctx.beginPath();const n=pts.length-1;const m=up*n;for(let i=0;i<=Math.floor(m)&&i<=n;i++){const q=pp(...pts[i]);i?ctx.lineTo(...q):ctx.moveTo(...q)}if(m<n){const i=Math.floor(m),f=m-i;const a=pp(...pts[i]),b=pp(...pts[i+1]);ctx.lineTo(lerp(a[0],b[0],f),lerp(a[1],b[1],f))}ctx.stroke();ctx.restore()}
+function axes(){line(PX[0],PY[1]+20,PX[1],PY[1]+20,'#7aa',3);line(PX[0],PY[0]-20,PX[0],PY[1]+20,'#7aa',3);lbl('0 s',PX[0],PY[1]+55,28,'#9cc');lbl('60 s',PX[1],PY[1]+55,28,'#9cc');lbl('un minuto',540,PY[1]+55,28,'#9cc')}
+function dot(k,col,txt,dy,a){const q=pp(...OHLC[k]);ctx.save();ctx.globalAlpha*=a;ctx.beginPath();ctx.arc(q[0],q[1],20,0,7);ctx.fillStyle=col;ctx.fill();ctx.lineWidth=5;ctx.strokeStyle='#fff';ctx.stroke();ctx.restore();lbl(txt,q[0]+(k=='O'?30:(k=='C'?-30:0)),q[1]+dy,34,col,a,k=='O'?'left':(k=='C'?'right':'center'))}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  lbl('BACKTEST EN ORO',540,300,100,'#fff',eout(prog(t,.2,.8)));lbl('TICKS REALES',540,440,96,ACC,eout(prog(t,.6,1.2)));lbl('vs',540,540,56,'#9cc',eout(prog(t,1,1.5)));lbl('VELAS DE 1 MINUTO',540,640,80,TL,eout(prog(t,1.4,2)));
+  lbl('¿IMPORTA LA DIFERENCIA?',540,1100,52,'#fff',eout(prog(t,3.6,4.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'VELAS DE 1 MINUTO');pan(eout(prog(t,6.8,7.4)));axes();
+  const d=[['O',TL,'ABRE',-50,7.8],['L','#ff7a8a','MÍNIMO',52,9.0],['H',ACC,'MÁXIMO',-52,10.2],['C',TL,'CIERRA',-50,11.4]];
+  d.forEach(([k,c,s,dy,ts])=>{const kk=eback(prog(t,ts,ts+.5));if(kk>.02)dot(k,c,s,dy,Math.min(1,kk))});
+  const k=eout(prog(t,11.8,12.4));if(k>.02){ctx.save();ctx.globalAlpha*=k;ctx.setLineDash([10,14]);path([OHLC.O,OHLC.L,OHLC.H,OHLC.C],1,'rgba(255,255,255,.25)',4);ctx.restore();lbl('lo demás "no existe"',540,780,40,'#fff',k)}
+  lbl('4 PRECIOS',540,1310,60,ACC,eout(prog(t,9.4,10)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'TICKS GENERADOS');pan(1);axes();
+  ['O','L','H','C'].forEach((k,i)=>dot(k,i==2?ACC:TL,'',0,1));
+  const up=eio(prog(t,14.6,19));path([OHLC.O,[.15,.36],OHLC.L,[.45,.5],[.52,.75],OHLC.H,[.8,.8],OHLC.C],up,TL,8,true);
+  lbl('CAMINO INVENTADO',540,1290,56,TL,eout(prog(t,16.6,17.2)));lbl('suave y amable',540,1360,40,'#fff',eout(prog(t,17.6,18.2)));ctx.restore()}
+function mini(x,y,w,h,order,t,ts,title,col,ok){const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;RR(x,y,w,h,20);ctx.fillStyle='rgba(6,20,26,.92)';ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();lbl(title,x+w/2,y+48,34,col,1);
+  const tp=y+120,sl=y+h-90,op=y+h/2;line(x+30,tp,x+w-30,tp,GN,4,[12,8]);line(x+30,sl,x+w-30,sl,RD,4,[12,8]);lbl('OBJETIVO',x+120,tp-22,24,GN,1);lbl('STOP',x+90,sl+26,24,RD,1);
+  const P=order?[[0,op],[.5,tp],[1,sl]]:[[0,op],[.5,sl],[1,tp]];
+  ctx.save();ctx.strokeStyle='#fff';ctx.lineWidth=7;ctx.beginPath();const up=eio(prog(t,ts+.5,ts+3));const m=up*2;for(let i=0;i<=Math.min(2,Math.floor(m));i++){const px=x+40+P[i][0]*(w-80);i?ctx.lineTo(px,P[i][1]):ctx.moveTo(px,P[i][1])}if(m<2){const i=Math.floor(m),f=m-i;const ax=x+40+P[i][0]*(w-80),bx=x+40+P[i+1][0]*(w-80);ctx.lineTo(lerp(ax,bx,f),lerp(P[i][1],P[i+1][1],f))}ctx.stroke();ctx.restore();
+  if(up>.95)lbl(ok?'✓ OBJETIVO PRIMERO':'✕ STOP PRIMERO',x+w/2,y+h-28,30,ok?GN:RD,1);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'EL ORDEN IMPORTA');
+  mini(60,330,470,820,0,t,21.4,'TICKS REALES',OR,false);mini(550,330,470,820,1,t,23,'GENERADOS',TL,true);
+  lbl('mismo minuto · ejemplo ILUSTRATIVO',540,1230,30,'#9cc',eout(prog(t,26,26.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'TICKS REALES',OR);pan(1);axes();
+  const r=rng(9);const pts=[];let v=.45;for(let i=0;i<=60;i++){const f=i/60;if(i%15==0)v+=0;const burst=(f>.18&&f<.3)||(f>.62&&f<.7);v+=(r()-.5)*(burst?.2:.05);v+=(f<.3?-.012:f<.62?.012:-.003);v=clamp(v,.05,.95);pts.push([f,v])}
+  path(pts,eio(prog(t,29.2,33.4)),OR,5,true);
+  lbl('RÁFAGAS',lerp(PX[0],PX[1],.24),PY[0]+40,34,OR,eout(prog(t,30.6,31.2)));lbl('RÁFAGAS',lerp(PX[0],PX[1],.66),PY[0]+40,34,OR,eout(prog(t,32.4,33)));
+  lbl('historial registrado por el bróker',540,1250,34,'#fff',eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'¿QUIÉN SUFRE MÁS?');
+  [['MÁS SENSIBLES',RD,['órdenes pendientes cerca','break even · trailing ajustado','objetivos a pocos puntos'],36.2,330],['MENOS SENSIBLES',GN,['decide al cierre de vela','stops a múltiplos del spread'],40,810]].forEach(([h,c,L,ts,y])=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;RR(70,y,940,L.length>2?440:340,24);ctx.fillStyle='rgba(6,20,26,.92)';ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=c;ctx.stroke();lbl(h,540,y+60,50,c,1);L.forEach((s,i)=>lbl('• '+s,540,y+140+i*80,40,'#fff',1));ctx.restore()});ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'TU CHECKLIST');
+  [['PRUEBA CON TICKS REALES',45.0],['COMPARA LOS MODOS',46.6],['NO GARANTIZA EL FUTURO',48.2]].forEach(([s,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=470+i*240;ctx.save();ctx.globalAlpha*=k;RR(90,y-80,900,170,24);ctx.fillStyle='rgba(6,20,26,.92)';ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=TL;ctx.stroke();lbl(s,540,y+5,46,'#fff',1);ctx.restore()});
+  lbl('Contenido educativo, no es asesoría',540,1240,34,'#9cc',eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(20);
+  lbl('4 PRECIOS',540,300,150,ACC);lbl('POR MINUTO',540,450,120,'#fff');lbl('¿Y EL RESTO?',540,630,96,RD);
+  RR(120,740,840,560,26);ctx.fillStyle='rgba(6,20,26,.9)';ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=TL;ctx.stroke();
+  ctx.save();ctx.setLineDash([10,14]);ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=5;ctx.beginPath();[[.0,.45],[.15,.36],[.3,.08],[.45,.5],[.52,.75],[.62,.92],[.8,.8],[1,.7]].forEach(([f,v],i)=>{const x=lerp(180,900,f),y=lerp(1240,800,v);i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();ctx.restore();
+  [[.0,.45],[.3,.08],[.62,.92],[1,.7]].forEach(([f,v])=>{ctx.beginPath();ctx.arc(lerp(180,900,f),lerp(1240,800,v),24,0,7);ctx.fillStyle=TL;ctx.fill();ctx.lineWidth=6;ctx.strokeStyle='#fff';ctx.stroke()});
+  coverBtn('VER LA DIFERENCIA →',ACC,DK)}
+</script></body></html>
