@@ -1,0 +1,83 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 45: libro o enciclopedia (pasa páginas) — tema: oro y petróleo, cuántos barriles compra una onza (60 s).
+const SPEC={name:'OroPetroleo',hook:'¿CUÁNTOS BARRILES DE PETRÓLEO COMPRA UNA ONZA DE ORO?',dur:60,cta:56,bpm:96,mus:'soft',prog:[[50,'m'],[46,'M'],[48,'m'],[45,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[7.6,'ding'],[9.6,'ding'],[13.6,'wipe'],[15.0,'down'],[17.6,'ding'],[20.6,'wipe'],[22.0,'ding'],[24.0,'ding'],[26.0,'ding'],[28.4,'wipe'],[30.0,'down'],[32.0,'hit'],[33.4,'ding'],[35.2,'wipe'],[36.6,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'¿Cuántos barriles de petróleo compra una onza de oro? Esa es la relación oro-petróleo.'],
+ [6.4,13.4,'Es oro dividido entre barril. Con oro a 4.000 y petróleo a 80, son 50 barriles.','Es oro dividido entre barril. Con oro a cuatro mil y petróleo a ochenta, son cincuenta barriles.'],
+ [13.6,20.4,'Históricamente, una onza compraba entre 15 y 20 barriles, según los promedios de largo plazo.','Históricamente, una onza compraba entre quince y veinte barriles, según los promedios de largo plazo.'],
+ [20.6,28.2,'En 2026, BitMEX la estimaba en unos 55 barriles, casi tres veces su promedio de 50 años.','En dos mil veintiséis, BitMEX la estimaba en unos cincuenta y cinco barriles, casi tres veces su promedio de cincuenta años.'],
+ [28.4,35.0,'Una relación alta puede significar oro caro, petróleo barato, o ambos: no dice cuál se movió.'],
+ [35.2,43.4,'En abril de 2020, con el petróleo hundido, se disparó a máximos históricos; las cifras varían según el contrato.','En abril de dos mil veinte, con el petróleo hundido, se disparó a máximos históricos; las cifras varían según el contrato.'],
+ [43.6,49.6,'Úsala como contexto, no como señal exacta, y gestiona tu riesgo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#241610',ACC='#ffd23f',FAM='Inter',PA='#f3e8cc',INK='#2b1d12',OX='#9b2335',GD='#c99a1d',OIL='#3b3b46';
+window.FONTS=[];
+const STY={subFont:'800 42px Inter',subBg:'rgba(36,22,16,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function bg(t){ctx.fillStyle='#3a2518';ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,800,100,540,800,1000);g.addColorStop(0,'#5a3a24');g.addColorStop(1,'#241610');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // página
+  ctx.save();ctx.shadowColor='rgba(0,0,0,.6)';ctx.shadowBlur=40;ctx.shadowOffsetY=14;RR(60,170,960,1220,18);ctx.fillStyle=PA;ctx.fill();ctx.restore();
+  const g2=ctx.createLinearGradient(60,0,200,0);g2.addColorStop(0,'rgba(90,60,30,.35)');g2.addColorStop(1,'rgba(90,60,30,0)');ctx.fillStyle=g2;ctx.fillRect(60,170,140,1220);
+  ctx.lineWidth=3;ctx.strokeStyle='rgba(155,35,53,.5)';ctx.strokeRect(100,205,880,1150)}
+function flip(t,t0){const k=prog(t,t0,t0+.7);if(k<=0||k>=1)return;const x=lerp(1010,70,eio(k));const g=ctx.createLinearGradient(x-80,0,x+10,0);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(60,40,20,.45)');ctx.fillStyle=g;ctx.fillRect(x-80,172,90,1216);ctx.fillStyle='rgba(243,232,204,.92)';ctx.fillRect(x+10,172,1010-x,1216)}
+function hd(t,t0,n,s,col=OX){lbl('CAPÍTULO '+n,540,262,28,'#7a6648',eout(prog(t,t0,t0+.5)));lbl(s,540,330,58,col,eout(prog(t,t0,t0+.5)))}
+function barrel(x,y,s,col,a=1){ctx.save();ctx.globalAlpha*=a;ctx.translate(x,y);ctx.scale(s,s);RR(-20,-26,40,52,10);ctx.fillStyle=col;ctx.fill();ctx.lineWidth=3;ctx.strokeStyle='#111';ctx.stroke();line(-20,-12,20,-12,'#111',3);line(-20,12,20,12,'#111',3);ctx.restore()}
+function ingot(x,y,s,a=1){ctx.save();ctx.globalAlpha*=a;ctx.translate(x,y);ctx.scale(s,s);ctx.beginPath();ctx.moveTo(-70,30);ctx.lineTo(-45,-30);ctx.lineTo(45,-30);ctx.lineTo(70,30);ctx.closePath();const g=ctx.createLinearGradient(0,-30,0,30);g.addColorStop(0,'#ffe27a');g.addColorStop(1,GD);ctx.fillStyle=g;ctx.fill();ctx.lineWidth=4;ctx.strokeStyle='#6b4a00';ctx.stroke();ctx.restore();T('Au',x,y,{font:`900 ${34*s}px Inter`,fill:'#6b4a00',a})}
+function grid(n,cols,x0,y0,dx,dy,s,col,t,ts,per){for(let i=0;i<n;i++){const k=eback(prog(t,ts+i*per,ts+i*per+.3));if(k<=.02)continue;barrel(x0+(i%cols)*dx,y0+Math.floor(i/cols)*dy,s*Math.min(1,k),col)}}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  lbl('ENCICLOPEDIA DEL ORO',540,262,28,'#7a6648',eout(prog(t,.1,.6)));
+  lbl('ORO ÷ PETRÓLEO',540,380,90,OX,eout(prog(t,.2,.8)));
+  lbl('1 ONZA = ¿CUÁNTOS BARRILES?',540,480,44,INK,eout(prog(t,.8,1.4)));
+  ingot(300,880,2.4,eout(prog(t,1.2,2)));const k=eout(prog(t,2,2.8));
+  for(let i=0;i<6;i++)barrel(640+(i%3)*120,800+Math.floor(i/3)*140,1.8,OIL,k*eout(prog(t,2+i*.25,2.4+i*.25)));
+  lbl('=',500,880,120,INK,eout(prog(t,1.8,2.4)));lbl('?',540,1190,200,OX,Math.min(1,eback(prog(t,3.6,4.4))*2));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,1,'LA FÓRMULA');
+  lbl('ORO ÷ PRECIO DEL BARRIL',540,440,48,INK,eout(prog(t,7.2,7.8)));
+  [['$4.000',8.2],['÷',8.8],['$80',9.2],['=',9.8],['50',10.2]].forEach(([s,ts],i)=>{const k=eout(prog(t,ts,ts+.4));lbl(s,[270,430,560,690,850][i],600,i==4?120:70,i==4?OX:INK,k)});
+  grid(50,10,170,800,82,78,1,OIL,t,10.6,.05);
+  lbl('50 BARRILES',540,1230,60,OX,eout(prog(t,12.2,12.8)));lbl('EJEMPLO ILUSTRATIVO',540,1310,34,'#7a6648',eout(prog(t,8,8.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,2,'EL PROMEDIO HISTÓRICO');
+  lbl('≈ 15 A 20 BARRILES',540,470,86,OX,eout(prog(t,14.6,15.2)));
+  grid(20,5,300,640,120,120,1.5,OIL,t,15.2,.25);
+  lbl('promedio de largo plazo · las fuentes difieren',540,1220,34,INK,eout(prog(t,19,19.6)));
+  lbl('BitMEX: 15–20 en 50 años · Gorozen: ≈ 20 desde 1900',540,1290,28,'#7a6648',eout(prog(t,19.4,20)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,3,'LA RELACIÓN EN 2026');
+  const base=1150;line(160,base,920,base,INK,4);
+  const k1=eout(prog(t,22,24)),k2=eout(prog(t,24.4,27));
+  ctx.fillStyle=OIL;RR(220,base-17*11*k1,230,17*11*k1,10);ctx.fill();ctx.fillStyle=OX;RR(580,base-55*11*k2,230,55*11*k2,10);ctx.fill();
+  lbl('PROMEDIO',335,base+50,34,INK,eout(prog(t,22,22.6)));lbl('≈ 17',335,base-17*11-40,64,INK,k1>.9?1:0);
+  lbl('2026',695,base+50,34,INK,eout(prog(t,24.4,25)));lbl('≈ 55',695,base-55*11-40,76,OX,k2>.9?1:0);
+  const kk=eback(prog(t,27,27.6));lbl('≈ 3×',540,430,100,OX,Math.min(1,kk*2));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,4,'¿QUÉ SE MOVIÓ?');
+  [['ORO CARO',GD,'▲',29.8],['PETRÓLEO BARATO',OIL,'▼',31.4],['O AMBOS','#555','⇅',33]].forEach(([s,c,ar,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=520+i*270;ctx.save();ctx.globalAlpha*=k;RR(120,y-100,840,210,22);ctx.fillStyle='rgba(255,255,255,.55)';ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=c;ctx.stroke();
+    lbl(ar,260,y+5,100,c,1);lbl(s,640,y+5,s.length>10?46:56,INK,1);ctx.restore()});
+  lbl('la relación sube en los tres casos',540,1330,36,OX,eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,5,'ABRIL DE 2020',OX);
+  const x0=140,x1=940,y0=480,y1=1100;line(x0,y1,x1,y1,INK,4);line(x0,y0,x0,y1,INK,4);
+  ctx.save();ctx.strokeStyle=OX;ctx.lineWidth=9;ctx.beginPath();const up=prog(t,36.2,40);for(let i=0;i<=80*up;i++){const f=i/80;const v=f<.62?.12+.05*Math.sin(f*12):(f<.8?.12+(f-.62)/.18*.82:.94-(f-.8)/.2*.55);const x=x0+f*(x1-x0),y=y1-v*(y1-y0);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.restore();
+  lbl('MÁXIMOS HISTÓRICOS',540,y0-35,40,OX,eout(prog(t,39,39.6)));lbl('ILUSTRATIVO',540,1150,30,'#7a6648',eout(prog(t,38,38.6)));
+  lbl('según la fuente: de ≈ 90 a más de 400',540,1250,38,INK,eout(prog(t,40.6,41.2)));lbl('(depende del contrato de petróleo)',540,1310,30,'#7a6648',eout(prog(t,41.6,42.2)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,6,'CONCLUSIÓN');
+  [['CONTEXTO, NO SEÑAL EXACTA',45.0],['MIDE TU RIESGO',46.6],['EL PASADO NO GARANTIZA EL FUTURO',48.2]].forEach(([s,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=520+i*240;ctx.save();ctx.globalAlpha*=k;RR(120,y-80,840,170,22);ctx.fillStyle='rgba(255,255,255,.55)';ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=OX;ctx.stroke();lbl(s,540,y+5,s.length>24?38:48,INK,1);ctx.restore()});
+  lbl('Contenido educativo, no es asesoría',540,1280,32,'#7a6648',eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  [6.4,13.6,20.6,28.4,35.2,43.6].forEach(x=>flip(t,x-.3));
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  lbl('1 ONZA DE ORO ≈',540,330,76,INK);lbl('55',540,620,330,OX);lbl('BARRILES DE PETRÓLEO',540,830,66,INK);
+  lbl('≈ 3× SU PROMEDIO',540,960,84,OX);
+  ingot(260,1180,2,1);for(let i=0;i<4;i++)barrel(600+i*85,1170,1.6,OIL);
+  coverBtn('VER POR QUÉ →',OX,'#fff')}
+</script></body></html>
