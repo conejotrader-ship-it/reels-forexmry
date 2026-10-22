@@ -1,0 +1,79 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:STM;src:url(node_modules/@fontsource/share-tech-mono/files/share-tech-mono-latin-400-normal.woff2)}
+@font-face{font-family:ORB;font-weight:900;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 16 (reutilizado): plano técnico (blueprint) cian sobre azul con cotas — tema: criterio de Kelly (60 s).
+const SPEC={name:'Kelly',hook:'KELLY: CON 55% DE ACIERTOS, ¿ARRIESGAR 32,5%?',dur:60,cta:56,bpm:98,mus:'soft',prog:[[41,'m'],[38,'M'],[43,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[7.8,'ding'],[10.0,'ding'],[13.6,'wipe'],[15.2,'ding'],[17.0,'ding'],[18.6,'hit'],[20.6,'wipe'],[22.4,'ding'],[24.4,'hit'],[26.4,'ding'],[28.4,'wipe'],[30.4,'alert'],[32.4,'down'],[35.2,'wipe'],[37.4,'ding'],[39.8,'hit'],[41.6,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Con 55 % de aciertos y ganancia doble, Kelly sugiere arriesgar 32,5 %. ¿Es sensato?','Con cincuenta y cinco por ciento de aciertos y ganancia doble, Kelly sugiere arriesgar treinta y dos con cinco por ciento. ¿Es sensato?'],
+ [6.4,13.4,'J. L. Kelly Jr. publicó la fórmula en 1956: busca maximizar el crecimiento del capital a largo plazo.','J. L. Kelly junior publicó la fórmula en mil novecientos cincuenta y seis: busca maximizar el crecimiento del capital a largo plazo.'],
+ [13.6,20.4,'La fórmula: Kelly = probabilidad de ganar menos probabilidad de perder, dividida entre la razón ganancia-pérdida.'],
+ [20.6,28.2,'Ejemplo: 55 % y razón 2, da 32,5 %. Con 40 % y razón 2, da 10 %.','Ejemplo: cincuenta y cinco por ciento y razón dos, da treinta y dos con cinco. Con cuarenta por ciento y razón dos, diez por ciento.'],
+ [28.4,35.0,'Kelly supone que conoces tu ventaja exacta. Si la sobrestimas, arriesgas de más y sube el riesgo de ruina.'],
+ [35.2,43.4,'Por eso muchos usan medio Kelly: cede cerca de un cuarto del crecimiento óptimo y reduce a la mitad las peores caídas.'],
+ [43.6,49.6,'Recuerda: es un modelo, no una promesa. Usa menos que Kelly y gestiona tu riesgo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#06284d',ACC='#7fe3ff',FAM='Inter',BL='#0b3d78',LN='#7fe3ff',WH='#e8f6ff',YL='#ffd23f',RDm='#ff6b6b',GNm='#5ef2a8';
+window.FONTS=['40px STM','900 40px ORB'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(6,40,77,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function mono(s,x,y,sz,col=WH,a=1,al='center'){T(_s(s),x,y,{font:`${sz}px STM`,fill:col,a,align:al})}
+function orb(s,x,y,sz,col=WH,a=1,al='center'){T(_s(s),x,y,{font:`900 ${sz}px ORB`,fill:col,a,align:al})}
+function bg(t){ctx.fillStyle=BL;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle='rgba(127,227,255,.14)';ctx.lineWidth=2;for(let x=0;x<=W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<=H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  ctx.strokeStyle='rgba(127,227,255,.3)';ctx.lineWidth=3;for(let x=0;x<=W;x+=300){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<=H;y+=300){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.strokeStyle=LN;ctx.lineWidth=4;ctx.strokeRect(30,140,1020,1320);mono('PLANO K-1956 · CRITERIO DE KELLY · HOJA 1/1',540,120,26,LN)}
+function hd(t,t0,s,col=LN){orb(s,540,230,46,col,eout(prog(t,t0,t0+.5)));line(100,285,980,285,col,4)}
+function dim(x1,y,x2,s,col,a=1){ctx.save();ctx.globalAlpha*=a;line(x1,y,x2,y,col,3);line(x1,y-14,x1,y+14,col,3);line(x2,y-14,x2,y+14,col,3);mono(s,(x1+x2)/2,y-26,28,col);ctx.restore()}
+function g(f,p=.55,b=2){return p*Math.log(1+b*f)+(1-p)*Math.log(1-f)}
+const GX=f=>140+f/0.8*800,GY=v=>1250-(v+0.2)/0.32*600;
+function curve(t,t0,t1){const k=eio(prog(t,t0,t1))*0.78;ctx.save();ctx.strokeStyle=LN;ctx.lineWidth=7;ctx.lineJoin='round';ctx.beginPath();for(let f=0.005;f<=k;f+=.005){const x=GX(f),y=GY(g(f));f<.01?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.stroke();ctx.restore();return k}
+function axes(){line(140,GY(0),960,GY(0),WH,3);line(140,GY(.12),140,1260,WH,3);mono('crecimiento',200,640,26,WH,1,'left');mono('fracción de la cuenta apostada →',560,1300,28,WH);mono('0',140,GY(0)+28,24,WH);mono('0,8',GX(.8),GY(0)+28,24,WH)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  orb('KELLY',540,380,170,LN,Math.min(1,eback(prog(t,.2,1.1))*2));
+  mono('f* = W − (1 − W) / R',540,560,54,WH,eout(prog(t,1.2,2.0)));
+  orb('32,5 %',540,860,190,YL,Math.min(1,eback(prog(t,2.4,3.4))*2));mono('¿de tu cuenta por operación?',540,1010,44,WH,eout(prog(t,3.4,4.0)));
+  mono('ejemplo: 55 % de aciertos · ganancia = 2 × pérdida',540,1160,30,LN,eout(prog(t,4.2,4.8)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'ORIGEN');
+  orb('1956',540,430,200,YL,eout(prog(t,7.2,8.0)));mono('J. L. KELLY JR.',540,560,48,WH,eout(prog(t,8.0,8.6)));
+  mono('objetivo: maximizar el crecimiento',540,720,38,LN,eout(prog(t,9.6,10.2)));mono('del capital a largo plazo',540,775,38,LN,eout(prog(t,9.9,10.5)));
+  const k=eio(prog(t,10.4,12.6));ctx.save();ctx.strokeStyle=GNm;ctx.lineWidth=8;ctx.beginPath();for(let i=0;i<=100*k;i++){const x=160+i*7.4,y=1280-Math.pow(i/100,2.2)*400;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.restore();
+  line(160,1280,900,1280,WH,3);mono('tiempo →',530,1320,26,WH,eout(prog(t,10.6,11.2)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'LA FÓRMULA');
+  mono('f* = W − (1 − W) / R',540,430,56,YL,eout(prog(t,14.4,15.2)));
+  const it=[['f*','fracción de la cuenta a arriesgar',15.4],['W','probabilidad de ganar (aciertos)',16.8],['R','ganancia media ÷ pérdida media',18.2]];
+  it.forEach(([a1,b1_,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=600+i*210;ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=LN;ctx.lineWidth=4;RR(100,y,880,160,12);ctx.stroke();orb(a1,200,y+80,64,YL);mono(b1_,620,y+80,b1_.length>30?30:34,WH);ctx.restore()});
+  dim(100,1300,980,'W = 0,55 → 1 − W = 0,45',LN,eout(prog(t,19.0,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'DOS EJEMPLOS');
+  [[400,'A','W = 55 %  ·  R = 2','0,55 − 0,45 / 2','= 0,325 → 32,5 %',YL,21.4],[860,'B','W = 40 %  ·  R = 2','0,40 − 0,60 / 2','= 0,10 → 10 %',GNm,24.2]].forEach(([y,l,a1,b1_,c1,col,ts])=>{const k=eout(prog(t,ts,ts+.6));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.translate(lerp(60,0,k),0);ctx.strokeStyle=col;ctx.lineWidth=5;RR(80,y,920,400,16);ctx.stroke();orb(l,160,y+70,60,col);mono(a1,590,y+70,40,WH);mono(b1_,540,y+190,54,WH,eout(prog(t,ts+.8,ts+1.4)));orb(c1,540,y+310,50,col,eout(prog(t,ts+1.6,ts+2.2)));ctx.restore()});
+  mono('ejemplos ilustrativos · cálculo con la fórmula, antes de costos',540,1330,26,LN,eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'APOSTAR DE MÁS',RDm);axes();
+  const k=curve(t,29.2,33.0);
+  const kk=eout(prog(t,30.4,31.0));if(kk>.02){ctx.save();ctx.globalAlpha*=kk;ctx.fillStyle=YL;ctx.beginPath();ctx.arc(GX(.325),GY(g(.325)),14,0,7);ctx.fill();mono('Kelly 32,5 %',GX(.325)+140,GY(g(.325))-30,30,YL);ctx.restore()}
+  const k3=eout(prog(t,32.4,33.2));if(k3>.02){ctx.save();ctx.globalAlpha*=k3;ctx.fillStyle='rgba(255,107,107,.22)';ctx.fillRect(GX(.63),GY(.12),GX(.8)-GX(.63),GY(-.2)-GY(.12));mono('crecimiento',GX(.715),870,24,RDm);mono('negativo',GX(.715),900,24,RDm);ctx.restore()}
+  mono('curva con p = 55 %, R = 2 (cálculo propio, ilustrativo)',540,1370,24,LN,eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'MEDIO KELLY',GNm);axes();
+  curve(t,35.8,36.8);
+  [[.325,YL,'Kelly',37.2],[.1625,GNm,'½ Kelly',38.8]].forEach(([f,c,s,ts])=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=c;ctx.beginPath();ctx.arc(GX(f),GY(g(f)),14,0,7);ctx.fill();line(GX(f),GY(g(f)),GX(f),GY(0),c,3,[8,8]);mono(s,GX(f),GY(0)+60,30,c);ctx.restore()});
+  const k=eout(prog(t,40.0,40.8));if(k>.02){ctx.save();ctx.globalAlpha*=k;orb('≈ 75 %',720,440,80,GNm);mono('del crecimiento',720,500,28,WH);mono('con la mitad del riesgo',720,540,28,WH);ctx.restore()}
+  mono('fuente: FFFinstill · cifras aproximadas',540,1370,24,LN,eout(prog(t,41.4,42)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'RECUERDA',YL);
+  [['ES UN MODELO, NO UNA PROMESA',45.0,YL],['USA MENOS QUE KELLY',46.6,GNm],['GESTIONA TU RIESGO',48.2,LN]].forEach(([s,ts,c],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=470+i*230;ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=c;ctx.lineWidth=5;RR(90,y-75,900,150,14);ctx.stroke();orb(s,540,y,s.length>24?34:40,c);ctx.restore()});
+  mono('Contenido educativo, no es asesoría financiera',540,1260,30,WH,eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  orb('KELLY',540,300,110,LN);orb('32,5 %',540,640,196,YL);mono('f* = W − (1 − W) / R',540,850,50,WH);orb('¿CUÁNTO',540,1050,96,WH);orb('ARRIESGAR?',540,1180,96,RDm);
+  ctx.save();ctx.strokeStyle=GNm;ctx.lineWidth=9;ctx.beginPath();for(let f=.005;f<=.78;f+=.005){const x=100+f/.8*880,y=1430-(g(f)+.2)/.32*130;f<.01?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.stroke();ctx.restore();
+  coverBtn('VER LA FÓRMULA →',ACC,DK)}
+</script></body></html>
