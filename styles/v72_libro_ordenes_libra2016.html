@@ -1,0 +1,84 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:STM;src:url(node_modules/@fontsource/share-tech-mono/files/share-tech-mono-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 18 (reutilizado): libro de órdenes (escalera de precios con profundidad compradora/vendedora) — tema: flash crash de la libra, 7 oct 2016 (60 s).
+const SPEC={name:'FlashLibra',hook:'7 DE OCTUBRE DE 2016: LA LIBRA CAE 6% EN 2 MINUTOS',dur:60,cta:56,bpm:112,mus:'soft',prog:[[40,'m'],[43,'M'],[38,'m'],[45,'M']],
+ ev:[[0.3,'rise',2.4],[2.6,'down'],[3.4,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'ding'],[12.0,'alert'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[19.0,'ding'],[20.6,'wipe'],[22.4,'ding'],[24.0,'ding'],[25.6,'ding'],[27.2,'ding'],[28.4,'wipe'],[30.4,'ding'],[32.4,'ding'],[34.0,'ding'],[35.2,'wipe'],[37.0,'rise',2.4],[39.6,'hit'],[41.4,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'7 de octubre de 2016: en unos dos minutos, la libra cayó cerca de 6 % frente al dólar.','Siete de octubre de dos mil dieciséis: en unos dos minutos, la libra cayó cerca de seis por ciento frente al dólar.'],
+ [6.4,13.4,'Fue de madrugada en Londres, en las primeras horas de Asia, cuando casi no hay liquidez.'],
+ [13.6,20.4,'Pasó de ≈ 1,26 a un mínimo de 1,1841 dólares, el nivel más bajo desde 1985.','Pasó de cerca de uno con veintiséis a un mínimo de uno con mil ciento ochenta y cuatro dólares, el nivel más bajo desde mil novecientos ochenta y cinco.'],
+ [20.6,28.2,'Se citaron varias causas: palabras de Hollande sobre el Brexit, temor a un Brexit duro y un posible error humano.'],
+ [28.4,35.0,'El informe del BPI habló de una confluencia de factores y de amplificadores mecánicos, como coberturas de opciones.'],
+ [35.2,43.4,'En minutos recuperó ≈ 1,2450, pero la libra cerró el día más baja.','En minutos recuperó cerca de uno con doscientos cuarenta y cinco, pero la libra cerró el día más baja.'],
+ [43.6,49.6,'Lección: con poca liquidez, el spread y el slippage se disparan. Cuida el tamaño y el horario.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0a1020',ACC='#4cc9f0',FAM='Inter',PN='#111a30',GRN='#2fd38c',RED='#ff5266',YEL='#ffd23f',TX='#e6ecff',MUT='#8c9ac0';
+window.FONTS=['40px STM'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,16,32,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function mono(s,x,y,sz,col=TX,a=1,al='center'){T(_s(s),x,y,{font:`${sz}px STM`,fill:col,a,align:al})}
+function bg(t){ctx.fillStyle=DK;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle='rgba(76,201,240,.07)';ctx.lineWidth=2;for(let y=0;y<H;y+=48){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore()}
+function hd(t,t0,s,col=ACC){lbl(s,540,240,58,col,eout(prog(t,t0,t0+.5)));line(100,290,980,290,col,5)}
+// escalera: filas de precio; liq 0..1 ; bid verde a la izquierda, ask rojo a la derecha
+function ladder(x,y,w,rows,rh,liq,seed,labels,mid){const r=rng(seed);for(let i=0;i<rows;i++){const yy=y+i*rh;const a=.55+.45*r();const cx=x+w/2;const L=(w/2-70)*a*liq,R=(w/2-70)*(.4+.6*r())*liq;
+    const ask=mid==null?i<rows/2:i<mid;ctx.fillStyle=ask?'rgba(255,82,102,.85)':'rgba(47,211,140,.85)';if(ask){ctx.fillRect(cx+60,yy+3,R,rh-6)}else{ctx.fillRect(cx-60-L,yy+3,L,rh-6)}
+    if(labels)mono(labels(i),cx,yy+rh/2+1,Math.min(26,rh*.55),MUT)}}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  lbl('7 OCT 2016',540,350,70,MUT,eout(prog(t,.2,.8)));lbl('LIBRA',540,500,150,TX,eout(prog(t,.5,1.2)));
+  lbl('−6 %',540,780,330,RED,Math.min(1,eback(prog(t,1.2,2.2))*2));lbl('EN ≈ 2 MINUTOS',540,1020,84,YEL,eout(prog(t,2.6,3.3)));
+  const k=eio(prog(t,2.4,3.6));ctx.save();ctx.globalAlpha*=eout(prog(t,2.4,3));mono('GBP/USD',540,1170,48,ACC);ctx.restore();
+  const P=[['1,26',1240],['1,1841',1340]];ladder(160,1210,760,2,60,eout(prog(t,3.4,4.4)),4,null,1);
+  mono('≈ 1,26',300,1262,40,GRN,eout(prog(t,2.8,3.4)));mono('1,1841 mín.',780,1322,40,RED,eout(prog(t,4.0,4.6)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'¿POR QUÉ DE MADRUGADA?');
+  mono('00:07 · Londres',540,380,60,YEL,eout(prog(t,7.2,7.8)));mono('primeras horas de Asia',540,445,34,MUT,eout(prog(t,7.8,8.4)));
+  ctx.save();ctx.globalAlpha*=eout(prog(t,8.4,9.0));ctx.fillStyle=PN;RR(90,520,430,640,18);ctx.fill();RR(560,520,430,640,18);ctx.fill();ctx.restore();
+  mono('SESIÓN ACTIVA',305,565,32,GRN,eout(prog(t,8.8,9.4)));mono('MADRUGADA',775,565,32,RED,eout(prog(t,9.2,9.8)));
+  ladder(100,600,410,12,46,eout(prog(t,9.4,10.8)),11,null,6);ladder(570,600,410,12,46,.35*eout(prog(t,10.0,11.4)),12,null,6);
+  mono('mucha profundidad',305,1190,30,GRN,eout(prog(t,10.8,11.4)));mono('poca profundidad',775,1190,30,RED,eout(prog(t,11.4,12)));
+  mono('esquema ilustrativo del libro de órdenes',540,1290,28,MUT,eout(prog(t,12.2,12.8)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'EL PRECIO CAE');
+  const N=14,y0=360,rh=64;const P=i=>(1.27-i*0.0075).toFixed(4).replace('.',',');
+  ladder(80,y0,920,N,rh,.55,21,i=>P(i),N/2);
+  const k=eio(prog(t,15.0,17.4));const ym=lerp(y0+rh*1.5,y0+rh*12.5,k);
+  ctx.save();ctx.strokeStyle=YEL;ctx.lineWidth=6;ctx.setLineDash([14,10]);ctx.beginPath();ctx.moveTo(80,ym);ctx.lineTo(1000,ym);ctx.stroke();ctx.restore();
+  ctx.fillStyle=YEL;ctx.beginPath();ctx.moveTo(60,ym);ctx.lineTo(30,ym-20);ctx.lineTo(30,ym+20);ctx.closePath();ctx.fill();
+  const price=lerp(1.26,1.1841,k);mono(price.toFixed(4).replace('.',','),840,ym-32,44,YEL);
+  lbl('−6 %',270,520,120,RED,eout(prog(t,17.2,18)));
+  mono('≈ 1,26 → 1,1841 · mín. desde 1985',540,1330,34,TX,eout(prog(t,18.0,18.6)));mono('esquema ilustrativo · algún feed marcó 1,1378',540,1385,26,MUT,eout(prog(t,18.8,19.4)));ctx.restore()}
+function chip(y,s,col,t,ts,sz=40){const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.translate(lerp(50,0,k),0);ctx.fillStyle=PN;ctx.strokeStyle=col;ctx.lineWidth=5;RR(90,y,900,150,16);ctx.fill();ctx.stroke();lbl(s,540,y+76,sz,col);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'CAUSAS CITADAS',YEL);
+  chip(380,'PALABRAS DE HOLLANDE SOBRE EL BREXIT',TX,t,22.0,34);chip(570,'TEMOR A UN BREXIT DURO',TX,t,23.6,40);chip(760,'¿ERROR HUMANO? (FAT FINGER)',YEL,t,25.2,40);chip(950,'POCA LIQUIDEZ EN ASIA',RED,t,26.8,40);
+  mono('ninguna confirmada como causa única',540,1190,32,MUT,eout(prog(t,27.0,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'LO QUE DIJO EL BPI');
+  ctx.save();ctx.globalAlpha*=eout(prog(t,29.2,29.8));ctx.fillStyle=PN;ctx.strokeStyle=ACC;ctx.lineWidth=5;RR(90,360,900,260,16);ctx.fill();ctx.stroke();mono('Markets Committee Papers No 9',540,430,38,ACC);mono('13 de enero de 2017 · BIS / Bank of England',540,490,30,TX);mono('“flash event” del 7 de octubre de 2016',540,550,30,MUT);ctx.restore();
+  chip(670,'CONFLUENCIA DE FACTORES',YEL,t,30.6,40);chip(860,'AMPLIFICADORES MECÁNICOS: OPCIONES',RED,t,32.2,34);chip(1050,'UNA SERIE DE FLASH EVENTS',GRN,t,33.8,38);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'EL REBOTE',GRN);
+  const N=14,y0=360,rh=64;const P=i=>(1.27-i*0.0075).toFixed(4).replace('.',',');ladder(80,y0,920,N,rh,.55,21,i=>P(i),N/2);
+  const k=eio(prog(t,36.2,39.4));const ym=lerp(y0+rh*12.5,y0+rh*3.2,k);
+  ctx.save();ctx.strokeStyle=GRN;ctx.lineWidth=6;ctx.setLineDash([14,10]);ctx.beginPath();ctx.moveTo(80,ym);ctx.lineTo(1000,ym);ctx.stroke();ctx.restore();
+  ctx.fillStyle=GRN;ctx.beginPath();ctx.moveTo(60,ym);ctx.lineTo(30,ym-20);ctx.lineTo(30,ym+20);ctx.closePath();ctx.fill();
+  mono('≈ 1,2450',840,ym-32,44,GRN);
+  lbl('REBOTE EN MINUTOS',540,1290,48,GRN,eout(prog(t,39.4,40)));lbl('pero cerró el día más baja',540,1360,36,TX,eout(prog(t,40.8,41.4)));
+  mono('Fuentes: BIS, Business Standard, Wikipedia · cifras aprox.',540,1415,24,MUT,eout(prog(t,41.6,42.2)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'LECCIÓN PARA TU ROBOT',YEL);
+  chip(380,'POCA LIQUIDEZ = MÁS SPREAD',RED,t,45.0,38);chip(570,'MÁS SLIPPAGE EN LAS ÓRDENES',YEL,t,46.6,38);chip(760,'CUIDA TAMAÑO Y HORARIO',GRN,t,48.2,40);
+  mono('Contenido educativo, no es asesoría financiera',540,1000,28,MUT,eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  lbl('LIBRA · 7 OCT 2016',540,290,62,MUT);lbl('−6 %',540,600,340,RED);lbl('EN 2 MINUTOS',540,880,110,YEL);
+  ladder(120,980,840,6,56,.7,31,null,3);mono('GBP/USD · 1,26 → 1,1841',540,1500-10,1,TX,0);
+  ctx.fillStyle=YEL;ctx.beginPath();ctx.moveTo(100,1230);ctx.lineTo(70,1210);ctx.lineTo(70,1250);ctx.closePath();ctx.fill();
+  coverBtn('VER QUÉ PASÓ →',ACC,DK)}
+</script></body></html>
