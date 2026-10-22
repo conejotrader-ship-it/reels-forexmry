@@ -1,0 +1,80 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 14 (reutilizado): lingotes dorados sobre bóveda oscura — tema: oro físico, ETF, mineras y futuros (60 s).
+const SPEC={name:'CuatroFormasOro',hook:'4 FORMAS DE TENER ORO: ¿CUÁL CUESTA MÁS?',dur:60,cta:56,bpm:104,mus:'soft',prog:[[43,'m'],[40,'M'],[45,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[7.8,'ding'],[9.6,'ding'],[11.4,'hit'],[13.6,'wipe'],[15.0,'ding'],[17.2,'ding'],[19.0,'hit'],[20.6,'wipe'],[22.4,'ding'],[24.8,'hit'],[26.4,'alert'],[28.4,'wipe'],[30.0,'ding'],[31.6,'ding'],[33.2,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[47.8,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Oro físico, ETF, mineras y futuros: cuatro formas de exponerte al oro, con costos y riesgos distintos.'],
+ [6.4,13.4,'Oro físico: pagas una prima de 3 a 8 % sobre el spot en barras de una onza, y tú lo custodias.','Oro físico: pagas una prima de tres a ocho por ciento sobre el spot en barras de una onza, y tú lo custodias.'],
+ [13.6,20.4,'Un ETF de oro se opera fácil y cobra comisión anual: 0,40 % en SPDR Gold Trust. No tocas las barras.','Un ETF de oro se opera fácil y cobra comisión anual: cero con cuarenta por ciento en SPDR Gold Trust. No tocas las barras.'],
+ [20.6,28.2,'Las mineras amplifican el oro: con costo de 1.200, oro a 1.500 deja 300; a 1.800, 600. Y hay riesgo de empresa.','Las mineras amplifican el oro: con costo de mil doscientos, oro a mil quinientos deja trescientos; a mil ochocientos, seiscientos. Y hay riesgo de empresa.'],
+ [28.4,35.0,'Futuros de oro: un contrato COMEX son 100 onzas, con apalancamiento y vencimientos.','Futuros de oro: un contrato COMEX son cien onzas, con apalancamiento y vencimientos.'],
+ [35.2,43.4,'El XAUUSD de un bróker suele ser un CFD: operas el precio con margen, sin recibir oro, y puede haber swap.'],
+ [43.6,49.6,'No hay opción perfecta: compara costos, plazo y riesgo antes de elegir.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0e0c09',ACC='#f0b429',FAM='Inter',GD2='#b8860b',IV='#f6ecd0',RDm='#e5484d',GNm='#3ecf8e',BLm='#5aa9ff';
+const STY={subFont:'800 42px Inter',subBg:'rgba(14,12,9,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0b0907');g.addColorStop(.5,'#1a140c');g.addColorStop(1,'#0b0907');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.5;const r=rng(9);for(let i=0;i<70;i++){const x=r()*W,y=r()*H,s=(Math.sin(t*2+i)+1)/2;ctx.fillStyle=ACC;ctx.globalAlpha=.08+.25*s*r();ctx.fillRect(x,y,3,3)}ctx.restore();
+  ctx.strokeStyle='rgba(240,180,41,.35)';ctx.lineWidth=3;RR(36,150,1008,1300,26);ctx.stroke()}
+function ingot(x,y,w,h,a=1,lab,ls){ctx.save();ctx.globalAlpha*=a;const tw=w*.76;const g=ctx.createLinearGradient(0,y-h/2,0,y+h/2);g.addColorStop(0,'#ffe49a');g.addColorStop(.5,'#f0b429');g.addColorStop(1,'#a8750a');
+  ctx.beginPath();ctx.moveTo(x-tw/2,y-h/2);ctx.lineTo(x+tw/2,y-h/2);ctx.lineTo(x+w/2,y+h/2);ctx.lineTo(x-w/2,y+h/2);ctx.closePath();ctx.fillStyle=g;ctx.fill();ctx.lineWidth=5;ctx.strokeStyle='#6b4a05';ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x-tw/2+14,y-h/2+12);ctx.lineTo(x+tw/2-14,y-h/2+12);ctx.lineTo(x+tw/2-30,y-h/2+h*.3);ctx.lineTo(x-tw/2+30,y-h/2+h*.3);ctx.closePath();ctx.fillStyle='rgba(255,255,255,.35)';ctx.fill();
+  if(lab)lbl(lab,x,y+h*.12,ls||40,'#4a3200');ctx.restore()}
+function hd(t,t0,s,col=ACC){lbl(s,540,250,56,col,eout(prog(t,t0,t0+.5)));line(120,300,960,300,col,6)}
+function chip(x,y,w,h,s,col,t,ts,sz=40){const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.translate(lerp(40,0,k),0);ctx.fillStyle='rgba(255,255,255,.06)';ctx.strokeStyle=col;ctx.lineWidth=5;RR(x,y,w,h,22);ctx.fill();ctx.stroke();lbl(s,x+w/2,y+h/2+2,sz,col);ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  lbl('4',540,520,560,ACC,Math.min(1,eback(prog(t,.2,1.2))*2));lbl('FORMAS DE TENER ORO',540,860,78,IV,eout(prog(t,1.0,1.7)));
+  [[210,1090,'FÍSICO'],[430,1090,'ETF'],[650,1090,'MINERAS'],[870,1090,'FUTUROS']].forEach(([x,y,s],i)=>{const k=eout(prog(t,2.0+i*.5,2.6+i*.5));ingot(x,y,190,110,k,s,26)});
+  lbl('¿CUÁL CUESTA MÁS?',540,1290,64,RDm,eout(prog(t,4.4,5.1)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'1 · ORO FÍSICO');
+  ingot(540,560,560,250,eout(prog(t,7.2,8.0)),'BARRA 1 OZ',46);
+  const k=eout(prog(t,8.8,10.2));lbl('PRECIO SPOT + PRIMA',540,800,40,IV,eout(prog(t,8.6,9.2)));
+  ctx.fillStyle=ACC;RR(120,840,640*k,70,14);ctx.fill();ctx.fillStyle=RDm;ctx.beginPath();ctx.roundRect(120+640*k,840,150*k,70,14);ctx.fill();
+  lbl('PRIMA ≈ 3–8 %',640,1000,56,RDm,eout(prog(t,10.2,10.8)));
+  chip(120,1050,840,100,'VENTA: SPOT − 1 A 3 %',IV,t,11.0,40);chip(120,1180,840,100,'CUSTODIA Y SEGURO: TU CARGO',IV,t,12.0,38);
+  lbl('esquema no a escala · cifras de vendedores, aprox.',540,1350,28,'#b9ab86',eout(prog(t,12.4,13)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'2 · ETF DE ORO',BLm);
+  const k=eout(prog(t,14.4,15.2));ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=BLm;ctx.lineWidth=8;RR(130,380,360,330,26);ctx.stroke();ingot(310,520,190,90,1);ingot(310,610,190,90,1);lbl('BÓVEDA',310,435,34,BLm);ctx.restore();
+  const k2=eout(prog(t,15.4,16.4));ctx.save();ctx.globalAlpha*=k2;line(500,545,590,545,BLm,8);ctx.fillStyle=BLm;ctx.beginPath();ctx.moveTo(610,545);ctx.lineTo(580,520);ctx.lineTo(580,570);ctx.closePath();ctx.fill();
+  ctx.strokeStyle=BLm;RR(620,420,330,250,24);ctx.lineWidth=8;ctx.stroke();lbl('ACCIÓN',785,480,40,BLm);lbl('ETF',785,580,100,IV);ctx.restore();
+  lbl('0,40 %',540,880,170,ACC,Math.min(1,eback(prog(t,17.0,18.0))*2));lbl('comisión anual · SPDR Gold Trust',540,990,38,IV,eout(prog(t,18.0,18.6)));
+  chip(120,1060,840,100,'NO RECIBES LAS BARRAS',IV,t,18.8,40);chip(120,1190,840,100,'DIFERENCIAL COMPRA-VENTA: < 1 %',IV,t,19.4,36);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'3 · MINERAS',GNm);
+  const yb=1130;line(120,yb,960,yb,IV,5);
+  const k1=eout(prog(t,21.6,23.4)),k2=eout(prog(t,23.8,26.4));
+  ctx.fillStyle=ACC;RR(190,yb-120*k1,250,120*k1,12);ctx.fill();ctx.fillStyle=GNm;RR(640,yb-600*k2,250,600*k2,12);ctx.fill();
+  lbl('ORO +20 %',315,yb+55,42,ACC);lbl('GANANCIA POR ONZA +100 %',765,yb+55,26,GNm);
+  lbl('$1.500 → $1.800',315,yb-120*k1-40,38,IV,eout(prog(t,23,23.6)));lbl('$300 → $600',765,yb-600*k2-40,48,IV,eout(prog(t,25.6,26.2)));
+  lbl('costo de producción $1.200 por onza (ejemplo)',540,380,32,'#b9ab86',eout(prog(t,22,22.6)));
+  chip(120,1260,840,90,'RIESGO DE EMPRESA: COSTOS, GESTIÓN, DEUDA',RDm,t,26.6,30);
+  lbl('ejemplo ilustrativo del apalancamiento operativo',540,1395,26,'#b9ab86',eout(prog(t,27,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'4 · FUTUROS DE ORO',RDm);
+  ingot(540,560,520,240,eout(prog(t,29.2,30)),'100 OZ',70);lbl('1 CONTRATO COMEX',540,730,42,IV,eout(prog(t,30,30.6)));
+  chip(120,830,840,110,'MARGEN: DEPÓSITO, NO EL PRECIO TOTAL',IV,t,30.8,34);chip(120,970,840,110,'APALANCAMIENTO: GANAS Y PIERDES MÁS',RDm,t,32.0,34);chip(120,1110,840,110,'VENCIMIENTO Y ROLLOVER',IV,t,33.2,40);
+  lbl('fuente: CME Group (contrato de 100 onzas troy)',540,1320,28,'#b9ab86',eout(prog(t,33.8,34.4)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'+ XAUUSD DEL BRÓKER',BLm);
+  lbl('CFD',540,500,260,ACC,Math.min(1,eback(prog(t,36,37))*2));lbl('contrato por diferencia',540,650,48,IV,eout(prog(t,37,37.6)));
+  chip(120,760,840,110,'OPERAS EL PRECIO, NO RECIBES ORO',IV,t,38.2,36);chip(120,900,840,110,'CON MARGEN Y APALANCAMIENTO',IV,t,39.6,38);chip(120,1040,840,110,'PUEDE HABER SWAP NOCTURNO',BLm,t,41.0,38);
+  lbl('“suele ser” · depende del bróker: revisa sus condiciones',540,1260,28,'#b9ab86',eout(prog(t,42,42.6)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'COMPARA ANTES DE ELEGIR',GNm);
+  [['FÍSICO','PRIMA + CUSTODIA',ACC,45.0],['ETF','COMISIÓN ANUAL',BLm,46.0],['MINERAS','RIESGO DE EMPRESA',GNm,47.0],['FUTUROS','APALANCAMIENTO',RDm,48.0]].forEach(([a1,b1_,c,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const x=i%2?560:80,y=400+Math.floor(i/2)*320;ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=c;ctx.lineWidth=6;ctx.fillStyle='rgba(255,255,255,.06)';RR(x,y,440,280,26);ctx.fill();ctx.stroke();lbl(a1,x+220,y+100,58,c);lbl(b1_,x+220,y+190,30,IV);ctx.restore()});
+  lbl('Contenido educativo, no es asesoría financiera',540,1130,32,'#b9ab86',eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  lbl('ORO · 4 FORMAS',540,300,64,IV);lbl('4',540,640,620,ACC);lbl('¿CUÁL CUESTA',540,1000,100,IV);lbl('MÁS?',540,1130,150,RDm);
+  [[215,1300],[435,1300],[655,1300],[875,1300]].forEach(([x,y])=>ingot(x,y,190,100,1));
+  coverBtn('VER LOS COSTOS →',ACC,DK)}
+</script></body></html>
