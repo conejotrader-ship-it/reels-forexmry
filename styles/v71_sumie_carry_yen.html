@@ -1,0 +1,87 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:SM;font-weight:800;src:url(node_modules/@fontsource/shippori-mincho/files/shippori-mincho-latin-800-normal.woff2)}
+@font-face{font-family:SM;font-weight:500;src:url(node_modules/@fontsource/shippori-mincho/files/shippori-mincho-latin-500-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 15 (reutilizado): tinta japonesa sumi-e, pinceladas sobre papel de arroz — tema: carry trade del yen y el 5 de agosto de 2024 (60 s).
+const SPEC={name:'CarryYen',hook:'5 DE AGOSTO DE 2024: EL NIKKEI CAE 12,4% EN UN DÍA',dur:60,cta:56,bpm:90,mus:'soft',prog:[[45,'m'],[41,'M'],[43,'m'],[40,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[8.0,'ding'],[10.0,'ding'],[12.0,'ding'],[13.6,'wipe'],[15.0,'down'],[17.4,'hit'],[20.6,'wipe'],[22.4,'ding'],[24.6,'hit'],[26.6,'ding'],[28.4,'wipe'],[30.0,'rise',2.4],[32.4,'hit'],[35.2,'wipe'],[37.0,'down'],[39.4,'hit'],[41.2,'alert'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'El 5 de agosto de 2024, el Nikkei cayó 12,4 % en un día. Detrás estaba el carry trade del yen.','El cinco de agosto de dos mil veinticuatro, el Nikkei cayó doce con cuatro por ciento en un día. Detrás estaba el carry trade del yen.'],
+ [6.4,13.4,'Un carry trade pide prestado en una moneda con tasas bajas, como el yen, para invertir donde rinde más.'],
+ [13.6,20.4,'Entre 2022 y julio de 2024, el yen perdió más de 40 % frente al dólar. Pedir yenes salía barato.','Entre dos mil veintidós y julio de dos mil veinticuatro, el yen perdió más de cuarenta por ciento frente al dólar. Pedir yenes salía barato.'],
+ [20.6,28.2,'El 31 de julio, el Banco de Japón subió su tasa de 0,1 a 0,25 %. Dos días después, el empleo en EE. UU. decepcionó: 111 mil puestos.','El treinta y uno de julio, el Banco de Japón subió su tasa de cero con uno a cero con veinticinco por ciento. Dos días después, el empleo en Estados Unidos decepcionó: ciento once mil puestos.'],
+ [28.4,35.0,'El yen se disparó: casi 14 % en menos de un mes, hasta unos 143 por dólar. Muchas posiciones se cerraron.','El yen se disparó: casi catorce por ciento en menos de un mes, hasta unos ciento cuarenta y tres por dólar. Muchas posiciones se cerraron.'],
+ [35.2,43.4,'El Nikkei perdió 4.451 puntos, su mayor caída diaria, y 12,4 %: lo peor desde 1987.','El Nikkei perdió cuatro mil cuatrocientos cincuenta y un puntos, su mayor caída diaria, y doce con cuatro por ciento: lo peor desde mil novecientos ochenta y siete.'],
+ [43.6,49.6,'Un banco central puede mover todos los mercados. Gestiona tu riesgo en días de volatilidad.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#141414',ACC='#e04848',FAM='Inter',PP='#f1eadb',INK='#191919',RS='#c1272d',GY='#8a857a',IN2='#3a3a3a';
+window.FONTS=['800 40px SM','500 40px SM'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(20,20,20,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function sm(s,x,y,sz,col=INK,a=1,al='center',w=800){T(_s(s),x,y,{font:`${w} ${sz}px SM`,fill:col,a,align:al})}
+function bg(t){ctx.fillStyle=PP;ctx.fillRect(0,0,W,H);
+  ctx.save();const r=rng(5);for(let i=0;i<220;i++){ctx.globalAlpha=.05+r()*.06;ctx.strokeStyle='#7a6a4a';ctx.lineWidth=1+r()*1.5;const x=r()*W,y=r()*H;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+(r()-.5)*90,y+(r()-.5)*40);ctx.stroke()}ctx.restore();
+  const g=ctx.createRadialGradient(540,900,350,540,900,1250);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(1,'rgba(120,95,50,.28)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+// pincelada: puntos [x,y], ancho, color, avance 0..1
+function brush(pts,w,col,k,seed=3,a=.92){const L=[];let tot=0;for(let i=1;i<pts.length;i++){const d=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);L.push(d);tot+=d}
+  const lim=tot*clamp(k);if(lim<=0)return;const r=rng(seed*17+1);ctx.save();ctx.fillStyle=col;let acc=0;
+  for(let i=1;i<pts.length;i++){const d=L[i-1];for(let s=0;s<d;s+=3){if(acc+s>lim){ctx.restore();return}const f=s/d,u=(acc+s)/tot;
+      const x=lerp(pts[i-1][0],pts[i][0],f)+(r()-.5)*2,y=lerp(pts[i-1][1],pts[i][1],f)+(r()-.5)*2;const rad=w/2*(.55+.45*Math.sin(Math.PI*Math.min(1,u*1.05)))*(.85+r()*.3);
+      ctx.globalAlpha=a*(.75+r()*.25);ctx.beginPath();ctx.arc(x,y,rad,0,7);ctx.fill();
+      if(r()<.12){ctx.globalAlpha=.35;ctx.beginPath();ctx.arc(x+(r()-.5)*rad*2.2,y+(r()-.5)*rad*2.2,rad*.25,0,7);ctx.fill()}}acc+=d}
+  ctx.restore()}
+function hanko(s,x,y,sz,a=1,rot=0){ctx.save();ctx.globalAlpha*=a;ctx.translate(x,y);ctx.rotate(rot);ctx.fillStyle=RS;RR(-sz*.75,-sz*.75,sz*1.5,sz*1.5,8);ctx.fill();if(s.includes(' ')){const [n,m]=s.split(' ');sm(n,0,-sz*.12,sz*.78,PP);sm(m,0,sz*.42,sz*.46,PP)}else sm(s,0,4,sz*(s.length>2?.42:.7),PP);ctx.restore()}
+function hd(t,t0,s,col=INK){sm(s,540,245,66,col,eout(prog(t,t0,t0+.5)));brush([[160,305],[540,312],[920,303]],12,col,eout(prog(t,t0+.2,t0+1)),4)}
+function ink(x,y,w,h,col,r=14,a=1){ctx.save();ctx.globalAlpha*=a;ctx.strokeStyle=col;ctx.lineWidth=7;RR(x,y,w,h,r);ctx.stroke();ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  sm('NIKKEI · 5 AGO 2024',540,330,52,INK,eout(prog(t,.2,.8)));
+  brush([[160,860],[420,960],[640,1100],[920,1330]],130,'#d9d0bb',eout(prog(t,.4,2.6)),2,.9);brush([[160,860],[420,960],[640,1100],[920,1330]],26,INK,eout(prog(t,.8,3.2)),2);
+  sm('−12,4 %',540,640,190,RS,Math.min(1,eback(prog(t,1.4,2.4))*2));
+  sm('en un solo día',540,790,60,INK,eout(prog(t,3.2,3.9)));
+  hanko('¥',200,1250,52,eout(prog(t,4.0,4.6)),.1);ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'¿QUÉ ES UN CARRY TRADE?');
+  const N=[[540,470,'PRESTAMO EN YENES','tasa baja',7.4],[540,800,'CAMBIAS A OTRA MONEDA','',9.0],[540,1130,'INVIERTES DONDE RINDE MÁS','mayor tasa',10.6]];
+  N.forEach(([x,y,s,sb,ts],i)=>{const k=eout(prog(t,ts,ts+.6));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.translate(0,lerp(30,0,k));ink(100,y-95,880,190,i==0?RS:INK);sm(s.replace('PRESTAMO','PRÉSTAMO'),540,y-(sb?14:0),s.length>22?42:48,INK);if(sb)sm(sb,540,y+54,36,GY,1,'center',500);ctx.restore();
+    if(i<2){const kk=eout(prog(t,ts+.5,ts+1.1));brush([[540,y+110],[540,y+210]],26,INK,kk,i+9)}});
+  ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'EL YEN, BARATO PARA PEDIR');
+  sm('> 40 %',540,520,230,RS,Math.min(1,eback(prog(t,14.6,15.6))*2));sm('lo que perdió el yen frente al dólar',540,680,42,INK,eout(prog(t,15.6,16.2)));sm('(inicios de 2022 → julio de 2024)',540,740,34,GY,eout(prog(t,16.2,16.8),1),'center',500);
+  brush([[160,850],[400,930],[640,1090],[900,1250]],34,INK,eout(prog(t,16.6,19.0)),6);
+  sm('yen',900,1330,40,INK,eout(prog(t,18.6,19.2)));sm('→ pedir prestado en yenes salía barato',540,1390,36,RS,eout(prog(t,19.0,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'DOS DÍAS, DOS GOLPES');
+  const C=[[400,'31 JUL','Banco de Japón','0,1 % → 0,25 %',RS,21.6],[800,'2 AGO','Empleo EE. UU.','111 mil · paro 4,1 → 4,3 %',INK,24.4]];
+  C.forEach(([y,d,s1,s2,col,ts])=>{const k=eout(prog(t,ts,ts+.6));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.translate(lerp(60,0,k),0);ink(80,y,920,320,col);hanko(d,190,y+160,70,1,-.05);sm(s1,640,y+110,52,INK);sm(s2,640,y+215,s2.length>16?36:56,col);ctx.restore()});
+  sm('≈ la mitad de lo que se esperaba (empleo)',540,1200,34,GY,eout(prog(t,26.6,27.2)),'center',500);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'EL YEN SE DISPARA',RS);
+  brush([[150,1150],[350,1050],[540,780],[760,560],[930,430]],42,RS,eout(prog(t,29.4,32.6)),8);
+  sm('+14 %',340,430,170,INK,eout(prog(t,32.4,33.2)));sm('en menos de un mes',340,550,38,INK,eout(prog(t,33,33.6)));
+  sm('≈ 143 ¥ por dólar',640,1270,56,RS,eout(prog(t,33.6,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'LUNES 5 DE AGOSTO',RS);
+  const Y=v=>470+(42426-v)/(42426-31458)*620;
+  ink(80,360,920,900,INK,18);
+  const kk=eio(prog(t,36.2,39.0));brush([[150,Y(42426)],[420,Y(41000)],[640,Y(36000)],[860,Y(31458)]],20,INK,kk,5);
+  sm('42.427',200,Y(42426)-50,40,INK,eout(prog(t,36.4,37)));sm('11 jul',200,Y(42426)-10,28,GY,eout(prog(t,36.4,37),1),'center',500);
+  sm('31.458',860,Y(31458)+60,44,RS,eout(prog(t,38.8,39.4)));
+  sm('−4.451 pts',340,960,56,RS,Math.min(1,eback(prog(t,39.4,40.4))*2));sm('−12,4 %',340,1060,86,RS,eout(prog(t,40.0,40.8)));
+  sm('lo peor desde 1987 · Topix −12,2 %',540,1330,36,INK,eout(prog(t,41.2,41.8)));sm('VIX ≈ 65 ese día · cifras aproximadas',540,1385,28,GY,eout(prog(t,41.8,42.4)),'center',500);ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'LA LECCIÓN');
+  [['UN BANCO CENTRAL PUEDE MOVER TODO',45.0,RS],['TODO ESTÁ CONECTADO',46.6,INK],['GESTIONA TU RIESGO',48.2,INK]].forEach(([s,ts,c],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=450+i*230;ctx.save();ctx.globalAlpha*=k;ink(90,y-80,900,160,c);sm(s,540,y+4,s.length>26?40:50,c);ctx.restore()});
+  sm('Contenido educativo, no es asesoría financiera',540,1230,32,GY,eout(prog(t,48.6,49.2)),'center',500);ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  sm('NIKKEI · 5 AGO 2024',540,300,56,INK);brush([[160,1090],[420,1170],[640,1260],[920,1380]],150,'#d9d0bb',1,2,.9);brush([[160,1090],[420,1170],[640,1260],[920,1380]],30,INK,1,2);
+  sm('−12,4 %',540,600,200,RS);sm('EL DÍA QUE EL YEN',540,880,72,INK);sm('SACUDIÓ AL MUNDO',540,970,72,INK);
+  hanko('¥',860,1100,60,1,.1);
+  coverBtn('VER QUÉ PASÓ →',ACC,DK)}
+</script></body></html>
