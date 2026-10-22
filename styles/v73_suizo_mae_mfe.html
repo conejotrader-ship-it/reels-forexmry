@@ -1,0 +1,85 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 13 (reutilizado): tipografía suiza, negro, rojo y blanco con retícula — tema: MAE y MFE para ubicar stop y objetivo (60 s).
+const SPEC={name:'MAEMFE',hook:'MAE Y MFE: ¿DÓNDE PONER TU STOP?',dur:60,cta:56,bpm:120,mus:'soft',prog:[[38,'m'],[41,'M'],[36,'m'],[43,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[8.0,'ding'],[10.4,'down'],[12.0,'hit'],[13.6,'wipe'],[15.2,'ding'],[17.0,'rise',2.0],[19.0,'hit'],[20.6,'wipe'],[22.4,'ding'],[24.0,'ding'],[25.6,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[33.8,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'hit'],[43.6,'wipe'],[45.0,'alert'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'¿Tu stop loss está bien puesto? MAE y MFE lo miden con datos de tus propias operaciones.'],
+ [6.4,13.4,'MAE es la mayor pérdida flotante que alcanzó una operación entre su entrada y su cierre, aunque terminara ganando.'],
+ [13.6,20.4,'MFE es lo contrario: la mayor ganancia flotante que llegó a tener antes de cerrar.'],
+ [20.6,28.2,'John Sweeney presentó el MAE en su libro de 1996. Con más de 200 operaciones, separa ganadoras y perdedoras.','John Sweeney presentó el MAE en su libro de mil novecientos noventa y seis. Con más de doscientas operaciones, separa ganadoras y perdedoras.'],
+ [28.4,35.0,'Mira el MAE de las ganadoras: un stop justo después del percentil 95 deja fuera cerca de 5 % de ellas.','Mira el MAE de las ganadoras: un stop justo después del percentil noventa y cinco deja fuera cerca de cinco por ciento de ellas.'],
+ [35.2,43.4,'El MFE te orienta sobre el objetivo: si tus ganadoras llegan mucho más lejos, tu objetivo puede estar muy corto.'],
+ [43.6,49.6,'Ojo: con menos de 200 operaciones es ruido, y revisa el análisis cada trimestre.','Ojo: con menos de doscientas operaciones es ruido, y revisa el análisis cada trimestre.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#111111',ACC='#ff2a1f',FAM='Inter',WH='#f4f4f0',BK='#111111',RD='#e10600',GR='#bdbdb7',MG='#6b6b66';
+const STY={subFont:'800 42px Inter',subBg:'rgba(17,17,17,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=BK,a=1){lbl(s,x,y,sz,col,a,'left')}
+function bg(t){ctx.fillStyle=WH;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle='rgba(17,17,17,.07)';ctx.lineWidth=2;for(let x=90;x<=990;x+=180){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}ctx.restore();
+  ctx.fillStyle=RD;ctx.fillRect(90,110,70,70);L('MAE · MFE',190,148,34,BK);line(90,200,990,200,BK,8)}
+function hd(t,t0,s,col=BK){const k=eout(prog(t,t0,t0+.5));L(s,90,270,70,col,k)}
+function trade(t,t0,t1,mode){ // trayectoria ilustrativa
+  const P=[[130,560],[300,760],[450,960],[600,780],[760,520],[930,430]];const n=P.length;const k=eio(prog(t,t0,t1))*(n-1);
+  line(130,560,950,560,GR,3,[10,10]);
+  ctx.save();ctx.strokeStyle=BK;ctx.lineWidth=12;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();ctx.moveTo(P[0][0],P[0][1]);for(let i=1;i<n;i++){const f=clamp(k-(i-1));if(f<=0)break;ctx.lineTo(lerp(P[i-1][0],P[i][0],f),lerp(P[i-1][1],P[i][1],f))}ctx.stroke();ctx.restore();return P}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  L('MAE',90,480,330,BK,eout(prog(t,.2,.9)));L('MFE',90,760,330,RD,eout(prog(t,.7,1.4)));
+  L('¿Dónde poner',90,1010,92,BK,eout(prog(t,1.6,2.3)));L('tu stop?',90,1110,130,RD,eout(prog(t,2.0,2.8)));
+  L('con datos de tus propias operaciones',90,1220,40,MG,eout(prog(t,3.2,3.9)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'MAE',RD);
+  L('Maximum Adverse Excursion',90,330,38,MG,eout(prog(t,7.0,7.6)));
+  const P=trade(t,7.4,11.6);
+  const k=eout(prog(t,10.4,11.2));ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=RD;ctx.fillRect(445,560,16,400*k);ctx.beginPath();ctx.arc(453,960,22,0,7);ctx.fill();ctx.restore();
+  L('MAE',500,780,90,RD,eout(prog(t,11,11.6)));
+  L('entrada',90,620,32,MG,eout(prog(t,7.6,8.2)));L('cierre: ganadora',700,400,32,MG,eout(prog(t,11.4,12)));
+  L('la mayor pérdida flotante,',90,1140,52,BK,eout(prog(t,11.6,12.2)));L('aunque la operación gane',90,1210,52,BK,eout(prog(t,12.0,12.6)));
+  L('esquema ilustrativo',90,1330,28,MG,eout(prog(t,12.4,13)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'MFE',BK);
+  L('Maximum Favorable Excursion',90,330,38,MG,eout(prog(t,14.2,14.8)));
+  const P=[[130,780],[300,620],[480,470],[640,560],[800,690],[930,740]];const n=P.length;const k=eio(prog(t,14.6,17.8))*(n-1);
+  line(130,780,950,780,GR,3,[10,10]);ctx.save();ctx.strokeStyle=BK;ctx.lineWidth=12;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();ctx.moveTo(P[0][0],P[0][1]);for(let i=1;i<n;i++){const f=clamp(k-(i-1));if(f<=0)break;ctx.lineTo(lerp(P[i-1][0],P[i][0],f),lerp(P[i-1][1],P[i][1],f))}ctx.stroke();ctx.restore();
+  const kk=eout(prog(t,17.4,18.2));ctx.save();ctx.globalAlpha*=kk;ctx.fillStyle=RD;ctx.fillRect(470,470,16,310*kk);ctx.beginPath();ctx.arc(478,470,22,0,7);ctx.fill();ctx.restore();
+  L('MFE',530,640,90,RD,eout(prog(t,18.2,18.8)));
+  L('la mayor ganancia flotante',90,1100,52,BK,eout(prog(t,18.6,19.2)));L('antes de cerrar',90,1170,52,BK,eout(prog(t,19.0,19.6)));
+  L('esquema ilustrativo',90,1330,28,MG,eout(prog(t,19.6,20.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'EL MÉTODO',BK);
+  L('1996',90,520,200,RD,eout(prog(t,21.4,22.2)));L('John Sweeney · libro “Maximum Adverse Excursion”',90,590,34,MG,eout(prog(t,22.2,22.8)));
+  [['1','200+ operaciones con un stop más amplio',22.8],['2','Separa ganadoras y perdedoras',24.4],['3','Calcula el MAE de cada operación',26.0]].forEach(([n,s,ts])=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=730+(+n-1)*190;ctx.save();ctx.globalAlpha*=k;ctx.translate(lerp(-60,0,k),0);ctx.fillStyle=BK;ctx.fillRect(90,y,100,100);lbl(n,140,y+52,70,WH);L(s,220,y+52,s.length>34?33:38,BK);ctx.restore()});
+  L('fuente: NexusFi Academy',90,1360,28,MG,eout(prog(t,26.8,27.4)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'PERCENTIL 95',RD);
+  const N=20,w=40,x0=100,yb=1050,wt=[];let sum=0;for(let i=0;i<N;i++){const v=Math.exp(-i/4.2)+.015;wt.push(v);sum+=v}let c=0,cut=N;for(let i=0;i<N;i++){c+=wt[i]/sum;if(c>=.95){cut=i+1;break}}
+  const k=eout(prog(t,29.2,31.6));line(x0-10,yb,x0+N*w+10,yb,BK,6);
+  for(let i=0;i<N;i++){const h=wt[i]/wt[0]*520*k;ctx.fillStyle=i<cut?BK:RD;ctx.fillRect(x0+i*w+4,yb-h,w-8,h)}
+  const kc=eout(prog(t,31.8,32.8));if(kc>.02){ctx.save();ctx.globalAlpha*=kc;line(x0+cut*w,yb-640,x0+cut*w,yb+20,RD,8,[16,10]);ctx.restore();L('stop',x0+cut*w+14,yb-600,44,RD,kc)}
+  const k5=eout(prog(t,33.4,34.2));L('≈ 5 %',x0+cut*w+14,yb-250,100,RD,k5);L('de las ganadoras quedarían fuera',90,1180,38,BK,k5);
+  L('MAE de las ganadoras (distribución ilustrativa)',90,1110,28,MG,eout(prog(t,30.4,31)));
+  L('stop 1–2 ticks más allá del percentil 95 · no es una regla fija',90,1340,28,MG,eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'MFE = TU OBJETIVO',BK);
+  const yb=1100,hs=[300,520,420,640,360,580,480,700,340,560];const k=eout(prog(t,36.2,38.6));line(90,yb,990,yb,BK,6);
+  hs.forEach((h,i)=>{ctx.fillStyle=BK;ctx.fillRect(110+i*86,yb-h*k,60,h*k)});
+  const ky=eout(prog(t,38.8,39.6));const ty=yb-260;ctx.save();ctx.globalAlpha*=ky;line(90,ty,990,ty,RD,8,[18,12]);ctx.restore();L('- - -  tu objetivo',90,yb+60,38,RD,ky);
+  const kd=eout(prog(t,40.4,41.2));if(kd>.02){ctx.save();ctx.globalAlpha*=kd;ctx.fillStyle='rgba(225,6,0,.18)';hs.forEach((h,i)=>{if(h>260)ctx.fillRect(110+i*86,yb-h,60,h-260)});ctx.restore()}
+  L('si casi todas llegan más lejos…',90,1190,44,BK,eout(prog(t,40.6,41.2)));L('el objetivo puede estar muy corto',90,1250,44,RD,eout(prog(t,41.4,42)));
+  L('MFE de 10 operaciones (ilustrativo)',90,1330,28,MG,eout(prog(t,42,42.6)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'OJO',RD);
+  [['< 200','operaciones = ruido',45.0],['BACKTEST','más limpio que la realidad',46.6],['TRIMESTRAL','vuelve a correr el análisis',48.2]].forEach(([a1,b1_,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=420+i*250;ctx.save();ctx.globalAlpha*=k;ctx.translate(lerp(-60,0,k),0);ctx.fillStyle=i==0?RD:BK;ctx.fillRect(90,y,900,200);lbl(a1,130,y+80,74,WH,1,'left');lbl(b1_,130,y+150,36,WH,1,'left');ctx.restore()});
+  L('Contenido educativo, no es asesoría financiera',90,1240,30,MG,eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  L('95 %',90,470,320,RD);L('de tus ganadoras',90,720,92,BK);L('¿cuánto aguantaron?',90,830,70,BK);
+  ctx.fillStyle=BK;ctx.fillRect(90,930,900,10);L('MAE',90,1090,180,BK);L('MFE',560,1090,180,RD);
+  L('dónde poner tu stop y tu objetivo',90,1260,40,MG);
+  coverBtn('VER EL MÉTODO →',ACC,DK)}
+</script></body></html>

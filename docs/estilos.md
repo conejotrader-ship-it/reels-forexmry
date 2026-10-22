@@ -16,7 +16,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 10 | Tablero de barras a escala | Negro, rojo y dorado | 4 caídas del oro (v35, 17 oct) |
 | 11 | Terminal ámbar sobre negro | Pantalla financiera de los noventa | LTCM 1998 (v36, 17 oct) |
 | 12 | Periódico de época | Titulares y columnas | 5 operaciones legendarias (v13, 11 oct); Hermanos Hunt y la plata 1980 (v67_periodico_hunt_plata, escena 134, 22 oct 6:00, 2.º uso: edición especial sepia) |
-| 13 | Tipografía suiza | Texto grande, rojo y negro | Scalping (v12, 11 oct) |
+| 13 | Tipografía suiza | Texto grande, rojo y negro | Scalping (v12, 11 oct); MAE y MFE: dónde poner stop y objetivo (v73_suizo_mae_mfe, escena 140, 23 oct 3:00, 2.º uso: retícula blanca con rojo y negro) |
 | 14 | Lingotes dorados | Barras de oro sobre fondo oscuro | Mineras de oro (v11, 11 oct); Oro físico, ETF, mineras y futuros (v68_lingotes_cuatro_formas_oro, escena 135, 22 oct 9:30, 2.º uso: bóveda negra con lingotes 3D) |
 | 15 | Tinta japonesa (sumi-e) | Trazos de pincel | ¿Quién inventó las velas? (v9_sumie, 10 oct); Carry trade del yen y el Nikkei 5 ago 2024 (v71_sumie_carry_yen, escena 138, 22 oct 20:00, 2.º uso: pinceladas de tinta con sellos rojos) |
 | 16 | Plano técnico (blueprint) | Azul con cotas | MetaQuotes (v8_blueprint, 10 oct); Criterio de Kelly (v69_blueprint_kelly, escena 136, 22 oct 13:00, 2.º uso: cian sobre azul con curva de crecimiento) |
