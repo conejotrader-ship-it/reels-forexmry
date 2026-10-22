@@ -1,0 +1,77 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:CB;src:url(node_modules/@fontsource/caveat-brush/files/caveat-brush-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 17 (reutilizado): papercut, capas de papel recortado con sombras — tema: informe COT de la CFTC y el oro (60 s).
+const SPEC={name:'COT',hook:'COT: ¿QUIÉN COMPRA ORO EN FUTUROS?',dur:60,cta:56,bpm:108,mus:'soft',prog:[[42,'m'],[39,'M'],[44,'m'],[37,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[8.0,'ding'],[10.4,'ding'],[12.0,'hit'],[13.6,'wipe'],[15.0,'ding'],[17.0,'ding'],[18.4,'ding'],[19.6,'ding'],[20.6,'wipe'],[22.4,'hit'],[24.4,'ding'],[26.4,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[33.6,'hit'],[35.2,'wipe'],[37.0,'alert'],[39.4,'ding'],[41.4,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Cada viernes la CFTC publica quién compra y vende oro en futuros. Es el informe COT.'],
+ [6.4,13.4,'Sale los viernes a las 3:30 p. m., hora del Este, con datos del martes: llegan con tres días de retraso.','Sale los viernes a las tres y media de la tarde, hora del Este, con datos del martes: llegan con tres días de retraso.'],
+ [13.6,20.4,'El informe desagregado separa cuatro grupos: productores y comerciantes, casas de swaps, fondos gestionados y otros.'],
+ [20.6,28.2,'Los fondos gestionados, o managed money, son los más vigilados: el 13 de octubre estaban largos en unos 107 mil contratos de oro.','Los fondos gestionados, o managed money, son los más vigilados: el trece de octubre estaban largos en unos ciento siete mil contratos de oro.'],
+ [28.4,35.0,'Cada contrato COMEX son 100 onzas: unos 10,7 millones de onzas, cerca de 333 toneladas.','Cada contrato COMEX son cien onzas: unos diez con siete millones de onzas, cerca de trescientas treinta y tres toneladas.'],
+ [35.2,43.4,'Pero los datos son del martes, no en vivo, y una posición extrema no es una señal fiable por sí sola: la tendencia puede seguir.'],
+ [43.6,49.6,'Úsalo como contexto, junto con tu análisis y tu gestión de riesgo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#2d3047',ACC='#f4b942',FAM='Inter',CR='#f6f1e7',TL='#1b998b',CO='#ff6b57',MU='#f4b942',NV='#2d3047',PU='#7b5ea7';
+window.FONTS=['40px CB'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(45,48,71,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function pr(x,y,w,h,col,r=26,sh=1){ctx.save();ctx.shadowColor='rgba(0,0,0,'+(.38*sh)+')';ctx.shadowBlur=22;ctx.shadowOffsetY=12;RR(x,y,w,h,r);ctx.fillStyle=col;ctx.fill();ctx.restore()}
+function cb(s,x,y,sz,col,a=1,al='center'){T(_s(s),x,y,{font:`${sz}px CB`,fill:col,a,align:al})}
+function hill(y0,amp,col,ph,fr){ctx.save();ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=20;ctx.shadowOffsetY=-8;ctx.beginPath();ctx.moveTo(0,H);for(let x=0;x<=W;x+=20)ctx.lineTo(x,y0+Math.sin(x/fr+ph)*amp);ctx.lineTo(W,H);ctx.closePath();ctx.fillStyle=col;ctx.fill();ctx.restore()}
+function bg(t){ctx.fillStyle=TL;ctx.fillRect(0,0,W,H);
+  hill(260,40,'#2aa89a',1,170);hill(420,50,'#34b4a6',3,210);
+  hill(1560,38,CO,2,160);hill(1640,34,MU,5,190);hill(1730,30,NV,.5,220)}
+function hd(t,t0,s,col=CR){cb(s,540,235,84,col,eout(prog(t,t0,t0+.5)))}
+function tile(x,y,w,h,col,s,sub,t,ts,tc=NV,sz=44){const k=eout(prog(t,ts,ts+.55));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.translate(0,lerp(40,0,k));pr(x,y,w,h,col);lbl(s,x+w/2,y+h/2-(sub?24:0),sz,tc);if(sub)lbl(sub,x+w/2,y+h/2+34,28,tc);ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  const k=Math.min(1,eback(prog(t,.2,1.2))*2);ctx.save();ctx.globalAlpha*=k;pr(140,330,800,420,MU,40);lbl('COT',540,540,330,NV);ctx.restore();
+  lbl('¿QUIÉN COMPRA ORO',540,900,76,CR,eout(prog(t,1.2,1.9)));lbl('EN FUTUROS?',540,1000,100,CO,eout(prog(t,1.7,2.4)));
+  const k2=eout(prog(t,2.8,3.6));ctx.save();ctx.globalAlpha*=k2;pr(200,1090,680,170,CR,30);lbl('CFTC · CADA VIERNES',540,1150,44,NV);lbl('3:30 p. m. · hora del Este',540,1210,32,TL);ctx.restore();ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'¿CUÁNDO SALE?');
+  const D=['L','M','X','J','V','S','D'];D.forEach((d,i)=>{const k=eout(prog(t,7.2+i*.15,7.8+i*.15));if(k<=.02)return;const x=70+i*135,y=420;ctx.save();ctx.globalAlpha*=k;const col=i==1?MU:(i==4?CO:CR);pr(x,y,120,170,col,20);lbl(d,x+60,y+85,66,NV);ctx.restore()});
+  lbl('DATOS',265,640,40,MU,eout(prog(t,8.6,9.2)));lbl('SE PUBLICA',745,640,40,CO,eout(prog(t,9.0,9.6)));
+  const k=eio(prog(t,10.0,11.6));ctx.save();ctx.strokeStyle=CR;ctx.lineWidth=10;ctx.lineCap='round';ctx.setLineDash([22,18]);ctx.beginPath();ctx.moveTo(265,720);ctx.quadraticCurveTo(505,860,745,720);ctx.stroke();ctx.restore();
+  tile(120,900,840,200,CR,'3 DÍAS DE RETRASO','martes → viernes',t,11.4,CO,56);
+  tile(120,1160,840,160,CR,'VIERNES 3:30 p. m. ET','fuente: CFTC',t,12.2,NV,46);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'4 GRUPOS (DESAGREGADO)');
+  tile(70,380,450,330,CR,'PRODUCTORES','y comerciantes',t,15.0,TL,36);tile(560,380,450,330,CR,'CASAS DE','SWAPS',t,17.0,PU,40);
+  tile(70,760,450,330,MU,'FONDOS','GESTIONADOS',t,18.4,NV,40);tile(560,760,450,330,CR,'OTROS','REPORTABLES',t,19.6,CO,40);
+  lbl('Managed Money',295,1010,32,NV,eout(prog(t,19,19.6)));
+  lbl('según su actividad principal (Formulario 40 de la CFTC)',540,1200,28,CR,eout(prog(t,19.8,20.3)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'FONDOS GESTIONADOS');
+  const k=eout(prog(t,21.4,24.0));pr(100,360,880,430,CR,36);lbl(Math.round(107089*k).toLocaleString('es-CO').replace(/,/g,'.'),540,520,160,CO);lbl('contratos de oro · posición neta larga',540,650,36,NV,eout(prog(t,23.4,24)));lbl('informe del 13 de octubre de 2026 (MetalCharts)',540,720,28,TL,eout(prog(t,24.0,24.6)));
+  const w=eout(prog(t,25.0,26.4));pr(100,860,880,120,'rgba(246,241,231,.35)',26,.3);ctx.save();ctx.beginPath();ctx.roundRect(100,860,880*.27*w,120,26);ctx.fillStyle=MU;ctx.fill();ctx.restore();
+  lbl('≈ 27 % del interés abierto (396,3 mil contratos)',540,1050,38,CR,eout(prog(t,26.0,26.6)));lbl('cálculo propio con los datos citados',540,1100,26,CR,eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'¿CUÁNTO ORO ES?');
+  tile(100,380,880,210,CR,'1 CONTRATO = 100 ONZAS','COMEX · contrato estándar de CME',t,29.4,NV,46);
+  tile(100,640,880,210,CR,'107.089 × 100 oz','= 10,7 millones de onzas',t,31.0,CO,60);
+  tile(100,900,880,230,MU,'≈ 333 TONELADAS','1 onza troy ≈ 31,1 g · cálculo propio',t,32.8,NV,70);
+  lbl('Fuente: CME Group y CFTC',540,1230,28,CR,eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'CUIDADO CON ESTO',MU);
+  tile(100,380,880,200,CR,'DATOS DEL MARTES','no en vivo',t,36.4,NV,56);
+  tile(100,640,880,200,CR,'EXTREMO ≠ SEÑAL','por sí solo',t,38.6,CO,56);
+  tile(100,900,880,200,CR,'LA TENDENCIA PUEDE SEGUIR','aunque la posición ya sea extrema',t,40.8,TL,44);
+  lbl('fuentes: MetalCharts y WallStreetMojo',540,1210,26,CR,eout(prog(t,42,42.6)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'RECUERDA',MU);
+  tile(100,400,880,190,CR,'CONTEXTO, NO SEÑAL',null,t,45.0,NV,52);tile(100,640,880,190,MU,'JUNTO CON TU ANÁLISIS',null,t,46.6,NV,48);tile(100,880,880,190,CR,'GESTIONA TU RIESGO',null,t,48.2,CO,52);
+  lbl('Contenido educativo, no es asesoría financiera',540,1190,30,CR,eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  pr(60,260,960,640,CR,44);lbl('107.089',540,470,205,CO);lbl('CONTRATOS LARGOS',540,680,66,NV);lbl('DE LOS FONDOS EN ORO',540,770,52,TL);
+  pr(120,960,840,200,MU,40);lbl('INFORME COT',540,1030,84,NV);lbl('CFTC · al 13 oct 2026',540,1112,34,NV);
+  pr(120,1210,840,150,NV,36);lbl('¿SEÑAL O RUIDO?',540,1285,66,CR);
+  coverBtn('VER EL INFORME →',ACC,DK)}
+</script></body></html>

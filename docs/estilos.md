@@ -20,7 +20,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 14 | Lingotes dorados | Barras de oro sobre fondo oscuro | Mineras de oro (v11, 11 oct); Oro físico, ETF, mineras y futuros (v68_lingotes_cuatro_formas_oro, escena 135, 22 oct 9:30, 2.º uso: bóveda negra con lingotes 3D) |
 | 15 | Tinta japonesa (sumi-e) | Trazos de pincel | ¿Quién inventó las velas? (v9_sumie, 10 oct) |
 | 16 | Plano técnico (blueprint) | Azul con cotas | MetaQuotes (v8_blueprint, 10 oct); Criterio de Kelly (v69_blueprint_kelly, escena 136, 22 oct 13:00, 2.º uso: cian sobre azul con curva de crecimiento) |
-| 17 | Papercut | Capas de papel recortado | v11_papercut |
+| 17 | Papercut | Capas de papel recortado | v11_papercut; Informe COT de la CFTC y el oro (v70_papercut_cot, escena 137, 22 oct 16:30, 2.º uso: colinas de papel turquesa con tarjetas) |
 | 18 | Libro de órdenes | Compras y ventas que suben y bajan | HFT y spoofing (v14, 13 oct) |
 | 19 | Cuaderno | Hoja clara con anotaciones | EMA (v17, 13 oct) |
 | 20 | Pixel-art 3D | Bloques de colores en tres dimensiones | pixel/pixel5.html |
