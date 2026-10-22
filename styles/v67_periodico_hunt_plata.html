@@ -1,0 +1,105 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:PF;font-weight:900;src:url(node_modules/@fontsource/playfair-display/files/playfair-display-latin-900-normal.woff2)}
+@font-face{font-family:PF;font-weight:700;src:url(node_modules/@fontsource/playfair-display/files/playfair-display-latin-700-normal.woff2)}
+@font-face{font-family:SE;src:url(node_modules/@fontsource/special-elite/files/special-elite-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 12 (reutilizado): periódico de época, edición especial sepia — tema: Hunt y la plata, Jueves de la plata 1980 (60 s).
+const SPEC={name:'HuntPlata',hook:'27 DE MARZO DE 1980: LA PLATA SE DESPLOMA',dur:60,cta:56,bpm:92,mus:'soft',prog:[[45,'m'],[43,'M'],[40,'m'],[47,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[7.8,'ding'],[9.4,'ding'],[11.2,'hit'],[13.6,'wipe'],[15.0,'ding'],[17.6,'ding'],[19.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[24.0,'ding'],[26.0,'alert'],[28.4,'wipe'],[30.0,'down'],[32.6,'hit'],[35.2,'wipe'],[36.6,'ding'],[38.8,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.6,'ding'],[48.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'27 de marzo de 1980: la plata se desplomó. Esto les pasó a los hermanos Hunt.','Veintisiete de marzo de mil novecientos ochenta: la plata se desplomó. Esto les pasó a los hermanos Hunt.'],
+ [6.4,13.4,'Los Hunt compraron plata durante años; según las estimaciones llegaron a controlar entre 100 y 195 millones de onzas.','Los Hunt compraron plata durante años; según las estimaciones llegaron a controlar entre cien y ciento noventa y cinco millones de onzas.'],
+ [13.6,20.4,'La plata subió de 9 dólares en julio de 1979 a casi 50 seis meses después.','La plata subió de nueve dólares en julio de mil novecientos setenta y nueve a casi cincuenta seis meses después.'],
+ [20.6,28.2,'En enero, COMEX limitó las posiciones y después solo permitió cerrarlas. Un día después, la plata cayó unos 10 dólares.','En enero, COMEX limitó las posiciones y después solo permitió cerrarlas. Un día después, la plata cayó unos diez dólares.'],
+ [28.4,35.0,'En marzo, la plata cayó de 29,75 a 10,80 dólares en 17 días.','En marzo, la plata cayó de veintinueve con setenta y cinco a diez con ochenta dólares en diecisiete días.'],
+ [35.2,43.4,'Los Hunt no cubrieron sus llamadas de margen. 13 bancos prestaron 1.100 millones de dólares a una empresa familiar.','Los Hunt no cubrieron sus llamadas de margen. Trece bancos prestaron mil cien millones de dólares a una empresa familiar.'],
+ [43.6,49.6,'Lección: apalancamiento y posición concentrada pueden destruir una cuenta. Define tu riesgo antes.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#1a1612',ACC='#e0b040',FAM='Inter',PAP='#ecdfbf',INK='#1a1612',RD='#b3202a',GD='#8a6a12',GR='#2f6b3c';
+window.FONTS=['900 40px PF','700 40px PF','40px SE'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(26,22,18,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function pf(s,x,y,sz,col=INK,a=1,al='center'){T(_s(s),x,y,{font:`900 ${sz}px PF`,fill:col,a,align:al})}
+function pb(s,x,y,sz,col=INK,a=1,al='center'){T(_s(s),x,y,{font:`700 ${sz}px PF`,fill:col,a,align:al})}
+function se(s,x,y,sz,col=INK,a=1,al='center'){T(_s(s),x,y,{font:`${sz}px SE`,fill:col,a,align:al})}
+function paper(t){ctx.fillStyle=PAP;ctx.fillRect(0,0,W,H);
+  const g=ctx.createRadialGradient(540,800,300,540,800,1200);g.addColorStop(0,'rgba(255,245,210,0)');g.addColorStop(1,'rgba(120,80,30,.45)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.07;ctx.fillStyle='#000';const r=rng(7);for(let i=0;i<260;i++){ctx.fillRect(r()*W,r()*H,2+r()*5,1+r()*2)}ctx.restore();
+  ctx.strokeStyle=INK;ctx.lineWidth=5;ctx.strokeRect(36,36,1008,1848);ctx.lineWidth=2;ctx.strokeRect(48,48,984,1824);
+  pf('EL HERALDO DE LOS MERCADOS',540,110,44);line(70,146,1010,146,INK,4);line(70,154,1010,154,INK,1.5);
+  se('EDICIÓN ESPECIAL · NUEVA YORK · MARZO DE 1980',540,185,24,'#4a3f2c')}
+function stamp(s,x,y,sz,col,rot,a=1){ctx.save();ctx.globalAlpha*=a;ctx.translate(x,y);ctx.rotate(rot);ctx.font=`900 ${sz}px PF`;const w=ctx.measureText(_s(s)).width+50;ctx.strokeStyle=col;ctx.lineWidth=8;ctx.strokeRect(-w/2,-sz*.75,w,sz*1.5);pf(s,0,0,sz,col);ctx.restore()}
+function head(s,t0,t,sz=72,col=INK){pf(s,540,260,sz,col,eout(prog(t,t0,t0+.5)));line(100,310,980,310,INK,4,null);line(100,318,980,318,INK,1.5)}
+// gráfico sepia: puntos [x,y], etiqueta
+function chart(pts,t,t0,t1,col){const n=pts.length;const k=eio(prog(t,t0,t1))*(n-1);ctx.save();ctx.strokeStyle=col;ctx.lineWidth=9;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();ctx.moveTo(pts[0][0],pts[0][1]);
+  for(let i=1;i<n;i++){const f=clamp(k-(i-1));if(f<=0)break;ctx.lineTo(lerp(pts[i-1][0],pts[i][0],f),lerp(pts[i-1][1],pts[i][1],f))}ctx.stroke();ctx.restore();return k}
+function grid(x0,y0,x1,y1){ctx.save();ctx.strokeStyle='rgba(26,22,18,.25)';ctx.lineWidth=2;for(let i=0;i<=5;i++){const y=lerp(y1,y0,i/5);ctx.beginPath();ctx.moveTo(x0,y);ctx.lineTo(x1,y);ctx.setLineDash([8,8]);ctx.stroke()}ctx.restore();line(x0,y1,x1,y1,INK,5);line(x0,y0,x0,y1,INK,5)}
+function man(x,y,s,col,hat){ctx.save();ctx.translate(x,y);ctx.scale(s,s);ctx.fillStyle=col;ctx.beginPath();ctx.arc(0,-60,42,0,7);ctx.fill();ctx.beginPath();ctx.moveTo(-90,110);ctx.quadraticCurveTo(-90,0,0,0);ctx.quadraticCurveTo(90,0,90,110);ctx.closePath();ctx.fill();
+  if(hat){ctx.fillStyle=INK;ctx.fillRect(-70,-98,140,12);ctx.beginPath();ctx.roundRect(-44,-140,88,48,10);ctx.fill()}ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  pb('JUEVES 27 DE MARZO DE 1980',540,300,44,INK,eout(prog(t,.2,.8)));
+  pf('LA PLATA',540,470,170,RD,eout(prog(t,.5,1.3)));pf('SE DESPLOMA',540,650,128,INK,eout(prog(t,1.0,1.8)));
+  stamp('EXTRA',830,820,64,RD,-.14,eout(prog(t,2.4,2.9)));
+  grid(130,860,950,1300);const pts=[[160,900],[420,930],[640,1000],[760,1140],[900,1250]];
+  const k=chart(pts,t,2.0,5.0,RD);
+  pf('$49,45',215,865,60,GD,eout(prog(t,2.2,2.8)));pf('$10,80',830,1330,64,RD,eout(prog(t,4.2,4.9)));
+  se('línea ilustrativa entre puntos reales',540,1390,26,'#4a3f2c',eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head('LOS HERMANOS HUNT',6.6,t);
+  const k=eout(prog(t,7.2,8.0));ctx.save();ctx.globalAlpha*=k;man(310,640,1.5,'#5a4a30',true);man(770,640,1.5,'#6b3a2a',true);ctx.restore();
+  pb('NELSON BUNKER',310,860,36,INK,eout(prog(t,8.0,8.6)));pb('WILLIAM HERBERT',770,860,34,INK,eout(prog(t,8.4,9.0)));
+  pf('100–195 M',540,1040,170,RD,Math.min(1,eback(prog(t,9.2,10.2))*2));
+  pb('de onzas de plata (estimaciones)',540,1150,44,INK,eout(prog(t,10.2,10.8)));
+  se('al empezar en los años setenta: ≈ $1,50 por onza',540,1240,32,GD,eout(prog(t,11.2,11.9)));
+  se('fuentes difieren: 100 M (Britannica) – 195 M (Wikipedia)',540,1320,26,'#4a3f2c',eout(prog(t,12.0,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head('DE $9 A CASI $50',13.8,t,80,GR);
+  grid(150,380,950,1250);const Y=v=>1250-v/50*820;const pts=[[150,Y(9)],[852,Y(34.45)],[930,Y(49.45)]];
+  chart(pts,t,14.6,18.4,GR);
+  const lbl=[[150,Y(9),'$9','jul 1979',15.0],[852,Y(34.45),'$34,45','31 dic 1979',16.8],[930,Y(49.45),'$49,45','ene 1980',18.0]];
+  lbl.forEach(([x,y,a1,b1_,ts],i)=>{const k=eout(prog(t,ts,ts+.5));ctx.save();ctx.globalAlpha*=k;ctx.beginPath();ctx.arc(x,y,14,0,7);ctx.fillStyle=GR;ctx.fill();const lx=i==0?x+110:(i==1?x:x-130),ly=i==0?y+70:(i==1?y+80:y-70);pf(a1,lx,ly,56,GR);se(b1_,lx,ly+46,26,INK);ctx.restore()});
+  pf('×5,5',330,560,150,RD,Math.min(1,eback(prog(t,18.8,19.6))*2));pb('en unos seis meses',330,660,38,INK,eout(prog(t,19.4,20)));
+  ctx.restore()}
+function clip(y,col,d,tx,t,ts){const k=eout(prog(t,ts,ts+.6));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.translate(lerp(-80,0,k),0);
+  ctx.fillStyle='#f5ebcf';ctx.strokeStyle=INK;ctx.lineWidth=5;RR(90,y,900,250,10);ctx.fill();ctx.stroke();ctx.fillStyle=col;RR(90,y,900,76,10);ctx.fill();
+  pf(d,130,y+40,44,'#fff',1,'left');pb(tx[0],130,y+130,50,INK,1,'left');se(tx[1],130,y+200,34,'#4a3f2c',1,'left');ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head('LA BOLSA REACCIONA',20.8,t,76,RD);
+  clip(380,RD,'7 DE ENERO',['COMEX limita posiciones','en futuros de plata'],t,21.6);
+  clip(680,GD,'21 DE ENERO',['Solo se permite liquidar','y cobertura (hedging)'],t,23.4);
+  clip(980,INK,'22 DE ENERO',['Plata: −$10 en un día','hasta unos $34 por onza'],t,25.4);
+  se('cifras aproximadas · fuente: Wikipedia (Silver Thursday)',540,1300,26,'#4a3f2c',eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head('JUEVES DE LA PLATA',28.6,t,78,RD);
+  grid(150,380,950,1100);const Y=v=>1100-v/30*700;const pts=[[190,Y(29.75)],[900,Y(10.8)]];
+  chart(pts,t,29.4,32.4,RD);
+  [[190,Y(29.75),'$29,75','10 mar',29.6],[900,Y(10.8),'$10,80','27 mar',32.0]].forEach(([x,y,p,d,ts],i)=>{const k=eout(prog(t,ts,ts+.5));ctx.save();ctx.globalAlpha*=k;ctx.beginPath();ctx.arc(x,y,14,0,7);ctx.fillStyle=RD;ctx.fill();pf(p,i?x-60:x+120,y+(i?-90:-60),56,RD);se(d,i?x-60:x+120,y+(i?-40:-12),28,INK);ctx.restore()});
+  pf('≈ −64%',540,1230,140,RD,Math.min(1,eback(prog(t,32.6,33.5))*2));pb('en 17 días · ≈ −78% desde el máximo',540,1330,38,INK,eout(prog(t,33.6,34.2)));
+  stamp('LLAMADAS DE MARGEN',560,520,40,INK,-.06,eout(prog(t,31.0,31.6)));ctx.restore()}
+function card(y,big,sm,col,t,ts){const k=eout(prog(t,ts,ts+.6));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.translate(lerp(60,0,k),0);ctx.fillStyle='#f5ebcf';ctx.strokeStyle=INK;ctx.lineWidth=5;RR(90,y,900,250,10);ctx.fill();ctx.stroke();
+  pf(big,130,y+95,110,col,1,'left');pb(sm[0],130,y+185,38,INK,1,'left');if(sm[1])pb(sm[1],130,y+225,34,'#4a3f2c',1,'left');ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head('EL DESENLACE',35.4,t,80,INK);
+  card(380,'$1.100 M',['crédito de 13 bancos a Placid Oil','(empresa familiar, garantizada por los Hunt)'],GD,t,36.2);
+  card(680,'1988',['Un jurado halla conspiración para','acaparar el mercado de la plata'],RD,t,38.6);
+  card(980,'1989',['Acuerdo con la CFTC: multas y','prohibición de operar materias primas'],INK,t,41.0);
+  se('Fuentes: Britannica y Wikipedia · cifras aproximadas',540,1300,26,'#4a3f2c',eout(prog(t,42.2,42.8)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head('LA LECCIÓN',43.8,t,86,GR);
+  [['APALANCAMIENTO + CONCENTRACIÓN',45.0,RD],['LAS REGLAS PUEDEN CAMBIAR',46.6,GD],['DEFINE TU RIESGO ANTES',48.2,GR]].forEach(([s,ts,c],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;const y=430+i*230;ctx.save();ctx.globalAlpha*=k;ctx.fillStyle='#f5ebcf';ctx.strokeStyle=c;ctx.lineWidth=8;RR(100,y-80,880,170,14);ctx.fill();ctx.stroke();pf(s,540,y+5,s.length>26?44:52,c);ctx.restore()});
+  se('Contenido educativo, no es asesoría financiera',540,1250,30,'#4a3f2c',eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){paper(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){ctx.fillStyle='#14100c';ctx.fillRect(0,0,W,H);
+  const g=ctx.createRadialGradient(540,780,80,540,780,900);g.addColorStop(0,'rgba(179,32,42,.55)');g.addColorStop(1,'rgba(20,16,12,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=PAP;RR(70,230,940,1130,20);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=6;RR(86,246,908,1098,12);ctx.stroke();
+  pf('27 MARZO 1980',540,340,64,INK);line(130,395,950,395,INK,4);
+  pf('−78%',540,640,290,RD);pf('LA PLATA EN',540,900,90,INK);pf('10 SEMANAS',540,1010,110,INK);
+  const pts=[[150,1090],[420,1120],[640,1190],[770,1260],[930,1320]];ctx.save();ctx.strokeStyle=RD;ctx.lineWidth=14;ctx.lineJoin='round';ctx.beginPath();pts.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.stroke();ctx.restore();
+  stamp('HERMANOS HUNT',760,290,28,RD,.06);
+  coverBtn('VER LO QUE PASÓ →',ACC,DK)}
+</script></body></html>
