@@ -6,7 +6,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 |---|---|---|---|
 | 1 | Velas animadas | Velas japonesas que se dibujan solas | Cómo leer una vela japonesa (v30, 17 oct) |
 | 2 | Infografía de tarjetas | Iconos, cifras y bloques de color | Qué es el swap (v29, 17 oct) |
-| 3 | Neón synthwave | Líneas brillantes sobre fondo oscuro retro | Volatilidad (v24, 15 oct) |
+| 3 | Neón synthwave | Líneas brillantes sobre fondo oscuro retro | Volatilidad (v24, 15 oct); Puntos swap (v76_neon_puntos_swap, escena 143, 23 oct 13:00, 2.º uso: morado con cuadrícula en perspectiva y rótulos neón) |
 | 4 | Pizarra con tiza | Texto y diagramas como en una clase | Break even (v31, 18 oct) |
 | 5 | Terminal tipo MetaTrader | Ventanas de plataforma con velas de fondo | Diario de trading (v32, 18 oct) |
 | 6 | Cómic pop-art | Viñetas con tramado y globos | Miedo y avaricia (v26, 16 oct) |

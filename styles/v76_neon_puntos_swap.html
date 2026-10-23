@@ -1,0 +1,86 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:Orb;font-weight:900;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 3 (2.º uso): neón synthwave con cuadrícula en perspectiva y sol — tema: puntos swap (puntos forward) (60 s).
+const SPEC={name:'PuntosSwap',hook:'PUNTOS SWAP: EL PRECIO DE LA DIFERENCIA DE TASAS',dur:60,cta:56,bpm:104,mus:'soft',prog:[[45,'m'],[41,'M'],[43,'m'],[48,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[8.0,'ding'],[10.4,'ding'],[13.6,'wipe'],[15.2,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.4,'ding'],[24.0,'ding'],[25.6,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'hit'],[33.4,'ding'],[35.2,'wipe'],[37.0,'down'],[39.6,'ding'],[41.4,'hit'],[43.6,'wipe'],[45.0,'ding'],[47.0,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Puntos swap: el precio de la diferencia de tasas entre dos monedas.'],
+ [6.4,13.4,'El precio a plazo sale del spot y de las tasas de interés de las dos monedas.'],
+ [13.6,20.4,'Puntos swap son la diferencia entre el precio a plazo y el spot, expresada en pips.'],
+ [20.6,28.2,'Ejemplo ilustrativo: EUR/USD en 1,10; tasa del dólar, 4 %; euro, 2 %.','Ejemplo ilustrativo: euro dólar en uno coma diez; tasa del dólar, cuatro por ciento; euro, dos.'],
+ [28.4,35.0,'Resultado: unos 55 puntos; el euro, de tasa menor, cotiza con prima.','Resultado: unos cincuenta y cinco puntos; el euro, de tasa menor, cotiza con prima.'],
+ [35.2,43.4,'La moneda de tasa más alta cotiza con descuento a plazo; de ahí nace la lógica del swap nocturno.'],
+ [43.6,49.6,'Revisa en tu plataforma cuánto cobra o paga tu bróker antes de operar.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#10002b',ACC='#ff2ec4',FAM='Inter',MG='#ff2ec4',CY='#19e6ff',YL='#ffe14d',VI='#7b2cff',TXN='#f5e9ff';
+window.FONTS=['900 40px Orb'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(16,0,43,.96)',subStroke:CY,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:MG,ctaAccent:MG,ctaBtnText:'#fff',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function N(s,x,y,sz,col=TXN,a=1,al='left',gl=true,fam='Inter'){T(s,x,y,{font:`900 ${sz}px ${fam}`,fill:col,a,align:al,glow:gl?col:null,gb:18})}
+function O(s,x,y,sz,col=CY,a=1,al='left'){T(s,x,y,{font:`900 ${sz}px Orb`,fill:col,a,align:al,glow:col,gb:22})}
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#1a0040');g.addColorStop(.55,'#10002b');g.addColorStop(1,'#2a0050');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // sol
+  const sg=ctx.createLinearGradient(0,1160,0,1380);sg.addColorStop(0,'#ffe14d');sg.addColorStop(1,'#ff2ec4');ctx.save();ctx.globalAlpha=.3;ctx.fillStyle=sg;ctx.beginPath();ctx.arc(540,1290,130,Math.PI,0);ctx.fill();ctx.restore();
+  // cuadrícula
+  ctx.save();ctx.strokeStyle=VI;ctx.lineWidth=2;ctx.globalAlpha=.65;const hy=1380;
+  for(let i=-10;i<=10;i++){ctx.beginPath();ctx.moveTo(540+i*60,hy);ctx.lineTo(540+i*320,H);ctx.stroke()}
+  const off=(t*40)%1;for(let k=0;k<9;k++){const f=(k+off)/9;const y=hy+Math.pow(f,2.2)*(H-hy);ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.fillStyle='#10002b';ctx.fillRect(0,1380-4,W,4)}
+function hd(t,t0,s,col=CY){O(s,540,230,48,col,eout(prog(t,t0,t0+.5)),'center')}
+function card(x,y,w,h,col,k=1){ctx.save();ctx.globalAlpha*=k;ctx.fillStyle='rgba(30,0,70,.82)';RR(x,y,w,h,24);ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=5;ctx.shadowColor=col;ctx.shadowBlur=20;ctx.stroke();ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  O('PUNTOS',540,520,150,CY,eout(prog(t,.2,.9)),'center');O('SWAP',540,700,200,MG,eout(prog(t,.6,1.3)),'center');
+  N('el precio de la diferencia de tasas',540,900,46,TXN,eout(prog(t,1.6,2.3)),'center',false);
+  N('EUR  ⇄  USD',540,1030,110,YL,eout(prog(t,2.4,3.1)),'center');
+  N('forward − spot, en pips',540,1150,44,CY,eout(prog(t,3.4,4.0)),'center');ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'PRECIO A PLAZO');
+  const kF=eout(prog(t,7.2,7.9));N('F',200,520,170,YL,kF,'center');N('=',330,520,110,TXN,eout(prog(t,7.6,8.2)),'center');
+  N('S',470,520,170,CY,eout(prog(t,8.0,8.7)),'center');N('×',600,520,100,TXN,eout(prog(t,8.4,9)),'center');
+  line(660,520,1010,520,TXN,6);
+  N('1 + r cotizada × t',835,455,44,MG,eout(prog(t,9.2,9.8)),'center');N('1 + r base × t',835,590,44,CY,eout(prog(t,9.8,10.4)),'center');
+  N('F = precio a plazo',90,760,46,YL,eout(prog(t,10.6,11.2)));N('S = precio spot',90,830,46,CY,eout(prog(t,11.0,11.6)));N('r = tasas de interés · t = plazo en años',90,900,38,TXN,eout(prog(t,11.4,12)),'left',false);
+  N('paridad cubierta de tasas · Ryan O’Connell Finance',90,1040,30,'#b9a3e8',eout(prog(t,12,12.6)),'left',false);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'PUNTOS SWAP = F − S');
+  const x0=140,x1=940,y=640;line(x0,y,x0+(x1-x0)*eout(prog(t,14.4,15.2)),y,VI,10);
+  const k1=eout(prog(t,15.2,15.9));ctx.save();ctx.globalAlpha*=k1;ctx.fillStyle=CY;ctx.shadowColor=CY;ctx.shadowBlur=24;ctx.beginPath();ctx.arc(x0+120,y,26,0,7);ctx.fill();ctx.restore();N('spot',x0+120,y-80,46,CY,k1,'center');
+  const k2=eout(prog(t,16.4,17.1));ctx.save();ctx.globalAlpha*=k2;ctx.fillStyle=YL;ctx.shadowColor=YL;ctx.shadowBlur=24;ctx.beginPath();ctx.arc(x1-120,y,26,0,7);ctx.fill();ctx.restore();N('forward',x1-120,y-80,46,YL,k2,'center');
+  const k3=eout(prog(t,17.4,18.2));ctx.save();ctx.globalAlpha*=k3;ctx.strokeStyle=MG;ctx.lineWidth=8;ctx.shadowColor=MG;ctx.shadowBlur=20;ctx.beginPath();ctx.moveTo(x0+120,y+70);ctx.lineTo(x1-120,y+70);ctx.stroke();ctx.restore();N('puntos swap',540,y+150,70,MG,k3,'center');
+  card(90,900,900,250,CY,eout(prog(t,18.6,19.2)));N('1 pip = 0,0001  (pares con 4 decimales)',540,980,40,TXN,eout(prog(t,18.8,19.4)),'center',false);N('pares con yen: 1 pip = 0,01',540,1060,40,TXN,eout(prog(t,19.2,19.8)),'center',false);
+  N('puntos = (F − S) × 10.000',540,1230,48,YL,eout(prog(t,19.6,20.2)),'center');ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'EJEMPLO ILUSTRATIVO');
+  [[CY,'SPOT EUR/USD','1,1000',21.4],[MG,'TASA USD','4 %',23.0],[YL,'TASA EUR','2 %',24.6]].forEach(([c,l1,v,ts],i)=>{const k=eout(prog(t,ts,ts+.6));if(k<=.02)return;const y=340+i*250;card(90,y,900,200,c,k);N(l1,140,y+60,40,c,k,'left',false);N(v,140,y+140,100,TXN,k)});
+  N('plazo: 90 días (año de 360)',540,1130,48,TXN,eout(prog(t,26,26.7)),'center',false);N('cifras de ejemplo · no son cotizaciones reales',540,1230,30,'#b9a3e8',eout(prog(t,26.6,27.2)),'center',false);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'EL CÁLCULO');
+  N('F = 1,1000 × (1 + 0,04 × 0,25)',540,400,46,TXN,eout(prog(t,29.2,29.8)),'center',false);line(140,450,940,450,TXN,5);N('(1 + 0,02 × 0,25)',540,510,46,TXN,eout(prog(t,29.8,30.4)),'center',false);
+  N('F ≈ 1,1055',540,700,130,YL,eout(prog(t,31.0,31.8)),'center');
+  N('1,1055 − 1,1000',540,860,50,TXN,eout(prog(t,32.4,33.0)),'center',false);
+  N('≈ +55 puntos',540,1010,110,MG,eout(prog(t,33.0,33.8)),'center');N('(54,7 con más decimales)',540,1100,34,'#b9a3e8',eout(prog(t,33.8,34.4)),'center',false);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'¿QUIÉN TIENE PRIMA?');
+  const ang=Math.sin(eout(prog(t,36.2,38.0))*1.2)*.0+(-.22*eout(prog(t,36.4,38.0)));ctx.save();ctx.translate(540,760);ctx.rotate(ang);line(-400,0,400,0,VI,14);ctx.restore();
+  ctx.fillStyle=CY;ctx.beginPath();ctx.moveTo(540,780);ctx.lineTo(480,900);ctx.lineTo(600,900);ctx.closePath();ctx.fill();
+  const yl=760+Math.sin(ang)*-400,yr=760+Math.sin(ang)*400;
+  card(110,yl-230,300,200,YL,eout(prog(t,36.8,37.4)));N('TASA ALTA',260,yl-170,34,YL,eout(prog(t,37,37.6)),'center',false);N('descuento',260,yl-100,46,TXN,eout(prog(t,37.3,37.9)),'center',false);
+  card(670,yr-230,300,200,MG,eout(prog(t,38.2,38.8)));N('TASA BAJA',820,yr-170,34,MG,eout(prog(t,38.4,39)),'center',false);N('prima',820,yr-100,46,TXN,eout(prog(t,38.7,39.3)),'center',false);
+  N('swap nocturno: misma lógica de diferencial',540,1160,38,TXN,eout(prog(t,40.2,40.9)),'center',false);N('cada bróker aplica su propio cálculo',540,1230,34,'#b9a3e8',eout(prog(t,41,41.7)),'center',false);ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'ANTES DE OPERAR',YL);
+  [['swap largo','lo que paga o cobra una compra'],['swap corto','lo que paga o cobra una venta']].forEach(([a1,b1_],i)=>{const ts=44.8+i*1.8;const k=eout(prog(t,ts,ts+.6));if(k<=.02)return;const y=400+i*260;card(90,y,900,210,i?MG:CY,k);N(a1,140,y+75,70,i?MG:CY,k);N(b1_,140,y+150,38,TXN,k,'left',false)});
+  N('en la especificación del símbolo',540,950,44,TXN,eout(prog(t,47,47.6)),'center',false);N('Contenido educativo, no es asesoría financiera',540,1100,32,YL,eout(prog(t,48.4,49)),'center',false);ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  O('55',540,480,330,YL,1,'center');O('PUNTOS SWAP',540,720,96,MG,1,'center');
+  N('¿cuánto cuesta la diferencia de tasas?',540,860,46,TXN,1,'center',false);
+  card(110,960,860,230,CY);N('EUR/USD · 90 días',540,1030,44,CY,1,'center',false);N('ejemplo ilustrativo',540,1110,40,TXN,1,'center',false);
+  coverBtn('VER EL CÁLCULO →',MG,'#fff')}
+</script></body></html>
