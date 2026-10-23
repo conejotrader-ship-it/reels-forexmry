@@ -1,0 +1,68 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:PM;src:url(node_modules/@fontsource/permanent-marker/files/permanent-marker-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 6 (2.º uso): cómic pop-art con tramado, viñetas y globos — tema: 5 mayores pérdidas de operadores (ranking, 60 s).
+const SPEC={name:'RogueRanking',hook:'LAS 5 MAYORES PÉRDIDAS DE UN SOLO OPERADOR',dur:60,cta:56,bpm:118,mus:'soft',prog:[[40,'m'],[45,'M'],[36,'m'],[43,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'hit'],[10.4,'ding'],[13.6,'wipe'],[15.2,'hit'],[17.0,'ding'],[20.6,'wipe'],[22.4,'hit'],[24.4,'ding'],[28.4,'wipe'],[30.0,'hit'],[32.0,'ding'],[35.2,'wipe'],[37.0,'hit'],[39.0,'alert'],[41.0,'hit'],[43.6,'wipe'],[45.0,'ding'],[47.0,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Cinco operadores, miles de millones perdidos. Este es el ranking.'],
+ [6.4,13.4,'Número 5: Iguchi, Daiwa, 1995; unos 1.100 millones de dólares.','Número cinco: Iguchi, Daiwa, mil novecientos noventa y cinco; unos mil cien millones de dólares.'],
+ [13.6,20.4,'Número 4: Nick Leeson, Barings, 1995; unos 1.300 millones.','Número cuatro: Nick Leeson, Barings, mil novecientos noventa y cinco; unos mil trescientos millones.'],
+ [20.6,28.2,'Número 3: Kweku Adoboli, UBS, 2011; unos 2.000 millones de dólares.','Número tres: Kweku Adoboli, UBS, dos mil once; unos dos mil millones de dólares.'],
+ [28.4,35.0,'Número 2: Yasuo Hamanaka, Sumitomo, 1996; 2.600 millones, en cobre.','Número dos: Yasuo Hamanaka, Sumitomo, mil novecientos noventa y seis; dos mil seiscientos millones, en cobre.'],
+ [35.2,43.4,'Número 1: Jérôme Kerviel, Société Générale: unos 6.000 millones de dólares, 4.900 millones de euros.','Número uno: Jérôme Kerviel, Société Générale: unos seis mil millones de dólares, cuatro mil novecientos millones de euros.'],
+ [43.6,49.6,'La lección: límites de riesgo automáticos y supervisión independiente.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#14141c',ACC='#ffd400',FAM='Inter',YLW='#ffd400',RDC='#e8222e',BLC='#1976e8',CYN='#19c9e8',MGN='#e8329c',INKC='#111',ORG='#ff7a1a';
+window.FONTS=['40px PM'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(20,20,28,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function C(s,x,y,sz,col=INKC,a=1,al='center',st=null){T(s,x,y,{font:`${sz}px PM`,fill:col,a,align:al,stroke:st,lw:Math.max(6,sz/9)})}
+function B(s,x,y,sz,col=INKC,a=1,al='center'){T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+function dots(col,bgc,r=9,gap=34,fadeY=true){ctx.fillStyle=bgc;ctx.fillRect(0,0,W,H);ctx.fillStyle=col;for(let y=0,j=0;y<H;y+=gap,j++)for(let x=(j%2)*gap/2;x<W;x+=gap){const k=fadeY?clamp(1-(y/H)*.7):1;ctx.beginPath();ctx.arc(x,y,r*k,0,7);ctx.fill()}}
+function bg(t,i=0){const P=[[ '#f2b800','#ffd400'],['#0e9ec0','#19c9e8'],['#c21f7c','#e8329c'],['#d95f00','#ff7a1a'],['#b01820','#e8222e']];const [d,b]=P[i%5];dots(d,b)}
+function star(cx,cy,r,col,k=1,n=14){ctx.save();ctx.translate(cx,cy);ctx.scale(k,k);ctx.beginPath();for(let i=0;i<n*2;i++){const a=i*Math.PI/n,rr=i%2?r*.72:r;ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr)}ctx.closePath();ctx.fillStyle=col;ctx.fill();ctx.lineWidth=10;ctx.strokeStyle=INKC;ctx.stroke();ctx.restore()}
+function panel(x,y,w,h,col,k=1,rot=0){ctx.save();ctx.translate(x+w/2,y+h/2);ctx.rotate(rot*k);ctx.scale(k,k);ctx.translate(-w/2,-h/2);ctx.fillStyle='rgba(0,0,0,.25)';RR(12,14,w,h,10);ctx.fill();ctx.fillStyle=col;RR(0,0,w,h,10);ctx.fill();ctx.lineWidth=10;ctx.strokeStyle=INKC;ctx.stroke();ctx.restore()}
+function bubble(x,y,w,h,k=1,tail=1){ctx.save();ctx.globalAlpha*=k;ctx.fillStyle='#fff';ctx.strokeStyle=INKC;ctx.lineWidth=8;RR(x,y,w,h,46);ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(x+w*.25,y+h-6);ctx.lineTo(x+w*.15,y+h+60*tail);ctx.lineTo(x+w*.4,y+h-6);ctx.fillStyle='#fff';ctx.fill();ctx.stroke();ctx.fillRect(x+w*.17,y+h-14,w*.2,12);ctx.restore()}
+function rankBlock(t,t0,rank,name,corp,yr,amt,sub,val,col,rot,extra){
+  const k=eback(prog(t,t0,t0+.6));
+  star(250,360,200,'#fff',k);star(250,360,170,col==YLW?RDC:YLW,k*.9);C('#'+rank,250,370,200,INKC,k);
+  panel(80,640,920,230,'#fff',k,rot);if(k>.02){C(name,540,730,84,INKC,k);B(corp+' · '+yr,540,820,48,'#333',k)}
+  const kb=eout(prog(t,t0+1.0,t0+3.2));panel(80,930,920,170,'#fff',1,0);
+  ctx.fillStyle=col;ctx.fillRect(100,950,880*clamp(val/6000)*kb,130);ctx.lineWidth=8;ctx.strokeStyle=INKC;ctx.strokeRect(100,950,880,130);
+  const kk=eout(prog(t,t0+2.4,t0+3.0));C('≈ '+amt,540,1170+ (1-kk)*30,98,INKC,kk,'center','#fff');
+  const k3=eout(prog(t,t0+3.4,t0+4.0));B(sub,540,1290,40,INKC,k3);if(extra)extra(t,t0)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  star(540,480,330,'#fff',eback(prog(t,.2,.9)),16);star(540,480,290,RDC,eback(prog(t,.3,1)),16);
+  C('5',540,520,330,'#fff',eout(prog(t,.6,1.2)),'center',INKC);
+  panel(90,880,900,200,'#fff',eback(prog(t,1.4,2.1)),-.03);C('MAYORES PÉRDIDAS',540,950,74,INKC,eout(prog(t,1.8,2.4)));B('de un solo operador',540,1030,56,'#333',eout(prog(t,2.2,2.8)));
+  bubble(220,1140,640,150,eout(prog(t,3.0,3.6)));B('¡cuenta regresiva!',540,1215,56,INKC,eout(prog(t,3.2,3.8)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;rankBlock(t,6.6,5,'IGUCHI','Daiwa Bank',1995,'$1.100 M','bonos · pérdidas ocultas',1100,CYN,-.02);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;rankBlock(t,13.8,4,'NICK LEESON','Barings Bank',1995,'$1.300 M','futuros y opciones · Singapur y Osaka',1300,MGN,.02);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;rankBlock(t,20.8,3,'KWEKU ADOBOLI','UBS',2011,'$2.000 M','derivados · Londres',2000,ORG,-.02);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;rankBlock(t,28.6,2,'YASUO HAMANAKA','Sumitomo',1996,'$2.600 M','cobre · LME · “Mr. Cinco por Ciento”',2600,RDC,.02);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;rankBlock(t,35.4,1,'JÉRÔME KERVIEL','Société Générale',2008,'$6.000 M','≈ 4.900 M de euros · ETF y derivados',6000,RDC,-.02,(t,t0)=>{const k=eback(prog(t,t0+4.4,t0+5.2));if(k>.02){ctx.save();ctx.translate(850,370);ctx.rotate(.2);ctx.scale(k,k);star(0,0,150,YLW,1,12);C('¡EL #1!',0,10,64,INKC,1);ctx.restore()}});ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;
+  const rows=[['Kerviel',6000,RDC],['Hamanaka',2600,ORG],['Adoboli',2000,MGN],['Leeson',1300,CYN],['Iguchi',1100,BLC]];
+  rows.forEach(([n,v,c],i)=>{const k=eout(prog(t,43.8+i*.35,44.6+i*.35));if(k<=.02)return;const y=250+i*128;ctx.save();ctx.globalAlpha*=k;panel(70,y,940,106,'#fff',1,0);ctx.fillStyle=c;ctx.fillRect(86,y+16,520*clamp(v/6000)*k,74);B(n,100,y+54,44,INKC,1,'left');B('$'+String(v).replace(/(\d)(\d{3})$/,'$1.$2')+' M',990-14,y+54,40,INKC,1,'right');ctx.restore()});
+  bubble(90,930,900,230,eout(prog(t,46.4,47.1)));B('LA LECCIÓN',540,990,52,RDC,eout(prog(t,46.6,47.2)));B('límites de riesgo automáticos',540,1060,46,INKC,eout(prog(t,47.0,47.6)));B('y supervisión independiente',540,1115,46,INKC,eout(prog(t,47.4,48.0)));
+  B('cifras aproximadas · fuentes: Euromoney, Wikipedia, swissinfo',540,1260,30,'#222',eout(prog(t,48.0,48.6)));B('Contenido educativo, no es asesoría financiera',540,1310,32,INKC,eout(prog(t,48.4,49.0)));ctx.restore()}
+function draw(t){const bi=t<6.4?0:t<13.6?1:t<20.6?2:t<28.4?3:t<35.2?4:t<43.6?0:1;bg(t,t<6.4?4:t<13.6?1:t<20.6?2:t<28.4?3:t<35.2?4:t<43.6?0:1);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2,4);
+  star(540,520,420,'#fff',1,18);star(540,520,375,YLW,1,18);
+  C('$6.000 M',540,520,160,RDC,1,'center',INKC);
+  panel(70,900,940,200,'#fff',1,-.02);C('UN SOLO OPERADOR',540,1000,86,INKC);
+  B('el ranking de las mayores pérdidas',540,1180,46,INKC);
+  coverBtn('VER EL RANKING →',ACC,DK)}
+</script></body></html>
