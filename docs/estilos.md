@@ -22,7 +22,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 16 | Plano técnico (blueprint) | Azul con cotas | MetaQuotes (v8_blueprint, 10 oct); Criterio de Kelly (v69_blueprint_kelly, escena 136, 22 oct 13:00, 2.º uso: cian sobre azul con curva de crecimiento) |
 | 17 | Papercut | Capas de papel recortado | v11_papercut; Informe COT de la CFTC y el oro (v70_papercut_cot, escena 137, 22 oct 16:30, 2.º uso: colinas de papel turquesa con tarjetas) |
 | 18 | Libro de órdenes | Compras y ventas que suben y bajan | HFT y spoofing (v14, 13 oct); Flash crash de la libra 7 oct 2016 (v72_libro_ordenes_libra2016, escena 139, 22 oct 23:30, 2.º uso: escalera de precios con profundidad) |
-| 19 | Cuaderno | Hoja clara con anotaciones | EMA (v17, 13 oct) |
+| 19 | Cuaderno | Hoja clara con anotaciones | EMA (v17, 13 oct); Bretton Woods 1944 (v74_cuaderno_bretton_woods, escena 141, 23 oct 6:00, 2.º uso: hoja con renglones, margen rojo y marcador amarillo) |
 | 20 | Pixel-art 3D | Bloques de colores en tres dimensiones | pixel/pixel5.html |
 | 21 | Línea de tiempo horizontal con hitos | Hitos sobre un eje que se desplaza | Lunes Negro 1987 (v38_timeline_lunes_negro, escena 105, 18 oct) |
 | 22 | Noticiero de última hora | Cinta de titulares | Knight Capital 2012 (v40_noticiero_knight, escena 107, 18 oct) |
