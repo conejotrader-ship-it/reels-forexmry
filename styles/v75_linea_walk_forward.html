@@ -1,0 +1,89 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 8 (2.º uso): gráfico de línea con suelo, azul noche con línea turquesa — tema: walk-forward (60 s).
+const SPEC={name:'WalkForward',hook:'WALK-FORWARD: ¿TU ROBOT FUNCIONA CON DATOS NUEVOS?',dur:60,cta:56,bpm:110,mus:'soft',prog:[[41,'m'],[36,'M'],[38,'m'],[43,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[8.0,'ding'],[10.4,'down'],[13.6,'wipe'],[15.2,'ding'],[17.0,'ding'],[18.6,'hit'],[20.6,'wipe'],[22.4,'ding'],[24.4,'ding'],[26.2,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[33.6,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'alert'],[46.8,'down'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Un robot optimizado luce perfecto en el pasado. ¿Funcionará con datos nuevos?'],
+ [6.4,13.4,'Walk-forward es optimizar con datos históricos y probar enseguida con datos que el robot nunca vio.'],
+ [13.6,20.4,'Una ventana típica: 3 años para optimizar y 1 para probar. Luego la ventana avanza.','Una ventana típica: tres años para optimizar y uno para probar. Luego la ventana avanza.'],
+ [20.6,28.2,'La eficiencia compara la ganancia fuera de muestra con la optimizada: 50 % es aceptable.','La eficiencia compara la ganancia fuera de muestra con la optimizada: cincuenta por ciento es aceptable.'],
+ [28.4,35.0,'Más de 60 % es sólido; menos de 30 % es señal de alarma.','Más de sesenta por ciento es sólido; menos de treinta por ciento es señal de alarma.'],
+ [35.2,43.4,'Usa de 6 a 8 ventanas como mínimo, y desconfía si optimizas más de 3 o 4 parámetros.','Usa de seis a ocho ventanas como mínimo, y desconfía si optimizas más de tres o cuatro parámetros.'],
+ [43.6,49.6,'Ojo: pasar el walk-forward no garantiza nada; los mercados cambian de régimen.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0a1020',ACC='#22d3a6',FAM='Inter',TE='#22d3a6',GO='#ffc83d',RD2='#ff4d5e',GRID='#1b2a47',TX='#e8eefc',MUT='#8ea0c4';
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,16,32,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=TX,a=1,al='left'){lbl(s,x,y,sz,col,a,al)}
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0e1830');g.addColorStop(1,DK);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  for(let y=240;y<1420;y+=118)line(60,y,1020,y,GRID,2);L('WALK-FORWARD',70,150,34,TE);line(70,190,1010,190,TE,4)}
+function curve(p,x0,y0,w,h,t,t0,t1,col,lw=9,floor=true,upto=1){ // p: valores 0..1 (alto), dibuja progresivamente
+  const k=eio(prog(t,t0,t1))*upto;const n=p.length-1;const f=k*n;const pts=[];
+  for(let i=0;i<=n;i++){const g=clamp(f-(i-1));if(i>0&&g<=0)break;const xa=x0+w*(i/n);const ya=y0+h*(1-p[i]);if(i==0)pts.push([xa,ya]);else{const xp=x0+w*((i-1)/n),yp=y0+h*(1-p[i-1]);pts.push([lerp(xp,xa,g),lerp(yp,ya,g)])}}
+  if(pts.length<2)return;ctx.save();
+  if(floor){ctx.beginPath();ctx.moveTo(pts[0][0],y0+h);pts.forEach(q=>ctx.lineTo(q[0],q[1]));ctx.lineTo(pts[pts.length-1][0],y0+h);ctx.closePath();const g=ctx.createLinearGradient(0,y0,0,y0+h);g.addColorStop(0,col+'55');g.addColorStop(1,col+'00');ctx.fillStyle=g;ctx.fill()}
+  ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineJoin='round';ctx.lineCap='round';ctx.shadowColor=col;ctx.shadowBlur=14;ctx.beginPath();pts.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.stroke();ctx.restore();return pts[pts.length-1]}
+function hd(t,t0,s,col=TX){L(s,70,260,66,col,eout(prog(t,t0,t0+.5)))}
+const R1=rng(11);const EQ=[];{let v=.1;for(let i=0;i<30;i++){v+=.026+(R1()-.45)*.03;EQ.push(clamp(v,0,1))}}
+const EQ2=EQ.concat((()=>{const o=[];let v=EQ[EQ.length-1];const r=rng(5);for(let i=0;i<22;i++){v-=.012+(r()-.5)*.03;o.push(clamp(v,.05,1))}return o})());
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  L('WALK',70,420,260,TX,eout(prog(t,.2,.9)));L('FORWARD',70,650,165,TE,eout(prog(t,.6,1.3)));
+  curve(EQ2,70,780,940,520,t,1.2,4.2,TE,9);
+  const k=eout(prog(t,3.4,4.0));if(k>.02){ctx.save();ctx.globalAlpha*=k;line(70+940*29/51,780,70+940*29/51,1300,GO,4,[14,10]);ctx.restore();L('pasado optimizado',80,1340,34,TE,k);L('datos nuevos ¿?',560,1340,34,RD2,k)}
+  ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'OPTIMIZAR + PROBAR');
+  curve(EQ,70,480,470,520,t,7.2,9.6,TE,9);L('datos históricos',70,1040,36,TE,eout(prog(t,8.4,9)));L('optimización',70,1090,32,MUT,eout(prog(t,8.8,9.4)));
+  const k=eout(prog(t,9.8,10.4));if(k>.02){ctx.save();ctx.globalAlpha*=k;line(560,460,560,1020,GO,4,[14,10]);ctx.restore()}
+  const pt=EQ[EQ.length-1];const r=rng(3);const O=[pt];let v=pt;for(let i=0;i<14;i++){v+=(r()-.42)*.05;O.push(clamp(v,.05,1))}
+  curve(O,540,480,470,520,t,10.4,12.6,GO,9);L('datos nuevos',560,1040,36,GO,eout(prog(t,11.4,12)));L('nunca vistos por el robot',560,1090,32,MUT,eout(prog(t,11.8,12.4)));
+  L('curvas ilustrativas',70,1230,30,MUT,eout(prog(t,12.4,13)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'VENTANAS QUE AVANZAN');
+  const rows=5,rh=120,x0=70,u=110; // 1 año = 190 px (4 años por fila)
+  for(let i=0;i<rows;i++){const ts=14.6+i*1.0;const k=eout(prog(t,ts,ts+.7));if(k<=.02)continue;const y=420+i*(rh+30);const xo=x0+i*u;
+    ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=TE;RR(xo,y,u*3*k,rh,16);ctx.fill();ctx.fillStyle=GO;RR(xo+u*3,y,u*k,rh,16);ctx.fill();ctx.restore();
+    L('3 años',xo+20,y+rh/2,34,DK,k);L('1',xo+u*3+u/2-8,y+rh/2,40,DK,k)}
+  L('■ optimizar (3)',70,1280,36,TE,eout(prog(t,19,19.6)));L('■ probar (1)',640,1280,36,GO,eout(prog(t,19.2,19.8)));
+  L('fuente: NexusFi Academy · proporción 3:1 o 4:1',70,1340,28,MUT,eout(prog(t,19.6,20.2)));ctx.restore()}
+function gauge(t,t0,val,col){ // barra 0..100
+  const x0=90,x1=990,y=700,hh=90;const k=eout(prog(t,t0,t0+1.2));
+  ctx.fillStyle='#16233f';RR(x0,y,x1-x0,hh,45);ctx.fill();
+  const zs=[[0,30,RD2],[30,60,GO],[60,100,TE]];zs.forEach(([a1,b1_,c])=>{ctx.save();ctx.globalAlpha*=.35;ctx.fillStyle=c;RR(lerp(x0,x1,a1/100),y,lerp(x0,x1,(b1_-a1)/100)-x0+0,hh,0);ctx.fill();ctx.restore()});
+  ctx.save();ctx.fillStyle=col;RR(x0,y,(x1-x0)*val/100*k,hh,45);ctx.fill();ctx.restore();
+  [[30,'30 %',1],[50,'50 %',0],[60,'60 %',1]].forEach(([v,s,d])=>{const x=lerp(x0,x1,v/100);line(x,y-14,x,y+hh+14,TX,3);L(s,x+(v==60?30:v==30?-30:0),d?y+hh+50:y-40,34,MUT,1,'center')})}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'EFICIENCIA WALK-FORWARD');
+  L('ganancia fuera de muestra',90,420,48,GO,eout(prog(t,21.6,22.2)));ctx.fillStyle=TX;ctx.fillRect(90,470,560,6);L('ganancia optimizada',90,540,48,TE,eout(prog(t,22.4,23)));
+  L('× 100',680,480,70,TX,eout(prog(t,23.4,24)));
+  gauge(t,24.6,50,GO);const k=eout(prog(t,25.6,26.4));L('50 %',540,950,180,GO,k,'center');L('aceptable',540,1080,60,TX,eout(prog(t,26.2,26.8)),'center');
+  L('fuente: NexusFi Academy',90,1300,28,MUT,eout(prog(t,26.8,27.4)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'¿CÓMO LEER LA CIFRA?');
+  [[RD2,'< 30 %','señal de alarma',29.2],[GO,'≈ 50 %','aceptable',30.8],[TE,'> 60 %','sólido',32.4]].forEach(([c,a1,b1_,ts],i)=>{const k=eout(prog(t,ts,ts+.6));if(k<=.02)return;const y=400+i*270;ctx.save();ctx.globalAlpha*=k;ctx.translate(lerp(-80,0,k),0);ctx.fillStyle='#14223d';RR(70,y,940,220,28);ctx.fill();ctx.fillStyle=c;RR(70,y,22,220,10);ctx.fill();ctx.restore();
+    L(a1,130,y+100,100,c,k);L(b1_,130,y+180,46,TX,k)});
+  L('regla orientativa, no una garantía',70,1260,30,MUT,eout(prog(t,33.8,34.4)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'CUÁNTAS PRUEBAS');
+  const items=[['6–8','ventanas como mínimo',36.2],['12–20','es lo ideal',38.2],['≤ 3–4','parámetros a optimizar',40.2]];
+  items.forEach(([n,s,ts],i)=>{const k=eout(prog(t,ts,ts+.6));if(k<=.02)return;const y=380+i*270;ctx.save();ctx.globalAlpha*=k;ctx.translate(lerp(80,0,k),0);ctx.fillStyle='#14223d';RR(70,y,940,220,28);ctx.fill();ctx.restore();
+    L(n,110,y+100,110,i==2?GO:TE,k);L(s,110,y+185,44,TX,k)});
+  L('más parámetros = más riesgo de sobreoptimización',70,1230,32,MUT,eout(prog(t,41.6,42.2)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'EL MERCADO CAMBIA',RD2);
+  const p=curve(EQ2,70,420,940,620,t,44.4,48.2,TE,9);
+  const k=eout(prog(t,47.2,47.9));if(k>.02){ctx.save();ctx.globalAlpha*=k;line(70+940*29/51,420,70+940*29/51,1040,GO,4,[14,10]);ctx.restore();L('cambio de régimen',70+940*29/51+14,470,34,GO,k)}
+  L('pasar la prueba no garantiza nada',70,1150,42,TX,eout(prog(t,47.8,48.4)));L('gráfico ilustrativo',70,1210,30,MUT,eout(prog(t,48.2,48.8)));
+  L('Contenido educativo, no es asesoría financiera',70,1300,32,RD2,eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  L('50 %',540,430,330,GO,1,'center');L('eficiencia mínima aceptable',540,640,52,TX,1,'center');
+  curve(EQ2,90,760,900,420,2,0,1,TE,12);L('¿tu robot pasa el walk-forward?',540,1290,50,TX,1,'center');
+  coverBtn('VER LA PRUEBA →',ACC,DK)}
+</script></body></html>

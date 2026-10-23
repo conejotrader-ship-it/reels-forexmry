@@ -11,7 +11,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 5 | Terminal tipo MetaTrader | Ventanas de plataforma con velas de fondo | Diario de trading (v32, 18 oct) |
 | 6 | Cómic pop-art | Viñetas con tramado y globos | Miedo y avaricia (v26, 16 oct) |
 | 7 | Dashboard con indicadores | Tarjetas, medidores y gráficos | Revisión semanal del robot (v27, 16 oct) |
-| 8 | Gráfico de línea con suelo | Línea que cae o sube, color de marca | Franco suizo 2015 (v25, 15 oct) |
+| 8 | Gráfico de línea con suelo | Línea que cae o sube, color de marca | Franco suizo 2015 (v25, 15 oct); Walk-forward (v75_linea_walk_forward, escena 142, 23 oct 9:30, 2.º uso: azul noche con línea turquesa y suelo degradado) |
 | 9 | Billete verde y crema | Diseño tipo dólar con guilloche | Acuerdo del Plaza (v34, 17 oct) |
 | 10 | Tablero de barras a escala | Negro, rojo y dorado | 4 caídas del oro (v35, 17 oct) |
 | 11 | Terminal ámbar sobre negro | Pantalla financiera de los noventa | LTCM 1998 (v36, 17 oct) |
