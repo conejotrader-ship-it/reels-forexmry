@@ -10,7 +10,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 4 | Pizarra con tiza | Texto y diagramas como en una clase | Break even (v31, 18 oct) |
 | 5 | Terminal tipo MetaTrader | Ventanas de plataforma con velas de fondo | Diario de trading (v32, 18 oct) |
 | 6 | Cómic pop-art | Viñetas con tramado y globos | Miedo y avaricia (v26, 16 oct); Las 5 mayores pérdidas de un solo operador (v77_comic_trading_rogue, escena 144, 23 oct 16:30, 2.º uso: tramado de colores con estrellas y barras de ranking) |
-| 7 | Dashboard con indicadores | Tarjetas, medidores y gráficos | Revisión semanal del robot (v27, 16 oct) |
+| 7 | Dashboard con indicadores | Tarjetas, medidores y gráficos | Revisión semanal del robot (v27, 16 oct); Miércoles Negro 16 sep 1992 (v78_dashboard_miercoles_negro, escena 145, 23 oct 20:00, 2.º uso: panel azul noche con tarjetas, anillo y barras) |
 | 8 | Gráfico de línea con suelo | Línea que cae o sube, color de marca | Franco suizo 2015 (v25, 15 oct); Walk-forward (v75_linea_walk_forward, escena 142, 23 oct 9:30, 2.º uso: azul noche con línea turquesa y suelo degradado) |
 | 9 | Billete verde y crema | Diseño tipo dólar con guilloche | Acuerdo del Plaza (v34, 17 oct) |
 | 10 | Tablero de barras a escala | Negro, rojo y dorado | 4 caídas del oro (v35, 17 oct) |

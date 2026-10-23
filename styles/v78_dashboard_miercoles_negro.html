@@ -1,0 +1,79 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 7 (2.º uso): dashboard oscuro con tarjetas, medidores y KPI — tema: Miércoles Negro, 16 sep 1992 (60 s).
+const SPEC={name:'MiercolesNegro',hook:'16 DE SEPTIEMBRE DE 1992: TASAS DEL 10 % AL 15 % EN UN DÍA',dur:60,cta:56,bpm:100,mus:'soft',prog:[[43,'m'],[38,'M'],[41,'m'],[46,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.4,'down'],[13.6,'wipe'],[15.2,'ding'],[17.0,'down'],[20.6,'wipe'],[22.4,'ding'],[24.4,'ding'],[26.0,'hit'],[28.4,'wipe'],[30.0,'alert'],[32.0,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.6,'hit'],[41.4,'ding'],[43.6,'wipe'],[45.0,'down'],[47.0,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Un día de 1992, el Reino Unido subió sus tasas dos veces.','Un día de mil novecientos noventa y dos, el Reino Unido subió sus tasas dos veces.'],
+ [6.4,13.4,'Desde 1990, la libra estaba atada al marco alemán, en 2,95.','Desde mil novecientos noventa, la libra estaba atada al marco alemán, en dos coma noventa y cinco.'],
+ [13.6,20.4,'El Banco de Inglaterra gastó cerca del 40 % de sus reservas para defenderla.','El Banco de Inglaterra gastó cerca del cuarenta por ciento de sus reservas para defenderla.'],
+ [20.6,28.2,'Subió la tasa de 10 a 12 % y luego a 15 %, todo en un día.','Subió la tasa de diez a doce por ciento y luego a quince, todo en un día.'],
+ [28.4,35.0,'No bastó: esa tarde, a las 7:40, el Reino Unido salió del mecanismo.','No bastó: esa tarde, a las siete y cuarenta, el Reino Unido salió del mecanismo.'],
+ [35.2,43.4,'Soros ganó cerca de 1.000 millones de libras; el costo para el Reino Unido: unos 3.300 millones.','Soros ganó cerca de mil millones de libras; el costo para el Reino Unido: unos tres mil trescientos millones.'],
+ [43.6,49.6,'Las paridades fijas pueden romperse de golpe; el riesgo de gap existe.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0b1220',ACC='#f5b301',FAM='Inter',CARD='#16213a',CARD2='#1d2b4a',AMB='#f5b301',RDS='#ff4d5e',GRN='#2ee59d',BLU='#4da3ff',TXD='#e9eefb',MUD='#8ea0c4';
+const STY={subFont:'800 42px Inter',subBg:'rgba(11,18,32,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=TXD,a=1,al='left'){lbl(s,x,y,sz,col,a,al)}
+function bg(t){ctx.fillStyle=DK;ctx.fillRect(0,0,W,H);ctx.fillStyle='#0e1730';ctx.fillRect(0,0,W,120);L('● PANEL · MIÉRCOLES NEGRO 1992',60,62,32,AMB);L('16 SEP 1992',1020,62,32,MUD,1,'right');line(0,120,W,120,'#25355a',3)}
+function card(x,y,w,h,k=1,col=CARD){ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=col;RR(x,y,w,h,28);ctx.fill();ctx.strokeStyle='#2a3b64';ctx.lineWidth=3;ctx.stroke();ctx.restore()}
+function ring(cx,cy,r,v,col,t,t0,t1,lw=44){const k=eout(prog(t,t0,t1));ctx.save();ctx.lineCap='round';ctx.lineWidth=lw;ctx.strokeStyle='#25355a';ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.stroke();ctx.strokeStyle=col;ctx.beginPath();ctx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+Math.PI*2*v*k);ctx.stroke();ctx.restore();return k}
+function hd(t,t0,s,col=TXD){L(s,60,210,62,col,eout(prog(t,t0,t0+.5)))}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  const k=eback(prog(t,.2,.9));card(60,250,960,640,k);L('TASA OFICIAL · REINO UNIDO',100,320,36,MUD,eout(prog(t,.5,1.1)));
+  L('10 %',240,560,150,TXD,eout(prog(t,.8,1.4)),'center');L('→',540,550,120,AMB,eout(prog(t,1.4,2.0)),'center');L('15 %',840,560,150,RDS,eout(prog(t,1.8,2.4)),'center');
+  L('en un solo día',540,760,64,AMB,eout(prog(t,2.6,3.2)),'center');L('16 de septiembre de 1992',540,830,40,MUD,eout(prog(t,3.0,3.6)),'center');
+  card(60,940,960,240,eout(prog(t,3.4,4.0)),CARD2);L('Miércoles Negro',100,1030,76,TXD,eout(prog(t,3.6,4.2)));L('la libra sale del mecanismo cambiario europeo',100,1120,38,MUD,eout(prog(t,4.0,4.6)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'LA PARIDAD');
+  card(60,300,960,520,eout(prog(t,7.0,7.6)));L('LIBRA / MARCO ALEMÁN',100,370,34,MUD,eout(prog(t,7.4,8.0)));
+  L('2,95',540,560,230,AMB,eout(prog(t,8.0,8.8)),'center');L('marcos por libra',540,700,46,TXD,eout(prog(t,8.8,9.4)),'center');
+  card(60,860,460,220,eout(prog(t,9.6,10.2)),CARD2);L('ERM',100,950,80,BLU,eout(prog(t,9.8,10.4)));L('Mecanismo cambiario',100,1020,30,MUD,eout(prog(t,10,10.6)));
+  card(560,860,460,220,eout(prog(t,10.4,11.0)),CARD2);L('oct. 1990',600,950,70,GRN,eout(prog(t,10.6,11.2)));L('el Reino Unido entra',600,1020,32,MUD,eout(prog(t,10.8,11.4)));
+  L('fuente: The Boar · FXCM',60,1180,28,MUD,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'LA DEFENSA');
+  card(60,300,960,720,eout(prog(t,14.2,14.8)));
+  const k=ring(540,640,230,.4,RDS,t,14.8,17.4,56);const v=Math.round(40*k);L(v+' %',540,630,170,TXD,1,'center');L('de las reservas',540,760,40,MUD,eout(prog(t,16,16.6)),'center');
+  L('RESERVAS DE DIVISAS GASTADAS',540,380,34,MUD,eout(prog(t,14.8,15.4)),'center');
+  L('vendió divisas para sostener la libra',540,930,38,TXD,eout(prog(t,17.4,18.0)),'center');
+  L('estimación aproximada · fuente: FXCM',60,1100,28,MUD,eout(prog(t,18.6,19.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'TASAS EN UN DÍA');
+  card(60,300,960,780,eout(prog(t,21.2,21.8)));
+  const bars=[['antes',10,TXD,22.0],['11:00',12,AMB,24.0],['después',15,RDS,25.6]];bars.forEach(([lb,v,c,ts],i)=>{const k=eout(prog(t,ts,ts+.8));if(k<=.02)return;const bw=220,x=130+i*300,h=v*32*k;ctx.fillStyle=c;RR(x,980-h,bw,h,16);ctx.fill();L(v+' %',x+bw/2,980-h-40,64,c,1,'center');L(lb,x+bw/2,1040,36,MUD,1,'center')});
+  L('el mayor salto de tasas en un solo día',540,380,34,MUD,eout(prog(t,21.8,22.4)),'center');
+  L('tasas de interés del Reino Unido · 16 sep 1992',60,1160,28,MUD,eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'LA SALIDA',RDS);
+  card(60,300,960,560,eout(prog(t,29,29.6)));L('HORA DE LONDRES',540,370,34,MUD,eout(prog(t,29.4,30)),'center');
+  L('7:40 p. m.',540,600,150,TXD,eout(prog(t,30,30.8)),'center');
+  card(60,900,960,220,eout(prog(t,32,32.6)),RDS);L('el Reino Unido sale del ERM',540,1010,56,'#fff',eout(prog(t,32.2,32.8)),'center');
+  L('Lamont anunció la suspensión esa noche',60,1200,32,MUD,eout(prog(t,33.4,34),1));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'EL BALANCE');
+  card(60,300,960,360,eout(prog(t,36,36.6)));L('GANANCIA DE SOROS (aprox.)',100,370,34,MUD,eout(prog(t,36.4,37)));L('≈ £1.000 M',540,520,150,GRN,eout(prog(t,37,37.8)),'center');
+  card(60,700,960,360,eout(prog(t,39.4,40)));L('COSTO ESTIMADO PARA EL REINO UNIDO',100,770,32,MUD,eout(prog(t,39.8,40.4)));L('≈ £3.300 M',540,920,150,RDS,eout(prog(t,40.4,41.2)),'center');
+  L('cifras aproximadas: las fuentes difieren (£3.300–3.400 M)',60,1150,28,MUD,eout(prog(t,41.6,42.2)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'EL RIESGO DE GAP',AMB);
+  card(60,300,960,600,eout(prog(t,44.2,44.8)));
+  const r=rng(9);const pts=[];for(let i=0;i<30;i++)pts.push(i<20?560+(r()-.5)*30:(560+(i-19)*24+(r()-.5)*20));
+  const k=eio(prog(t,44.8,48));ctx.save();ctx.strokeStyle=TXD;ctx.lineWidth=8;ctx.lineJoin='round';ctx.beginPath();for(let i=0;i<30*k;i++){const x=110+i*30,y=pts[i];i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.restore();
+  line(110,620,980,620,AMB,3,[12,10]);L('paridad fija',120,590,30,AMB,eout(prog(t,45.2,45.8)));L('ruptura',780,700,40,RDS,eout(prog(t,47.2,47.8)));
+  L('esquema ilustrativo',100,860,28,MUD,eout(prog(t,48,48.6)));
+  L('Contenido educativo, no es asesoría financiera',60,1010,32,RDS,eout(prog(t,48.4,49)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  card(50,240,980,760,1);L('16 SEP 1992',540,320,40,MUD,1,'center');
+  L('10 % → 15 %',540,520,150,AMB,1,'center');L('EN UN SOLO DÍA',540,720,84,TXD,1,'center');
+  L('el día que la libra cayó',540,860,50,RDS,1,'center');L('Miércoles Negro',540,940,44,MUD,1,'center');
+  card(50,1060,980,220,1,CARD2);L('Banco de Inglaterra · 40 % de reservas',540,1170,42,TXD,1,'center');
+  coverBtn('VER LA HISTORIA →',ACC,DK)}
+</script></body></html>
