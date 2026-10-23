@@ -5,7 +5,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | N.º | Estilo | Descripción | Usado en |
 |---|---|---|---|
 | 1 | Velas animadas | Velas japonesas que se dibujan solas | Cómo leer una vela japonesa (v30, 17 oct) |
-| 2 | Infografía de tarjetas | Iconos, cifras y bloques de color | Qué es el swap (v29, 17 oct) |
+| 2 | Infografía de tarjetas | Iconos, cifras y bloques de color | Qué es el swap (v29, 17 oct); Sharpe, Sortino y Calmar (v79_info_sharpe_sortino_calmar, escena 146, 23 oct 23:30, 2.º uso: crema con bloques azul, verde y naranja) |
 | 3 | Neón synthwave | Líneas brillantes sobre fondo oscuro retro | Volatilidad (v24, 15 oct); Puntos swap (v76_neon_puntos_swap, escena 143, 23 oct 13:00, 2.º uso: morado con cuadrícula en perspectiva y rótulos neón) |
 | 4 | Pizarra con tiza | Texto y diagramas como en una clase | Break even (v31, 18 oct) |
 | 5 | Terminal tipo MetaTrader | Ventanas de plataforma con velas de fondo | Diario de trading (v32, 18 oct) |

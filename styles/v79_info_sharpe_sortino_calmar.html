@@ -1,0 +1,86 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 2 (2.º uso): infografía de tarjetas con bloques de color vivos — tema: Sharpe, Sortino y Calmar (60 s).
+const SPEC={name:'SharpeSortinoCalmar',hook:'DOS ROBOTS GANAN LO MISMO: ¿CUÁL ES MEJOR?',dur:60,cta:56,bpm:112,mus:'soft',prog:[[40,'M'],[45,'m'],[43,'M'],[38,'m']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.4,'ding'],[13.6,'wipe'],[15.2,'down'],[17.0,'hit'],[20.6,'wipe'],[22.4,'ding'],[24.4,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.6,'hit'],[41.4,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[47.8,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Dos robots ganan lo mismo, pero uno arriesga más. Estos tres ratios lo miden.'],
+ [6.4,13.4,'Sharpe, de 1966: ganancia sobre la tasa libre de riesgo, entre la volatilidad.','Sharpe, de mil novecientos sesenta y seis: ganancia sobre la tasa libre de riesgo, entre la volatilidad.'],
+ [13.6,20.4,'Ojo: castiga toda la volatilidad, tanto la que sube como la que baja.'],
+ [20.6,28.2,'Sortino corrige eso: solo cuenta la volatilidad a la baja, por debajo de un mínimo aceptable.'],
+ [28.4,35.0,'Calmar divide el rendimiento anual compuesto entre la máxima caída, normalmente de tres años.'],
+ [35.2,43.4,'Ninguno es perfecto: con colas gruesas, un Sharpe alto puede esconder grandes pérdidas raras.'],
+ [43.6,49.6,'Compara robots con los tres y con el drawdown, no solo con la ganancia.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#1f2937',ACC='#ff7a1a',FAM='Inter',CRM='#fff4df',BL='#2563eb',GN='#16a34a',OR='#f97316',RD='#dc2626',PU='#7c3aed',INK='#1f2937',WH='#ffffff';
+const STY={subFont:'800 42px Inter',subBg:'rgba(31,41,55,.97)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=INK,a=1,al='left'){lbl(s,x,y,sz,col,a,al)}
+function bg(t){ctx.fillStyle=CRM;ctx.fillRect(0,0,W,H);ctx.fillStyle=BL;ctx.fillRect(0,0,W,110);ctx.fillStyle=OR;ctx.fillRect(0,110,W,12);L('RATIOS DE RIESGO',60,56,38,'#fff');L('INFO',1020,56,32,'#cfe0ff',1,'right')}
+function blk(x,y,w,h,col,k=1,r=34){ctx.save();ctx.globalAlpha*=k;ctx.fillStyle='rgba(0,0,0,.14)';RR(x+8,y+10,w,h,r);ctx.fill();ctx.fillStyle=col;RR(x,y,w,h,r);ctx.fill();ctx.restore()}
+function ico(kind,cx,cy,s,col){ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);ctx.fillStyle=col;ctx.strokeStyle=col;ctx.lineWidth=10;ctx.lineCap='round';ctx.lineJoin='round';
+  if(kind=='up'){ctx.beginPath();ctx.moveTo(0,-50);ctx.lineTo(40,10);ctx.lineTo(14,10);ctx.lineTo(14,50);ctx.lineTo(-14,50);ctx.lineTo(-14,10);ctx.lineTo(-40,10);ctx.closePath();ctx.fill()}
+  else if(kind=='down'){ctx.rotate(Math.PI);ctx.beginPath();ctx.moveTo(0,-50);ctx.lineTo(40,10);ctx.lineTo(14,10);ctx.lineTo(14,50);ctx.lineTo(-14,50);ctx.lineTo(-14,10);ctx.lineTo(-40,10);ctx.closePath();ctx.fill()}
+  else if(kind=='scale'){ctx.beginPath();ctx.moveTo(0,-50);ctx.lineTo(0,50);ctx.moveTo(-50,-30);ctx.lineTo(50,-30);ctx.moveTo(-30,50);ctx.lineTo(30,50);ctx.stroke();ctx.beginPath();ctx.arc(-40,0,20,0,Math.PI);ctx.arc(40,0,20,0,Math.PI);ctx.stroke()}
+  else if(kind=='dd'){ctx.beginPath();ctx.moveTo(-50,-40);ctx.lineTo(-10,-40);ctx.lineTo(10,10);ctx.lineTo(50,50);ctx.stroke()}
+  else if(kind=='warn'){ctx.beginPath();ctx.moveTo(0,-50);ctx.lineTo(50,40);ctx.lineTo(-50,40);ctx.closePath();ctx.stroke();ctx.fillRect(-5,-20,10,35);ctx.beginPath();ctx.arc(0,28,6,0,7);ctx.fill()}
+  ctx.restore()}
+function path(pts,x0,y0,w,h,t,t0,t1,col,lw=10){const k=eio(prog(t,t0,t1));const n=pts.length-1;const f=k*n;ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();for(let i=0;i<=n;i++){const g=clamp(f-(i-1));if(i>0&&g<=0)break;const xa=x0+w*(i/n),ya=y0+h*(1-pts[i]);if(i==0){ctx.moveTo(xa,ya)}else{const xp=x0+w*((i-1)/n),yp=y0+h*(1-pts[i-1]);ctx.lineTo(lerp(xp,xa,g),lerp(yp,ya,g))}}ctx.stroke();ctx.restore()}
+const RA=[],RB=[];{let a=.1,b=.1;const r=rng(2),r2=rng(8);for(let i=0;i<24;i++){a+=.035+(r()-.5)*.012;b+=.035+(r2()-.5)*.17;RA.push(a);RB.push(clamp(b,0,1))}RB[23]=RA[23]}
+function hd(t,t0,s,col=INK){L(s,60,200,64,col,eout(prog(t,t0,t0+.5)))}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  blk(60,240,460,560,'#fff',eback(prog(t,.2,.8)));blk(560,240,460,560,'#fff',eback(prog(t,.5,1.1)));
+  L('ROBOT A',290,300,44,BL,eout(prog(t,.6,1.2)),'center');L('ROBOT B',790,300,44,OR,eout(prog(t,.9,1.5)),'center');
+  path(RA,100,380,380,300,t,1.2,4.0,BL,10);path(RB,600,380,380,300,t,1.4,4.2,OR,10);
+  L('+20 %',290,740,76,INK,eout(prog(t,3.6,4.2)),'center');L('+20 %',790,740,76,INK,eout(prog(t,3.8,4.4)),'center');
+  L('¿cuál es mejor?',540,920,100,RD,eout(prog(t,4.2,4.8)),'center');L('curvas y cifras ilustrativas',540,1010,32,'#6b7280',eout(prog(t,4.6,5.2)),'center');ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'1. SHARPE',BL);
+  blk(60,280,960,330,BL,eback(prog(t,7,7.6)));ico('scale',190,445,1.5,'#fff');L('SHARPE',330,380,100,'#fff',eout(prog(t,7.4,8)));L('William Sharpe · 1966',330,470,42,'#cfe0ff',eout(prog(t,7.8,8.4)));L('“reward-to-variability”',330,535,34,'#cfe0ff',eout(prog(t,8.2,8.8)));
+  const k=eout(prog(t,9.4,10.2));blk(60,660,960,340,'#fff',k);
+  L('( R − Rf )',540,760,86,INK,eout(prog(t,9.8,10.4)),'center');line(240,820,840,820,INK,8);L('σ  (volatilidad)',540,900,70,OR,eout(prog(t,10.6,11.2)),'center');
+  L('R = ganancia · Rf = tasa libre de riesgo',60,1060,34,'#4b5563',eout(prog(t,11.6,12.2)));L('fuente: Wikipedia · Gate39 Media',60,1110,28,'#6b7280',eout(prog(t,12.2,12.8)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'LO QUE CASTIGA',RD);
+  blk(60,280,460,500,'#fff',eback(prog(t,14.4,15.0)));blk(560,280,460,500,'#fff',eback(prog(t,15.2,15.8)));
+  ico('up',290,500,2.3,RD);ico('down',790,500,2.3,RD);
+  L('volatilidad',290,680,46,INK,eout(prog(t,15.6,16.2)),'center');L('al alza',290,730,40,'#6b7280',eout(prog(t,15.8,16.4)),'center');
+  L('volatilidad',790,680,46,INK,eout(prog(t,16.4,17.0)),'center');L('a la baja',790,730,40,'#6b7280',eout(prog(t,16.6,17.2)),'center');
+  blk(60,840,960,150,RD,eout(prog(t,17.8,18.4)));L('Sharpe cuenta las dos por igual',540,915,50,'#fff',eout(prog(t,18.0,18.6)),'center');ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'2. SORTINO',GN);
+  blk(60,280,960,330,GN,eback(prog(t,21.2,21.8)));ico('down',190,445,1.7,'#fff');L('SORTINO',330,400,100,'#fff',eout(prog(t,21.6,22.2)));L('solo cuenta la baja',330,490,46,'#d7f5e0',eout(prog(t,22.2,22.8)));
+  blk(60,660,960,360,'#fff',eout(prog(t,23.4,24.0)));
+  L('( R − mínimo aceptable )',540,750,52,INK,eout(prog(t,23.8,24.4)),'center');line(160,800,920,800,INK,8);L('desviación a la baja',540,880,60,GN,eout(prog(t,24.6,25.2)),'center');
+  L('MAR: el rendimiento mínimo que tú defines',540,960,34,'#4b5563',eout(prog(t,25.8,26.4)),'center');
+  L('fuente: Gate39 Media · Wikipedia',60,1090,28,'#6b7280',eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'3. CALMAR',OR);
+  blk(60,280,960,330,OR,eback(prog(t,29,29.6)));ico('dd',190,445,1.7,'#fff');L('CALMAR',330,400,100,'#fff',eout(prog(t,29.4,30)));L('rendimiento ÷ caída máxima',330,490,42,'#ffe7cf',eout(prog(t,30,30.6)));
+  blk(60,660,960,360,'#fff',eout(prog(t,31.2,31.8)));
+  L('rendimiento anual compuesto',540,750,52,INK,eout(prog(t,31.6,32.2)),'center');line(160,800,920,800,INK,8);L('máxima caída (drawdown)',540,880,60,RD,eout(prog(t,32.6,33.2)),'center');
+  L('normalmente: últimos 3 años',540,960,36,'#4b5563',eout(prog(t,33.6,34.2)),'center');ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'LA TRAMPA',RD);
+  blk(60,280,960,520,'#fff',eback(prog(t,35.8,36.4)));
+  // histograma con cola gruesa
+  const bars=[4,9,18,32,46,32,18,9,4,2,1.5,1.2,2.2];const bw=64;bars.forEach((v,i)=>{const k=eout(prog(t,36.6+i*.08,37.4+i*.08));const x=110+i*bw,h=v*6*k;ctx.fillStyle=i>=9?RD:BL;ctx.fillRect(x,740-h,bw-8,h)});
+  L('pérdidas raras y grandes',540,480,36,RD,eout(prog(t,38.8,39.4)));ctx.save();ctx.strokeStyle=RD;ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(740,510);ctx.lineTo(800,690);ctx.stroke();ctx.restore();
+  blk(60,850,960,200,RD,eout(prog(t,39.8,40.4)));ico('warn',180,950,1.2,'#fff');L('Sharpe alto ≠ sin riesgo',620,930,54,'#fff',eout(prog(t,40.2,40.8)),'center');L('colas gruesas · datos no normales',620,995,34,'#ffd5d5',eout(prog(t,40.8,41.4)),'center');
+  L('histograma ilustrativo',60,1110,28,'#6b7280',eout(prog(t,41.6,42.2)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'COMPARA CON TODO');
+  [['Sharpe',BL],['Sortino',GN],['Calmar',OR],['Drawdown',RD]].forEach(([n,c],i)=>{const k=eout(prog(t,44.6+i*.7,45.2+i*.7));if(k<=.02)return;const y=280+i*170;ctx.save();ctx.translate(lerp(-80,0,k),0);blk(60,y,960,140,c,k);L(n,120,y+72,66,'#fff',k);L('✓',920,y+72,74,'#fff',k,'center');ctx.restore()});
+  L('no son una garantía de resultados',60,1010,38,INK,eout(prog(t,47.6,48.2)));L('Contenido educativo, no es asesoría financiera',60,1080,32,RD,eout(prog(t,48.4,49)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  L('+20 %',540,350,230,BL,1,'center');L('LOS DOS ROBOTS',540,520,84,INK,1,'center');
+  blk(60,600,460,380,'#fff');blk(560,600,460,380,'#fff');path(RA,90,640,400,300,99,0,1,BL,12);path(RB,590,640,400,300,99,0,1,OR,12);
+  L('¿cuál es mejor?',540,1120,100,RD,1,'center');L('ejemplo ilustrativo',540,1210,34,'#6b7280',1,'center');
+  coverBtn('VER LA RESPUESTA →',ACC,DK)}
+</script></body></html>
