@@ -1,0 +1,79 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 1 (2.º uso): velas japonesas que se dibujan solas, fondo carbón con verde y rojo — tema: choque de Volcker 1979–1980 y el oro (60 s).
+const SPEC={name:'VolckerOro',hook:'6 DE OCTUBRE DE 1979: LA FED CAMBIÓ LAS REGLAS',dur:60,cta:56,bpm:98,mus:'soft',prog:[[36,'m'],[41,'M'],[38,'m'],[43,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[8.0,'ding'],[10.4,'hit'],[13.6,'wipe'],[15.2,'ding'],[17.0,'rise',2.0],[20.6,'wipe'],[22.4,'alert'],[24.4,'ding'],[26.2,'hit'],[28.4,'wipe'],[30.0,'down'],[32.0,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.0,'down'],[40.6,'hit'],[41.8,'ding'],[43.6,'wipe'],[45.0,'ding'],[47.0,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Sábado 6 de octubre de 1979: la Reserva Federal cambia las reglas.','Sábado seis de octubre de mil novecientos setenta y nueve: la Reserva Federal cambia las reglas.'],
+ [6.4,13.4,'Volcker anunció que la Fed controlaría las reservas bancarias, y las tasas se volvieron mucho más variables.'],
+ [13.6,20.4,'La inflación llegó a 11,6 % en marzo de 1980.','La inflación llegó a once coma seis por ciento en marzo de mil novecientos ochenta.'],
+ [20.6,28.2,'La tasa de fondos federales alcanzó un récord cercano a 20 % a finales de 1980.','La tasa de fondos federales alcanzó un récord cercano a veinte por ciento a finales de mil novecientos ochenta.'],
+ [28.4,35.0,'El costo fue una recesión: el desempleo llegó a 10,8 %.','El costo fue una recesión: el desempleo llegó a diez coma ocho por ciento.'],
+ [35.2,43.4,'En enero de 1980 el oro tocó $850; en marzo, $474.','En enero de mil novecientos ochenta el oro tocó ochocientos cincuenta dólares; en marzo, cuatrocientos setenta y cuatro.'],
+ [43.6,49.6,'Tasas altas y oro: una relación histórica, no una señal de entrada.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0d1117',ACC='#26d07c',FAM='Inter',GRN='#26d07c',RDV='#ff4757',GLD='#ffc83d',TXV='#e6edf3',MUV='#8b98a9',GRD='#1c2430';
+const STY={subFont:'800 42px Inter',subBg:'rgba(13,17,23,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=TXV,a=1,al='left'){lbl(s,x,y,sz,col,a,al)}
+function bg(t){ctx.fillStyle=DK;ctx.fillRect(0,0,W,H);for(let y=260;y<1440;y+=110)line(40,y,1040,y,GRD,2);for(let x=100;x<1040;x+=160)line(x,200,x,1440,GRD,2);L('VELAS · 1979–1980',60,100,34,GRN);line(60,140,1020,140,GRN,4)}
+function hd(t,t0,s,col=TXV){L(s,60,210,64,col,eout(prog(t,t0,t0+.5)))}
+// serie de velas: n velas, valores normalizados 0..1 por ruta de puntos de control
+function mk(ctl,n,seed,noise){const r=rng(seed);const out=[];let prev=ctl[0];for(let i=0;i<n;i++){const f=i/(n-1)*(ctl.length-1);const a=Math.floor(Math.min(f,ctl.length-2)),b=f-a;const tgt=lerp(ctl[a],ctl[a+1],b);const o=prev;const c=tgt+(r()-.5)*noise;const h=Math.max(o,c)+r()*noise*.7,l=Math.min(o,c)-r()*noise*.7;out.push([o,h,l,c]);prev=c}return out}
+function candles(cs,x0,y0,w,h,t,t0,t1,lo=0,hi=1){const n=cs.length;const k=eio(prog(t,t0,t1))*n;const cw=w/n;
+  for(let i=0;i<n;i++){const g=clamp(k-i);if(g<=0)break;const [o,hh,l,c]=cs[i];const up=c>=o;const col=up?GRN:RDV;const X=x0+i*cw+cw/2;const Y=v=>y0+h*(1-(v-lo)/(hi-lo));
+    ctx.save();ctx.globalAlpha*=g;ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(X,Y(hh));ctx.lineTo(X,Y(l));ctx.stroke();const top=Y(Math.max(o,c)),bh=Math.max(6,Math.abs(Y(o)-Y(c)));ctx.fillRect(X-cw*.32,top,cw*.64,bh);ctx.restore()}}
+function frame(x,y,w,h,k=1){ctx.save();ctx.globalAlpha*=k;ctx.fillStyle='rgba(22,32,48,.7)';RR(x,y,w,h,24);ctx.fill();ctx.strokeStyle='#2a3a52';ctx.lineWidth=3;ctx.stroke();ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  L('VOLCKER',60,420,190,TXV,eout(prog(t,.2,.9)));L('1979',60,620,230,GLD,eout(prog(t,.6,1.3)));
+  frame(60,740,960,560,eout(prog(t,1.2,1.8)));candles(mk([.3,.35,.3,.75,.35,.8,.2],36,4,.1),90,780,900,480,t,1.6,4.6);
+  L('sábado 6 de octubre · velas ilustrativas',60,1340,32,MUV,eout(prog(t,3.8,4.4)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'EL CAMBIO');
+  frame(60,290,960,380,eout(prog(t,7,7.6)));L('Sáb 6 oct 1979',100,360,48,GLD,eout(prog(t,7.4,8)));
+  L('la Fed pasa a manejar las reservas bancarias',100,430,36,TXV,eout(prog(t,8.2,8.8)));L('en vez de fijar la tasa día a día',100,480,36,MUV,eout(prog(t,8.6,9.2)));
+  L('evento: reunión no programada del FOMC',100,560,32,MUV,eout(prog(t,9.2,9.8)));
+  frame(60,720,960,520,eout(prog(t,9.8,10.4)));L('tasas más volátiles',100,790,44,RDV,eout(prog(t,10.2,10.8)));
+  const c1=mk([.5,.52,.5,.5],10,3,.03),c2=mk([.5,.8,.2,.9,.15,.95,.3],14,6,.16);candles(c1,90,830,400,360,t,10.6,11.8);candles(c2,520,830,470,360,t,11.4,13);
+  L('antes',290,1210,34,MUV,eout(prog(t,11.4,12)),'center');L('después',755,1210,34,MUV,eout(prog(t,12.4,13)),'center');ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'LA INFLACIÓN');
+  frame(60,290,960,720,eout(prog(t,14.2,14.8)));candles(mk([.15,.3,.45,.7,.9],28,12,.07),90,330,900,420,t,14.8,17.6);
+  L('11,6 %',540,880,170,RDV,eout(prog(t,17.6,18.4)),'center');L('marzo de 1980 · índice PCE · pico',540,980,36,MUV,eout(prog(t,18.2,18.8)),'center');
+  L('fuente: Federal Reserve History',60,1090,28,MUV,eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'LA TASA DE LA FED');
+  frame(60,290,960,860,eout(prog(t,21.2,21.8)));
+  const k=eout(prog(t,22.2,25.0));const ys=1040;ctx.fillStyle=RDV;ctx.fillRect(420,ys-540*k,240,540*k);line(100,ys-540,980,ys-540,GLD,4,[16,12]);
+  L('≈ 20 %',540,ys-540*k-70,150,GLD,k,'center');L('récord · finales de 1980',540,ys+50,38,TXV,eout(prog(t,24.6,25.2)),'center');
+  L('tasa de fondos federales',100,350,34,MUV,eout(prog(t,21.6,22.2)));
+  L('esquema a escala ilustrativa',60,1200,28,MUV,eout(prog(t,25.6,26.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'EL COSTO',RDV);
+  frame(60,290,960,860,eout(prog(t,29,29.6)));L('desempleo en EE. UU.',100,350,34,MUV,eout(prog(t,29.4,30)));
+  candles(mk([.2,.35,.5,.65,.95],26,21,.07),90,390,900,430,t,30,33);
+  const k=eout(prog(t,32.6,33.4));L('10,8 %',540,950,170,RDV,k,'center');L('máximo a finales de 1982',540,1050,38,TXV,eout(prog(t,33.4,34)),'center');ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'EL ORO EN 1980',GLD);
+  frame(60,290,960,860,eout(prog(t,35.8,36.4)));
+  candles(mk([.97,.93,.78,.56,.5],28,33,.05),90,430,900,430,t,36.4,41.0,.2,1.05);
+  L('21 ene · $850',110,360,46,GLD,eout(prog(t,37.4,38)));L('18 mar · $474',560,860,46,RDV,eout(prog(t,40,40.6)));
+  L('−44 %',540,1020,150,RDV,eout(prog(t,40.8,41.6)),'center');L('fixes LBMA · velas entre los dos puntos: ilustrativas',100,1100,28,MUV,eout(prog(t,41.8,42.4)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'LECCIÓN',GRN);
+  frame(60,290,960,520,eout(prog(t,44.2,44.8)));L('tasas altas',100,380,60,TXV,eout(prog(t,44.8,45.4)));L('⇄',540,470,90,GLD,eout(prog(t,45.6,46.2)),'center');L('oro',100,560,60,GLD,eout(prog(t,46.2,46.8)));
+  L('relación histórica, no una señal',100,690,40,MUV,eout(prog(t,47.2,47.8)));L('gestiona tu riesgo',100,745,40,MUV,eout(prog(t,47.6,48.2)));
+  L('fuentes: Federal Reserve History · SD Bullion',60,900,28,MUV,eout(prog(t,48.2,48.8)));
+  L('Contenido educativo, no es asesoría financiera',60,980,32,RDV,eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  L('20 %',540,420,330,RDV,1,'center');L('LA TASA DE LA FED',540,640,76,TXV,1,'center');
+  frame(60,720,960,460);candles(mk([.2,.3,.4,.6,.95],24,5,.06),90,760,900,380,99,0,1);
+  L('el golpe de Volcker · 1979–1981',540,1260,44,GLD,1,'center');
+  coverBtn('VER LA HISTORIA →',ACC,DK)}
+</script></body></html>
