@@ -38,7 +38,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 32 | Pixel-art 2D de 8 bits con personajes |  | Brown's Bottom, venta de oro del Reino Unido (v47_pixel8_browns_bottom, escena 114, 19 oct 9:30) |
 | 33 | Ciudad isométrica | Edificios que son barras | Oro tras el máximo de enero de 2026 (v50_isometrica_oro2026, escena 117, 19 oct 20:00) |
 | 34 | Montañas lowpoly 3D | Forman el gráfico | Backwardation en el oro (v52_lowpoly_backwardation, escena 119, 20 oct 3:00) |
-| 35 | Acuarela con tinta | Manchas de acuarela sobre papel con trazo de tinta | Perder 50% exige ganar 100% (v37_acuarela_drawdown, escena 104, 17 oct) |
+| 35 | Acuarela con tinta | Manchas de acuarela sobre papel con trazo de tinta | Perder 50% exige ganar 100% (v37_acuarela_drawdown, escena 104, 17 oct); Crisis asiática 1997: el baht (v81_acuarela_baht1997, escena 148, 24 oct 6:00, 2.º uso: manchas turquesa, ocre y rojo con cadena que se rompe) |
 | 36 | Art déco dorado | Años veinte | Fix de Londres y multas por spoofing (v51_deco_fix_spoofing, escena 118, 19 oct 23:30) |
 | 37 | Cinta de teletipo | Clásica de bolsa | Oro de papel vs físico: qué respalda a un ETF de oro (v53_teletipo_etf_oro, escena 120, 20 oct 6:00) |
 | 38 | Monitor CRT verde fósforo |  | Cuánto vale 1 lote de XAUUSD: 100 onzas (v54_crt_lote_oro, escena 121, 20 oct 9:30) |

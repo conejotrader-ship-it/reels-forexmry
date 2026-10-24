@@ -1,0 +1,128 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:PH;src:url(node_modules/@fontsource/patrick-hand/files/patrick-hand-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 35 (2.º uso): acuarela con tinta sobre papel — tema: crisis asiática de 1997, el baht (60 s).
+const SPEC={name:'Baht1997',hook:'2 DE JULIO DE 1997: TAILANDIA SUELTA EL BAHT',dur:60,cta:56,bpm:84,mus:'soft',prog:[[45,'m'],[41,'M'],[43,'m'],[40,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[6.4,'wipe'],[8.0,'ding'],[10.4,'down'],[13.6,'wipe'],[15.2,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.4,'down'],[24.4,'down'],[28.4,'wipe'],[30.0,'ding'],[32.0,'hit'],[35.2,'wipe'],[37.0,'alert'],[39.6,'hit'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[47.8,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'El 2 de julio de 1997, Tailandia soltó el baht.','El dos de julio de mil novecientos noventa y siete, Tailandia soltó el baht.'],
+ [6.4,13.4,'El baht estaba atado al dólar. Defenderlo costó 6.800 millones de dólares de reservas en seis meses.','El baht estaba atado al dólar. Defenderlo costó seis mil ochocientos millones de dólares de reservas en seis meses.'],
+ [13.6,20.4,'Además había vendido 23.000 millones en contratos a plazo, con reservas de 33.300 millones.','Además vendió veintitrés mil millones a plazo, con reservas de treinta y tres mil trescientos millones.'],
+ [20.6,28.2,'Cayó entre 15 y 20 %. Terminó el año en unos 56 por dólar; antes, 25.','Cayó entre quince y veinte por ciento. Terminó el año en unos cincuenta y seis por dólar; antes, veinticinco.'],
+ [28.4,35.0,'La crisis saltó a la región. Corea del Sur fue de las más golpeadas.'],
+ [35.2,43.4,'El 20 de agosto llegó un rescate de 17.200 millones de dólares, con condiciones muy estrictas.','El veinte de agosto llegó un rescate de diecisiete mil doscientos millones de dólares, con condiciones muy estrictas.'],
+ [43.6,49.6,'Una paridad fija se rompe cuando se acaban las reservas. Gestiona tu riesgo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#2a2830',ACC='#e2a93b',FAM='Inter';
+const PAPER='#f4ecdc',INK='#2a2830',RED='#e0524a',BLU='#3b7fb5',GRN='#4f9d69',OCH='#e2a93b',BRN='#8a7a60',TEA='#2f9c95';
+window.FONTS=['40px PH'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(246,238,222,.96)',subStroke:INK,subFill:INK,ctaBg:DK,ctaSub:'#f4ecdc',ctaGlow:OCH,ctaAccent:OCH,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+const fr=x=>x-Math.floor(x),nz=(i,s)=>fr(Math.sin(i*12.9898+s*78.233)*43758.5453)-.5;
+function grainC(){if(window._g)return window._g;const c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');const r=rng(77);
+  for(let i=0;i<30000;i++){g.fillStyle=`rgba(120,90,50,${.03+r()*.05})`;g.fillRect(r()*W,r()*H,1+r()*2.5,1+r()*2.5)}
+  g.lineWidth=1;for(let i=0;i<500;i++){g.strokeStyle='rgba(120,90,50,.05)';const x=r()*W,y=r()*H;g.beginPath();g.moveTo(x,y);g.lineTo(x+r()*30-15,y+r()*30-15);g.stroke()}window._g=c;return c}
+function blobPath(cx,cy,rx,ry,seed){ctx.beginPath();const n=36;for(let i=0;i<=n;i++){const a=i/n*Math.PI*2;const r=1+.07*Math.sin(3*a+seed)+.05*Math.sin(5*a+seed*2)+.03*Math.sin(9*a+seed*3);
+  const x=cx+Math.cos(a)*rx*r,y=cy+Math.sin(a)*ry*r;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.closePath()}
+function wash(cx,cy,rx,ry,col,a,seed){ctx.save();const b=ctx.globalAlpha;ctx.globalCompositeOperation='multiply';ctx.fillStyle=col;ctx.strokeStyle=col;
+  for(let l=0;l<3;l++){blobPath(cx+nz(l,seed)*14,cy+nz(l+3,seed)*14,rx*(1-l*.07),ry*(1-l*.07),seed+l);ctx.globalAlpha=b*a*(l==0?.55:.3);ctx.fill()}
+  blobPath(cx,cy,rx,ry,seed);ctx.globalAlpha=b*a*.6;ctx.lineWidth=3;ctx.stroke();ctx.restore()}
+function wRect(x,y,w,h,seed){ctx.beginPath();const pts=[],st=30;for(let xx=0;xx<=w;xx+=st)pts.push([x+xx,y]);for(let yy=0;yy<=h;yy+=st)pts.push([x+w,y+yy]);
+  for(let xx=w;xx>=0;xx-=st)pts.push([x+xx,y+h]);for(let yy=h;yy>=0;yy-=st)pts.push([x,y+yy]);
+  pts.forEach((p,i)=>{const px=p[0]+nz(i,seed)*7,py=p[1]+nz(i+50,seed)*7;i?ctx.lineTo(px,py):ctx.moveTo(px,py)});ctx.closePath()}
+function barWash(x,y,w,h,col,seed,a=1){if(h<6)return;ctx.save();const b=ctx.globalAlpha;ctx.globalCompositeOperation='multiply';ctx.fillStyle=col;
+  wRect(x,y,w,h,seed);ctx.globalAlpha=b*a*.6;ctx.fill();wRect(x+8,y+8,w-16,Math.max(2,h-16),seed+1);ctx.globalAlpha=b*a*.3;ctx.fill();ctx.restore();
+  ctx.save();wRect(x,y,w,h,seed);ctx.strokeStyle=INK;ctx.lineWidth=4;ctx.globalAlpha*=.85*a;ctx.stroke();ctx.restore()}
+function ink(x1,y1,x2,y2,lw=4,col=INK,dash){ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineCap='round';ctx.lineJoin='round';if(dash)ctx.setLineDash(dash);ctx.beginPath();
+  const n=Math.max(2,Math.round(Math.hypot(x2-x1,y2-y1)/30));for(let i=0;i<=n;i++){const u=i/n;const x=lerp(x1,x2,u)+nz(i,x1)*3,y=lerp(y1,y2,u)+nz(i+9,y1)*3;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.restore()}
+function bg(t){ctx.fillStyle=PAPER;ctx.fillRect(0,0,W,H);
+  const v=ctx.createRadialGradient(540,960,400,540,960,1200);v.addColorStop(0,'rgba(120,90,50,0)');v.addColorStop(1,'rgba(120,90,50,.22)');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.14;wash(120,330+Math.sin(t*.4)*10,260,200,TEA,1,2);wash(960,1560,300,230,OCH,1,5);wash(980,260,220,170,RED,.8,9);ctx.restore();
+  ctx.drawImage(grainC(),0,0)}
+function ibox(x,y,w,h,seed){ctx.save();ctx.fillStyle='rgba(250,245,232,.9)';wRect(x,y,w,h,seed);ctx.fill();ctx.strokeStyle=INK;ctx.lineWidth=4;ctx.stroke();ctx.restore()}
+function LB(s,x,y,sz,col=INK,a=1,al='center'){T(_s(s),x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+function HW(s,x,y,sz,col=INK,a=1,al='center'){T(_s(s),x,y,{font:`${sz}px PH`,fill:col,a,align:al})}
+function head(t,t0,s,col=INK){LB(s,540,230,58,col,eout(prog(t,t0,t0+.5)))}
+function coin(cx,cy,r,col,seed,txt,k=1){wash(cx,cy,r,r,col,.95*k,seed);ctx.save();ctx.strokeStyle=INK;ctx.lineWidth=5;ctx.globalAlpha*=k;ctx.beginPath();ctx.arc(cx,cy,r*.78,0,7);ctx.stroke();ctx.restore();LB(txt,cx,cy+r*.1,r*.42,INK,k)}
+// bloque 0: la paridad se rompe
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  LB('2 JUL 1997',540,400,150,RED,eout(prog(t,.3,.9)));
+  const k=eout(prog(t,1,1.8));
+  coin(300,800,170,OCH,3,'BAHT',k);coin(780,800,170,GRN,8,'US$',k);
+  const br=prog(t,2.4,3.4);const gap=lerp(0,70,eout(prog(t,2.6,3.4)));
+  // cadena de eslabones que se rompe
+  for(let i=0;i<5;i++){const x=470+i*35;const dy=(i<2?-1:1)*gap*.4;ctx.save();ctx.translate(0,dy);ctx.strokeStyle=INK;ctx.lineWidth=7;ctx.beginPath();ctx.ellipse(x+(i<2?-gap/3:gap/3),800,24,15,0,0,7);ctx.stroke();ctx.restore()}
+  LB('ATADO',540,980,60,BRN,eout(prog(t,1.6,2.2)));
+  const k3=eback(prog(t,3.2,3.9));if(k3>.02){ctx.save();ctx.translate(540,1130);ctx.rotate(-.06);ctx.scale(k3,k3);wash(0,0,380,95,RED,.9,15);LB('¡SE SUELTA!',0,14,92,INK);ctx.restore()}
+  HW('primera vez en 14 años',540,1290,44,BRN,eout(prog(t,4.2,4.9)));ctx.restore()}
+// bloque 1: reservas gastadas
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'DEFENDER EL BAHT',BLU);ibox(70,300,940,980,3);
+  LB('reservas gastadas, ene–jun 1997',540,370,32,BRN,eout(prog(t,7,7.6)));
+  const BX=330,BY=450,BW=420,BH=640;
+  ctx.save();wRect(BX,BY,BW,BH,5);ctx.strokeStyle=INK;ctx.lineWidth=5;ctx.stroke();ctx.restore();
+  const k=eio(prog(t,8,11.2));const fill=BH*(1-k*.24);barWash(BX+10,BY+BH-fill,BW-20,fill,TEA,7);
+  const k2=eout(prog(t,10.6,11.4));const gh=BH*.24*k;if(gh>4){ctx.save();ctx.globalAlpha=a*.5;ctx.setLineDash([12,10]);ctx.strokeStyle=RED;ctx.lineWidth=4;ctx.strokeRect(BX+10,BY+4,BW-20,gh);ctx.restore()}
+  if(k2>0){ctx.save();ctx.translate(850,BY+90);ctx.rotate(-.05);ctx.scale(k2,k2);wash(0,0,170,90,RED,.9,11);LB('−6.800',0,-4,60,INK);LB('millones US$',0,40,28,INK);ctx.restore()}
+  HW('el banco central vendía dólares para sostener el precio',540,1215,34,BRN,eout(prog(t,12,12.8)));
+  LB('fuente: Southeast Asian Economic Crisis · ADST',540,1340,26,BRN,eout(prog(t,12.4,13)));ctx.restore()}
+// bloque 2: reservas vs contratos
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LA TRAMPA',RED);ibox(70,300,940,980,6);
+  const BASE=1140,S=15.5/1000*1000/1000;
+  const sc=17; // px por millardo
+  [[330,33.3,TEA,'33.300','reservas (fin de mayo)',15.2],[700,23,RED,'23.000','ventas a plazo',16.6]].forEach(([cx,v,col,lab,nm,ts],i)=>{const k=eout(prog(t,ts,ts+1));if(k<=0)return;const h=v*sc*k*(i?1:1);
+    barWash(cx-120,BASE-h,240,h,col,i*4+20);LB(lab,cx,BASE-h-78,56,INK,k);LB('millones US$',cx,BASE-h-34,26,BRN,k);HW(nm,cx,BASE+54,36,INK,k)});
+  ink(130,BASE,950,BASE,4);
+  const k3=eout(prog(t,18.4,19.2));if(k3>0){ctx.save();ctx.globalAlpha=a*k3;wash(540,400,440,60,OCH,.9,30);LB('las ventas ≈ 70 % de las reservas',540,412,36,INK);ctx.restore()}
+  HW('cifras de 1997 · aproximadas · 70 %: cálculo propio',540,1330,32,BRN,eout(prog(t,19,19.8)));ctx.restore()}
+// bloque 3: el baht cae (dólar en baht)
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'EL BAHT CAE',RED);ibox(70,300,940,980,9);
+  LB('baht por 1 dólar',540,365,34,BRN,eout(prog(t,21,21.6)));
+  const X0=150,X1=940,Y25=1040,Y56=520;
+  ink(X0,Y25,X1,Y25,3,BRN,[14,10]);ink(X0,Y56,X1,Y56,3,BRN,[14,10]);
+  LB('25',110,Y25,44,TEA,eout(prog(t,22,22.6)),'center');LB('56',110,Y56,44,RED,eout(prog(t,23.4,24)),'center');
+  ink(X0,1120,X1,1120,4);HW('antes de julio',X0+90,1170,34,BRN,eout(prog(t,22,22.6)));HW('fin de 1997',X1-70,1170,34,BRN,eout(prog(t,23.4,24)));
+  const xs=[0,.28,.32,.56,1];const ys=[0,.02,.34,.58,1];const k=eio(prog(t,22.4,26.4));const n=xs.length-1;const f=k*n;
+  ctx.save();ctx.strokeStyle=RED;ctx.lineWidth=12;ctx.lineJoin='round';ctx.lineCap='round';ctx.beginPath();
+  for(let i=0;i<=n;i++){const g=clamp(f-(i-1));if(i>0&&g<=0)break;const xa=X0+(X1-X0)*xs[i],ya=Y25-(Y25-Y56)*ys[i];if(i==0)ctx.moveTo(xa,ya);else{const xp=X0+(X1-X0)*xs[i-1],yp=Y25-(Y25-Y56)*ys[i-1];ctx.lineTo(lerp(xp,xa,g),lerp(yp,ya,g))}}
+  ctx.stroke();ctx.restore();
+  const k2=eback(prog(t,24.6,25.4));if(k2>.02){ctx.save();ctx.translate(380,760);ctx.rotate(-.05);ctx.scale(k2,k2);wash(0,0,230,80,OCH,.9,33);LB('−15 a −20 %',0,12,56,INK);ctx.restore()}
+  HW('trayecto ilustrativo · solo los extremos son datos',540,1330,32,BRN,eout(prog(t,26.4,27.2)));ctx.restore()}
+// bloque 4: contagio regional
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EL CONTAGIO',BLU);ibox(70,300,940,980,12);
+  const N=[[540,470,'TAILANDIA',RED,29.0,150],[300,820,'LA REGIÓN',OCH,30.6,150],[780,820,'ASIA',TEA,31.6,130],[540,1130,'COREA DEL SUR',BLU,33.0,175]];
+  const edges=[[0,1],[0,2],[1,3],[2,3]];
+  edges.forEach(([i,j],e)=>{const kk=eout(prog(t,N[j][4]-.5,N[j][4]));if(kk<=0)return;const [x1,y1]=N[i],[x2,y2]=N[j];ink(x1,y1,lerp(x1,x2,kk),lerp(y1,y2,kk),6,BRN)});
+  N.forEach(([x,y,s,c,ts,r],i)=>{const k=eback(prog(t,ts,ts+.7));if(k<=.02)return;ctx.save();ctx.translate(x,y);ctx.scale(k,k);wash(0,0,r,r*.62,c,.95,i*7+2);LB(s,0,10,s.length>9?38:46,INK);ctx.restore()});
+  HW('“se esparció por toda la región”',540,1330,34,BRN,eout(prog(t,34,34.8)));ctx.restore()}
+// bloque 5: el rescate
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'EL RESCATE',GRN);ibox(70,300,940,980,15);
+  const k=eback(prog(t,36,36.8));if(k>.02){ctx.save();ctx.translate(540,560);ctx.rotate(-.04);ctx.scale(k,k);wash(0,0,400,150,GRN,.9,41);LB('US$ 17.200',0,10,110,INK);LB('millones',0,86,40,INK);ctx.restore()}
+  LB('20 DE AGOSTO DE 1997',540,820,52,RED,eout(prog(t,38,38.6)));
+  ['IMF · Banco Mundial · BAD','Japón · Australia · Malasia','Singapur · Hong Kong'].forEach((s,i)=>{LB(s,540,910+i*60,36,INK,eout(prog(t,39+i*.5,39.6+i*.5)))});
+  const k2=eback(prog(t,41.2,42));if(k2>.02){ctx.save();ctx.translate(540,1170);ctx.rotate(.04);ctx.scale(k2,k2);wash(0,0,380,70,RED,.85,45);LB('CONDICIONES MUY ESTRICTAS',0,12,40,INK);ctx.restore()}
+  ctx.restore()}
+// bloque 6: lección
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'LA LECCIÓN');
+  const R=[['Paridad fija',TEA],['+ reservas limitadas',OCH],['= ruptura',RED]];
+  R.forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;const y=420+i*210;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;wash(540,y,400,80,c,.9,50+i*3);LB(s,540,y+14,58,INK);ctx.restore()});
+  robot(640,880,440,eout(prog(t,47,47.8)));
+  LB('Gestiona tu riesgo: nada es seguro',60,1090,36,INK,eout(prog(t,47.6,48.2)),'left');LB('Contenido educativo, no es asesoría financiera',60,1160,30,RED,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  LB('25 → 56',540,420,240,RED,1);LB('BAHT POR DÓLAR',540,590,82,INK,1);
+  coin(300,930,150,OCH,3,'BAHT');coin(780,930,150,GRN,8,'US$');
+  for(let i=0;i<5;i++){ctx.save();ctx.strokeStyle=INK;ctx.lineWidth=7;ctx.beginPath();ctx.ellipse(470+i*35+(i<2?-30:30),930+(i<2?-14:14),24,15,0,0,7);ctx.stroke();ctx.restore()}
+  ctx.save();ctx.translate(540,1230);ctx.rotate(-.04);wash(0,0,470,100,OCH,.95,60);LB('ASÍ ARRANCÓ LA CRISIS ASIÁTICA',0,14,48,INK);ctx.restore();
+  coverBtn('VER QUÉ PASÓ →',RED,'#fff')}
+</script></body></html>
