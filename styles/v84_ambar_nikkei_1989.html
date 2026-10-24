@@ -1,0 +1,93 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:VT;src:url(node_modules/@fontsource/vt323/files/vt323-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 11 (2.º uso): terminal ámbar sobre negro — tema: la burbuja del Nikkei 1989 y los 34 años para recuperar el máximo (60 s).
+const SPEC={name:'Nikkei1989',hook:'38.915: EL NIKKEI TARDÓ 34 AÑOS EN VOLVER',dur:60,cta:56,bpm:92,mus:'soft',prog:[[38,'m'],[45,'M'],[43,'m'],[40,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.4,'ding'],[13.6,'wipe'],[15.2,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.4,'down'],[24.4,'down'],[26.4,'hit'],[28.4,'wipe'],[30.0,'alert'],[32.0,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.6,'hit'],[41.4,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'29 de diciembre de 1989: el Nikkei cierra en 38.915 puntos.','Veintinueve de diciembre de mil novecientos ochenta y nueve: Nikkei en treinta y ocho mil novecientos quince.'],
+ [6.4,13.4,'A fines de 1985 rondaba los 13.000. En cuatro años casi se triplicó.','A fines de mil novecientos ochenta y cinco rondaba los trece mil. En cuatro años casi se triplicó.'],
+ [13.6,20.4,'El Banco de Japón subió tasas de 2,5 % a 6 % entre 1989 y 1990.','El Banco de Japón subió tasas de dos con cinco a seis por ciento entre el ochenta y nueve y el noventa.'],
+ [20.6,28.2,'En 1990 perdió cerca de la mitad. En marzo de 2009 llegó a 7.055 puntos.','En mil novecientos noventa perdió cerca de la mitad. En marzo de dos mil nueve llegó a siete mil cincuenta y cinco.'],
+ [28.4,35.0,'Una caída cercana al 82 % desde el máximo, en casi 20 años.','Una caída cercana al ochenta y dos por ciento desde el máximo, en casi veinte años.'],
+ [35.2,43.4,'El 22 de febrero de 2024 cerró en 39.098: récord, 34 años y 2 meses después.','El veintidós de febrero de dos mil veinticuatro cerró en treinta y nueve mil noventa y ocho, récord, treinta y cuatro años y dos meses después.'],
+ [43.6,49.6,'Un máximo no garantiza nada: recuperar puede tardar décadas. Gestiona tu riesgo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0a0600',ACC='#ffb000',FAM='Inter';
+const AM='#ffb000',AD='#a86c00',AR='#ff5a3c',AB='#ffd37a';
+window.FONTS=['40px VT'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,6,0,.96)',subStroke:AM,subFill:AB,ctaBg:DK,ctaSub:'#ffd37a',ctaGlow:AM,ctaAccent:AM,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function A(s,x,y,sz,col=AM,a=1,al='center'){if(sz<=90)sz=Math.round(sz*1.3);T(_s(s),x,y,{font:`${sz}px VT`,fill:col,a,align:al,glow:col,gb:14})}
+function bg(t){ctx.fillStyle='#0a0600';ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,860,200,540,860,1200);g.addColorStop(0,'rgba(255,176,0,.10)');g.addColorStop(1,'rgba(0,0,0,.5)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.16;ctx.fillStyle='#000';for(let y=0;y<H;y+=6)ctx.fillRect(0,y,W,3);ctx.restore();
+  ctx.save();ctx.strokeStyle=AD;ctx.lineWidth=3;ctx.strokeRect(30,30,W-60,H-60);ctx.restore();
+  A('NIKKEI 225 · INDICE DE LA BOLSA DE TOKIO',540,86,40,AD,1);const blink=Math.floor(t*2)%2;if(blink)A('█',990,86,40,AM,1)}
+function head(t,t0,s,col=AM){A(s,540,200,84,col,eout(prog(t,t0,t0+.5)))}
+// gráfico: dominio x0..x1 (años), y0..y1
+function chart(t,a,dom,pts,t0,t1,opts={}){const [x0,x1,y0,y1]=dom;const X=90,Y=340,Wd=900,Hh=760;const fx=v=>X+(v-x0)/(x1-x0)*Wd,fy=v=>Y+Hh-(v-y0)/(y1-y0)*Hh;
+  ctx.save();ctx.globalAlpha=a;ctx.strokeStyle=AD;ctx.lineWidth=2;ctx.strokeRect(X,Y,Wd,Hh);
+  for(let i=1;i<5;i++){ctx.globalAlpha=a*.35;ctx.setLineDash([6,10]);ctx.beginPath();ctx.moveTo(X,Y+Hh*i/5);ctx.lineTo(X+Wd,Y+Hh*i/5);ctx.stroke()}ctx.setLineDash([]);ctx.globalAlpha=a;
+  (opts.ylabels||[]).forEach(v=>A(v.toLocaleString('es-ES'),X+8,fy(v)-16,34,AD,1,'left'));(opts.xlabels||[]).forEach(v=>A(String(v),fx(v),Y+Hh+36,36,AD,1));
+  if(opts.ref){const ry=fy(opts.ref);ctx.strokeStyle=AR;ctx.setLineDash([14,10]);ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(X,ry);ctx.lineTo(X+Wd,ry);ctx.stroke();ctx.setLineDash([])}
+  const k=eio(prog(t,t0,t1));const tot=pts.length-1;const f=k*tot;ctx.strokeStyle=opts.col||AM;ctx.lineWidth=7;ctx.lineJoin='round';ctx.lineCap='round';ctx.shadowColor=AM;ctx.shadowBlur=16;ctx.beginPath();
+  for(let i=0;i<=tot;i++){const g=clamp(f-(i-1));if(i>0&&g<=0)break;const xa=fx(pts[i][0]),ya=fy(pts[i][1]);if(i==0)ctx.moveTo(xa,ya);else{const xp=fx(pts[i-1][0]),yp=fy(pts[i-1][1]);ctx.lineTo(lerp(xp,xa,g),lerp(yp,ya,g))}}ctx.stroke();ctx.restore();
+  return {fx,fy,k,f}}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  A('> CIERRE · 29 DIC 1989',540,330,56,AD,eout(prog(t,.2,.8)));
+  A('38.915,87',540,640,230,AM,eback(prog(t,.5,1.3)));A('puntos',540,790,90,AB,eout(prog(t,1.4,2)));
+  A('> MÁXIMO HISTÓRICO',540,990,60,AR,eout(prog(t,2.2,2.8)));
+  A('> ¿CUÁNTO TARDÓ EN VOLVER?',540,1100,56,AM,eout(prog(t,3.4,4)));A('34 AÑOS',540,1260,140,AB,eback(prog(t,4.2,4.9)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'LA SUBIDA');
+  const c=chart(t,a,[1985,1990,10000,40000],[[1985,13000],[1986,16000],[1987,24000],[1988,30000],[1989,34000],[1989.99,38916]],7.4,11.2,{ylabels:[20000,30000,40000],xlabels:[1985,1987,1989]});
+  const k=eout(prog(t,11,11.8));A('≈ 13.000',c.fx(1985)+20,c.fy(13000)-50,50,AB,eout(prog(t,8,8.8)),'left');
+  if(k>0){A('38.916',c.fx(1989.99)-10,c.fy(38916)-46,56,AM,k,'right');A('× 3',540,1300,150,AR,eback(prog(t,11.8,12.5)))}
+  A('trayecto ilustrativo · solo extremos son datos',540,1390,34,AD,eout(prog(t,12.4,13.2)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LAS TASAS');
+  const X=90,Wd=900;A('TASA DE DESCUENTO · BANCO DE JAPÓN',540,320,42,AD,eout(prog(t,14,14.6)));
+  const fy=v=>1100-(v-2)/(7-2)*620;ctx.strokeStyle=AD;ctx.lineWidth=2;ctx.strokeRect(X,400,Wd,720);
+  [2.5,6].forEach(v=>{A(String(v).replace('.',',')+' %',X+20,fy(v)-30,52,AD,eout(prog(t,15,15.8)),'left')});
+  const k=eio(prog(t,15.4,19.2));const xs=[[0,2.5],[.25,2.5],[.55,4],[.8,5.2],[1,6]];
+  ctx.shadowColor=AM;ctx.shadowBlur=16;ctx.strokeStyle=AM;ctx.lineWidth=8;ctx.lineJoin='round';ctx.beginPath();const tot=xs.length-1,f=k*tot;
+  for(let i=0;i<=tot;i++){const g=clamp(f-(i-1));if(i>0&&g<=0)break;const xa=X+60+(Wd-120)*xs[i][0],ya=fy(xs[i][1]);if(i==0)ctx.moveTo(xa,ya);else{const xp=X+60+(Wd-120)*xs[i-1][0],yp=fy(xs[i-1][1]);ctx.lineTo(lerp(xp,xa,g),lerp(yp,ya,g))}}ctx.stroke();ctx.restore();
+  ctx.save();ctx.globalAlpha=a;A('MAY 1989',X+120,1190,44,AB,eout(prog(t,15.4,16.2)));A('AGO 1990',X+Wd-130,1190,44,AB,eout(prog(t,18.4,19.2)));
+  A('escalones ilustrativos entre los dos extremos',540,1290,34,AD,eout(prog(t,19.4,20.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'EL ESTALLIDO',AR);
+  const P=[[1989.99,38916],[1990.8,20200],[1992,17000],[1993,15000],[1999,18000],[2003,8000],[2009.2,7055]];
+  const c=chart(t,a,[1989,2010,0,40000],P,21.4,26.6,{col:AR,ylabels:[10000,20000,30000,40000],xlabels:[1990,2000,2009],ref:38916});
+  const k1=eout(prog(t,22.4,23.2));A('1990: ≈ −48 %',c.fx(1990.8)+50,c.fy(20200)-60,48,AR,k1,'left');
+  const k2=eout(prog(t,26,26.8));A('7.054,98',c.fx(2009.2)-20,c.fy(7055)-60,56,AB,k2,'right');A('MAR 2009',c.fx(2009.2)-20,c.fy(7055)+50,40,AB,k2,'right');
+  A('trayecto ilustrativo · puntos clave: dato',540,1390,34,AD,eout(prog(t,26.8,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EL PRECIO',AR);
+  A('38.915,87 → 7.054,98',540,420,66,AM,eout(prog(t,29,29.8)));
+  const k=eback(prog(t,30,30.9));A('−82 %',540,780,300,AR,k);
+  A('del máximo al mínimo (cálculo propio)',540,960,48,AB,eout(prog(t,31.8,32.6)));
+  A('casi 20 años · 1989 → 2009',540,1070,56,AM,eout(prog(t,33,33.8)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'EL RÉCORD',AB);
+  const P=[[1985,13000],[1989.99,38916],[1993,15000],[2009.2,7055],[2013,13000],[2018,24000],[2022,27000],[2024.14,39099]];
+  const c=chart(t,a,[1985,2025,0,42000],P,36,41.4,{ylabels:[10000,20000,30000,40000],xlabels:[1990,2000,2010,2020],ref:38916});
+  const k=eout(prog(t,41,41.8));if(k>0){A('22 FEB 2024',c.fx(2024.14)-10,c.fy(39099)-100,48,AB,k,'right');A('39.098,68',c.fx(2024.14)-10,c.fy(39099)-50,56,AM,k,'right')}
+  A('34 años y 2 meses',540,1310,76,AM,eout(prog(t,41.6,42.4)));A('trayecto ilustrativo · hitos: datos',540,1400,34,AD,eout(prog(t,42.2,43)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'LECCIÓN');
+  ['> UN MÁXIMO NO ES UNA GARANTÍA','> RECUPERAR PUEDE TARDAR DÉCADAS','> GESTIONA EL RIESGO'].forEach((s,i)=>{A(s,80,380+i*130,52,i==2?AR:AM,eout(prog(t,44.6+i*1.1,45.3+i*1.1)),'left')});
+  robot(630,860,520,eout(prog(t,47,47.8)));
+  A('Contenido educativo,',60,1230,44,AR,eout(prog(t,48.4,49)),'left');A('no es asesoría financiera',60,1290,44,AR,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  A('34 AÑOS',540,380,260,AM,1);A('PARA RECUPERAR EL MÁXIMO',540,560,78,AB,1);
+  const P=[[1985,13000],[1989.99,38916],[1993,15000],[2009.2,7055],[2013,13000],[2018,24000],[2022,27000],[2024.14,39099]];
+  const fx=v=>110+(v-1985)/(2025-1985)*860,fy=v=>1380-(v-0)/(42000)*700;ctx.save();ctx.strokeStyle=AM;ctx.lineWidth=12;ctx.shadowColor=AM;ctx.shadowBlur=20;ctx.lineJoin='round';ctx.beginPath();P.forEach((p,i)=>i?ctx.lineTo(fx(p[0]),fy(p[1])):ctx.moveTo(fx(p[0]),fy(p[1])));ctx.stroke();ctx.restore();
+  A('38.915',fx(1989.99),fy(38916)-40,70,AB,1);A('−82 %',fx(2009.2)+30,fy(7055)+10,80,AR,1,'left');A('1989 → 2024',540,1020,46,AM,1);
+  coverBtn('VER LA BURBUJA →',AM,DK)}
+</script></body></html>
