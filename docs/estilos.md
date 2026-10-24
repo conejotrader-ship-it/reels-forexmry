@@ -13,7 +13,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 7 | Dashboard con indicadores | Tarjetas, medidores y gráficos | Revisión semanal del robot (v27, 16 oct); Miércoles Negro 16 sep 1992 (v78_dashboard_miercoles_negro, escena 145, 23 oct 20:00, 2.º uso: panel azul noche con tarjetas, anillo y barras) |
 | 8 | Gráfico de línea con suelo | Línea que cae o sube, color de marca | Franco suizo 2015 (v25, 15 oct); Walk-forward (v75_linea_walk_forward, escena 142, 23 oct 9:30, 2.º uso: azul noche con línea turquesa y suelo degradado) |
 | 9 | Billete verde y crema | Diseño tipo dólar con guilloche | Acuerdo del Plaza (v34, 17 oct) |
-| 10 | Tablero de barras a escala | Negro, rojo y dorado | 4 caídas del oro (v35, 17 oct) |
+| 10 | Tablero de barras a escala | Negro, rojo y dorado | 4 caídas del oro (v35, 17 oct); Mayores productores de oro 2025, ranking USGS (v83_barras_productores_oro, escena 150, 24 oct 13:00, 2.º uso: barras horizontales a escala negro, rojo y dorado) |
 | 11 | Terminal ámbar sobre negro | Pantalla financiera de los noventa | LTCM 1998 (v36, 17 oct) |
 | 12 | Periódico de época | Titulares y columnas | 5 operaciones legendarias (v13, 11 oct); Hermanos Hunt y la plata 1980 (v67_periodico_hunt_plata, escena 134, 22 oct 6:00, 2.º uso: edición especial sepia) |
 | 13 | Tipografía suiza | Texto grande, rojo y negro | Scalping (v12, 11 oct); MAE y MFE: dónde poner stop y objetivo (v73_suizo_mae_mfe, escena 140, 23 oct 3:00, 2.º uso: retícula blanca con rojo y negro) |
