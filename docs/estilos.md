@@ -23,7 +23,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 17 | Papercut | Capas de papel recortado | v11_papercut; Informe COT de la CFTC y el oro (v70_papercut_cot, escena 137, 22 oct 16:30, 2.º uso: colinas de papel turquesa con tarjetas) |
 | 18 | Libro de órdenes | Compras y ventas que suben y bajan | HFT y spoofing (v14, 13 oct); Flash crash de la libra 7 oct 2016 (v72_libro_ordenes_libra2016, escena 139, 22 oct 23:30, 2.º uso: escalera de precios con profundidad) |
 | 19 | Cuaderno | Hoja clara con anotaciones | EMA (v17, 13 oct); Bretton Woods 1944 (v74_cuaderno_bretton_woods, escena 141, 23 oct 6:00, 2.º uso: hoja con renglones, margen rojo y marcador amarillo) |
-| 20 | Pixel-art 3D | Bloques de colores en tres dimensiones | pixel/pixel5.html |
+| 20 | Pixel-art 3D | Bloques de colores en tres dimensiones | pixel/pixel5.html; Los Turtle Traders de Richard Dennis (v85_pixel_turtle_traders, escena 152, 24 oct 20:00, 2.º uso: pixel-art de bloques en canvas 2D con tortugas, velas y monedas) |
 | 21 | Línea de tiempo horizontal con hitos | Hitos sobre un eje que se desplaza | Lunes Negro 1987 (v38_timeline_lunes_negro, escena 105, 18 oct) |
 | 22 | Noticiero de última hora | Cinta de titulares | Knight Capital 2012 (v40_noticiero_knight, escena 107, 18 oct) |
 | 23 | Mapa mundial con rutas de flujo | Oro y divisas | Oro COMEX vs LBMA (v41_mapa_comex_lbma, escena 108, 18 oct) |

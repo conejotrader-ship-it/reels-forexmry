@@ -1,0 +1,132 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:PS;src:url(node_modules/@fontsource/press-start-2p/files/press-start-2p-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 20 (2.º uso): pixel-art de bloques (canvas 2D con píxeles grandes) — tema: los Turtle Traders de Richard Dennis (60 s).
+const SPEC={name:'TurtleTraders',hook:'1983: DENNIS APOSTÓ QUE SE PUEDE ENSEÑAR A OPERAR',dur:60,cta:56,bpm:118,mus:'soft',prog:[[40,'M'],[45,'m'],[43,'M'],[47,'m']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.4,'ding'],[13.6,'wipe'],[15.2,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.4,'down'],[24.4,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[38.2,'ding'],[39.4,'hit'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[47.8,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'En 1983, Richard Dennis apostó que se podía enseñar a operar. Los llamó tortugas.','En mil novecientos ochenta y tres, Richard Dennis apostó que se podía enseñar a operar. Los llamó tortugas.'],
+ [6.4,13.4,'Reclutó novatos, entre 14 y 23 según la fuente, y les dio reglas escritas y capital.','Reclutó novatos, entre catorce y veintitrés según la fuente, y les dio reglas escritas y capital.'],
+ [13.6,20.4,'Entrada: romper el máximo o el mínimo de 20 días. El sistema largo usaba 55 días.','Entrada: romper el máximo o el mínimo de veinte días. El sistema largo usaba cincuenta y cinco días.'],
+ [20.6,28.2,'Salida: cuando el precio rompía el mínimo de 10 días, o de 20 días en el sistema largo.','Salida: cuando el precio rompía el mínimo de diez días, o de veinte días en el sistema largo.'],
+ [28.4,35.0,'El tamaño dependía de la volatilidad, medida con el ATR de 20 días, llamado N.','El tamaño dependía de la volatilidad, medida con el ATR de veinte días, llamado N.'],
+ [35.2,43.4,'Se reporta que ganaron más de 100 millones de dólares en cuatro años; el total varía.','Se reporta que ganaron más de cien millones de dólares en cuatro años; el total varía según la fuente.'],
+ [43.6,49.6,'Reglas claras y disciplina: la misma lógica de un robot. Sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#12142b',ACC='#3ddc84',FAM='Inter';
+const NV='#12142b',N2='#1d2147',GL='#6ef0a4',GM='#3ddc84',GD='#1f9d5b',YL='#ffd23f',RD='#ff4f5e',WH='#f4f4ff',BL='#5ec8ff',GY='#8a8fc0';
+window.FONTS=['40px PS'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(18,20,43,.96)',subStroke:GM,subFill:'#fff',ctaBg:DK,ctaSub:'#f4f4ff',ctaGlow:GM,ctaAccent:GM,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+const S=8,LW=135,LH=240;const LC=document.createElement('canvas');LC.width=LW;LC.height=LH;const L=LC.getContext('2d');
+function P(x,y,w,h,c){L.fillStyle=c;L.fillRect(Math.round(x),Math.round(y),Math.max(1,Math.round(w)),Math.max(1,Math.round(h)))}
+function pxLine(pts,c,k=1,th=2){const n=pts.length-1;const end=k*n;for(let i=0;i<n;i++){if(i>end)break;const g=Math.min(1,end-i);const [x0,y0]=pts[i],[x1,y1]=pts[i+1];const steps=Math.max(1,Math.round(Math.abs(x1-x0)*g));for(let s=0;s<=steps;s++){const u=s/steps*g;P(x0+(x1-x0)*u,y0+(y1-y0)*u,th,th,c)}}}
+function turtle(x,y,s,t,col=GM,dark=GD,fl=false){const b=Math.round(Math.sin(t*6)*1);ctx;
+  const R=(dx,dy,w,h,c)=>P(x+(fl?-dx-w:dx)*s,y+(dy+0)*s+b*0,w*s,h*s,c);
+  R(0,0,0,0,col);
+  // patas
+  const lg=Math.round(Math.sin(t*8))>0?1:0;R(2,7+lg,2,2,dark);R(8,7+(1-lg),2,2,dark);R(11,7+lg,2,2,dark);
+  // caparazón
+  R(2,1,10,2,col);R(1,3,12,4,col);R(3,0,6,1,dark);
+  R(4,2,2,2,dark);R(8,2,2,2,dark);R(6,4,2,2,dark);R(2,4,2,2,dark);R(10,4,2,2,dark);
+  // cabeza
+  R(13,3,3,3,col);R(15,4,1,1,NV);R(0,5,2,1,dark)}
+function lcBg(t){L.fillStyle=NV;L.fillRect(0,0,LW,LH);for(let i=0;i<40;i++){const r=rng(i+3);const x=Math.floor(r()*LW),y=Math.floor(r()*LH*.5);if(Math.floor(t*2+i)%3)P(x,y,1,1,N2)}
+  for(let y=0;y<LH;y+=8)P(0,y,LW,1,'#171a38')}
+function head(t,t0,s,col=GM){T(s,540,215,{font:'44px PS',fill:col,a:eout(prog(t,t0,t0+.5))})}
+function PS(s,x,y,sz,col=WH,a=1,al='center'){T(_s(s),x,y,{font:`${sz}px PS`,fill:col,a,align:al})}
+function bg(t){lcBg(t)}
+function flush(){ctx.save();ctx.imageSmoothingEnabled=false;ctx.drawImage(LC,0,0,LW*S,LH*S);ctx.restore()}
+// serie de precio sintética (ilustrativa)
+const SER=(()=>{const r=rng(31);const a=[];let p=60;for(let i=0;i<64;i++){p+=(r()-.5)*5+(i>38?2.2:0)+(i>52?-3.6:0);a.push(p)}return a})();
+function priceChart(t,k,opts){ // x 10..125, y 40..150 en píxeles lógicos
+  const n=SER.length;const mn=Math.min(...SER)-4,mx=Math.max(...SER)+6;const fx=i=>12+i/(n-1)*110,fy=v=>150-(v-mn)/(mx-mn)*100;
+  const pts=SER.map((v,i)=>[fx(i),fy(v)]);
+  P(10,150,115,1,GY);P(10,48,1,103,GY);
+  if(opts.upper){const w=opts.upper;const up=[];for(let i=w;i<n;i++){const m=Math.max(...SER.slice(i-w,i));up.push([fx(i),fy(m)])}pxLine(up,YL,Math.min(1,k*1.3),1)}
+  if(opts.lower){const w=opts.lower;const lo=[];for(let i=w;i<n;i++){const m=Math.min(...SER.slice(i-w,i));lo.push([fx(i),fy(m)])}pxLine(lo,RD,Math.min(1,k*1.3),1)}
+  pxLine(pts,GL,k,2);return {fx,fy,pts}}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  PS('1983',540,330,150,YL,eback(prog(t,.2,.9)));
+  const k=eout(prog(t,1,1.8));turtle(24+(1-k)*-40,78,5,t,GM,GD);
+  PS('LAS TORTUGAS',540,1120,54,GM,eout(prog(t,1.8,2.4)));
+  PS('DENNIS  vs  ECKHARDT',540,1210,32,WH,eout(prog(t,2.6,3.2)));
+  PS('¿se puede enseñar a operar?',540,1290,28,YL,eout(prog(t,3.6,4.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL EXPERIMENTO');
+  const n=8;for(let i=0;i<n;i++){const k=eout(prog(t,7+i*.35,7.8+i*.35));if(k<=0)continue;turtle(8+(i%4)*30+(1-k)*-60,70+Math.floor(i/4)*26,2,t+i*.3,i%2?GM:GL,GD)}
+  PS('14 a 23',540,950,110,YL,eback(prog(t,10,10.8)));PS('novatos según la fuente',540,1040,30,WH,eout(prog(t,10.8,11.5)));
+  PS('+ reglas escritas + capital',540,1150,28,GM,eout(prog(t,11.6,12.4)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'ENTRADA',YL);
+  const k=eio(prog(t,14.2,19));const c=priceChart(t,k,{upper:20});
+  const kb=eout(prog(t,17,17.8));if(kb>0){const [bx,by]=c.pts[44];ctx.save();ctx.globalAlpha=a*kb;ctx.restore()}
+  ctx.restore();ctx.save();ctx.globalAlpha=a;
+  PS('máximo de 20 días',540,1260,32,YL,eout(prog(t,15.2,16)));
+  const kb2=eback(prog(t,17.4,18.2));if(kb2>.02)PS('¡RUPTURA!',540,420,70,GM,kb2);
+  PS('sistema largo: 55 días',540,1340,28,WH,eout(prog(t,18.4,19.2)));
+  PS('gráfico ilustrativo',540,1400,22,GY,eout(prog(t,19,19.8)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'SALIDA',RD);
+  const k=eio(prog(t,21.2,26));priceChart(t,k,{lower:10});
+  ctx.restore();ctx.save();ctx.globalAlpha=a;
+  PS('mínimo de 10 días',540,1260,32,RD,eout(prog(t,22.4,23.2)));
+  const kb2=eback(prog(t,25,25.8));if(kb2>.02)PS('¡SALIDA!',540,420,70,RD,kb2);
+  PS('sistema largo: 20 días',540,1340,28,WH,eout(prog(t,26,26.8)));
+  PS('gráfico ilustrativo',540,1400,22,GY,eout(prog(t,26.8,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'TAMAÑO = N',BL);
+  // baja volatilidad: pila grande; alta: pila chica
+  const stack=(cx,n,col,t0)=>{for(let i=0;i<n;i++){const k=eout(prog(t,t0+i*.35,t0+.6+i*.35));if(k<=0)continue;P(cx-14,148-(i+1)*14+(1-k)*-20,28,12,col);P(cx-14,148-(i+1)*14,28,2,'#ffffff55')}};
+  stack(36,4,GM,29.4);stack(98,2,RD,31);
+  P(10,150,115,1,GY);
+  ctx.restore();ctx.save();ctx.globalAlpha=a;
+  PS('poca volatilidad',290,1280,26,GM,eout(prog(t,29.4,30.2)));PS('más tamaño',290,1330,26,WH,eout(prog(t,29.8,30.6)));
+  PS('mucha volatilidad',790,1280,26,RD,eout(prog(t,31,31.8)));PS('menos tamaño',790,1330,26,WH,eout(prog(t,31.4,32.2)));
+  PS('N = ATR de 20 días',540,340,34,YL,eout(prog(t,32.2,33)));PS('ilustrativo',540,1400,22,GY,eout(prog(t,33,33.8)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'EL RESULTADO',YL);
+  const n=14;for(let i=0;i<n;i++){const k=eout(prog(t,36+i*.3,36.7+i*.3));if(k<=0)continue;const x=14+(i%7)*16,y=70+Math.floor(i/7)*18-(1-k)*20;P(x,y,12,12,YL);P(x+2,y+2,8,8,'#ffb800');P(x+5,y+3,2,6,YL)}
+  ctx.restore();ctx.save();ctx.globalAlpha=a;
+  PS('>100 M US$',540,980,92,YL,eback(prog(t,40.2,41)));PS('en cuatro años',540,1070,34,WH,eout(prog(t,41,41.8)));
+  PS('cifra reportada, el total varía',540,1180,26,GY,eout(prog(t,41.8,42.6)));PS('sin verificación oficial',540,1240,26,RD,eout(prog(t,42.2,43)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'LA LECCIÓN');
+  ctx.restore();ctx.save();ctx.globalAlpha=a;
+  [['REGLAS CLARAS',GM],['TAMAÑO POR RIESGO',YL],['DISCIPLINA',BL]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;ctx.save();ctx.globalAlpha=a*k;ctx.fillStyle=c;ctx.fillRect(80,320+i*120-36,56,56);PS('+',108,320+i*120-6,34,NV,1);PS(s,170,320+i*120-6,32,WH,1,'left');ctx.restore()});
+  robot(620,860,520,eout(prog(t,47,47.8)));
+  PS('Contenido educativo,',60,1240,24,RD,eout(prog(t,48.4,49)),'left');PS('no es asesoría financiera',60,1290,24,RD,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  // dibujar escenas en baja resolución primero, luego volcar
+  let a;
+  a=fade(t,0,6.0);if(t<.3)a=1;
+  if(a>0){ctx.save();ctx.globalAlpha=a;ctx.restore()}
+  // pixeles de cada bloque
+  L.save();
+  const scenes=[[0,6.0,'h0'],[6.4,13.4,'b1'],[13.6,20.4,'b2'],[20.6,28.2,'b3'],[28.4,35.0,'b4'],[35.2,43.4,'b5'],[43.6,49.6,'b6'],[49.8,55.9,'ou']];
+  const act=scenes.find(([s,e])=>t>=s&&t<e);
+  const fns={h0,b1,b2,b3,b4,b5,b6,ou:outro};
+  if(!act)flush();
+  if(act){const [s,e,k]=act;const al=k=='h0'&&t<.3?1:fade(t,s,e);
+    if(k=='ou'){outro(t,al)}
+    else{ // pasada 1: pixeles
+      window.__layer='px';ctx.save();const saveCtx=ctx;
+      // las escenas dibujan píxeles en L y textos en ctx; para ordenar, dibujamos píxeles primero
+      PXPASS=true;fns[k](t,al);PXPASS=false;
+      flush();
+      PXPASS=false;TXPASS=true;fns[k](t,al);TXPASS=false;ctx.restore()}}
+  }
+let PXPASS=false,TXPASS=false;
+// Interceptar: durante la pasada de píxeles se omiten los textos; en la de texto se omiten los píxeles
+const _T=window.T;
+window.T=function(s,x,y,o){if(PXPASS)return;return _T(s,x,y,o)};
+const _robot=window.robot;window.robot=function(x,y,h,a){if(PXPASS)return;return _robot(x,y,h,a)};
+const _P=P;
+function PWrap(x,y,w,h,c){if(TXPASS)return;_P(x,y,w,h,c)}
+function cover(){bg(2);window.__lcClear&&0;
+  PXPASS=true;turtle(11,80,7,1.1,GM,GD);
+  const pts=SER.map((v,i)=>[12+i/63*110,150-(v-50)/(100-50)*60-40]);PXPASS=false;
+  flush();
+  _T('34 AÑOS'.replace('34 AÑOS','1983'),540,330,{font:'150px PS',fill:YL,align:'center'});
+  _T('LAS TORTUGAS',540,520,{font:'62px PS',fill:GM,align:'center'});
+  _T('LO QUE ENSEÑÓ DENNIS',540,1230,{font:'34px PS',fill:WH,align:'center'});
+  _T('>100 M US$ (reportado)',540,1330,{font:'30px PS',fill:YL,align:'center'});
+  coverBtn('VER LAS REGLAS →',GM,DK)}
+</script></body></html>
