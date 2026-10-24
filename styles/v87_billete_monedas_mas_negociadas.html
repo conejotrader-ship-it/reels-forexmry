@@ -1,0 +1,86 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:PF;font-weight:900;src:url(node_modules/@fontsource/playfair-display/files/playfair-display-latin-900-normal.woff2)}
+@font-face{font-family:PF;font-weight:700;src:url(node_modules/@fontsource/playfair-display/files/playfair-display-latin-700-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 9 (2.º uso): billete crema con guilloche azul-verdoso — tema: ranking de las monedas más negociadas (BIS 2025) (60 s).
+const SPEC={name:'MonedasNegociadas',hook:'9,6 BILLONES DE DÓLARES AL DÍA: EL RANKING DE MONEDAS',dur:60,cta:56,bpm:98,mus:'soft',prog:[[41,'M'],[36,'m'],[43,'M'],[45,'m']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.4,'hit'],[13.6,'wipe'],[15.2,'ding'],[16.4,'ding'],[20.6,'wipe'],[22.4,'ding'],[24.4,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'hit'],[35.2,'wipe'],[37.0,'ding'],[38.2,'ding'],[39.4,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[47.8,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'9,6 billones de dólares al día: así de grande es el mercado de divisas.','Nueve con seis billones de dólares al día: así de grande es el mercado de divisas.'],
+ [6.4,13.4,'Lo midió el Banco de Pagos Internacionales en abril de 2025: 28 % más que en 2022.','Lo midió el Banco de Pagos Internacionales en abril de dos mil veinticinco: veintiocho por ciento más que en dos mil veintidós.'],
+ [13.6,20.4,'Cada operación tiene dos monedas, por eso suman 200 %. Puesto 5: yuan chino, 8,5 %.','Cada operación tiene dos monedas, por eso suman doscientos por ciento. Puesto cinco: yuan chino, ocho con cinco.'],
+ [20.6,28.2,'Puesto 4: libra esterlina, 10,2 %. Puesto 3: yen japonés, 16,8 %.','Puesto cuatro: libra esterlina, diez con dos por ciento. Puesto tres: yen japonés, dieciséis con ocho.'],
+ [28.4,35.0,'Puesto 2: euro, 28,9 %. Puesto 1: dólar, 89,2 %.','Puesto dos: euro, veintiocho con nueve. Puesto uno: dólar, ochenta y nueve con dos por ciento.'],
+ [35.2,43.4,'Los diez pares más negociados incluyen el dólar. Dólar-yuan pesa 8,1 %; dólar-franco suizo, 4,9 %.','Los diez pares más negociados incluyen el dólar. Dólar yuan pesa ocho con uno por ciento; dólar franco suizo, cuatro con nueve.'],
+ [43.6,49.6,'El dólar está en casi todo: conoce sus noticias antes de operar. Sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0d3a31',ACC='#d9b24c',FAM='Inter';
+const CR='#f0e7c9',CR2='#e6dab3',GN='#12493b',TL='#1f7a6d',GD='#b8892b',RD='#b3362c',BLU='#274c77',INK='#0f2b24';
+const STY={subFont:'800 42px Inter',subBg:'rgba(240,231,201,.97)',subStroke:GN,subFill:INK,ctaBg:DK,ctaSub:'#f0e7c9',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=INK,a=1,al='center',fam='Inter'){T(_s(s),x,y,{font:`900 ${sz}px ${fam}`,fill:col,a,align:al})}
+function F(s,x,y,sz,col=INK,a=1,al='center'){T(_s(s),x,y,{font:`900 ${sz}px PF`,fill:col,a,align:al})}
+window.FONTS=['900 40px PF','700 40px PF'];
+function guil(cx,cy,r,col,n=26,al=.14,ph=0){ctx.save();ctx.strokeStyle=col;ctx.globalAlpha=al;ctx.lineWidth=2;for(let k=0;k<n;k++){ctx.beginPath();for(let i=0;i<=120;i++){const a=i/120*Math.PI*2;const rr=r*(.35+k/n*.65)*(1+.08*Math.sin(a*9+k*.4+ph));const x=cx+Math.cos(a)*rr,y=cy+Math.sin(a)*rr;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke()}ctx.restore()}
+function bg(t){ctx.fillStyle=CR;ctx.fillRect(0,0,W,H);
+  guil(120,260,420,TL,24,.16,t*.2);guil(980,1500,520,BLU,24,.14,-t*.2);guil(900,300,260,GN,18,.10,t*.1);guil(180,1450,280,GD,16,.14,0);
+  // marco de billete
+  ctx.save();ctx.strokeStyle=GN;ctx.lineWidth=6;RR(30,30,W-60,H-60,18);ctx.stroke();ctx.lineWidth=2;RR(48,48,W-96,H-96,12);ctx.stroke();
+  for(const [x,y] of [[78,78],[W-78,78],[78,H-78],[W-78,H-78]]){ctx.beginPath();ctx.arc(x,y,22,0,7);ctx.stroke();ctx.beginPath();ctx.arc(x,y,10,0,7);ctx.fillStyle=GD;ctx.fill()}ctx.restore();
+  ctx.save();ctx.globalAlpha=.5;L('FOREX · BANCO DE PAGOS INTERNACIONALES · 2025',540,100,24,GN,1);ctx.restore()}
+function head(t,t0,s,col=GN){F(s,540,205,62,col,eout(prog(t,t0,t0+.5)))}
+function card(x,y,w,h,col=GN,k=1){ctx.save();ctx.globalAlpha*=k;ctx.fillStyle='rgba(255,252,240,.92)';RR(x,y,w,h,20);ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=5;ctx.stroke();ctx.restore()}
+// tablero de ranking (5 monedas)
+const RK=[['USD','dólar EE. UU.',89.2,GN,31.0],['EUR','euro',28.9,BLU,29.0],['JPY','yen japonés',16.8,RD,23.6],['GBP','libra esterlina',10.2,TL,21.4],['CNY','yuan chino',8.5,GD,14.4]];
+function board(t,a,from){ctx.save();ctx.globalAlpha=a;
+  RK.forEach(([cd,nm,v,col,ts],i)=>{const y=290+i*200;const k=eback(prog(t,ts,ts+.8));
+    ctx.save();ctx.globalAlpha=a*.35;ctx.setLineDash([12,10]);ctx.strokeStyle=GN;ctx.lineWidth=3;RR(70,y,940,170,20);ctx.stroke();ctx.restore();
+    if(k<=.02)return;ctx.save();ctx.translate(540,y+85);ctx.scale(k,k);ctx.translate(-540,-(y+85));
+    card(70,y,940,170,col);F(String(i+1),120,y+98,100,col);L(cd,250,y+66,64,INK,1,'left');L(nm,250,y+125,26,GN,1,'left');
+    const bw=Math.max(40,v/89.2*290)*eout(prog(t,ts+.2,ts+1.2));ctx.fillStyle=col;ctx.fillRect(470,y+50,bw,70);ctx.fillStyle='rgba(255,255,255,.25)';ctx.fillRect(470,y+50,bw,10);
+    L((v+'').replace('.',',')+' %',480+bw+10,y+86,46,INK,eout(prog(t,ts+.5,ts+1.1)),'left');ctx.restore()});
+  ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  card(80,260,920,660,GN,eout(prog(t,.2,.9)));
+  F('9,6',540,560,330,GN,eback(prog(t,.4,1.2)));L('BILLONES DE US$',540,740,70,TL,eout(prog(t,1.2,1.8)));L('CADA DÍA',540,830,70,RD,eout(prog(t,1.8,2.4)));
+  const k=eout(prog(t,2.6,3.2));ctx.save();ctx.globalAlpha=a*k;ctx.translate(540,1090);ctx.rotate(-.05);RR(-330,-70,660,140,18);ctx.strokeStyle=RD;ctx.lineWidth=7;ctx.stroke();F('EL FOREX',0,26,76,RD,1);ctx.restore();
+  L('mercado de divisas · abril de 2025',540,1260,36,GN,eout(prog(t,3.6,4.4)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'ABRIL DE 2025');
+  card(70,290,940,760,GN,eout(prog(t,6.8,7.4)));
+  [['2022',7.5,TL,8.0],['2025',9.6,GN,9.6]].forEach(([y,v,c,ts],i)=>{const k=eout(prog(t,ts,ts+1.2));const x=230+i*360,bh=v/9.6*520*k;ctx.fillStyle=c;ctx.fillRect(x,950-bh,220,bh);ctx.fillStyle='rgba(255,255,255,.22)';ctx.fillRect(x,950-bh,220,12);L('$'+(v+'').replace('.',',')+' B',x+110,950-bh-30,48,INK,k);L(y,x+110,1005,40,GN)});
+  const k=eback(prog(t,11,11.8));if(k>.02){ctx.save();ctx.translate(290,400);ctx.rotate(-.05);ctx.scale(k,k);RR(-150,-60,300,120,60);ctx.fillStyle=RD;ctx.fill();L('+28 %',0,16,70,'#fff');ctx.restore()}
+  L('B = billones (millones de millones)',540,1130,32,GN,eout(prog(t,11.8,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'RANKING · PARTE 1');board(t,a);
+  const k=eout(prog(t,16.2,17));ctx.save();ctx.globalAlpha=a*k;L('1 operación = 2 monedas → suman 200 %',540,1315,36,RD,1);ctx.restore();
+  L('% de las operaciones en que participa cada moneda',540,1365,28,GN,eout(prog(t,17.6,18.4)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'RANKING · PARTE 2');board(t,a);
+  L('fuente: BIS Triennial Survey 2025',540,1320,32,GN,eout(prog(t,25,25.8)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EL TOP 2',RD);board(t,a);
+  const k=eback(prog(t,32.4,33.2));if(k>.02){ctx.save();ctx.translate(540,1340);ctx.rotate(-.03);ctx.scale(k,k);RR(-420,-52,840,104,18);ctx.fillStyle=GN;ctx.fill();L('USD EN CASI 9 DE CADA 10 OPERACIONES',0,12,40,CR);ctx.restore()}
+  ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LOS PARES');
+  card(70,290,940,760,GN,eout(prog(t,35.6,36.2)));
+  [['USD / CNY',8.1,GD,36.6],['USD / CHF',4.9,RD,37.9],['USD / HKD',3.6,TL,39.2]].forEach(([n,v,c,ts],i)=>{const k=eout(prog(t,ts,ts+.9));const y=380+i*210;L(n,120,y,50,INK,k,'left');const bw=v/8.1*440*k;ctx.fillStyle=c;ctx.fillRect(120,y+40,bw,60);L((v+'').replace('.',',')+' %',120+bw+16,y+72,44,INK,k,'left')});
+  const k=eout(prog(t,40.8,41.6));ctx.save();ctx.globalAlpha=a*k;RR(70,1100,940,150,20);ctx.fillStyle=GN;ctx.fill();L('los 10 mayores pares incluyen el dólar',540,1160,38,CR,1);L('% del volumen mundial · BIS 2025',540,1215,28,'#cfc9a5',1);ctx.restore();ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'RECUERDA');
+  [['El dólar está en casi todo',GN],['conoce sus noticias',TL],['sin garantías',RD]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;card(70,300+i*160,940,120,c);L(s,120,362+i*160,46,INK,1,'left');ctx.restore()});
+  robot(620,860,520,eout(prog(t,47,47.8)));
+  L('Contenido educativo,',60,1230,34,RD,eout(prog(t,48.4,49)),'left');L('no es asesoría financiera',60,1290,34,RD,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  F('89,2 %',540,360,230,GN,1);L('DE LAS OPERACIONES FOREX',540,520,60,INK,1);L('INCLUYEN EL DÓLAR',540,596,60,INK,1);
+  card(180,670,720,420,RD);F('USD',540,930,260,RD,1);L('la reina del mercado',540,1050,40,GN,1);
+  L('9,6 billones de US$ al día · BIS 2025',540,1220,36,GN,1);
+  coverBtn('VER EL RANKING →',GN,CR)}
+</script></body></html>
