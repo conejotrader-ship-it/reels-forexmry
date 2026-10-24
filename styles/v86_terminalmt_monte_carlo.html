@@ -1,0 +1,109 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:SM;src:url(node_modules/@fontsource/share-tech-mono/files/share-tech-mono-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 5 (2.º uso): terminal tipo MetaTrader con ventanas de plataforma — tema: Monte Carlo en backtests de robots (60 s).
+const SPEC={name:'MonteCarlo',hook:'TU BACKTEST ES UN SOLO CAMINO: MONTE CARLO MUESTRA MILES',dur:60,cta:56,bpm:108,mus:'soft',prog:[[45,'m'],[40,'M'],[38,'m'],[43,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[9.2,'ding'],[10.4,'ding'],[11.6,'ding'],[13.6,'wipe'],[15.2,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.4,'ding'],[24.4,'ding'],[26.4,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'hit'],[35.2,'wipe'],[37.0,'ding'],[38.2,'ding'],[39.4,'ding'],[40.6,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Tu backtest muestra un solo camino. Monte Carlo muestra miles. ¿Cuánto podría caer tu robot?'],
+ [6.4,13.4,'Toma las mismas operaciones y reordénalas al azar, entre 5.000 y 10.000 veces. Cada vez sale una curva distinta.','Toma las mismas operaciones y reordénalas al azar, entre cinco mil y diez mil veces. Cada vez sale una curva distinta.'],
+ [13.6,20.4,'Misma ganancia total, pero la caída máxima cambia según el orden de ganadoras y perdedoras.'],
+ [20.6,28.2,'Se mira el percentil 95 de la caída máxima: un escenario adverso, no el promedio.','Se mira el percentil noventa y cinco de la caída máxima: un escenario adverso, no el promedio.'],
+ [28.4,35.0,'Ejemplo: caída del backtest, 4.200 dólares; percentil 95, 10.200.','Ejemplo: caída del backtest, cuatro mil doscientos dólares; percentil noventa y cinco, diez mil doscientos.'],
+ [35.2,43.4,'Límites: se necesitan al menos 200 operaciones, mejor más de 500. No prueba que haya ventaja ni reemplaza al walk-forward.','Límites: se necesitan al menos doscientas operaciones, mejor más de quinientas. No prueba que haya ventaja ni reemplaza al walk-forward.'],
+ [43.6,49.6,'Mide el peor caso de tu robot, no solo el promedio. Sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0b0e14',ACC='#2ecc71',FAM='Inter';
+const BG='#0b0e14',PN='#161b26',PN2='#1e2533',LN='#2b3446',GR='#2ecc71',RD='#e74c3c',GO='#f5c542',TX='#cfd8e3',DM='#7f8aa0',BL='#4aa3ff';
+window.FONTS=['40px SM'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(11,14,20,.96)',subStroke:GR,subFill:'#fff',ctaBg:DK,ctaSub:'#cfd8e3',ctaGlow:GR,ctaAccent:GR,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function M(s,x,y,sz,col=TX,a=1,al='center'){T(_s(s),x,y,{font:`${Math.round(sz*1.15)}px SM`,fill:col,a,align:al})}
+function B(s,x,y,sz,col=TX,a=1,al='center'){T(_s(s),x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+// simulación determinista
+const NT=70;const TR=(()=>{const r=rng(7);const a=[];for(let i=0;i<NT;i++){a.push((r()<.55?1:-.85)*(.6+r()*.8)*100)}return a})();
+function perm(seed){const r=rng(seed*97+5);const a=TR.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function curve(a){const c=[0];let s=0;for(const v of a){s+=v;c.push(s)}return c}
+function maxDD(c){let pk=-1e9,dd=0;for(const v of c){pk=Math.max(pk,v);dd=Math.max(dd,pk-v)}return dd}
+const CUR=[];for(let i=0;i<140;i++)CUR.push(i==0?curve(TR):curve(perm(i)));
+const DDS=CUR.map(maxDD);const SORT=DDS.slice(1).sort((a,b)=>a-b);const P95=SORT[Math.floor(SORT.length*.95)];
+let CMIN=1e9,CMAX=-1e9;CUR.forEach(c=>c.forEach(v=>{CMIN=Math.min(CMIN,v);CMAX=Math.max(CMAX,v)}));
+const CX=90,CY=360,CW=900,CH=680;
+const fx=i=>CX+i/NT*CW,fy=v=>CY+CH-(v-CMIN)/(CMAX-CMIN)*CH;
+function bg(t){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+  // velas de fondo
+  ctx.save();ctx.globalAlpha=.07;const r=rng(11);let p=900;for(let i=0;i<26;i++){const x=20+i*42,o=p,c=p+(r()-.5)*120;p=c;ctx.fillStyle=c>o?GR:RD;ctx.fillRect(x,Math.min(o,c),22,Math.abs(c-o)+8);ctx.fillRect(x+10,Math.min(o,c)-40,2,Math.abs(c-o)+90)}ctx.restore();
+  // barra de título de plataforma
+  ctx.fillStyle=PN;ctx.fillRect(0,0,W,120);ctx.fillStyle=LN;ctx.fillRect(0,120,W,3);
+  ['#ff5f57','#febc2e','#28c840'].forEach((c,i)=>{ctx.fillStyle=c;ctx.beginPath();ctx.arc(46+i*40,60,13,0,7);ctx.fill()});
+  M('MetaTrader · Informe del Probador · Monte Carlo',620,60,26,TX,1);
+  ctx.fillStyle=PN2;ctx.fillRect(0,123,W,64);['Resultados','Gráfico','Monte Carlo','Diario'].forEach((s,i)=>{const act=i==2;ctx.fillStyle=act?BG:PN2;ctx.fillRect(20+i*250,130,235,57);M(s,137+i*250,160,26,act?GR:DM,1)})}
+function panel(x,y,w,h,k=1){ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=PN;ctx.fillRect(x,y,w,h);ctx.strokeStyle=LN;ctx.lineWidth=2;ctx.strokeRect(x,y,w,h);ctx.restore()}
+function grid(){ctx.save();ctx.strokeStyle=LN;ctx.lineWidth=1;ctx.globalAlpha*=.8;for(let i=0;i<=5;i++){ctx.beginPath();ctx.moveTo(CX,CY+CH*i/5);ctx.lineTo(CX+CW,CY+CH*i/5);ctx.stroke()}for(let i=0;i<=6;i++){ctx.beginPath();ctx.moveTo(CX+CW*i/6,CY);ctx.lineTo(CX+CW*i/6,CY+CH);ctx.stroke()}ctx.restore()}
+function drawCurve(c,col,lw,al,k=1){ctx.save();ctx.globalAlpha*=al;ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineJoin='round';ctx.beginPath();const n=Math.floor(k*(c.length-1));for(let i=0;i<=n;i++){const x=fx(i),y=fy(c[i]);i?ctx.lineTo(x,y):ctx.moveTo(x,y)}if(k<1&&n<c.length-1){const g=k*(c.length-1)-n;ctx.lineTo(lerp(fx(n),fx(n+1),g),lerp(fy(c[n]),fy(c[n+1]),g))}ctx.stroke();ctx.restore()}
+function head(t,t0,s,col=GR){M(s,540,250,52,col,eout(prog(t,t0,t0+.5)))}
+function fan(t,a,n,k,hi){for(let i=1;i<n;i++)drawCurve(CUR[i],BL,2,.22*(n>60?.7:1),k);if(hi)hi();drawCurve(CUR[0],GO,6,1,k)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  panel(60,230,960,860);grid();M('Equity · backtest (ilustrativo)',CX+10,300,32,DM,1,'left');
+  drawCurve(CUR[0],GO,7,1,eio(prog(t,.4,2.6)));
+  const k=eout(prog(t,2.8,3.4));if(k>0){ctx.save();ctx.globalAlpha=a*k;M('1 camino',830,420,40,GO,1);ctx.restore()}
+  const k2=eout(prog(t,3.4,5.4));fan(t,a,60,k2);
+  const k3=eout(prog(t,4.4,5.2));if(k3>0){ctx.save();ctx.globalAlpha=a*k3;M('miles de caminos',760,980,40,BL,1);ctx.restore()}
+  B('¿CUÁNTO PUEDE CAER?',540,1200,64,TX,eout(prog(t,4.4,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'SIMULACIONES');
+  panel(60,300,960,780);grid();
+  const n=Math.floor(lerp(2,130,eout(prog(t,7.2,12.6))));fan(t,a,n,1);
+  const cnt=Math.floor(lerp(0,10000,eio(prog(t,7.2,12.6))));
+  M('simulaciones: '+cnt.toLocaleString('es-ES'),CX+10,340,36,GR,1,'left');M('(se dibujan solo algunas)',CX+CW-10,340,24,DM,1,'right');
+  B('mismas operaciones · distinto orden',540,1190,46,TX,eout(prog(t,8,8.8)));
+  M('trade shuffle · NexusFi Academy',540,1270,28,DM,eout(prog(t,12,12.8)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL ORDEN IMPORTA');
+  panel(60,300,960,780);grid();
+  // elegir mejor y peor curva por drawdown con mismo final
+  let lo=1,hi=1;for(let i=1;i<140;i++){if(DDS[i]<DDS[lo])lo=i;if(DDS[i]>DDS[hi])hi=i}
+  drawCurve(CUR[lo],GR,6,1,eio(prog(t,14.4,16.8)));drawCurve(CUR[hi],RD,6,1,eio(prog(t,16.4,18.8)));
+  M('orden favorable',CX+10,700,34,GR,eout(prog(t,16,16.8)),'left');M('orden desfavorable',CX+10,760,34,RD,eout(prog(t,18.4,19.2)),'left');
+  const k=eout(prog(t,18.8,19.6));ctx.save();ctx.globalAlpha=a*k;M('mismo resultado final',CX+CW-10,1010,34,GO,1,'right');ctx.restore();
+  B('caída máxima distinta',540,1190,52,TX,eout(prog(t,18.6,19.4)));M('curvas ilustrativas',540,1270,28,DM,eout(prog(t,19.6,20.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'PERCENTIL 95',RD);
+  panel(60,300,960,780);
+  // histograma de caídas máximas
+  const mn=Math.min(...DDS.slice(1)),mx=Math.max(...DDS.slice(1));const bins=18,h=new Array(bins).fill(0);DDS.slice(1).forEach(v=>{h[Math.min(bins-1,Math.floor((v-mn)/(mx-mn+1e-9)*bins))]++});const hm=Math.max(...h);
+  const bw=CW/bins;const bx=i=>CX+i*bw;
+  h.forEach((v,i)=>{const k=eout(prog(t,21.4+i*.08,22.2+i*.08));const hh=v/hm*(CH-80)*k;const isTail=(mn+(i+.5)/bins*(mx-mn))>=P95;ctx.fillStyle=isTail?RD:BL;ctx.fillRect(bx(i)+3,CY+CH-hh,bw-6,hh)});
+  ctx.strokeStyle=GO;ctx.lineWidth=5;ctx.setLineDash([14,10]);const px=CX+(P95-mn)/(mx-mn)*CW;const kk=eout(prog(t,24.2,25));ctx.globalAlpha=a*kk;ctx.beginPath();ctx.moveTo(px,CY+10);ctx.lineTo(px,CY+CH);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=a;
+  if(kk>0){ctx.save();ctx.globalAlpha=a*kk;M('P95',px,CY-6,40,GO,1);ctx.restore()}
+  M('caída máxima en cada simulación →',CX+CW,CY+CH+44,28,DM,eout(prog(t,22,22.8)),'right');
+  B('el escenario adverso, no el promedio',540,1190,44,TX,eout(prog(t,25.6,26.4)));M('histograma ilustrativo',540,1270,28,DM,eout(prog(t,26.6,27.4)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EJEMPLO DE LA FUENTE',GO);
+  panel(60,300,960,780);
+  [['Backtest',4200,BL,29.4],['Percentil 95',10200,RD,31.0]].forEach(([n,v,c,ts],i)=>{const k=eout(prog(t,ts,ts+1.2));const x=190+i*400,bh=v/10200*500*k;ctx.fillStyle=c;ctx.fillRect(x,880-bh,240,bh);M('$'+String(v).replace(/\B(?=(\d{3})+(?!\d))/g,'.'),x+120,880-bh-36,44,TX,k);M(n,x+120,930,34,TX,1)});
+  const k=eout(prog(t,32.6,33.4));ctx.save();ctx.globalAlpha=a*k;M('caída máxima, 1 % de riesgo por operación',540,1010,28,DM,1);ctx.restore();
+  B('≈ 2,4 veces más',540,1190,64,GO,eout(prog(t,33,33.8)));M('10.200 ÷ 4.200 · cálculo propio · NexusFi',540,1270,28,DM,eout(prog(t,33.8,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LÍMITES',RD);
+  const R=[['≥ 200 operaciones (mínimo)',GR,36.4],['500+ para tener confianza',GR,37.8],['no prueba que haya ventaja',RD,39.4],['no reemplaza el walk-forward',RD,40.8]];
+  R.forEach(([s,c,ts],i)=>{const k=eout(prog(t,ts,ts+.7));if(k<=.02)return;ctx.save();ctx.globalAlpha=a*k;ctx.translate(lerp(60,0,k),0);panel(80,320+i*190,920,150);ctx.fillStyle=c;ctx.fillRect(80,320+i*190,14,150);M(s,130,395+i*190,38,TX,1,'left');ctx.restore()});
+  M('fuente: NexusFi Academy',540,1170,28,DM,eout(prog(t,42,42.8)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'RESUMEN');
+  [['Mide el peor caso',GR],['no solo el promedio',TX],['sin garantías',RD]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;ctx.save();ctx.globalAlpha=a*k;ctx.translate(lerp(-60,0,k),0);panel(80,320+i*150,920,120);M(s,130,380+i*150,44,c,1,'left');ctx.restore()});
+  robot(640,860,520,eout(prog(t,47,47.8)));
+  M('Contenido educativo,',60,1230,34,RD,eout(prog(t,48.4,49)),'left');M('no es asesoría financiera',60,1290,34,RD,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  B('$4.200 → $10.200',540,330,100,GO,1);B('LA CAÍDA DE TU BACKTEST',540,450,62,TX,1);
+  panel(60,520,960,700);const sv=[CX,CY,CW,CH];
+  ctx.save();ctx.translate(0,198);ctx.scale(1,.95);grid();for(let i=1;i<110;i++)drawCurve(CUR[i],BL,2,.2,1);drawCurve(CUR[0],GO,7,1,1);ctx.restore();
+  M('ejemplo de un artículo de NexusFi',540,1280,30,DM,1);
+  coverBtn('VER MONTE CARLO →',GR,DK)}
+</script></body></html>
