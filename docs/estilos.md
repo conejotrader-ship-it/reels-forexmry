@@ -7,7 +7,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 1 | Velas animadas | Velas japonesas que se dibujan solas | Cómo leer una vela japonesa (v30, 17 oct); Choque de Volcker 1979–1980 y el oro (v80_velas_volcker_oro, escena 147, 24 oct 3:00, 2.º uso: velas verdes y rojas sobre carbón con marcos) |
 | 2 | Infografía de tarjetas | Iconos, cifras y bloques de color | Qué es el swap (v29, 17 oct); Sharpe, Sortino y Calmar (v79_info_sharpe_sortino_calmar, escena 146, 23 oct 23:30, 2.º uso: crema con bloques azul, verde y naranja) |
 | 3 | Neón synthwave | Líneas brillantes sobre fondo oscuro retro | Volatilidad (v24, 15 oct); Puntos swap (v76_neon_puntos_swap, escena 143, 23 oct 13:00, 2.º uso: morado con cuadrícula en perspectiva y rótulos neón) |
-| 4 | Pizarra con tiza | Texto y diagramas como en una clase | Break even (v31, 18 oct) |
+| 4 | Pizarra con tiza | Texto y diagramas como en una clase | Break even (v31, 18 oct); El gap de fin de semana y tu stop (v82_pizarra_gap_fin_de_semana, escena 149, 24 oct 9:30, 2.º uso: pizarra verde con tiza de colores y marco de madera) |
 | 5 | Terminal tipo MetaTrader | Ventanas de plataforma con velas de fondo | Diario de trading (v32, 18 oct) |
 | 6 | Cómic pop-art | Viñetas con tramado y globos | Miedo y avaricia (v26, 16 oct); Las 5 mayores pérdidas de un solo operador (v77_comic_trading_rogue, escena 144, 23 oct 16:30, 2.º uso: tramado de colores con estrellas y barras de ranking) |
 | 7 | Dashboard con indicadores | Tarjetas, medidores y gráficos | Revisión semanal del robot (v27, 16 oct); Miércoles Negro 16 sep 1992 (v78_dashboard_miercoles_negro, escena 145, 23 oct 20:00, 2.º uso: panel azul noche con tarjetas, anillo y barras) |

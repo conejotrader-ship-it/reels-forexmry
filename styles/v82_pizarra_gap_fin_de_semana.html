@@ -1,0 +1,120 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:GH;src:url(node_modules/@fontsource/gochi-hand/files/gochi-hand-latin-400-normal.woff2)}
+@font-face{font-family:PM;src:url(node_modules/@fontsource/permanent-marker/files/permanent-marker-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 4 (2.º uso): pizarra verde con tiza — tema: el gap de fin de semana y qué pasa con tu stop (60 s).
+const SPEC={name:'GapFinDeSemana',hook:'CADA FIN DE SEMANA EL MERCADO SE APAGA 48 HORAS',dur:60,cta:56,bpm:100,mus:'soft',prog:[[38,'m'],[43,'M'],[40,'m'],[45,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.4,'ding'],[13.6,'wipe'],[15.2,'down'],[17.0,'hit'],[20.6,'wipe'],[22.4,'ding'],[24.4,'down'],[28.4,'wipe'],[30.0,'ding'],[32.0,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.6,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[47.8,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Cada fin de semana el mercado cierra unas 48 horas. ¿Qué pasa con tu stop?','Cada fin de semana el mercado cierra unas cuarenta y ocho horas. ¿Qué pasa con tu stop?'],
+ [6.4,13.4,'Cierra el viernes a las 5 p. m. de Nueva York y reabre el domingo. Las noticias no paran.','Cierra el viernes a las cinco de la tarde de Nueva York y reabre el domingo. Las noticias no paran.'],
+ [13.6,20.4,'Si pasa algo en el fin de semana, el precio no se mueve poco a poco: salta. Eso es un gap.'],
+ [20.6,28.2,'Tu stop dentro del salto se ejecuta al siguiente precio disponible, que puede ser peor. Es slippage negativo.','Tu stop dentro del salto se ejecuta al siguiente precio disponible, que puede ser peor. Es deslizamiento negativo.'],
+ [28.4,35.0,'Ilustrativo: stop en 2.000, apertura en 1.985: 15 dólares peor por onza.','Ilustrativo: stop en dos mil, apertura en mil novecientos ochenta y cinco: quince dólares peor por onza.'],
+ [35.2,43.4,'Con poca liquidez, el spread se ensancha al cierre y a la apertura. Algunas plataformas permiten fijar una desviación máxima.'],
+ [43.6,49.6,'Antes del viernes, revisa tus posiciones y el tamaño del lote. El gap no avisa.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#12241f',ACC='#f6d86b',FAM='Inter';
+const BD='#1d3b33',CH='#f2f0e6',YE='#f6d86b',PK='#f29aa8',BL='#8fd0f2',GR='#9be0a8',WD='#8a6a45';
+window.FONTS=['40px GH','40px PM'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(18,36,31,.96)',subStroke:YE,subFill:'#fff',ctaBg:DK,ctaSub:'#f2f0e6',ctaGlow:YE,ctaAccent:YE,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+const fr=x=>x-Math.floor(x),nz=(i,s)=>fr(Math.sin(i*12.9898+s*78.233)*43758.5453)-.5;
+function dust(){if(window._d)return window._d;const c=document.createElement('canvas');c.width=W;c.height=H;const g=c.getContext('2d');const r=rng(5);
+  for(let i=0;i<260;i++){g.fillStyle=`rgba(255,255,255,${.02+r()*.04})`;const x=r()*W,y=r()*H;g.beginPath();g.ellipse(x,y,60+r()*220,10+r()*40,r()*3,0,7);g.fill()}
+  for(let i=0;i<9000;i++){g.fillStyle=`rgba(255,255,255,${.03+r()*.07})`;g.fillRect(r()*W,r()*H,1+r()*2,1+r()*2)}window._d=c;return c}
+function bg(t){ctx.fillStyle=BD;ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,900,300,540,900,1300);g.addColorStop(0,'rgba(255,255,255,.07)');g.addColorStop(1,'rgba(0,0,0,.35)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.drawImage(dust(),0,0);ctx.fillStyle=WD;ctx.fillRect(0,0,W,26);ctx.fillRect(0,H-26,W,26);ctx.fillRect(0,0,26,H);ctx.fillRect(W-26,0,26,H);
+  ctx.fillStyle='#a98457';ctx.fillRect(26,26,W-52,8)}
+function ch(x1,y1,x2,y2,col=CH,lw=7,k=1,dash){if(k<=0)return;const xe=lerp(x1,x2,k),ye=lerp(y1,y2,k);ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineCap='round';ctx.globalAlpha*=.92;if(dash)ctx.setLineDash(dash);ctx.beginPath();
+  const n=Math.max(2,Math.round(Math.hypot(xe-x1,ye-y1)/22));for(let i=0;i<=n;i++){const u=i/n;const x=lerp(x1,xe,u)+nz(i,x1+y1)*3,y=lerp(y1,ye,u)+nz(i+7,y1)*3;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.restore()}
+function rect(x,y,w,h,col=CH,lw=7,k=1){ch(x,y,x+w,y,col,lw,clamp(k*4));ch(x+w,y,x+w,y+h,col,lw,clamp(k*4-1));ch(x+w,y+h,x,y+h,col,lw,clamp(k*4-2));ch(x,y+h,x,y,col,lw,clamp(k*4-3))}
+function CT(s,x,y,sz,col=CH,a=1,al='center'){sz=Math.round(sz*1.25);T(_s(s),x,y,{font:`${sz}px GH`,fill:col,a:a*.95,align:al})}
+function PMt(s,x,y,sz,col=CH,a=1,al='center'){T(_s(s),x,y,{font:`${sz}px PM`,fill:col,a:a*.95,align:al})}
+function head(t,t0,s,col=YE){PMt(s,540,215,64,col,eout(prog(t,t0,t0+.5)))}
+function candle(x,o,c,hi,lo,col,w=44,lw=6,k=1){if(k<=0)return;const yt=Math.min(o,c),yb=Math.max(o,c);ch(x,hi,x,lo,col,lw,k);ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=col;ctx.globalAlpha*=.35;ctx.fillRect(x-w/2,yt,w,Math.max(6,yb-yt));ctx.restore();rect(x-w/2,yt,w,Math.max(6,yb-yt),col,lw-1,k)}
+function clock(cx,cy,r,t0,t,h){ctx.save();ctx.strokeStyle=CH;ctx.lineWidth=8;const k=eout(prog(t,t0,t0+.8));ctx.globalAlpha*=k;ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.stroke();
+  for(let i=0;i<12;i++){const a=i/12*Math.PI*2;ctx.beginPath();ctx.moveTo(cx+Math.sin(a)*r*.86,cy-Math.cos(a)*r*.86);ctx.lineTo(cx+Math.sin(a)*r*.96,cy-Math.cos(a)*r*.96);ctx.stroke()}
+  ctx.lineCap='round';const ah=h/12*Math.PI*2;ctx.lineWidth=11;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.sin(ah)*r*.5,cy-Math.cos(ah)*r*.5);ctx.stroke();
+  ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx,cy-r*.78);ctx.stroke();ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  PMt('48',540,430,330,YE,eback(prog(t,.3,1)));CT('horas sin mercado',540,640,84,CH,eout(prog(t,1,1.6)));
+  clock(280,980,150,1.6,t,5);clock(800,980,150,2.2,t,5);
+  CT('VIERNES',280,1200,56,PK,eout(prog(t,2,2.6)));CT('DOMINGO',800,1200,56,GR,eout(prog(t,2.6,3.2)));
+  CT('5 p. m.',280,1275,54,CH,eout(prog(t,2.2,2.8)));CT('5 p. m.',800,1275,54,CH,eout(prog(t,2.8,3.4)));
+  ch(450,980,630,980,YE,8,eout(prog(t,3.2,4)));ch(580,940,630,980,YE,8,eout(prog(t,3.8,4.2)));ch(580,1020,630,980,YE,8,eout(prog(t,3.8,4.2)));
+  CT('hora de Nueva York · aproximado',540,1380,34,BL,eout(prog(t,4.4,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'LA SEMANA FOREX');
+  const D=['L','M','X','J','V','S','D'];
+  D.forEach((d,i)=>{const x=90+i*130;const k=eout(prog(t,7+i*.2,7.6+i*.2));const closed=i>=5;
+    if(k<=0)return;ctx.save();ctx.globalAlpha=a*k;rect(x,360,115,200,closed?PK:CH,6,1);PMt(d,x+57,460,70,closed?PK:CH);ctx.restore()});
+  const kc=eout(prog(t,9.4,10.4));if(kc>0){ch(90+4*130+57,360,90+4*130+57,300,YE,6,kc);CT('cierra',90+4*130+57,270,36,YE,kc);ch(90+6*130+57,360,90+6*130+57,300,GR,6,kc);CT('abre',90+6*130+57,270,36,GR,kc)}
+  const hk=eout(prog(t,10.4,11.4));ctx.save();ctx.globalAlpha=a*hk;ctx.fillStyle='rgba(242,154,168,.18)';ctx.fillRect(90+4*130+115,360,130*2.6,200);ctx.restore();
+  CT('sin precios: sábado y casi todo el domingo',540,640,40,PK,eout(prog(t,10.8,11.6)));
+  // noticias que no paran
+  const n=[[210,820,'NOTICIA'],[540,900,'DISCURSO'],[860,820,'DATO']];
+  n.forEach(([x,y,s],i)=>{const k=eback(prog(t,11.4+i*.5,12.1+i*.5));if(k<=.02)return;ctx.save();ctx.translate(x,y);ctx.scale(k,k);ctx.globalAlpha*=a;rect(-140,-60,280,120,YE,6,1);
+    ctx.beginPath();ctx.fillStyle=YE;ctx.moveTo(-18,-40);ctx.lineTo(10,-40);ctx.lineTo(-2,-10);ctx.lineTo(22,-10);ctx.lineTo(-26,45);ctx.lineTo(-10,5);ctx.lineTo(-30,5);ctx.closePath();ctx.globalAlpha*=.0;ctx.restore();
+    ctx.save();ctx.globalAlpha=a*k;PMt(s,x,y+14,40,YE);ctx.restore()});
+  CT('el mundo sigue moviéndose',540,1060,48,CH,eout(prog(t,12.4,13)));
+  CT('fuente: FXCM',540,1200,34,BL,eout(prog(t,12.6,13.2)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL GAP',PK);
+  const Y=(v)=>1250-(v-30)*22;
+  const F=[[50,55,58,48],[55,52,57,50],[52,58,60,51],[58,56,60,54],[56,60,62,54],[60,57,61,55]];
+  F.forEach(([o,c,hi,lo],i)=>{const k=eout(prog(t,14.4+i*.25,15+i*.25));candle(130+i*85,Y(o),Y(c),Y(hi),Y(lo),c>=o?GR:PK,56,6,k)});
+  ch(110,Y(57),980,Y(57),CH,3,eout(prog(t,16,16.8)),[14,12]);CT('cierre del viernes',300,Y(57)-95,36,CH,eout(prog(t,16,16.8)));
+  const G=[[40,36,43,34],[36,38,40,33],[38,42,44,36]];
+  G.forEach(([o,c,hi,lo],i)=>{const k=eout(prog(t,17.8+i*.3,18.4+i*.3));candle(660+i*95,Y(o),Y(c),Y(hi),Y(lo),c>=o?GR:PK,56,6,k)});
+  const kg=eout(prog(t,17.2,18));ch(570,Y(57),570,Y(40),YE,9,kg);ch(570,Y(40),548,Y(45),YE,9,eout(prog(t,17.8,18.2)));ch(570,Y(40),592,Y(45),YE,9,eout(prog(t,17.8,18.2)));
+  const k2=eback(prog(t,18.4,19.2));if(k2>.02){ctx.save();ctx.translate(790,Y(52));ctx.scale(k2,k2);PMt('GAP',0,0,170,YE,1);ctx.restore()}
+  CT('apertura del domingo',780,1255,36,GR,eout(prog(t,18.8,19.6)));
+  CT('velas ilustrativas',540,1340,34,BL,eout(prog(t,19.4,20.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'TU STOP',YE);
+  const Y=v=>1250-(v-40)*16;const sl=Y(60);
+  ch(110,sl,980,sl,PK,6,eout(prog(t,21.2,22)),[18,12]);CT('tu stop',210,sl-36,46,PK,eout(prog(t,21.4,22)));
+  [[10,46,45,40,50]].forEach(()=>{});
+  candle(300,Y(80),Y(78),Y(84),Y(75),GR,56,6,eout(prog(t,22.2,22.8)));
+  const k=eout(prog(t,23.4,24.4));ch(420,Y(78),420,Y(44),YE,8,k);
+  candle(560,Y(46),Y(44),Y(50),Y(40),PK,56,6,eout(prog(t,24.2,24.8)));
+  ctx.save();ctx.globalAlpha=a*eout(prog(t,24.6,25.4));ctx.beginPath();ctx.arc(560,Y(44),30,0,7);ctx.strokeStyle=YE;ctx.lineWidth=7;ctx.stroke();ctx.restore();
+  CT('se ejecuta aquí',780,Y(44)+4,44,YE,eout(prog(t,25,25.8)));
+  const k2=eout(prog(t,26,26.8));if(k2>0){ch(700,sl+20,700,Y(44)-30,PK,7,k2);ch(700,Y(44)-30,682,Y(44)-62,PK,7,eout(prog(t,26.6,27)));ch(700,Y(44)-30,718,Y(44)-62,PK,7,eout(prog(t,26.6,27)));
+    PMt('SLIPPAGE',840,Y(52)-30,48,PK,k2)}
+  CT('siguiente precio disponible',540,1330,44,CH,eout(prog(t,27,27.8)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EJEMPLO ILUSTRATIVO',BL);
+  const rows=[['stop','2.000',PK,29.2],['apertura','1.985',YE,30.4],['diferencia','−15 $/oz',GR,31.6]];
+  rows.forEach(([n,v,c,ts],i)=>{const k=eout(prog(t,ts,ts+.6));if(k<=0)return;const y=420+i*200;ctx.save();ctx.globalAlpha=a*k;ctx.translate(lerp(-60,0,k),0);rect(110,y-70,860,150,c,7,1);CT(n,170,y+12,56,CH,1,'left');PMt(v,900,y+12,80,c,1,'right');ctx.restore()});
+  const k4=eout(prog(t,33,33.8));if(k4>0){ctx.save();ctx.globalAlpha=a*k4;CT('1 lote = 100 onzas',540,1090,52,CH);PMt('≈ US$ 1.500 MÁS',540,1200,76,YE);CT('cálculo propio, no es una garantía',540,1290,36,BL);ctx.restore()}
+  ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LIQUIDEZ BAJA',PK);
+  const bars=[['normal',70,GR,36.2],['cierre / apertura',190,PK,37.4]];
+  bars.forEach(([n,w,c,ts],i)=>{const k=eout(prog(t,ts,ts+.8));const y=440+i*230;ctx.save();ctx.globalAlpha=a*k;CT('spread '+n,110,y-70,44,CH,1,'left');
+    ctx.fillStyle=c;ctx.globalAlpha*=.4;ctx.fillRect(110,y-30,w*4*k,70);ctx.globalAlpha=a*k;rect(110,y-30,w*4*k,70,c,6,1);ctx.restore()});
+  CT('ilustrativo',540,780,34,BL,eout(prog(t,38.4,39.2)));
+  const k=eout(prog(t,40,40.8));if(k>0){ctx.save();ctx.globalAlpha=a*k;rect(110,860,860,330,YE,7,1);CT('algunas plataformas',540,950,48,CH);PMt('DESVIACIÓN MÁXIMA',540,1040,64,YE);CT('(market range)',540,1110,44,CH);CT('con 0 no aceptas slippage, pero la orden puede no ejecutarse',540,1160,22,BL);ctx.restore()}
+  ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'ANTES DEL VIERNES',GR);
+  ['revisa tus posiciones abiertas','ajusta el tamaño del lote','sabe cuánto puede costar un gap'].forEach((s,i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=0)return;const y=420+i*160;ctx.save();ctx.globalAlpha=a*k;
+    ch(110,y-10,140,y+20,GR,9,1);ch(140,y+20,190,y-44,GR,9,1);CT(s,230,y,36,CH,1,'left');ctx.restore()});
+  robot(660,950,430,eout(prog(t,47,47.8)));
+  CT('el gap no avisa',130,1120,64,YE,eout(prog(t,47.6,48.2)),'left');CT('Contenido educativo, no es asesoría financiera',130,1230,30,PK,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  PMt('48 H',540,380,300,YE);CT('SIN MERCADO',540,580,100,CH);
+  const Y=v=>1270-(v-20)*13;[[50,55,58,48],[55,52,57,50],[52,60,62,51]].forEach(([o,c,hi,lo],i)=>candle(150+i*95,Y(o),Y(c),Y(hi),Y(lo),c>=o?GR:PK,64,9));
+  [[32,28,36,26],[28,31,34,25],[31,29,35,27]].forEach(([o,c,hi,lo],i)=>candle(640+i*105,Y(o),Y(c),Y(hi),Y(lo),c>=o?GR:PK,64,9));
+  ch(430,Y(52),560,Y(36),YE,12,1);ch(560,Y(36),528,Y(40),YE,12,1);ch(560,Y(36),566,Y(42),YE,12,1);PMt('GAP',700,830,190,YE,1);
+  CT('¿QUÉ PASA CON TU STOP?',540,1290,64,PK);
+  coverBtn('VER EL RIESGO →',YE,DK)}
+</script></body></html>
