@@ -1,0 +1,98 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 21 (2.º uso): línea de tiempo horizontal con hitos que se desplaza — tema: burbuja punto-com y el Nasdaq 2000-2015 (60 s).
+const SPEC={name:'DotCom2000',hook:'NASDAQ: 10 DE MARZO DE 2000 · 15 AÑOS PARA VOLVER',dur:60,cta:56,bpm:104,prog:[[45,'m'],[41,'M'],[43,'m'],[40,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.4,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'tick'],[24.0,'tick'],[26.0,'tick'],[27.4,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.4,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[47.8,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Nasdaq, 10 de marzo de 2000: 5.048 puntos. Tardó quince años en volver.','Nasdaq, diez de marzo de dos mil: cinco mil cuarenta y ocho puntos. Tardó quince años en volver.'],
+ [6.4,13.4,'Fue el récord de la burbuja punto com: el internet estaba de moda y el índice cerró en 5.048 puntos.','Fue el récord de la burbuja punto com: el internet estaba de moda y el índice cerró en cinco mil cuarenta y ocho puntos.'],
+ [13.6,20.4,'Luego vino la caída: en octubre de 2002 cerró cerca de 1.114 puntos, unos 78 % menos.','Luego vino la caída: en octubre de dos mil dos cerró cerca de mil ciento catorce puntos, unos setenta y ocho por ciento menos.'],
+ [20.6,28.2,'Recién el 23 de abril de 2015 cerró en 5.056 y superó ese récord: quince años y un mes después.','Recién el veintitrés de abril de dos mil quince cerró en cinco mil cincuenta y seis y superó ese récord: quince años y un mes después.'],
+ [28.4,35.0,'Tras perder 78 %, había que subir cerca de 350 % para volver al máximo. Cálculo propio.','Tras perder setenta y ocho por ciento, había que subir cerca de trescientos cincuenta por ciento para volver al máximo.'],
+ [35.2,43.4,'La lección: una tendencia fuerte no es garantía. Limita la pérdida por operación y prueba tu robot en distintos momentos.'],
+ [43.6,49.6,'Contenido educativo, sin garantías: los máximos pueden tardar años en volver.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#08162b',ACC='#ffc233',FAM='Inter';
+const NV='#0b1a2e',GR='#1d3556',CY='#35e0ff',AM='#ffc233',RD='#ff4d5e',WH='#ffffff',MU='#8fa6c7';
+const STY={subFont:'800 42px Inter',subBg:'rgba(8,22,43,.95)',subStroke:CY,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=WH,a=1,al='center'){T(_s(s),x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+window.FONTS=['900 40px Inter'];
+// serie (año decimal, valor) — hitos reales: pico 10-mar-2000 (5.048,62), mínimo oct-2002 (≈1.114), 23-abr-2015 (5.056,06); el resto es ILUSTRATIVO
+const PK=2000.19,TR=2002.78,RC=2015.31;
+const PTS=[[1998.3,1500],[1998.9,2000],[1999.4,2500],[1999.9,3600],[2000.0,4000],[2000.1,4600],[PK,5048.62],[2000.4,4200],[2000.7,3700],[2001.0,2500],[2001.3,2100],[2001.7,1600],[2001.95,2000],[2002.3,1700],[2002.55,1300],[TR,1114.11],[2003.3,1500],[2004.5,2100],[2006,2300],[2007.8,2800],[2008.8,1500],[2009.2,1400],[2010.5,2300],[2012,2900],[2013.5,3700],[2014.5,4600],[RC,5056.06]];
+const PX0=40,PW=1000,PT=420,PB=1130; // panel
+const Yv=v=>PB-30-v/5500*(PB-PT-90);
+function camYear(t){ if(t<13.6)return 2000.4; if(t<20.4)return lerp(2000.4,2002.6,eio(prog(t,13.6,20.4))); if(t<28.2)return lerp(2002.6,2013.1,eio(prog(t,20.6,27.6))); return 2013.1}
+function reveal(t){ if(t<6)return lerp(1998.3,PK-.02,eio(prog(t,.2,5.2))); if(t<13.4)return PK; if(t<20.4)return lerp(PK,TR,eio(prog(t,14.0,18.5))); if(t<28.2)return lerp(TR,RC,eio(prog(t,20.8,27.6))); return RC}
+function chart(t,a){const cam=camYear(t),ppy=lerp(150,86,prog(t,20.6,27.6)>0?eio(prog(t,20.6,27.6)):0)* (t<20.6?1:1);
+  const Xy=yr=>540+(yr-cam)*ppy;const rv=reveal(t);
+  ctx.save();ctx.globalAlpha=a;ctx.beginPath();ctx.rect(PX0,PT-40,PW,PB-PT+260);ctx.clip();
+  ctx.fillStyle='rgba(255,255,255,.04)';RR(PX0,PT-40,PW,PB-PT+260,22);ctx.fill();
+  // rejilla y eje de años
+  for(let v=1000;v<=5000;v+=1000){line(PX0,Yv(v),PX0+PW,Yv(v),GR,2);T(String(v).replace(/(\d)(\d{3})/,'$1.$2'),PX0+12,Yv(v)-14,{font:'800 24px Inter',fill:MU,align:'left'})}
+  const y0=Math.floor(cam-4),y1=Math.ceil(cam+4);
+  for(let y=y0;y<=y1;y++){const x=Xy(y);if(x<PX0||x>PX0+PW)continue;line(x,PB-24,x,PB+(y%5==0?36:20),MU,y%5==0?4:2);if(y%2==0||ppy>120)T(String(y),x,PB+60,{font:'800 28px Inter',fill:y%5==0?WH:MU})}
+  line(PX0,PB-24,PX0+PW,PB-24,MU,3);
+  // curva
+  const pts=[];for(const [yr,v] of PTS){if(yr<=rv)pts.push([yr,v])}
+  if(rv>PTS[0][0]){const i=PTS.findIndex(p=>p[0]>rv);if(i>0){const [ya,va]=PTS[i-1],[yb,vb]=PTS[i];pts.push([rv,lerp(va,vb,(rv-ya)/(yb-ya))])}}
+  if(pts.length>1){ctx.save();ctx.lineJoin='round';ctx.lineWidth=7;ctx.strokeStyle=CY;ctx.shadowColor=CY;ctx.shadowBlur=14;ctx.beginPath();pts.forEach(([yr,v],i)=>i?ctx.lineTo(Xy(yr),Yv(v)):ctx.moveTo(Xy(yr),Yv(v)));ctx.stroke();ctx.restore();
+    const [ly,lv]=pts[pts.length-1];ctx.beginPath();ctx.arc(Xy(ly),Yv(lv),12,0,7);ctx.fillStyle=AM;ctx.fill()}
+  // hitos
+  const ms=[[PK,5048.62,'10 MAR 2000','5.048,62',AM],[TR,1114.11,'OCT 2002','≈ 1.114',RD],[RC,5056.06,'23 ABR 2015','5.056,06',CY]];
+  ms.forEach(([yr,v,d,n,c])=>{if(rv<yr-.001)return;const x=Xy(yr),y=Yv(v);if(x<PX0-40||x>PX0+PW+40)return;
+    const k=eback(prog(rv,yr-.02,yr+.12));line(x,y,x,PB-24,c,3,[8,8]);ctx.beginPath();ctx.arc(x,y,16,0,7);ctx.fillStyle=c;ctx.fill();
+    const fy=PB+110;ctx.save();ctx.translate(x,fy);ctx.scale(Math.max(k,.001),Math.max(k,.001));RR(-130,0,260,118,18);ctx.fillStyle='#14294a';ctx.fill();ctx.lineWidth=4;ctx.strokeStyle=c;ctx.stroke();L(d,0,36,30,c);L(_s(n),0,82,40,WH);ctx.restore()});
+  ctx.restore();
+  T('trayecto entre hitos: ilustrativo',PX0+PW-16,PB+246,{font:'800 24px Inter',fill:MU,align:'right',a:a*.9})}
+function bg(t){ctx.fillStyle=NV;ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,500,80,540,500,900);g.addColorStop(0,'#16345f');g.addColorStop(1,'#08162b00');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=CY;ctx.globalAlpha=.9;ctx.fillRect(0,0,W,10);ctx.globalAlpha=1;L('NASDAQ COMPOSITE · LÍNEA DE TIEMPO',540,86,26,MU,1)}
+function head(t,t0,s,col=AM){L(s,540,190,58,col,eout(prog(t,t0,t0+.5)))}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  L('10 DE MARZO DE 2000',540,330,64,AM,eout(prog(t,.2,.8)));
+  const k=eback(prog(t,.6,1.4));ctx.save();ctx.translate(540,520);ctx.scale(Math.max(k,.001),Math.max(k,.001));L('5.048',0,0,250,WH,1);ctx.restore();
+  L('PUNTOS DEL NASDAQ',540,690,58,CY,eout(prog(t,1.6,2.2)));
+  const k2=eback(prog(t,3.0,3.8));ctx.save();ctx.translate(540,1390);ctx.rotate(-.03);ctx.scale(Math.max(k2,.001),Math.max(k2,.001));RR(-430,-60,860,120,24);ctx.fillStyle=RD;ctx.fill();L('TARDÓ 15 AÑOS EN VOLVER',0,12,54,WH);ctx.restore();ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL PICO DE LA BURBUJA');
+  const k=eback(prog(t,8.4,9.2));if(k>.02){ctx.save();ctx.translate(540,300);ctx.scale(k,k);RR(-300,-48,600,96,48);ctx.fillStyle=AM;ctx.fill();L('record: 5.048,62',0,12,46,NV);ctx.restore()}
+  L('empresas "punto com" · internet de moda',540,1425,34,MU,eout(prog(t,10.4,11.2)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LA CAÍDA',RD);
+  const k=eback(prog(t,16.6,17.4));if(k>.02){ctx.save();ctx.translate(540,300);ctx.scale(k,k);RR(-250,-60,500,120,24);ctx.fillStyle=RD;ctx.fill();L('−77,9 %',0,16,80,WH);ctx.restore()}
+  L('de 5.048,62 a ≈ 1.114 en 2,6 años',540,1425,34,MU,eout(prog(t,18.6,19.4)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LA ESPERA',CY);
+  const el=Math.max(0,reveal(t)-PK);L((el.toFixed(1)).replace('.',',')+' AÑOS',540,310,110,AM,eout(prog(t,21,21.6)));
+  const k=eback(prog(t,27.2,28));if(k>.02){ctx.save();ctx.translate(540,1420);ctx.scale(k,k);RR(-330,-52,660,104,24);ctx.fillStyle=CY;ctx.fill();L('15 años y 1 mes',0,12,54,NV);ctx.restore()}ctx.restore()}
+function cards(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'¿CUÁNTO HAY QUE SUBIR?');
+  const k1=eback(prog(t,29.6,30.4)),k2=eback(prog(t,31.8,32.6));
+  [[k1,RD,'−77,9 %','la caída',480],[k2,CY,'+352 %','para empatar',1000]].forEach(([k,c,n,s,y],i)=>{if(k<=.02)return;ctx.save();ctx.translate(540,i?1030:560);ctx.scale(k,k);RR(-400,-170,800,340,34);ctx.fillStyle='#0f2646';ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=c;ctx.stroke();L(n,0,0,170,c);L(s,0,110,44,WH);ctx.restore()});
+  L('cálculo propio · 1 ÷ (1 − 0,779) − 1',540,1425,30,MU,eout(prog(t,33,33.8)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LECCIÓN PARA UN ROBOT');
+  [['Tendencia fuerte ≠ garantía',AM],['Limita la pérdida por operación',CY],['Prueba en distintos momentos',RD]].forEach(([s,c],i)=>{const k=eout(prog(t,36.6+i*2,37.4+i*2));if(k<=.02)return;ctx.save();ctx.translate(lerp(-90,0,k),0);ctx.globalAlpha=a*k;RR(60,330+i*300,960,240,30);ctx.fillStyle='#0f2646';ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=c;ctx.stroke();
+    ctx.beginPath();ctx.arc(150,450+i*300,48,0,7);ctx.fillStyle=c;ctx.fill();L(String(i+1),150,462+i*300,54,NV);
+    const Ls=wrapLines(_s(s),700,'900 48px Inter');Ls.forEach((l,j)=>L(l,230,450+i*300+(j-(Ls.length-1)/2)*58,48,WH,1,'left'));ctx.restore()});ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'RECUERDA',CY);
+  [['Los máximos pueden tardar años',AM],['Sin garantías',RD]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;RR(60,290+i*140,960,110,24);ctx.fillStyle='#0f2646';ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=c;ctx.stroke();L(s,110,345+i*140,44,WH,1,'left');ctx.restore()});
+  robot(300,620,780,eout(prog(t,46.4,47.2)));
+  L('Contenido educativo,',60,1380,34,AM,eout(prog(t,48.4,49)),'left');L('no es asesoría financiera',60,1430,34,AM,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  const cA=t<6.2?.45:1; let ca=cA; if(t>=49.6)ca=0; if(t>=28.2&&t<35.2)ca=.28; if(t>=35.2)ca=0;
+  if(ca>0)chart(t,ca*(t>=28.2&&t<=28.6?prog(t,28.2,28.6)*0+1:1));
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)cards(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  L('10 MAR 2000',540,300,72,AM,1);L('5.048',540,520,300,WH,1);
+  ctx.save();ctx.translate(540,800);ctx.rotate(-.04);RR(-440,-78,880,156,26);ctx.fillStyle=RD;ctx.fill();L('15 AÑOS PARA VOLVER',0,16,66,WH);ctx.restore();
+  const pts=[[0,.55],[.15,.62],[.3,1],[.4,.8],[.55,.35],[.6,.18],[.72,.3],[.88,.7],[1,1]];ctx.save();ctx.lineWidth=14;ctx.strokeStyle=CY;ctx.shadowColor=CY;ctx.shadowBlur=24;ctx.lineJoin='round';ctx.beginPath();pts.forEach(([x,y],i)=>{const X=120+x*840,Y=1300-y*360;i?ctx.lineTo(X,Y):ctx.moveTo(X,Y)});ctx.stroke();ctx.restore();
+  L('la burbuja punto com',540,1360,40,MU,1);
+  coverBtn('VER LA HISTORIA →',AM,NV)}
+</script></body></html>
