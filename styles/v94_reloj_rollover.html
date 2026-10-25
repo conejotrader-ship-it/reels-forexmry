@@ -1,0 +1,88 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 27 (2.º uso): reloj gigante / cuenta regresiva — tema: el rollover de las 5 p. m. (Nueva York), el swap y el triple del miércoles (60 s).
+const SPEC={name:'Rollover',hook:'5 P. M. EN NUEVA YORK: EL RELOJ DEL SWAP',dur:60,cta:56,bpm:100,prog:[[41,'m'],[36,'M'],[38,'m'],[43,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.4,'ding'],[13.6,'wipe'],[15.0,'tick'],[17.0,'hit'],[20.6,'wipe'],[22.0,'tick'],[24.0,'tick'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.4,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[47.8,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Cada día a las 5 p. m. de Nueva York, el reloj del swap marca el corte. Tu posición paga o cobra.','Cada día a las cinco de la tarde de Nueva York, el reloj del swap marca el corte. Tu posición paga o cobra.'],
+ [6.4,13.4,'Es el rollover: las posiciones abiertas pagan o cobran swap, según la diferencia de tasas entre las dos monedas.'],
+ [13.6,20.4,'Toda posición abierta en ese instante activa el swap, aunque la abrieras 5 minutos antes. Cerrar antes lo evita.','Toda posición abierta en ese instante activa el swap, aunque la abrieras cinco minutos antes. Cerrar antes lo evita.'],
+ [20.6,28.2,'Los miércoles se cobra triple: la liquidación es a 2 días y cubre sábado y domingo. Casi todos los brókers lo aplican.','Los miércoles se cobra triple: la liquidación es a dos días y cubre sábado y domingo. Casi todos los brókers lo aplican.'],
+ [28.4,35.0,'Las 5 p. m. en Nueva York son las 4 p. m. en Bogotá hasta el 1 de noviembre. Después, las 5. Cada bróker define su corte.','Las cinco de la tarde en Nueva York son las cuatro en Bogotá hasta el primero de noviembre. Después, las cinco. Cada bróker define su corte.'],
+ [35.2,43.4,'Para tu robot: revisa el swap de tu bróker y el spread en esa hora, porque la liquidez baja y los spreads pueden ampliarse.'],
+ [43.6,49.6,'Contenido educativo, sin garantías. Cada bróker aplica su cálculo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#12081f',ACC='#ff8a1f',FAM='Inter';
+const BG='#12081f',FC='#1d1233',OR='#ff8a1f',CY='#7cf7ff',RD='#ff4d6d',WH='#ffffff',MU='#a79bc4',PN='#1b1030',GN='#3ddc97';
+const STY={subFont:'800 42px Inter',subBg:'rgba(18,8,31,.96)',subStroke:OR,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:OR,ctaAccent:OR,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=WH,a=1,al='center'){T(_s(s),x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+window.FONTS=['900 40px Inter'];
+function bg(t){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,640,60,540,640,950);g.addColorStop(0,'#2a1650');g.addColorStop(1,'#12081f00');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.fillStyle=OR;ctx.fillRect(0,0,W,10)}
+function head(t,t0,s,col=OR){L(s,540,175,56,col,eout(prog(t,t0,t0+.5)))}
+function panel(x,y,w,h,col){ctx.save();ctx.fillStyle=PN;RR(x,y,w,h,22);ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=col;ctx.stroke();ctx.restore()}
+// reloj analógico: h en horas decimales (0-12)
+function clock(cx,cy,R,hrs,alpha=1,glowCol=OR,hl=true){ctx.save();ctx.globalAlpha*=alpha;
+  ctx.shadowColor=glowCol;ctx.shadowBlur=40;ctx.fillStyle=FC;ctx.beginPath();ctx.arc(cx,cy,R+26,0,7);ctx.fill();ctx.shadowBlur=0;
+  ctx.lineWidth=14;ctx.strokeStyle=glowCol;ctx.beginPath();ctx.arc(cx,cy,R+20,0,7);ctx.stroke();
+  ctx.fillStyle='#150b27';ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.fill();
+  for(let i=0;i<60;i++){const a=i/60*Math.PI*2-Math.PI/2;const big=i%5==0;const r1=R-(big?44:24),r2=R-8;ctx.strokeStyle=big?WH:MU;ctx.lineWidth=big?8:3;ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*r1,cy+Math.sin(a)*r1);ctx.lineTo(cx+Math.cos(a)*r2,cy+Math.sin(a)*r2);ctx.stroke()}
+  for(let i=1;i<=12;i++){const a=i/12*Math.PI*2-Math.PI/2;L(String(i),cx+Math.cos(a)*(R-84),cy+Math.sin(a)*(R-84)+2,i==5&&hl?64:46,i==5&&hl?OR:WH,1)}
+  // sector 5
+  if(hl){ctx.fillStyle='rgba(255,138,31,.18)';ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R-8,(4.5/12)*Math.PI*2-Math.PI/2,(5.5/12)*Math.PI*2-Math.PI/2);ctx.closePath();ctx.fill()}
+  const ah=(hrs%12)/12*Math.PI*2-Math.PI/2,am=(hrs%1)*Math.PI*2-Math.PI/2;
+  ctx.lineCap='round';ctx.strokeStyle=WH;ctx.lineWidth=18;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(ah)*R*.5,cy+Math.sin(ah)*R*.5);ctx.stroke();
+  ctx.strokeStyle=OR;ctx.lineWidth=10;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(am)*R*.8,cy+Math.sin(am)*R*.8);ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,18,0,7);ctx.fillStyle=OR;ctx.fill();ctx.restore()}
+function digi(h,m){const hh=((h+11)%12)+1;return hh+':'+String(m).padStart(2,'0')+(h>=12?' p. m.':' a. m.')}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  L('NUEVA YORK',540,200,60,CY,eout(prog(t,.2,.8)));
+  const hrs=lerp(4.0,5.0,eio(prog(t,.4,5.2)));const k=eback(prog(t,.3,1.1));clock(540,700,330,hrs,k);
+  const min=Math.min(59,Math.floor((hrs%1)*60));L(hrs>=4.999?'5:00 p. m.':('4:'+String(min).padStart(2,'0')+' p. m.'),540,1150,100,WH,eout(prog(t,1,1.6)));
+  const k2=eback(prog(t,3.0,3.8));ctx.save();ctx.translate(540,1300);ctx.rotate(-.03);ctx.scale(Math.max(k2,.001),Math.max(k2,.001));RR(-420,-60,840,120,24);ctx.fillStyle=RD;ctx.fill();L('EL RELOJ DEL SWAP',0,14,64,WH);ctx.restore();ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL ROLLOVER');
+  clock(540,560,230,5.0,1);
+  const k1=eback(prog(t,8.0,8.8)),k2=eback(prog(t,10.2,11.0));
+  [[k1,GN,'COBRA','tasa mayor',270],[k2,RD,'PAGA','tasa menor',810]].forEach(([k,c,h,s,x])=>{if(k<=.02)return;ctx.save();ctx.translate(x,1010);ctx.scale(k,k);panel(-220,-100,440,200,c);L(h,0,-20,68,c);L(s,0,50,34,WH);ctx.restore()});
+  L('swap = diferencia de tasas entre las dos monedas',540,1200,32,MU,eout(prog(t,11.6,12.4)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL INSTANTE DEL CORTE');
+  // barra de tiempo 4:55 -> 5:05
+  const y=560;ctx.save();ctx.fillStyle=PN;RR(80,y-30,920,60,30);ctx.fill();ctx.restore();line(540,y-90,540,y+90,OR,8);L('5:00 p. m.',540,y-130,50,OR,eout(prog(t,14.4,15)));
+  const ts=[[15,'4:55',230,CY],[16.6,'5:05',850,CY]];ts.forEach(([tt,s,x,c])=>{const k=eout(prog(t,tt,tt+.5));L(s,x,y+70,36,MU,k)});
+  const kA=eback(prog(t,17.0,17.8)),kB=eback(prog(t,18.6,19.4));
+  [[kA,RD,'ABIERTA EN EL CORTE','SE APLICA EL SWAP',270],[kB,GN,'CERRADA ANTES','SIN SWAP',810]].forEach(([k,c,h,s,x])=>{if(k<=.02)return;ctx.save();ctx.translate(x,1000);ctx.scale(k,k);panel(-240,-190,480,380,c);L(h,0,-90,36,c);L(s,0,0,44,WH);if(h=='CERRADA ANTES')L('(según el bróker)',0,70,30,MU);ctx.restore()});
+  L('aunque la abrieras 5 minutos antes',540,1260,32,MU,eout(prog(t,19.4,20.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'EL TRIPLE DEL MIÉRCOLES');
+  const D=['LUN','MAR','MIÉ','JUE','VIE'];D.forEach((d,i)=>{const k=eback(prog(t,21.6+i*.35,22.2+i*.35));if(k<=.02)return;const x=140+i*200,wed=i==2;ctx.save();ctx.translate(x,520);ctx.scale(k,k);ctx.fillStyle=wed?OR:PN;RR(-85,-130,170,260,18);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=wed?WH:MU;ctx.stroke();L(d,0,-60,40,wed?BG:WH);L(wed?'×3':'×1',0,40,wed?96:70,wed?BG:CY);ctx.restore()});
+  const k=eout(prog(t,24.4,25.2));L('Miércoles: cubre mié + sáb + dom',540,820,44,WH,k);L('liquidación a 2 días (T+2) · la mayoría de brókers',540,880,32,MU,eout(prog(t,25.4,26.2)));
+  const kk=eback(prog(t,26.4,27.2));if(kk>.02){ctx.save();ctx.translate(540,1050);ctx.scale(kk,kk);RR(-380,-60,760,120,24);ctx.fillStyle=RD;ctx.fill();L('3 DÍAS DE SWAP EN UNO',0,14,52,WH);ctx.restore()}ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'¿Y EN BOGOTÁ?');
+  const k1=eback(prog(t,29.6,30.4)),k2=eback(prog(t,32.0,32.8));
+  [[k1,CY,'5:00 p. m.','NUEVA YORK',360,'(hora de verano de EE. UU.)'],[k2,OR,'4:00 p. m.','BOGOTÁ',760,'hasta el 1 de noviembre']].forEach(([k,c,h,s,y,u])=>{if(k<=.02)return;ctx.save();ctx.translate(540,y);ctx.scale(k,k);panel(-420,-150,840,300,c);L(s,0,-90,40,c);L(h,0,10,120,WH);L(u,0,100,30,MU);ctx.restore()});
+  L('después del 1 de noviembre: 5 p. m. en ambas',540,1060,40,GN,eout(prog(t,33.4,34.2)));L('cálculo propio · cada bróker define su corte',540,1120,30,MU,eout(prog(t,33.8,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'PARA TU ROBOT');
+  [['Revisa el swap de tu bróker',OR],['Vigila el spread en esa hora',CY],['La liquidez baja y el spread se amplía',RD]].forEach(([s,c],i)=>{const k=eout(prog(t,36.6+i*2,37.4+i*2));if(k<=.02)return;ctx.save();ctx.translate(lerp(-90,0,k),0);ctx.globalAlpha=a*k;panel(60,300+i*290,960,230,c);
+    ctx.beginPath();ctx.arc(150,415+i*290,48,0,7);ctx.fillStyle=c;ctx.fill();L(String(i+1),150,427+i*290,54,BG);
+    const Ls=wrapLines(_s(s),700,'900 46px Inter');Ls.forEach((l,j)=>L(l,230,415+i*290+(j-(Ls.length-1)/2)*56,46,WH,1,'left'));ctx.restore()});ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'RECUERDA',CY);
+  [['Cada bróker aplica su cálculo',OR],['Sin garantías',RD]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;panel(60,290+i*140,960,110,c);L(s,110,345+i*140,44,WH,1,'left');ctx.restore()});
+  robot(300,620,780,eout(prog(t,46.4,47.2)));
+  L('Contenido educativo,',60,1380,34,OR,eout(prog(t,48.4,49)),'left');L('no es asesoría financiera',60,1430,34,OR,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  L('5 P. M. NUEVA YORK',540,190,64,CY,1);clock(540,650,300,5.0,1);
+  L('5:00',540,1100,200,WH,1);
+  ctx.save();ctx.translate(540,1290);ctx.rotate(-.03);RR(-440,-75,880,150,22);ctx.fillStyle=RD;ctx.fill();L('TU POSICIÓN PAGA O COBRA',0,18,58,WH);ctx.restore();
+  coverBtn('VER EL SWAP →',OR,BG)}
+</script></body></html>
