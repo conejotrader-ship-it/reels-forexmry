@@ -25,7 +25,7 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 19 | Cuaderno | Hoja clara con anotaciones | EMA (v17, 13 oct); Bretton Woods 1944 (v74_cuaderno_bretton_woods, escena 141, 23 oct 6:00, 2.º uso: hoja con renglones, margen rojo y marcador amarillo) |
 | 20 | Pixel-art 3D | Bloques de colores en tres dimensiones | pixel/pixel5.html; Los Turtle Traders de Richard Dennis (v85_pixel_turtle_traders, escena 152, 24 oct 20:00, 2.º uso: pixel-art de bloques en canvas 2D con tortugas, velas y monedas) |
 | 21 | Línea de tiempo horizontal con hitos | Hitos sobre un eje que se desplaza | Lunes Negro 1987 (v38_timeline_lunes_negro, escena 105, 18 oct); Burbuja punto-com y el Nasdaq 2000–2015 (v88_timeline_dotcom_2000, escena 155, 25 oct 6:00, 2.º uso: línea de tiempo navy con curva cian y hitos) |
-| 22 | Noticiero de última hora | Cinta de titulares | Knight Capital 2012 (v40_noticiero_knight, escena 107, 18 oct) |
+| 22 | Noticiero de última hora | Cinta de titulares | Knight Capital 2012 (v40_noticiero_knight, escena 107, 18 oct); El VIX, el índice del miedo (v89_noticiero_vix, escena 156, 25 oct 9:30, 2.º uso: noticiero rojo de última hora con cinta de titulares) |
 | 23 | Mapa mundial con rutas de flujo | Oro y divisas | Oro COMEX vs LBMA (v41_mapa_comex_lbma, escena 108, 18 oct) |
 | 24 | Pantalla dividida antes/después | Dos mitades A vs B | Esperanza matemática (v39_split_esperanza, escena 106, 18 oct) |
 | 25 | Documental en blanco y negro con acento dorado | Película con perforaciones y grano | Tasas reales (TIPS) y oro (v42_documental_tips, escena 109, 18 oct) |
