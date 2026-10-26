@@ -1,0 +1,79 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 33 (2.º uso): ciudad isométrica — tema: los 4 mayores centros de negociación de divisas del mundo (BIS 2025) (60 s).
+const SPEC={name:'CentrosForex',hook:'US$ 9,6 BILLONES AL DÍA: ¿DÓNDE SE NEGOCIAN LAS DIVISAS?',dur:60,cta:56,bpm:112,prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'hit'],[10.6,'ding'],[13.6,'wipe'],[15.0,'hit'],[17.0,'hit'],[20.6,'wipe'],[22.0,'hit'],[24.6,'ding'],[26.2,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[34.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'hit'],[43.6,'wipe'],[45.2,'ding'],[47.0,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Cada día se negocian ≈ US$ 9,6 billones en divisas.','Cada día se negocian nueve coma seis billones de dólares en divisas.'],
+ [6.4,13.4,'Primero: Reino Unido (Londres), con ≈ 38 %. Sigue siendo el gran centro del forex.','Primero, el Reino Unido, con cerca de treinta y ocho por ciento. Londres sigue siendo el gran centro del forex.'],
+ [13.6,20.4,'Segundo: Estados Unidos, ≈ 19 %. Tercero: Singapur, 11,8 %.','Segundo, Estados Unidos, cerca de diecinueve por ciento. Tercero, Singapur, once coma ocho.'],
+ [20.6,28.2,'Cuarto: Hong Kong, ≈ 7 %. Entre los cuatro suman ≈ 76 %.','Cuarto, Hong Kong, cerca de siete por ciento. Entre los cuatro suman cerca de setenta y seis por ciento.'],
+ [28.4,35.0,'Son las plazas de las sesiones de Asia, Londres y Nueva York. Allí se concentra el volumen.'],
+ [35.2,43.4,'Para tu robot: más liquidez suele significar spreads más bajos. Revisa qué pasa en el cambio de sesión.'],
+ [43.6,49.6,'Fuente: BIS, encuesta trienal 2025. Cifras aproximadas. Contenido educativo, sin garantías.','Fuente: Banco de Pagos Internacionales, encuesta de dos mil veinticinco. Contenido educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BG='#14102b',CY='#3de0ff',MG='#ff4fd8',AM='#ffb347',LM='#8cff6b',WH='#ffffff',MU='#9d92cf',PN='#1e1840',DK='#14102b',ACC='#3de0ff',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(20,16,43,.96)',subStroke:CY,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:CY,ctaAccent:CY,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=WH,a=1,al='center'){T(_s(s),x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+window.FONTS=['900 40px Inter'];
+function bg(t){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#241a55');g.addColorStop(1,'#0c0a1e');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.5;const r=rng(9);for(let i=0;i<50;i++){ctx.fillStyle='#fff';ctx.fillRect(r()*W,r()*700,3,3)}ctx.restore();ctx.fillStyle=CY;ctx.fillRect(0,0,W,10)}
+function head(t,t0,s,col=CY){L(s,540,175,52,col,eout(prog(t,t0,t0+.5)))}
+function panel(x,y,w,h,col){ctx.save();ctx.fillStyle=PN;RR(x,y,w,h,22);ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=col;ctx.stroke();ctx.restore()}
+function shade(c,f){const n=parseInt(c.slice(1),16);const r=Math.round(((n>>16)&255)*f),g=Math.round(((n>>8)&255)*f),b=Math.round((n&255)*f);return `rgb(${r},${g},${b})`}
+function iso(cx,cy,a,h,col,al=1){if(h<=1)return;ctx.save();ctx.globalAlpha*=al;
+  const poly=(pts,f)=>{ctx.beginPath();pts.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.fillStyle=f;ctx.fill()};
+  poly([[cx-a,cy-h],[cx,cy-h+a/2],[cx,cy+a/2],[cx-a,cy]],shade(col,.62));poly([[cx+a,cy-h],[cx,cy-h+a/2],[cx,cy+a/2],[cx+a,cy]],shade(col,.8));poly([[cx,cy-h-a/2],[cx+a,cy-h],[cx,cy-h+a/2],[cx-a,cy-h]],col);
+  // ventanas
+  ctx.fillStyle='rgba(255,255,255,.35)';for(let y=cy-h+30;y<cy-14;y+=34){for(let k=0;k<3;k++){const xx=cx-a+14+k*(a-18)/3*1;ctx.fillRect(xx,y+(xx-cx+a)*.5/1*0.0,14,10)}}
+  ctx.restore()}
+const CT=[['REINO UNIDO',38,CY,180],['EE. UU.',19,MG,420],['SINGAPUR',11.8,AM,660],['HONG KONG',7,LM,900]];
+function city(t,t0,lit,cy=1180){CT.forEach(([n,v,c,x],i)=>{const k=eout(prog(t,t0[i],t0[i]+1.0));if(k<=.01)return;const on=lit.includes(i);ctx.save();ctx.globalAlpha*=on?1:.45;
+  iso(x,cy,100,v*11*k,c);ctx.restore();
+  if(k>.6){ctx.save();ctx.globalAlpha*=on?1:.55;L(n,x,cy+82,n.length>9?27:30,c);L((''+v).replace('.',',')+' %',x,cy-v*11*k-72,v>30?64:52,WH);ctx.restore()}})}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;
+  L('FOREX · ABRIL 2025',540,230,44,CY,eout(prog(t,.2,.8)));
+  const k=eback(prog(t,.4,1.2));ctx.save();ctx.translate(540,420);ctx.scale(Math.max(k,.001),Math.max(k,.001));L('9,6',0,0,200,WH);ctx.restore();
+  L('BILLONES DE US$ AL DÍA',540,560,50,AM,eout(prog(t,1.2,1.8)));
+  city(t,[2.0,2.6,3.2,3.8],[0,1,2,3]);ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'N.º 1 · REINO UNIDO');city(t,[-9,-9,-9,-9],[0],1180);
+  const k=eback(prog(t,8.4,9.2));if(k>.02){ctx.save();ctx.translate(540,380);ctx.scale(k,k);panel(-400,-80,800,160,CY);L('LONDRES SIGUE ARRIBA',0,4,48,WH);ctx.restore()}ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'N.º 2 Y N.º 3',MG);city(t,[-9,-9,-9,-9],[1,2]);
+  const k=eback(prog(t,15.0,15.8));if(k>.02){ctx.save();ctx.translate(540,380);ctx.scale(k,k);panel(-420,-80,840,160,MG);L('EE. UU. ≈ 19 %',0,-20,52,MG);L('SINGAPUR 11,8 %',0,40,44,AM);ctx.restore()}ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'N.º 4 · Y EL TOTAL',LM);city(t,[-9,-9,-9,-9],[0,1,2,3]);
+  const k=eback(prog(t,22.4,23.2));if(k>.02){ctx.save();ctx.translate(540,340);ctx.scale(k,k);panel(-380,-80,760,160,LM);L('HONG KONG ≈ 7 %',0,4,48,LM);ctx.restore()}
+  const k2=eback(prog(t,25.2,26.0));if(k2>.02){ctx.save();ctx.translate(540,1420);ctx.scale(k2,k2);RR(-400,-62,800,124,24);ctx.fillStyle=CY;ctx.fill();L('LOS 4 ≈ 76 %',0,14,70,DK);ctx.restore()}ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'LAS SESIONES');
+  const S=[['ASIA','Singapur · Hong Kong',AM,0,9],['LONDRES','Reino Unido',CY,7,16],['NUEVA YORK','EE. UU.',MG,13,22]];
+  S.forEach(([n,sub,c,s0,s1],i)=>{const k=eout(prog(t,29.6+i*1.6,30.4+i*1.6));if(k<=.02)return;const y=420+i*250;ctx.save();ctx.globalAlpha=a*k;
+    ctx.fillStyle=PN;RR(60,y-70,960,150,20);ctx.fill();ctx.fillStyle=c;RR(60+s0/24*880+0,y-30,(s1-s0)/24*880*k,70,12);ctx.fill();L(n,300,y-100+20,34,c);ctx.restore()});
+  L('(horarios ilustrativos de un día de 24 h)',540,1200,28,MU,eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LIQUIDEZ Y SPREAD',CY);
+  const A=[['MÁS LIQUIDEZ',GN_(),'spread bajo',20],['MENOS LIQUIDEZ',RD_(),'spread amplio',70]];
+  A.forEach(([s,c,u,sp],i)=>{const k=eback(prog(t,36.6+i*1.8,37.4+i*1.8));if(k<=.02)return;ctx.save();ctx.translate(540,520+i*330);ctx.scale(k,k);panel(-440,-130,880,260,c);L(s,0,-80,42,c);
+    // libro: dos barras con hueco
+    ctx.fillStyle=MG;RR(-340,-30,300-sp/2,56,10);ctx.fill();ctx.fillStyle=CY;RR(40+sp/2,-30,300-sp/2,56,10);ctx.fill();L(u,0,80,36,WH);ctx.restore()});
+  L('revisa el cambio de sesión',540,1230,38,AM,eout(prog(t,41,41.6)));ctx.restore()}
+function GN_(){return '#35e08a'}function RD_(){return '#ff5470'}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'FUENTE Y AVISO',AM);
+  [['BIS · encuesta trienal 2025',CY],['Cifras aproximadas',AM]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;panel(60,290+i*140,960,110,c);L(s,110,345+i*140,44,WH,1,'left');ctx.restore()});
+  robot(300,620,780,eout(prog(t,46.4,47.2)));
+  L('Contenido educativo,',60,1440,34,AM,eout(prog(t,48.4,49)),'left');L('no es asesoría financiera',60,1490,34,AM,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)hook(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(3);
+  L('FOREX · ¿DÓNDE SE NEGOCIA?',540,220,46,CY,1);
+  CT.forEach(([n,v,c,x])=>{iso(x,1000,100,v*13,c);L((''+v).replace('.',',')+' %',x,1000-v*13-70,v>30?70:54,WH);L(n,x,1082,n.length>9?26:30,c)});
+  L('4 PLAZAS',540,1240,120,AM,1);L('≈ 76 % DEL FOREX',540,1350,56,WH,1);coverBtn('VER EL RANKING →',CY,DK)}
+</script></body></html>
