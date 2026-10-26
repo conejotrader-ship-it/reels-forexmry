@@ -1,0 +1,79 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 30 (2.º uso): velocímetro de riesgo — tema: la curva de rendimientos invertida (60 s).
+const SPEC={name:'CurvaInvertida',hook:'LA CURVA DE TASAS: MÁS DE 624 DÍAS INVERTIDA',dur:60,cta:56,bpm:96,prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'alert'],[6.4,'wipe'],[8.0,'ding'],[10.6,'ding'],[13.6,'wipe'],[15.0,'tick'],[17.0,'tick'],[19.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[23.6,'ding'],[25.2,'ding'],[26.8,'ding'],[28.4,'wipe'],[30.0,'alert'],[32.6,'hit'],[35.2,'wipe'],[37.0,'ding'],[40.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[47.0,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'La curva de tasas de EE. UU. batió el récord de inversión: más de 624 días.','La curva de tasas de Estados Unidos batió el récord de inversión: más de seiscientos veinticuatro días.'],
+ [6.4,13.4,'Normalmente, un bono a 10 años rinde más que uno a 2 años. Cuando es al revés, la curva se invierte.','Normalmente, un bono a diez años rinde más que uno a dos años. Cuando es al revés, la curva se invierte.'],
+ [13.6,20.4,'Estaba invertida desde julio de 2022. El récord anterior, 624 días, venía de 1978.','Desde julio de dos mil veintidós. El récord anterior, seiscientos veinticuatro días, era de mil novecientos setenta y ocho.'],
+ [20.6,28.2,'¿Por qué importa? Históricamente se ha mirado como señal de una posible recesión en 12 a 18 meses.','¿Por qué importa? Históricamente se ha mirado como señal de una posible recesión en doce a dieciocho meses.'],
+ [28.4,35.0,'Pero no es perfecta: la recesión aún no llegaba. Las señales pueden fallar o tardar.'],
+ [35.2,43.4,'La Fed de Nueva York usa la diferencia entre 10 años y 3 meses, y publica cada mes una probabilidad de recesión.','La Fed de Nueva York usa la diferencia entre diez años y tres meses, y publica cada mes una probabilidad de recesión.'],
+ [43.6,49.6,'Para tu robot: es contexto macro, no un temporizador. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BG='#0b1020',PN='#141b33',GN='#35e08a',AM='#ffb52e',RD='#ff3d57',WH='#ffffff',MU='#8c97b8',CY='#59d0ff',DK='#0b1020',ACC='#ff3d57',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(11,16,32,.96)',subStroke:RD,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:RD,ctaAccent:AM,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=WH,a=1,al='center'){T(_s(s),x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+window.FONTS=['900 40px Inter'];
+function bg(t){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,700,50,540,700,900);g.addColorStop(0,'#1b2650');g.addColorStop(1,'#0b102000');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.fillStyle=RD;ctx.fillRect(0,0,W,10)}
+function head(t,t0,s,col=AM){L(s,540,175,52,col,eout(prog(t,t0,t0+.5)))}
+function panel(x,y,w,h,col){ctx.save();ctx.fillStyle=PN;RR(x,y,w,h,22);ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=col;ctx.stroke();ctx.restore()}
+// val: 1 = normal (derecha, verde) ... -1 = invertida (izquierda, roja)
+function gauge(cx,cy,R,val,a=1,lab=true){ctx.save();ctx.globalAlpha*=a;
+  const seg=[[Math.PI,Math.PI*1.38,RD],[Math.PI*1.38,Math.PI*1.62,AM],[Math.PI*1.62,Math.PI*2,GN]];
+  seg.forEach(([a0,a1,c])=>{ctx.strokeStyle=c;ctx.lineWidth=70;ctx.beginPath();ctx.arc(cx,cy,R,a0+.01,a1-.01);ctx.stroke()});
+  for(let i=0;i<=20;i++){const an=Math.PI+i/20*Math.PI;line(cx+Math.cos(an)*(R-52),cy+Math.sin(an)*(R-52),cx+Math.cos(an)*(R-72),cy+Math.sin(an)*(R-72),WH,i%5==0?6:3)}
+  const an=Math.PI+(1-val)/2*Math.PI;ctx.save();ctx.shadowColor='#000';ctx.shadowBlur=14;line(cx,cy,cx+Math.cos(an)*(R-30),cy+Math.sin(an)*(R-30),WH,14);ctx.restore();ctx.beginPath();ctx.arc(cx,cy,30,0,7);ctx.fillStyle=WH;ctx.fill();
+  if(lab){L('INVERTIDA',cx-R+20,cy+60,30,RD);L('PLANA',cx,cy-R-60,30,AM);L('NORMAL',cx+R-20,cy+60,30,GN)}ctx.restore()}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;
+  L('CURVA DE TASAS · EE. UU.',540,230,48,CY,eout(prog(t,.2,.8)));
+  const v=lerp(1,-.85,eio(prog(t,.5,3.0)))+Math.sin(t*30)*.015*prog(t,3,5);gauge(540,760,340,v,eback(prog(t,.3,1.0)));
+  L('+624',540,1130,190,RD,eout(prog(t,3.0,3.6)));L('DÍAS INVERTIDA',540,1250,70,WH,eout(prog(t,3.4,4.0)));ctx.restore()}
+function bars(cx,cy,inv,k,title,col){ctx.save();ctx.translate(cx,cy);panel(-240,-300,480,600,col);L(title,0,-250,36,col,k);
+  const a2=inv?210:130,a10=inv?130:210;
+  [['2 AÑOS',-110,a2,CY],['10 AÑOS',110,a10,AM]].forEach(([s,x,h,c])=>{const hh=h*k;RR(x-60,200-hh,120,hh,10);ctx.fillStyle=c;ctx.fill();L(s,x,236,30,WH,k)});
+  ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'NORMAL vs INVERTIDA');
+  bars(300,700,false,eout(prog(t,7.6,9.0)),'NORMAL',GN);bars(780,700,true,eout(prog(t,9.6,11.0)),'INVERTIDA',RD);
+  L('(alturas ilustrativas)',540,1080,30,MU,eout(prog(t,11.4,12)));L('inversión = tasa corta > tasa larga',540,1160,38,WH,eout(prog(t,11.8,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL RÉCORD');
+  const x0=120,x1=960,y=700;line(x0,y,x1,y,MU,6);
+  const g=eio(prog(t,14.6,19.0));const xe=lerp(x0,x1,g);ctx.strokeStyle=RD;ctx.lineWidth=22;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x0,y);ctx.lineTo(xe,y);ctx.stroke();
+  const days=Math.round(g*640);L(days+' días',540,560,110,days>=624?RD:WH,eout(prog(t,14.4,15)));
+  const xr=lerp(x0,x1,624/640);line(xr,y-60,xr,y+60,AM,6);L('624',xr,y+110,40,AM,eout(prog(t,15,15.6)));L('récord de 1978',xr-40,y-100,30,AM,eout(prog(t,15,15.6)));
+  L('JUL 2022',x0+30,y+60,30,MU);L('MAR 2024',x1-20,y+160,30,MU,eout(prog(t,17.5,18.1)));
+  const k=eback(prog(t,19.0,19.8));if(k>.02){ctx.save();ctx.translate(540,1010);ctx.scale(k,k);RR(-400,-70,800,140,24);ctx.fillStyle=RD;ctx.fill();L('NUEVO RÉCORD',0,16,70,WH);ctx.restore()}ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'¿POR QUÉ IMPORTA?');
+  [['Tasas cortas altas',CY],['Crédito más caro',AM],['Menos actividad',RD],['Posible recesión (12–18 meses)',WH]].forEach(([s,c],i)=>{const k=eback(prog(t,22.0+i*1.6,22.7+i*1.6));if(k<=.02)return;ctx.save();ctx.translate(540,380+i*220);ctx.scale(k,k);panel(-430,-80,860,160,c);L(s,0,4,s.length>22?40:50,c==WH?WH:c);ctx.restore();
+    if(i<3&&k>.6){ctx.fillStyle=MU;ctx.beginPath();ctx.moveTo(540,380+i*220+96);ctx.lineTo(515,380+i*220+130);ctx.lineTo(565,380+i*220+130);ctx.fill()}});ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'¿SEÑAL PERFECTA?');
+  gauge(540,720,330,-.8+Math.sin(t*3)*.03,1,false);
+  const k=eback(prog(t,30.2,31.0));if(k>.02){ctx.save();ctx.translate(540,1010);ctx.scale(k,k);panel(-430,-80,860,160,AM);L('Marzo 2024: aún sin recesión',0,4,44,WH);ctx.restore()}
+  const k2=eback(prog(t,32.6,33.4));if(k2>.02){ctx.save();ctx.translate(540,1200);ctx.scale(k2,k2);RR(-380,-60,760,120,24);ctx.fillStyle=AM;ctx.fill();L('PUEDE FALLAR O TARDAR',0,12,50,DK);ctx.restore()}ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'EL MODELO DE LA FED DE NY');
+  const k=eback(prog(t,36.4,37.2));if(k>.02){ctx.save();ctx.translate(540,520);ctx.scale(k,k);panel(-420,-110,840,220,CY);L('10 AÑOS − 3 MESES',0,-30,64,CY);L('diferencia de rendimientos',0,50,34,MU);ctx.restore()}
+  const k2=eout(prog(t,38.4,39.2));if(k2>.02){ctx.save();ctx.globalAlpha=a*k2;ctx.fillStyle=MU;ctx.beginPath();ctx.moveTo(540,680);ctx.lineTo(500,730);ctx.lineTo(580,730);ctx.fill();ctx.restore()}
+  const k3=eback(prog(t,39.4,40.2));if(k3>.02){ctx.save();ctx.translate(540,900);ctx.scale(k3,k3);panel(-420,-130,840,260,RD);L('PROBABILIDAD DE',0,-60,44,WH);L('RECESIÓN A 12 MESES',0,0,54,RD);L('se actualiza cada mes',0,70,32,MU);ctx.restore()}
+  L('no es una predicción segura',540,1180,36,AM,eout(prog(t,41.6,42.2)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'PARA TU ROBOT',CY);
+  [['Contexto macro',GN],['No es un temporizador',AM]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.4,45.3+i*1.4));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;panel(60,290+i*150,960,118,c);L(s,110,350+i*150,48,WH,1,'left');ctx.restore()});
+  robot(300,620,780,eout(prog(t,46.6,47.4)));
+  L('Contenido educativo,',60,1440,34,AM,eout(prog(t,48.4,49)),'left');L('no es asesoría financiera',60,1490,34,AM,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)hook(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(3);
+  L('CURVA DE TASAS · EE. UU.',540,230,50,CY,1);gauge(540,640,330,-.85,1,false);
+  L('624+',540,1010,230,RD,1);L('DÍAS INVERTIDA',540,1150,76,WH,1);L('¿SEÑAL DE RECESIÓN?',540,1260,52,AM,1);coverBtn('VER LA SEÑAL →',RD,WH)}
+</script></body></html>

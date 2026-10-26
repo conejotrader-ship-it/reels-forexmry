@@ -28,7 +28,7 @@ function radar(cx,cy,R,t,a=1){ctx.save();ctx.globalAlpha*=a;ctx.fillStyle='#0620
   const ang=(t*1.6)%(Math.PI*2);const g=ctx.createConicGradient(ang-1.2,cx,cy);g.addColorStop(0,'rgba(53,255,154,0)');g.addColorStop(1.2/(Math.PI*2),'rgba(53,255,154,.45)');g.addColorStop(1.2001/(Math.PI*2),'rgba(53,255,154,0)');g.addColorStop(1,'rgba(53,255,154,0)');
   ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.fill();line(cx,cy,cx+Math.cos(ang)*R,cy+Math.sin(ang)*R,GR,5);
   ctx.strokeStyle=GR;ctx.lineWidth=8;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.stroke();ctx.restore()}
-const CUR=[['EUR',57.6,'#5ee7ff',-.9,.42],['JPY',13.6,'#ff6b8a',.5,.62],['GBP',11.9,'#b794ff',2.2,.7],['CAD',9.1,'#ffb020',3.5,.55],['SEK',4.2,'#7dff6b',4.5,.74],['CHF',3.6,'#ff9a5e',5.4,.62]];
+const CUR=[['EUR',57.6,'#5ee7ff',-.9,.42],['JPY',13.6,'#ff6b8a',.5,.62],['GBP',11.9,'#b794ff',2.2,.7],['CAD',9.1,'#ffb020',3.5,.55],['SEK',4.2,'#7dff6b',4.5,.74],['CHF',3.6,'#ff9a5e',1.45,.8]];
 function blip(cx,cy,R,i,k,lab=true){const [n,w,c,an,rr]=CUR[i];if(k<=.02)return;const x=cx+Math.cos(an)*R*rr,y=cy+Math.sin(an)*R*rr,r=Math.max(18,Math.sqrt(w)*9)*k;
   ctx.save();ctx.shadowColor=c;ctx.shadowBlur=30;ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();ctx.restore();ctx.strokeStyle=c;ctx.lineWidth=3;ctx.beginPath();ctx.arc(x,y,r+14*Math.sin(k*9)+10,0,7);ctx.stroke();
   if(lab){L(n,x,y-r-26,34,c,k);L(w.toFixed(1).replace('.',',')+' %',x,y+r+34,32,WH,k)}}
