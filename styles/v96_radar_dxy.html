@@ -1,0 +1,77 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 29 (2.º uso): radar / sonar — tema: el índice dólar DXY y sus 6 monedas (60 s).
+const SPEC={name:'DXY',hook:'DXY: EL DÓLAR FRENTE A SOLO 6 MONEDAS',dur:60,cta:56,bpm:104,prog:[[38,'m'],[43,'M'],[36,'m'],[41,'M']],
+ ev:[[0.3,'rise',2.2],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[9.6,'ding'],[11.2,'ding'],[13.6,'wipe'],[15.0,'ding'],[16.6,'ding'],[18.2,'ding'],[20.6,'wipe'],[22.0,'tick'],[24.0,'tick'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.6,'ding'],[35.2,'wipe'],[37.0,'hit'],[40.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[47.0,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'El índice dólar mide al dólar frente a solo 6 monedas.','El índice dólar mide al dólar frente a solo seis monedas.'],
+ [6.4,13.4,'Euro 57,6 %, yen 13,6 % y libra 11,9 %.','Euro, cincuenta y siete coma seis por ciento; yen, trece coma seis; libra, once coma nueve.'],
+ [13.6,20.4,'Dólar canadiense 9,1 %, corona sueca 4,2 % y franco suizo 3,6 %.','Dólar canadiense, nueve coma uno; corona sueca, cuatro coma dos; y franco suizo, tres coma seis.'],
+ [20.6,28.2,'Base 100 en marzo de 1973. Solo cambió una vez: en 1999, con la llegada del euro.','Base cien en marzo de mil novecientos setenta y tres. Solo cambió una vez: en mil novecientos noventa y nueve, con el euro.'],
+ [28.4,35.0,'Máximo: ≈ 164,7 en 1985. Mínimo: ≈ 70,7 en 2008.','Máximo histórico: ciento sesenta y cuatro, en mil novecientos ochenta y cinco. Mínimo: setenta, en dos mil ocho.'],
+ [35.2,43.4,'Con casi 58 % de euro, el DXY es en gran parte un EUR/USD invertido. No incluye yuan ni peso mexicano.','Con casi sesenta por ciento de euro, el DXY es en gran parte un euro dólar invertido. No incluye yuan ni peso mexicano.'],
+ [43.6,49.6,'Para tu robot: úsalo como contexto, no como señal única. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BG='#04120f',GR='#35ff9a',GD='#0f3d2b',AM='#ffb020',RD='#ff4d5e',CYN='#5ee7ff',WH='#e8fff5',MU='#6fae96',DK='#04120f',ACC='#35ff9a',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(4,18,15,.96)',subStroke:GR,subFill:'#fff',ctaBg:DK,ctaSub:'#e8fff5',ctaGlow:GR,ctaAccent:GR,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=WH,a=1,al='center'){T(_s(s),x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+window.FONTS=['900 40px Inter'];
+function bg(t){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);ctx.save();ctx.globalAlpha=.08;for(let y=0;y<H;y+=6)line(0,y,W,y,GR,1);ctx.restore();ctx.fillStyle=GR;ctx.fillRect(0,0,W,8)}
+function head(t,t0,s,col=GR){L(s,540,175,52,col,eout(prog(t,t0,t0+.5)))}
+function radar(cx,cy,R,t,a=1){ctx.save();ctx.globalAlpha*=a;ctx.fillStyle='#062018';ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.fill();
+  for(let i=1;i<=4;i++){ctx.strokeStyle=GD;ctx.lineWidth=3;ctx.beginPath();ctx.arc(cx,cy,R*i/4,0,7);ctx.stroke()}
+  line(cx-R,cy,cx+R,cy,GD,3);line(cx,cy-R,cx,cy+R,GD,3);
+  const ang=(t*1.6)%(Math.PI*2);const g=ctx.createConicGradient(ang-1.2,cx,cy);g.addColorStop(0,'rgba(53,255,154,0)');g.addColorStop(1.2/(Math.PI*2),'rgba(53,255,154,.45)');g.addColorStop(1.2001/(Math.PI*2),'rgba(53,255,154,0)');g.addColorStop(1,'rgba(53,255,154,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.fill();line(cx,cy,cx+Math.cos(ang)*R,cy+Math.sin(ang)*R,GR,5);
+  ctx.strokeStyle=GR;ctx.lineWidth=8;ctx.beginPath();ctx.arc(cx,cy,R,0,7);ctx.stroke();ctx.restore()}
+const CUR=[['EUR',57.6,'#5ee7ff',-.9,.42],['JPY',13.6,'#ff6b8a',.5,.62],['GBP',11.9,'#b794ff',2.2,.7],['CAD',9.1,'#ffb020',3.5,.55],['SEK',4.2,'#7dff6b',4.5,.74],['CHF',3.6,'#ff9a5e',5.4,.62]];
+function blip(cx,cy,R,i,k,lab=true){const [n,w,c,an,rr]=CUR[i];if(k<=.02)return;const x=cx+Math.cos(an)*R*rr,y=cy+Math.sin(an)*R*rr,r=Math.max(18,Math.sqrt(w)*9)*k;
+  ctx.save();ctx.shadowColor=c;ctx.shadowBlur=30;ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();ctx.restore();ctx.strokeStyle=c;ctx.lineWidth=3;ctx.beginPath();ctx.arc(x,y,r+14*Math.sin(k*9)+10,0,7);ctx.stroke();
+  if(lab){L(n,x,y-r-26,34,c,k);L(w.toFixed(1).replace('.',',')+' %',x,y+r+34,32,WH,k)}}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;
+  L('ÍNDICE DÓLAR',540,230,50,CYN,eout(prog(t,.2,.8)));radar(540,820,400,t,eback(prog(t,.3,1.1)));
+  CUR.forEach((c,i)=>blip(540,820,400,i,eback(prog(t,1.6+i*.3,2.2+i*.3)),false));
+  L('DXY',540,1330,150,GR,eout(prog(t,2.6,3.2)));L('SOLO 6 MONEDAS',540,1420,50,WH,eout(prog(t,3.2,3.8)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'LAS 3 MAYORES');radar(540,740,420,t);
+  [0,1,2].forEach(i=>blip(540,740,420,i,eback(prog(t,8.0+i*1.6,8.7+i*1.6))));
+  const k=eout(prog(t,11.4,12.2));L('EL EURO PESA MÁS DE LA MITAD',540,1260,38,AM,k);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LAS 3 MENORES');radar(540,740,420,t);
+  CUR.forEach((c,i)=>blip(540,740,420,i,i<3?1:eback(prog(t,15.0+(i-3)*1.6,15.7+(i-3)*1.6)),i>=3||false));
+  const k=eout(prog(t,18.8,19.6));L('SUMAN 16,9 %  (cálculo propio)',540,1260,36,MU,k);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LA BASE DEL ÍNDICE');
+  const k=eback(prog(t,21.6,22.4));ctx.save();ctx.translate(540,620);ctx.scale(Math.max(k,.001),Math.max(k,.001));ctx.strokeStyle=GR;ctx.lineWidth=14;ctx.beginPath();ctx.arc(0,0,230,0,7);ctx.stroke();L('100',0,10,190,WH);ctx.restore();
+  L('MARZO DE 1973',540,930,60,CYN,eout(prog(t,23.4,24.0)));L('promedio geométrico ponderado',540,1000,34,MU,eout(prog(t,24.2,24.8)));
+  const k2=eback(prog(t,25.8,26.6));if(k2>.02){ctx.save();ctx.translate(540,1150);ctx.scale(k2,k2);RR(-400,-62,800,124,24);ctx.fillStyle=AM;ctx.fill();L('SOLO UN CAMBIO: 1999',0,12,58,DK);ctx.restore()}ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'RANGO HISTÓRICO');
+  const x0=140,x1=940,y=700,lo=70.7,hi=164.7;const X=v=>x0+(v-lo)/(hi-lo)*(x1-x0);
+  line(x0,y,x1,y,GR,8);
+  [[70.7,'≈ 70,7','MÍN. 2008',CYN,30.0],[100,'100','BASE 1973',WH,31.4],[164.7,'≈ 164,7','MÁX. 1985',RD,32.6]].forEach(([v,s,l,c,ts])=>{const k=eback(prog(t,ts,ts+.6));if(k<=.02)return;ctx.save();ctx.translate(X(v),y);ctx.scale(k,k);ctx.fillStyle=c;ctx.beginPath();ctx.arc(0,0,26,0,7);ctx.fill();L(s,0,-80,v==100?50:46,c);L(l,0,76,28,MU);ctx.restore()});
+  L('el DXY puede alejarse mucho de 100',540,1000,40,WH,eout(prog(t,33.6,34.2)));L('(valores aproximados)',540,1060,28,MU,eout(prog(t,33.8,34.4)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'EL PESO DEL EURO',AM);
+  const x0=90,w=900,y=520,h=130;const kk=eout(prog(t,36.4,38.0));
+  const parts=CUR.map(c=>c[1]);let acc=0;parts.forEach((p,i)=>{const ww=p/100*w*kk;ctx.fillStyle=CUR[i][2];RR(x0+acc,y,Math.max(ww-4,2),h,10);ctx.fill();acc+=p/100*w*kk});
+  L('57,6 %',x0+.576*w/2,y+h/2+2,56,DK,eout(prog(t,37.4,38)));L('EUR',x0+.576*w/2,y-36,38,CYN,eout(prog(t,37.4,38)));
+  const k2=eback(prog(t,39.6,40.4));if(k2>.02){ctx.save();ctx.translate(540,900);ctx.scale(k2,k2);RR(-430,-80,860,160,24);ctx.fillStyle=PNL();ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=AM;ctx.stroke();L('≈ EUR/USD INVERTIDO',0,-12,54,WH);L('el euro manda en el índice',0,48,32,MU);ctx.restore()}
+  L('NO INCLUYE: yuan ni peso mexicano',540,1120,38,RD,eout(prog(t,41.4,42.0)));ctx.restore()}
+function PNL(){return '#08261d'}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'PARA TU ROBOT',CYN);
+  [['Úsalo como contexto',GR],['No como señal única',AM],['Revisa si mueve el dólar o el euro',CYN]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.4,45.3+i*1.4));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;RR(60,300+i*150,960,118,20);ctx.fillStyle=PNL();ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=c;ctx.stroke();ctx.beginPath();ctx.arc(130,359+i*150,34,0,7);ctx.fillStyle=c;ctx.fill();L(String(i+1),130,368+i*150,40,DK);L(s,200,360+i*150,s.length>25?36:42,WH,1,'left');ctx.restore()});
+  robot(300,780,640,eout(prog(t,46.8,47.6)));
+  L('Contenido educativo,',60,1450,32,AM,eout(prog(t,48.4,49)),'left');L('no es asesoría financiera',60,1498,32,AM,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)hook(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(3);
+  L('ÍNDICE DÓLAR',540,230,56,CYN,1);radar(540,760,380,1.2);CUR.forEach((c,i)=>blip(540,760,380,i,1,false));
+  L('57,6 %',540,1230,170,GR,1);L('DEL DXY ES EL EURO',540,1350,54,WH,1);coverBtn('VER EL RADAR →',GR,DK)}
+</script></body></html>

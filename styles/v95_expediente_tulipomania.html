@@ -1,0 +1,96 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 28 (2.º uso): expediente "caso cerrado" en azul de Delft — tema: la tulipomanía holandesa de 1637 (60 s).
+const SPEC={name:'Tulipomania',hook:'FEB 1637: UN BULBO DE TULIPÁN VALÍA ƒ10.000',dur:60,cta:56,bpm:84,mus:'soft',prog:[[45,'m'],[41,'M'],[43,'m'],[40,'M']],
+ ev:[[0.3,'hit'],[2.2,'hit'],[6.4,'wipe'],[8.0,'tick'],[10.0,'hit'],[13.6,'wipe'],[15.0,'tick'],[17.0,'tick'],[18.6,'alert'],[20.6,'wipe'],[22.0,'tick'],[23.4,'tick'],[24.8,'tick'],[26.2,'tick'],[27.0,'hit'],[28.4,'wipe'],[30.0,'tick'],[32.6,'alert'],[33.4,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'hit'],[43.6,'wipe'],[45.0,'ding'],[47.0,'ding'],[48.2,'hit'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'En 1637, un solo bulbo de tulipán llegó a valer ƒ10.000.','En mil seiscientos treinta y siete, un solo bulbo de tulipán llegó a valer diez mil florines.'],
+ [6.4,13.4,'El Semper Augustus costaba más de 10 veces el ingreso anual de un artesano. Su color venía de un virus.','El Semper Augustus costaba más de diez veces el ingreso anual de un artesano. Su color venía de un virus.'],
+ [13.6,20.4,'Casi todo eran contratos a plazo, sin margen y sin bulbos entregados. Lo llamaban comercio del aire.'],
+ [20.6,28.2,'Algunos contratos cambiaron de manos hasta 5 veces ese invierno, y ningún bulbo llegó a entregarse.','Algunos contratos cambiaron de manos hasta cinco veces ese invierno, y ningún bulbo llegó a entregarse.'],
+ [28.4,35.0,'El 3 de febrero de 1637, en Haarlem, falló una subasta y los precios se desplomaron.','El tres de febrero de mil seiscientos treinta y siete, en Haarlem, falló una subasta y los precios se desplomaron.'],
+ [35.2,43.4,'El 24 de febrero, los contratos recientes pasaron a ser opciones: el comprador podía cancelar pagando una comisión.','El veinticuatro de febrero, los contratos recientes pasaron a ser opciones: el comprador podía cancelar pagando una comisión.'],
+ [43.6,49.6,'El daño real fue menor que el mito. La lección: apalancamiento sin garantías es riesgo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DESK='#10243a',FOLD='#b9c9de',PAP='#f4efe2',INK='#14202e',RED='#d6342a',GLD='#e3a72f',MUT='#6b7686',BLU='#2f5f9e',DK='#0c1a2a',ACC='#e3a72f',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(12,26,42,.95)',subStroke:GLD,subFill:'#fff',ctaBg:DK,ctaSub:'#f4efe2',ctaGlow:GLD,ctaAccent:GLD,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=INK,a=1,al='center'){T(_s(s),x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+window.FONTS=['900 40px Inter'];
+function bg(t){ctx.fillStyle=DESK;ctx.fillRect(0,0,W,H);
+  // azulejos de Delft tenues
+  ctx.save();ctx.globalAlpha=.07;for(let i=0;i<9;i++)for(let j=0;j<16;j++){ctx.strokeStyle='#8fb2e0';ctx.lineWidth=3;ctx.strokeRect(i*130+10,j*130+10,110,110);ctx.beginPath();ctx.arc(i*130+65,j*130+65,26,0,7);ctx.stroke()}ctx.restore();
+  const v=ctx.createRadialGradient(540,800,300,540,900,1300);v.addColorStop(0,'rgba(0,0,0,0)');v.addColorStop(1,'rgba(0,0,0,.55)');ctx.fillStyle=v;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.shadowColor='rgba(0,0,0,.5)';ctx.shadowBlur=30;ctx.shadowOffsetY=12;RR(60,340,960,930,24);ctx.fillStyle=FOLD;ctx.fill();RR(80,296,360,64,18);ctx.fill();ctx.restore();
+  L('CASO Nº 1637',260,330,30,INK);
+  ctx.save();ctx.translate(540,800);ctx.rotate(-.006);ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=16;ctx.shadowOffsetY=6;RR(-430,-410,860,810,8);ctx.fillStyle=PAP;ctx.fill();ctx.restore()}
+function tulip(x,y,s,col=RED,a=1){ctx.save();ctx.globalAlpha*=a;ctx.translate(x,y);ctx.scale(s,s);
+  ctx.strokeStyle='#2f7a45';ctx.lineWidth=12;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,150);ctx.stroke();
+  ctx.fillStyle='#3f9a5a';ctx.beginPath();ctx.ellipse(-34,120,16,52,-.6,0,7);ctx.fill();ctx.beginPath();ctx.ellipse(34,120,16,52,.6,0,7);ctx.fill();
+  [[-34,-8,-.35],[34,-8,.35]].forEach(([dx,dy,r])=>{ctx.save();ctx.translate(dx,dy);ctx.rotate(r);ctx.fillStyle=col;ctx.beginPath();ctx.ellipse(0,0,30,62,0,0,7);ctx.fill();ctx.restore()});
+  ctx.fillStyle=col;ctx.beginPath();ctx.ellipse(0,-14,32,70,0,0,7);ctx.fill();ctx.fillStyle='rgba(255,255,255,.55)';ctx.beginPath();ctx.ellipse(0,-14,8,56,0,0,7);ctx.fill();ctx.restore()}
+function stamp(x,y,w,h,s,rot,k,col=RED,sz=44){if(k<=0)return;ctx.save();ctx.translate(x,y);ctx.rotate(rot);const sc=lerp(1.8,1,eout(k));ctx.scale(sc,sc);ctx.globalAlpha*=eout(Math.min(1,k*1.5))*.92;
+  ctx.strokeStyle=col;ctx.lineWidth=8;RR(-w/2,-h/2,w,h,10);ctx.stroke();ctx.lineWidth=3;RR(-w/2+10,-h/2+10,w-20,h-20,6);ctx.stroke();T(_s(s),0,2,{font:`900 ${sz}px Inter`,fill:col});ctx.restore()}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;
+  const k=eback(prog(t,.3,1.0));ctx.save();ctx.translate(540,580);ctx.scale(Math.max(k,0),Math.max(k,0));T('FEB 1637',0,0,{font:'900 128px Inter',fill:INK});ctx.restore();
+  L('UN SOLO BULBO DE TULIPÁN',540,712,52,INK,eout(prog(t,1.2,1.8)));L('ƒ10.000',540,830,150,RED,eout(prog(t,1.8,2.4)));
+  tulip(300,1000,.9,RED,eout(prog(t,2.6,3.2)));tulip(540,1000,1.1,GLD,eout(prog(t,3.0,3.6)));tulip(780,1000,.9,BLU,eout(prog(t,3.4,4.0)));
+  stamp(790,1130,330,90,'CASO 1637',-.14,prog(t,4.2,4.9),RED,40);ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;
+  L('BULBO vs INGRESO ANUAL',540,490,44,INK,eout(prog(t,6.8,7.4)));
+  const B=1070,H1=480;line(150,B,930,B,INK,5);
+  const k1=eout(prog(t,7.6,9.2)),k2=eout(prog(t,9.6,10.6));
+  RR(250,B-H1*k1,230,H1*k1,8);ctx.fillStyle=RED;ctx.fill();L('ƒ10.000',365,B-H1*k1-40,56,RED,k1);L('Semper Augustus',365,B+50,30,INK,k1);
+  const h2=H1*(350/10000)*Math.max(k2,.01)+6;RR(600,B-h2,230,h2,6);ctx.fillStyle=BLU;ctx.fill();L('ƒ150–350',715,B-h2-40,50,BLU,k2);L('artesano al año',715,B+50,30,INK,k2);L('(estimación de Mackay, a escala)',715,B+90,22,MUT,k2);
+  const k3=eout(prog(t,11.2,12));L('> 10 VECES',690,640,66,INK,k3);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;
+  L('CÓMO SE NEGOCIABA',540,490,44,INK,eout(prog(t,13.8,14.4)));
+  const N=[[250,'COMPRADOR',BLU],[540,'NOTARIO',GLD],[830,'VENDEDOR',RED]];
+  N.forEach(([x,s,c],i)=>{const k=eback(prog(t,14.4+i*.5,15.0+i*.5));if(k<=.02)return;ctx.save();ctx.translate(x,640);ctx.scale(k,k);ctx.beginPath();ctx.arc(0,0,70,0,7);ctx.fillStyle=c;ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=INK;ctx.stroke();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(0,-14,18,0,7);ctx.fill();ctx.beginPath();ctx.arc(0,34,30,Math.PI,0);ctx.fill();ctx.restore();L(s,x,750,30,INK,eout(prog(t,15+i*.5,15.6+i*.5)))});
+  line(330,640,470,640,INK,5,[12,8]);line(610,640,750,640,INK,5,[12,8]);
+  [['CONTRATO A PLAZO',16.6,860],['SIN MARGEN',17.8,940],['BULBOS: EN VERANO (SI LLEGAN)',19.0,1020]].forEach(([s,ts,y],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha=a*k;ctx.translate(lerp(-60,0,k),0);RR(130,y-34,820,68,14);ctx.fillStyle=i==1?RED:INK;ctx.fill();L(s,540,y+2,36,'#f4efe2');ctx.restore()});
+  stamp(790,1150,380,90,'COMERCIO DEL AIRE',-.08,prog(t,19.4,20.1),RED,32);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;
+  L('UN CONTRATO, 5 MANOS',540,490,44,INK,eout(prog(t,21.0,21.6)));
+  for(let i=0;i<5;i++){const k=eback(prog(t,21.8+i*.9,22.4+i*.9));if(k<=.02)continue;const x=170+i*185;ctx.save();ctx.translate(x,700);ctx.scale(k,k);ctx.beginPath();ctx.arc(0,0,58,0,7);ctx.fillStyle=[BLU,RED,GLD,'#3f9a5a','#8a4fbf'][i];ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=INK;ctx.stroke();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(0,-10,15,0,7);ctx.fill();ctx.beginPath();ctx.arc(0,28,26,Math.PI,0);ctx.fill();ctx.restore();
+    if(i<4&&k>.5){line(x+66,700,x+120,700,INK,5);ctx.fillStyle=INK;ctx.beginPath();ctx.moveTo(x+124,700);ctx.lineTo(x+106,688);ctx.lineTo(x+106,712);ctx.fill()}}
+  const k=eback(prog(t,26.0,26.8));if(k>.02){ctx.save();ctx.translate(540,960);ctx.scale(k,k);L('BULBOS ENTREGADOS',0,-40,40,INK);L('0',0,70,170,RED);ctx.restore()}
+  L('en el pico del invierno 1636–1637',540,1130,30,MUT,eout(prog(t,27,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;
+  L('PRECIO DE UN BULBO (ILUSTRATIVO)',540,480,36,INK,eout(prog(t,28.8,29.4)));
+  const x0=150,x1=930,yb=1050,ytop=580;line(x0,yb,x1,yb,INK,5);line(x0,yb,x0,ytop,INK,3);
+  const pts=[[0,.05],[.25,.12],[.5,.3],[.72,.62],[.84,1],[.88,.55],[.93,.18],[1,.08]];
+  const P=pts.map(([u,v])=>[x0+u*(x1-x0),yb-v*(yb-ytop-20)]);const g=prog(t,29.2,32.6);
+  ctx.save();ctx.strokeStyle=RED;ctx.lineWidth=10;ctx.lineJoin='round';ctx.beginPath();let tot=g*(P.length-1);
+  for(let i=0;i<P.length;i++){if(i<=Math.floor(tot)){i?ctx.lineTo(P[i][0],P[i][1]):ctx.moveTo(P[i][0],P[i][1])}else{const f=tot-Math.floor(tot);const p0=P[i-1];ctx.lineTo(p0[0]+(P[i][0]-p0[0])*f,p0[1]+(P[i][1]-p0[1])*f);break}}ctx.stroke();ctx.restore();
+  L('1634',x0+10,yb+44,30,MUT);L('1637',x1-10,yb+44,30,MUT);
+  const kk=eback(prog(t,32.6,33.4));if(kk>.02){ctx.save();ctx.translate(P[4][0]-250,P[4][1]+70);ctx.scale(kk,kk);RR(-210,-44,420,88,16);ctx.fillStyle=INK;ctx.fill();L('3 FEB: HAARLEM',0,2,36,'#f4efe2');ctx.restore()}
+  L('subasta fallida → caída en días',540,1140,30,INK,eout(prog(t,33.6,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;
+  L('EL DECRETO DEL 24 DE FEBRERO',540,480,40,INK,eout(prog(t,35.6,36.2)));
+  const k=eout(prog(t,36.4,37.2));ctx.save();ctx.globalAlpha=a*k;ctx.translate(540,740);RR(-380,-170,760,340,12);ctx.fillStyle='#fffdf6';ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=INK;ctx.stroke();
+  L('CONTRATOS DESDE EL',0,-100,34,MUT);L('30 NOV 1636',0,-40,80,INK);L('= OPCIONES',0,60,70,RED);ctx.restore();
+  [['Comprador: puede cancelar',BLU,38.2],['Paga una comisión',GLD,39.6],['Casi ninguno se cumplió',RED,41.0]].forEach(([s,c,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha=a*k;ctx.translate(lerp(60,0,k),0);RR(150,1000+i*92-34,780,72,16);ctx.fillStyle=c;ctx.fill();L(s,540,1000+i*92+2,36,i==1?INK:'#fff');ctx.restore()});ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;
+  L('MITO vs DATOS',540,480,46,INK,eout(prog(t,44.0,44.6)));
+  [[270,'MACKAY 1841','ruina masiva',RED,44.8],[810,'HISTORIADORES','grupo pequeño,\ndaño menor',BLU,46.0]].forEach(([x,h,s,c,ts])=>{const k=eback(prog(t,ts,ts+.7));if(k<=.02)return;ctx.save();ctx.translate(x,760);ctx.scale(k,k);RR(-230,-170,460,340,20);ctx.fillStyle='#fffdf6';ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=c;ctx.stroke();L(h,0,-100,34,c);s.split('\n').forEach((l,i)=>L(l,0,-20+i*58,l.length>12?40:48,INK));ctx.restore()});
+  L('apalancamiento sin garantías = riesgo',540,1050,36,INK,eout(prog(t,47.2,47.8)));
+  stamp(760,1170,360,90,'CASO CERRADO',-.1,prog(t,48.2,48.9),'#2f7a45',36);
+  L('Contenido educativo, no es asesoría financiera',70,1250,26,MUT,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)hook(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(3);
+  L('FEB 1637 · HOLANDA',540,470,44,MUT);L('ƒ10.000',540,640,180,RED);L('POR UN BULBO',540,800,88,INK);
+  tulip(330,980,1.2,RED);tulip(540,990,1.4,GLD);tulip(750,980,1.2,BLU);
+  stamp(790,1180,340,90,'BURBUJA',-.12,1,RED,44);coverBtn('VER EL CASO →',GLD,INK)}
+</script></body></html>
