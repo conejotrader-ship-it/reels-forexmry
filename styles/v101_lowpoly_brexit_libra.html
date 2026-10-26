@@ -1,0 +1,91 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 34 (2.º uso): montañas lowpoly 3D que forman el gráfico — tema: el Brexit del 24 de junio de 2016 y la libra (60 s).
+const SPEC={name:'BrexitLibra',hook:'24 JUN 2016: LA LIBRA CAYÓ ≈ 8–9 % EN UN SOLO DÍA',dur:60,cta:56,bpm:92,mus:'soft',prog:[[38,'m'],[43,'M'],[41,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Día del Brexit, 24 jun 2016: la libra cayó ≈ 8–9 % frente al dólar.','El día del Brexit, la libra cayó entre ocho y nueve por ciento.'],
+ [6.4,13.4,'El Reino Unido votó salir de la Unión Europea, y los mercados reaccionaron al instante.'],
+ [13.6,20.4,'En la noche tocó ≈ $1,32: lo más bajo desde 1985, hace 31 años.','En la noche tocó cerca de uno treinta y dos dólares: lo más bajo desde mil novecientos ochenta y cinco.'],
+ [20.6,28.2,'Cayeron las bolsas: el Nikkei cerró casi −8 % y el FTSE 100 llegó a perder ≈ 8 %.','Las bolsas cayeron: el Nikkei cerró casi ocho por ciento abajo y el FTSE llegó a perder cerca de ocho.'],
+ [28.4,35.0,'El Banco de Inglaterra dijo que vigilaba de cerca y tenía planes de contingencia con el Tesoro.'],
+ [35.2,43.4,'Para tu robot: los eventos con fecha fija pueden crear saltos de precio y spreads amplios. Revisa el calendario.'],
+ [43.6,49.6,'Cifras aproximadas según las fuentes. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const SK1='#1b1245',SK2='#7a2a7a',OR='#ff7a45',YL='#ffe27a',TL='#3fd0c9',PU='#8b5cf6',RD='#ff4d6d',WH='#ffffff',MU='#b8a8e6',PN='#241a5a',DK='#1b1245',ACC='#ff7a45',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(27,18,69,.96)',subStroke:OR,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:OR,ctaAccent:OR,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=WH,a=1,al='center'){T(_s(s),x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+window.FONTS=['900 40px Inter'];
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,SK1);g.addColorStop(.6,SK2);g.addColorStop(1,'#2a1050');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.6;const r=rng(5);for(let i=0;i<60;i++){ctx.fillStyle='#fff';ctx.fillRect(r()*W,r()*800,3,3)}ctx.restore();
+  ctx.fillStyle=YL;ctx.beginPath();ctx.arc(910,250,52,0,7);ctx.fill();ctx.fillStyle=OR;ctx.fillRect(0,0,W,10)}
+function head(t,t0,s,col=YL){L(s,540,175,52,col,eout(prog(t,t0,t0+.5)))}
+function panel(x,y,w,h,col){ctx.save();ctx.fillStyle=PN;RR(x,y,w,h,22);ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=col;ctx.stroke();ctx.restore()}
+function shade(c,f){const n=parseInt(c.slice(1),16);return `rgb(${Math.min(255,Math.round(((n>>16)&255)*f))},${Math.min(255,Math.round(((n>>8)&255)*f))},${Math.min(255,Math.round((n&255)*f))})`}
+// cordillera lowpoly: pts=[[x,y]], base y; reveal 0..1 (de izquierda a derecha)
+function ridge(pts,base,col,reveal=1,al=1){ctx.save();ctx.globalAlpha*=al;const n=pts.length-1;const lim=reveal*n;
+  const tri=(a,b,c,f)=>{ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.lineTo(c[0],c[1]);ctx.closePath();ctx.fillStyle=f;ctx.fill()};
+  for(let i=0;i<n;i++){if(i>=lim)break;let p0=pts[i],p1=pts[i+1];if(i+1>lim){const f=lim-i;p1=[lerp(p0[0],p1[0],f),lerp(p0[1],p1[1],f)]}
+    const sl=(p1[1]-p0[1])/Math.max(1,p1[0]-p0[0]);const f1=sl<0?1.12:.78;const f2=sl<0?.92:.62;
+    tri(p0,p1,[p0[0],base],shade(col,f1));tri(p1,[p1[0],base],[p0[0],base],shade(col,f2));
+    // facetas
+    const mx=(p0[0]+p1[0])/2,my=(p0[1]+p1[1])/2+(base-my0(p0,p1))*.28;tri(p0,[mx,my],[p0[0],base],'rgba(255,255,255,.07)')}
+  ctx.restore()}
+function my0(a,b){return (a[1]+b[1])/2}
+function priceMountain(t,t0,t1){// GBP/USD ilustrativo: meseta alta, acantilado, valle
+  const P=[[0,.55],[.1,.62],[.2,.58],[.3,.7],[.4,.78],[.5,.82],[.58,.9],[.64,.88],[.7,.3],[.76,.22],[.84,.3],[.92,.26],[1,.3]];
+  return P.map(([u,v])=>[60+u*960,1150-v*620])}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;
+  L('LIBRA vs DÓLAR',540,230,50,TL,eout(prog(t,.2,.8)));
+  const pts=priceMountain();const rv=eio(prog(t,.6,3.4));ridge(pts,1300,PU,rv);ridge(pts.map(([x,y])=>[x,y+90]),1300,TL,rv,.8);
+  const k=eback(prog(t,3.4,4.2));if(k>.02){ctx.save();ctx.translate(540,1010);ctx.scale(k,k);L('24 JUN 2016',0,-210,60,YL);L('−8 / −9 %',0,-70,140,RD);L('EN UN SOLO DÍA',0,40,44,WH);ctx.restore()}ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL VOTO');
+  const k=eback(prog(t,7.2,8.0));ctx.save();ctx.translate(540,720);ctx.scale(Math.max(k,.001),Math.max(k,.001));
+  // urna lowpoly
+  const tri=(a,b,c,f)=>{ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.lineTo(...c);ctx.closePath();ctx.fillStyle=f;ctx.fill()};
+  tri([-260,-60],[260,-60],[260,300],PU);tri([-260,-60],[260,300],[-260,300],shade(PU,.8));tri([-260,-60],[0,-120],[260,-60],shade(PU,1.2));
+  ctx.fillStyle='#120a30';ctx.fillRect(-120,-70,240,22);
+  const py=lerp(-260,-70,eio(prog(t,8.6,9.8)));ctx.fillStyle='#fff';ctx.save();ctx.translate(0,py);ctx.rotate(-.1);ctx.fillRect(-90,-100,180,130);ctx.fillStyle=OR;ctx.fillRect(-70,-80,140,16);ctx.restore();
+  L('UE',0,150,110,YL);ctx.restore();
+  L('REINO UNIDO: SALIR',540,1130,50,WH,eout(prog(t,10.4,11)));L('DE LA UNIÓN EUROPEA',540,1200,50,OR,eout(prog(t,10.8,11.4)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL MÍNIMO',TL);
+  const pts=priceMountain();ridge(pts,1250,PU,1,.9);
+  const yLow=pts[9][1];line(60,yLow,1020,yLow,RD,5,[14,10]);
+  const k=eback(prog(t,14.8,15.6));if(k>.02){ctx.save();ctx.translate(540,520);ctx.scale(k,k);L('≈ $1,32',0,0,150,YL);ctx.restore()}
+  L('lo más bajo desde 1985',540,640,48,WH,eout(prog(t,16.6,17.2)));L('hace 31 años',540,700,40,OR,eout(prog(t,17.4,18)));L('(trayecto ilustrativo)',540,1300,26,MU,eout(prog(t,18.4,19)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LAS BOLSAS',OR);
+  [['NIKKEI 225','−7,9 %','cierre del día',280,RD,22.0],['FTSE 100','≈ −8 %','peor momento',800,OR,24.2]].forEach(([n,v,s,x,c,ts])=>{const k=eout(prog(t,ts,ts+1.2));if(k<=.01)return;
+    const h=480*k;const pts=[[x-190,420],[x-60,420+h*.55],[x,420+h],[x+60,420+h*.55],[x+190,420]];ctx.save();ridge([[x-190,430],[x-90,430+h*.5],[x,430+h],[x+90,430+h*.5],[x+190,430]],430,c,1);ctx.restore();
+    L(n,x,330,38,WH,k);L(v,x,430+h+80,78,c,k);L(s,x,430+h+140,30,MU,k)});
+  L('(la profundidad del valle = tamaño de la caída)',540,1330,26,MU,eout(prog(t,26.4,27)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EL BANCO DE INGLATERRA',YL);
+  const k=eback(prog(t,29.4,30.2));ctx.save();ctx.translate(540,640);ctx.scale(Math.max(k,.001),Math.max(k,.001));
+  const tri=(a,b,c,f)=>{ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.lineTo(...c);ctx.closePath();ctx.fillStyle=f;ctx.fill()};
+  tri([-300,-60],[0,-200],[300,-60],shade(TL,1.1));ctx.fillStyle=shade(TL,.8);ctx.fillRect(-300,-60,600,40);
+  for(let i=0;i<5;i++){ctx.fillStyle=i%2?shade(TL,.7):shade(TL,.9);ctx.fillRect(-250+i*110,-20,64,260)}ctx.fillStyle=shade(TL,.6);ctx.fillRect(-320,240,640,36);ctx.restore();
+  [['Vigila los acontecimientos de cerca',TL,31.4],['Planes de contingencia con el Tesoro',OR,33.2]].forEach(([s,c,ts],i)=>{const kk=eout(prog(t,ts,ts+.6));if(kk<=.02)return;ctx.save();ctx.globalAlpha=a*kk;ctx.translate(lerp(-60,0,kk),0);panel(60,980+i*150,960,120,c);L(s,540,1042+i*150,s.length>30?36:40,WH);ctx.restore()});ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'PARA TU ROBOT',TL);
+  [['Evento con fecha fija',YL,'cal',36.6],['Saltos de precio (gaps)',OR,'gap',38.6],['Spreads más amplios',RD,'spr',40.6]].forEach(([s,c,ic,ts],i)=>{const k=eback(prog(t,ts,ts+.7));if(k<=.02)return;ctx.save();ctx.translate(540,420+i*250);ctx.scale(k,k);panel(-440,-100,880,200,c);
+    ctx.save();ctx.translate(-340,0);if(ic=='cal'){ctx.fillStyle='#fff';ctx.fillRect(-50,-50,100,100);ctx.fillStyle=c;ctx.fillRect(-50,-50,100,28);L('24',0,24,48,DK)}else if(ic=='gap'){ctx.fillStyle=TL;ctx.fillRect(-50,-60,36,60);ctx.fillStyle=RD;ctx.fillRect(14,10,36,60)}else{ctx.fillStyle=TL;ctx.fillRect(-60,-6,50,12);ctx.fillStyle=RD;ctx.fillRect(10,-6,50,12);ctx.fillStyle='#fff';ctx.fillRect(-10,-26,20,52)}ctx.restore();
+    L(s,60,4,s.length>22?36:42,WH);ctx.restore()});ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'RECUERDA',OR);
+  [['Cifras aproximadas',YL],['Sin garantías',RD]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;panel(60,290+i*140,960,110,c);L(s,110,345+i*140,44,WH,1,'left');ctx.restore()});
+  robot(300,620,780,eout(prog(t,46.4,47.2)));
+  L('Contenido educativo,',60,1440,34,YL,eout(prog(t,48.4,49)),'left');L('no es asesoría financiera',60,1490,34,YL,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)hook(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(3);
+  L('24 JUN 2016 · BREXIT',540,220,48,TL,1);const pts=priceMountain();ridge(pts.map(([x,y])=>[x,y-110]),1000,PU,1);ridge(pts.map(([x,y])=>[x,y-20]),1000,TL,1,.85);
+  L('−8 / −9 %',540,1170,150,RD,1);L('LA LIBRA EN UN DÍA',540,1310,66,WH,1);coverBtn('VER EL DESPLOME →',OR,DK)}
+</script></body></html>
