@@ -1,0 +1,77 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:'Press Start 2P';font-weight:400;src:url(node_modules/@fontsource/press-start-2p/files/press-start-2p-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 32 (2.º uso): pixel-art 2D de 8 bits con personajes — tema: Mt. Gox 2014, el intercambio de bitcoin que perdió 850.000 BTC (60 s).
+const SPEC={name:'MtGox',hook:'2014: AL INTERCAMBIO MT. GOX LE FALTABAN 850.000 BITCOINS',dur:60,cta:56,bpm:124,prog:[[45,'m'],[41,'M'],[48,'m'],[43,'M']],
+ ev:[[0.3,'blip',660],[1.2,'blip',880],[2.4,'down'],[3.4,'hit'],[6.4,'wipe'],[7.2,'ding'],[10.2,'hit'],[13.6,'wipe'],[14.4,'tick'],[17.6,'hit'],[20.6,'wipe'],[21.2,'seq',[523,659,784]],[24.0,'alert'],[26.4,'ding'],[28.4,'wipe'],[30.0,'chime'],[32.2,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[44.8,'ding'],[46.4,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'En 2014, a Mt. Gox le faltaban 850.000 bitcoins.','En dos mil catorce, a Mont Gox le faltaban ochocientos cincuenta mil bitcoins.'],
+ [6.4,13.4,'Eran 750.000 de clientes y 100.000 propios: ≈ US$ 474 millones de entonces.','Eran setecientos cincuenta mil de clientes y cien mil propios: unos cuatrocientos setenta y cuatro millones de dólares.'],
+ [13.6,20.4,'Suspendió operaciones el 25 de febrero y se declaró en quiebra en Japón el 28.','Suspendió las operaciones el veinticinco de febrero y se declaró en quiebra en Japón el veintiocho.'],
+ [20.6,28.2,'Dijo que un ataque informático y una debilidad de su sistema lo explicaban. Las causas seguían en investigación.'],
+ [28.4,35.0,'El 20 de marzo halló ≈ 200.000 bitcoins en una cartera antigua. Seguían faltando ≈ 650.000.','El veinte de marzo halló doscientos mil bitcoins en una cartera antigua. Seguían faltando seiscientos cincuenta mil.'],
+ [35.2,43.4,'Lección: tu dinero depende de quien lo custodia. Verifica la regulación del bróker y si separa los fondos de clientes.'],
+ [43.6,49.6,'El riesgo de contraparte también cuenta para un robot. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#1a1c2c',ACC='#ffcd75',FAM='"Press Start 2P"',FW=400,NOACC=true,RED='#b13e53',GRN='#38b764',BLU='#41a6f6',PUR='#5d275d',GRY='#94b0c2',TXT='#f4f4f4',ORG='#f7931a';
+window.FONTS=['400 30px "Press Start 2P"'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(26,28,44,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function P(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),w,h)}
+function L(s,x,y,sz,col=TXT,a=1,al='center'){T(_s(s),x,y,{font:`400 ${sz}px "Press Start 2P"`,fill:col,a,align:al})}
+function bg(t){ctx.fillStyle=DK;ctx.fillRect(0,0,W,H);ctx.save();ctx.globalAlpha=.1;for(let x=0;x<W;x+=40)P(x,0,2,H,'#fff');for(let y=0;y<H;y+=40)P(0,y,W,2,'#fff');ctx.restore();P(0,0,W,12,ORG);
+  for(let i=0;i<18;i++){const r=rng(i+3);const x=r()*W,y=((r()*H)+t*(20+i*4))%H;P(x,y,8,8,'#3b5dc9')}}
+function head(t,t0,s,col=ACC){L(s,540,175,38,col,eout(prog(t,t0,t0+.5)))}
+function box(x,y,w,h,fill,bord,u=8){P(x+u,y,w-2*u,h,fill);P(x,y+u,w,h-2*u,fill);P(x+u,y-u/2,w-2*u,u/2,bord);P(x+u,y+h,w-2*u,u/2,bord);P(x-u/2,y+u,u/2,h-2*u,bord);P(x+w,y+u,u/2,h-2*u,bord)}
+// moneda pixel (r en celdas de 12 px)
+function coin(cx,cy,r,sx=1,a=1){ctx.save();ctx.globalAlpha*=a;const u=12;for(let j=-r;j<=r;j++)for(let i=-r;i<=r;i++){const d=Math.hypot(i,j);if(d<=r){const c=d>r-1.2?'#b86e0c':(i+j<-r*.5?'#ffd27a':ORG);ctx.fillStyle=c;ctx.fillRect(Math.round(cx+i*u*sx-u*sx/2),Math.round(cy+j*u-u/2),Math.max(2,Math.ceil(u*sx)),u)}}
+  if(Math.abs(sx)>.4)T('B',cx,cy+4,{font:`400 ${r*u*1.1}px "Press Start 2P"`,fill:'#fff',scale:Math.abs(sx)>1?1:Math.max(.4,Math.abs(sx))});ctx.restore()}
+function stack(x,y,n,col,u=14){for(let i=0;i<n;i++){const r=Math.floor(i/6),c=i%6;P(x+c*u*2,y-r*u,u*2-3,u-3,col)}}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;
+  L('FEBRERO 2014',540,240,40,BLU,eout(prog(t,.2,.8)));
+  const sx=Math.cos(t*4);coin(540,640,13,sx,eback(prog(t,.3,1.1)));
+  const k=eback(prog(t,1.4,2.2));ctx.save();ctx.translate(540,1010);ctx.scale(Math.max(k,.001),Math.max(k,.001));L('850.000',0,0,104,ORG);ctx.restore();
+  L('BITCOINS',540,1120,64,TXT,eout(prog(t,2.2,2.8)));
+  const k2=eback(prog(t,3.2,4.0));if(k2>.02){ctx.save();ctx.translate(540,1250);ctx.scale(k2,k2);box(-340,-50,680,100,RED,TXT);L('FALTABAN',0,6,50,TXT);ctx.restore()}ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL FALTANTE');
+  const x0=90,w=900,y=420;const k=eout(prog(t,7.2,9.6));
+  box(x0,y,w*.88*k,120,BLU,TXT);if(k>.5)box(x0+w*.88,y,w*.12*k,120,ORG,TXT,6);
+  L('750.000',x0+w*.44,y+14,40,TXT,eout(prog(t,8.2,8.8)));
+  L('CLIENTES',x0+w*.44,y+190,30,BLU,eout(prog(t,8.2,8.8)));L('100.000',x0+w*.94-60,y+260,28,ORG,eout(prog(t,9.2,9.8)));L('PROPIOS',x0+w*.94-60,y+310,24,ORG,eout(prog(t,9.2,9.8)));
+  stack(120,1060,48,BLU,20);stack(620,1060,12,ORG,20);
+  const k2=eback(prog(t,10.6,11.4));if(k2>.02){ctx.save();ctx.translate(540,1230);ctx.scale(k2,k2);box(-420,-70,840,140,PUR,ACC);L('~ US$ 474 M',0,-14,48,ACC);L('valor de entonces',0,36,24,TXT);ctx.restore()}ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LA QUIEBRA');
+  [[14.4,'25 FEB','SE SUSPENDEN','LAS OPERACIONES',ORG,520],[17.2,'28 FEB','QUIEBRA EN','JAPON (TOKIO)',RED,860]].forEach(([ts,d,l1,l2,c,y],i)=>{const k=eback(prog(t,ts,ts+.7));if(k<=.02)return;ctx.save();ctx.translate(540,y);ctx.scale(k,k);box(-430,-130,860,260,'#0f1020',c);box(-410,-110,300,220,c,TXT);L(d.split(' ')[0],-260,-30,64,DK);L(d.split(' ')[1],-260,50,40,DK);L(l1,150,-30,28,TXT);L(l2,150,30,28,c);ctx.restore()});
+  L('~ 3 DIAS ENTRE UNA Y OTRA',540,1130,26,GRY,eout(prog(t,18.6,19.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'¿QUÉ PASÓ?',BLU);
+  [['ATAQUE INFORMATICO',RED,22.0],['DEBILIDAD DEL SISTEMA',ORG,24.0],['CAUSAS: EN INVESTIGACION',BLU,26.0]].forEach(([s,c,ts],i)=>{const k=eout(prog(t,ts,ts+.6));if(k<=.02)return;ctx.save();ctx.globalAlpha=a*k;ctx.translate(lerp(-80,0,k),0);box(80,360+i*230,920,170,'#0f1020',c);P(120,400+i*230,70,70,c);L(String(i+1),155,440+i*230,34,DK);L(s,230,445+i*230,s.length>20?28:32,TXT,1,'left');ctx.restore()});
+  L('según la versión de la empresa',540,1110,26,GRY,eout(prog(t,27,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'20 DE MARZO',GRN);
+  const x0=100,yb=1000,sc=.0005;const full=850000*sc;
+  const bars=[['FALTABAN',850000,RED,29.4],['HALLADOS',200000,GRN,31.2],['SEGUÍAN FALTANDO',650000,ORG,33.0]];
+  bars.forEach(([s,v,c,ts],i)=>{const k=eout(prog(t,ts,ts+.9));if(k<=.01)return;const w=v*.00075*k;ctx.save();box(x0,380+i*200,Math.max(w,12),110,c,TXT);L(s.replace('Í','I'),x0,360+i*200,22,c,1,'left');L(['850.000','200.000','650.000'][i],x0+Math.max(w,12)+30,438+i*200,30,TXT,1,'left');ctx.restore()});
+  coin(540,1180,5,Math.cos(t*4),eout(prog(t,33.6,34.2)));L('CARTERA ANTIGUA',540,1290,26,GRY,eout(prog(t,33.8,34.4)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LA LECCIÓN',GRN);
+  L('TU DINERO DEPENDE',540,290,34,TXT,eout(prog(t,36,36.6)));L('DE QUIEN LO CUSTODIA',540,350,34,ACC,eout(prog(t,36.4,37)));
+  [['REGULACION DEL BROKER',GRN,37.4],['FONDOS SEPARADOS',BLU,39.2],['RIESGO DE CONTRAPARTE',ORG,41.0]].forEach(([s,c,ts],i)=>{const k=eout(prog(t,ts,ts+.6));if(k<=.02)return;ctx.save();ctx.globalAlpha=a*k;ctx.translate(lerp(-80,0,k),0);box(80,500+i*230,920,170,'#0f1020',c);P(120,540+i*230,70,70,c);P(135,570+i*230,10,24,DK);P(143,586+i*230,34,10,DK);L(s,230,585+i*230,s.length>20?26:30,TXT,1,'left');ctx.restore()});ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'RECUERDA',BLU);
+  [['EL RIESGO DE CONTRAPARTE CUENTA',ORG],['SIN GARANTIAS',RED]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;box(60,290+i*140,960,110,'#0f1020',c);L(s,100,345+i*140,s.length>20?24:34,TXT,1,'left');ctx.restore()});
+  robot(300,620,780,eout(prog(t,46.4,47.2)));
+  L('Contenido educativo,',60,1440,22,ACC,eout(prog(t,48.4,49)),'left');L('no es asesoria financiera',60,1490,22,ACC,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)hook(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(3);
+  L('FEBRERO 2014',540,230,40,BLU,1);coin(540,520,12,1,1);
+  L('850.000',540,880,112,ORG,1);L('BITCOINS',540,1000,66,TXT,1);
+  box(130,1090,820,120,RED,TXT);L('FALTABAN',540,1156,56,TXT,1);coverBtn('VER EL CASO →',ORG,DK)}
+</script></body></html>
