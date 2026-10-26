@@ -28,7 +28,7 @@ function gauge(cx,cy,R,val,a=1,lab=true){ctx.save();ctx.globalAlpha*=a;
   const seg=[[Math.PI,Math.PI*1.38,RD],[Math.PI*1.38,Math.PI*1.62,AM],[Math.PI*1.62,Math.PI*2,GN]];
   seg.forEach(([a0,a1,c])=>{ctx.strokeStyle=c;ctx.lineWidth=70;ctx.beginPath();ctx.arc(cx,cy,R,a0+.01,a1-.01);ctx.stroke()});
   for(let i=0;i<=20;i++){const an=Math.PI+i/20*Math.PI;line(cx+Math.cos(an)*(R-52),cy+Math.sin(an)*(R-52),cx+Math.cos(an)*(R-72),cy+Math.sin(an)*(R-72),WH,i%5==0?6:3)}
-  const an=Math.PI+(1-val)/2*Math.PI;ctx.save();ctx.shadowColor='#000';ctx.shadowBlur=14;line(cx,cy,cx+Math.cos(an)*(R-30),cy+Math.sin(an)*(R-30),WH,14);ctx.restore();ctx.beginPath();ctx.arc(cx,cy,30,0,7);ctx.fillStyle=WH;ctx.fill();
+  const an=Math.PI+(1+val)/2*Math.PI;ctx.save();ctx.shadowColor='#000';ctx.shadowBlur=14;line(cx,cy,cx+Math.cos(an)*(R-30),cy+Math.sin(an)*(R-30),WH,14);ctx.restore();ctx.beginPath();ctx.arc(cx,cy,30,0,7);ctx.fillStyle=WH;ctx.fill();
   if(lab){L('INVERTIDA',cx-R+20,cy+60,30,RD);L('PLANA',cx,cy-R-60,30,AM);L('NORMAL',cx+R-20,cy+60,30,GN)}ctx.restore()}
 function hook(t,a){ctx.save();ctx.globalAlpha=a;
   L('CURVA DE TASAS · EE. UU.',540,230,48,CY,eout(prog(t,.2,.8)));
