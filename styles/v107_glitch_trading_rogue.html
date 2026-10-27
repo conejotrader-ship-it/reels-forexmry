@@ -1,0 +1,51 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:Orb;font-weight:700;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-700-normal.woff2)}
+@font-face{font-family:Orb;font-weight:800;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 40 (2.º uso): glitch cyberpunk (rosa neón y verde ácido, separación RGB, cortes) — tema: ranking de pérdidas por trading no autorizado (60 s).
+const SPEC={name:'TradersRogue',hook:'UN SOLO TRADER HIZO PERDER ≈ €4.900 MILLONES A SU BANCO',dur:60,cta:56,bpm:112,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Un solo trader hizo perder ≈ €4.900 millones a su banco.','Un solo trader hizo perder a su banco cerca de cuatro mil novecientos millones de euros.'],
+ [6.4,13.4,'N.º 4: Nick Leeson, Barings, 1995: más de $1.000 millones.','Número cuatro: Nick Leeson, Barings, mil novecientos noventa y cinco: más de mil millones de dólares.'],
+ [13.6,20.4,'N.º 3: Kweku Adoboli, UBS, 2011: ≈ $2.000 a $2.300 millones.','Número tres: Kweku Adoboli, UBS, dos mil once: entre dos mil y dos mil trescientos millones de dólares.'],
+ [20.6,28.2,'N.º 2: Yasuo Hamanaka, Sumitomo, 1996: ≈ $2.600 millones.','Número dos: Yasuo Hamanaka, Sumitomo, mil novecientos noventa y seis: unos dos mil seiscientos millones de dólares.'],
+ [28.4,35.0,'N.º 1: Jérôme Kerviel, Société Générale: ≈ €4.900 millones.','Número uno: Jérôme Kerviel, Société Générale: cerca de cuatro mil novecientos millones de euros.'],
+ [35.2,43.4,'Los montos varían según la fuente y la moneda: son cifras aproximadas y reportadas.','Los montos varían según la fuente y la moneda: son cifras aproximadas y reportadas.'],
+ [43.6,49.6,'Para tu robot: límites de riesgo claros evitan que una posición lo arruine. Educativo, sin garantías.','Para tu robot: límites claros evitan que una posición lo arruine. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BK='#0a0612',PK='#ff2e93',GZ='#b6ff3b',CY='#26f0ff',WH='#f4eeff',VI='#8a5cff',DK='#0a0612',ACC='#ff2e93',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,6,18,.97)',subStroke:PK,subFill:WH,ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:'#fff',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Orb','700 40px Orb'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Orb, Inter, sans-serif',w:800,sc:.8,txt:WH,mu:'#9a8fc0',acc:PK,pn:'#150c24',c:[PK,GZ,CY,VI],mono:true});
+let GT=0;const _LB=Lb;
+Lb=function(s,x,y,sz,col,a=1,al='center',w){if(sz>=90&&a>.05){const j=(Math.floor(GT*10)%7==0)?10:4;_LB(s,x-j,y,sz,PK,a*.8,al,w);_LB(s,x+j,y,sz,CY,a*.8,al,w)}_LB(s,x,y,sz,col,a,al,w)};
+ST.panel=(x,y,w,h,col)=>{ctx.save();const j=(Math.floor(GT*8)%9==0)?8:0;ctx.fillStyle='#150c24';ctx.fillRect(x+j,y,w,h);ctx.lineWidth=4;ctx.strokeStyle=col;ctx.shadowColor=col;ctx.shadowBlur=16;ctx.strokeRect(x+j,y,w,h);ctx.shadowBlur=0;ctx.fillStyle=col;ctx.fillRect(x+j,y+h-8,w*.3,8);ctx.restore()};
+ST.bg=t=>{GT=t;ctx.fillStyle=BK;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(138,92,255,.16)';ctx.lineWidth=2;for(let x=0;x<=W;x+=90){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=((t*30)%90);y<=H;y+=90){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  const r=rng(Math.floor(t*14)+7);for(let i=0;i<6;i++){const y=r()*H,h=4+r()*26;ctx.fillStyle=['rgba(255,46,147,.22)','rgba(38,240,255,.2)','rgba(182,255,59,.16)'][i%3];ctx.fillRect(r()*200,y,W*(.3+r()*.7),h)}
+  ctx.fillStyle='rgba(0,0,0,.18)';for(let y=0;y<H;y+=5)ctx.fillRect(0,y,W,2);ctx.fillStyle=PK;ctx.fillRect(0,0,W,8);ctx.fillStyle=GZ;ctx.fillRect(0,8,W*.35,4)};
+function rank(t,a,t0,n,name,bank,amt,col,sub,ht,hc){ctx.save();ctx.globalAlpha=a;head(t,t0-.4,ht,hc);
+  pop(t,t0,200,430,()=>Lb('#'+n,0,0,260,col));
+  slide(t,t0+.6,()=>{Lb(name,420,360,56,WH,1,'left');Lb(bank,420,440,44,col,1,'left')},60);
+  const k=eback(prog(t,t0+1.6,t0+2.4));if(k>.02){ctx.save();ctx.translate(540,800);ctx.scale(k,k);Lb(amt,0,0,sz4(amt),GZ);ctx.restore()}
+  Lb(sub,540,960,38,WH,eout(prog(t,t0+2.8,t0+3.4)));ctx.restore()}
+const sz4=s=>Math.min(150,Math.floor(1380/s.length));
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('TRADING NO AUTORIZADO',540,235,48,CY,eout(prog(t,.2,.8)));
+  const k=eback(prog(t,.8,1.8));if(k>.02){ctx.save();ctx.translate(540,640);ctx.scale(k,k);Lb('€4.900',0,0,210,PK);Lb('MILLONES',0,150,90,GZ);ctx.restore()}
+  Lb('de pérdida por un solo trader',540,960,46,WH,eout(prog(t,2.6,3.2)));Lb('ranking de 4 casos →',540,1080,44,CY,eout(prog(t,3.8,4.4)));ctx.restore()}
+function b1(t,a){rank(t,a,7.0,4,'Nick Leeson','Barings · 1995','> $1.000 M',VI,'más de mil millones de dólares','CASO 4 DE 4',CY)}
+function b2(t,a){rank(t,a,14.2,3,'Kweku Adoboli','UBS · 2011','≈ $2.000–2.300 M',CY,'las fuentes difieren: ≈ $2.000 a $2.300 millones','CASO 3 DE 4',GZ)}
+function b3(t,a){rank(t,a,21.2,2,'Yasuo Hamanaka','Sumitomo · 1996','≈ $2.600 M',GZ,'≈ dos mil seiscientos millones de dólares','CASO 2 DE 4',PK)}
+function b4(t,a){rank(t,a,29.0,1,'Jérôme Kerviel','Société Générale','≈ €4.900 M',PK,'≈ $5.600–7.000 millones según la fuente','CASO 1 DE 4',PK)}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'ESCALA APROXIMADA (EN US$)',GZ);
+  barsH(t,36.2,[['Leeson · 1995',.22,VI,'> 1.000 M'],['Adoboli · 2011',.38,CY,'≈ 2.000–2.300 M'],['Hamanaka · 1996',.43,GZ,'≈ 2.600 M'],['Kerviel · 2008',1,PK,'≈ 5.600–7.000 M']],70,320,560,200,38);
+  Lb('montos reportados, no oficiales',540,1180,40,WH,eout(prog(t,40.4,41)));Lb('varían según fuente y moneda',540,1250,34,'#9a8fc0',eout(prog(t,41,41.6)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Límites de riesgo claros','Una posición no debe arruinarte',PK,GZ)}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3.05);Lb('UN SOLO TRADER',540,300,70,CY,1);Lb('€4.900 M',540,640,200,PK,1);Lb('DE PÉRDIDA',540,830,100,GZ,1);Lb('el caso Kerviel y 3 más',540,1010,50,WH,1);coverBtn('VER EL RANKING →',PK,'#fff')}
+</script></body></html>
