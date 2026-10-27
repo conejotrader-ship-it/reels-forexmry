@@ -2,7 +2,7 @@
 // La página define ST = {fam,w,txt,mu,acc,pn,c:[4 colores],mono,panel(x,y,w,h,col),bg(t)}
 const ST={fam:'Inter',w:900,txt:'#fff',mu:'#aaa',acc:'#fff',pn:'#222',c:['#fff','#fff','#fff','#fff'],mono:false,panel:null};
 function fx(s){s=String(s);return ST.mono?s.replace(/≈/g,'~').replace(/−/g,'-').replace(/→/g,'>').replace(/×/g,'x'):s}
-function Lb(s,x,y,sz,col,a=1,al='center',w){T(fx(s),x,y,{font:`${w||ST.w} ${sz}px ${ST.fam}`,fill:col||ST.txt,a,align:al})}
+function Lb(s,x,y,sz,col,a=1,al='center',w){T(fx(s),x,y,{font:`${w||ST.w} ${Math.round(sz*(ST.sc||1))}px ${ST.fam}`,fill:col||ST.txt,a,align:al})}
 function head(t,t0,s,col){Lb(s,540,175,52,col||ST.acc,eout(prog(t,t0,t0+.5)))}
 function panel(x,y,w,h,col){if(ST.panel)ST.panel(x,y,w,h,col);else{ctx.save();ctx.fillStyle=ST.pn;RR(x,y,w,h,22);ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=col;ctx.stroke();ctx.restore()}}
 // aparece con rebote en (cx,cy); fn dibuja centrado en 0,0

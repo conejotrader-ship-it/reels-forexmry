@@ -1,0 +1,63 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:VT;src:url(node_modules/@fontsource/vt323/files/vt323-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 38 (2.º uso): monitor CRT ámbar con cian (scanlines, parpadeo) — tema: carry trade del yen y el Nikkei del 5 ago 2024 (60 s).
+const SPEC={name:'CarryYen2024',hook:'5 AGO 2024: EL NIKKEI CAYÓ 12,4 % EN UN DÍA',dur:60,cta:56,bpm:104,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'type',2.0],[1.6,'tick'],[2.4,'tick'],[3.2,'tick'],[4.4,'hit'],[6.4,'wipe'],[7.0,'type',2],[9.4,'ding'],[11.0,'ding'],[13.6,'wipe'],[14.6,'ding'],[16.4,'ding'],[18.2,'ding'],[20.6,'wipe'],[22.0,'rise',1.6],[25.0,'hit'],[28.4,'wipe'],[29.4,'ding'],[31.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Agosto de 2024: el Nikkei cayó 12,4 % en un solo día.','Agosto de dos mil veinticuatro: el Nikkei cayó doce coma cuatro por ciento en un día.'],
+ [6.4,13.4,'Carry trade: pides prestado en yenes, con tasas bajas, para comprar activos que rinden más.'],
+ [13.6,20.4,'El 31 de julio, Japón subió su tasa de 0,1 % a 0,25 %, y el yen se fortaleció.','El treinta y uno de julio, Japón subió su tasa de cero coma uno a cero coma veinticinco por ciento.'],
+ [20.6,28.2,'Con un yen más fuerte y solo 114.000 empleos en EE. UU., muchos cerraron esas posiciones.','Con un yen más fuerte y solo ciento catorce mil empleos en Estados Unidos, muchos cerraron esas posiciones.'],
+ [28.4,35.0,'Perdió 4.451 puntos, un récord. En porcentaje, solo 1987 fue peor.','Perdió cuatro mil cuatrocientos cincuenta y un puntos, un récord. En porcentaje, solo en mil novecientos ochenta y siete fue peor.'],
+ [35.2,43.4,'El VIX subió a su nivel más alto en 4 años, y el S&P 500 rebotó 2,3 % el jueves.','El VIX subió a su nivel más alto en cuatro años, y el S&P quinientos rebotó dos coma tres por ciento el jueves.'],
+ [43.6,49.6,'Para tu robot: si se deshace un carry trade, hay saltos y spreads amplios. Educativo, sin garantías.','Para tu robot: si se deshace un carry trade, hay saltos y spreads amplios. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const AM='#ffb000',DIM='#9a6a00',CY='#4de3ff',RD='#ff5a4d',GN='#7dff9a',DK='#0b0700',ACC='#ffb000',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(11,7,0,.97)',subStroke:AM,subFill:'#ffe9b0',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','40px VT'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'VT, "Courier New", monospace',w:400,sc:1.45,txt:AM,mu:DIM,acc:AM,pn:'#140d00',c:[AM,CY,RD,GN],mono:true});
+const GL=(s,x,y,sz,col,a=1,al='center')=>T(fx(s),x,y,{font:`${Math.round(sz*1.45)}px VT, monospace`,fill:col,a,align:al,glow:col,gb:14});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#140d00';ctx.fillRect(x,y,w,h);ctx.lineWidth=4;ctx.strokeStyle=col;ctx.shadowColor=col;ctx.shadowBlur=14;ctx.strokeRect(x,y,w,h);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle='#000';ctx.fillRect(0,0,W,H);
+  ctx.save();RR(30,110,1020,1360,60);ctx.clip();const g=ctx.createRadialGradient(540,780,200,540,780,900);g.addColorStop(0,'#2a1a00');g.addColorStop(1,'#0b0700');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='rgba(0,0,0,.30)';for(let y=110;y<1470;y+=6)ctx.fillRect(0,y,W,3);
+  ctx.fillStyle=`rgba(255,176,0,${.02+.015*Math.sin(t*41)})`;ctx.fillRect(0,0,W,H);ctx.restore();
+  ctx.lineWidth=14;ctx.strokeStyle='#2a2216';RR(30,110,1020,1360,60);ctx.stroke();
+  T('C:\\FX> CARRY.EXE',80,160,{font:'46px VT',fill:DIM,align:'left',glow:DIM,gb:8})};
+const ty=(s,t,t0,cps=26)=>s.slice(0,Math.floor(Math.max(0,t-t0)*cps));
+function prompt(t,t0,s){GL('> '+ty(s,t,t0,24)+(Math.floor(t*3)%2?'_':' '),80,250,40,AM,1,'left')}
+const NK=[[0,.8],[.12,.82],[.25,.86],[.38,.83],[.5,.87],[.62,.78],[.72,.66],[.8,.56],[.88,.5],[.93,.44],[1,.22]];
+function hook(t,a){ctx.save();ctx.globalAlpha=a;prompt(t,.3,'NIKKEI 225 · 5 AGO 2024');
+  lineChart(t,.8,3.4,NK,100,330,880,640,AM,10,18);axes(100,330,880,640,DIM);
+  const k=eback(prog(t,3.4,4.2));if(k>.02){ctx.save();ctx.translate(540,1160);ctx.scale(k,k);GL('−12,4 %',0,0,150,RD);GL('EN UN SOLO DÍA',0,110,40,AM);ctx.restore()}
+  Lb('(trayecto ilustrativo)',540,1370,24,DIM,eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;prompt(t,6.6,'CARRY TRADE');
+  [['1 · PIDES YENES','tasa baja',CY,7.6],['2 · COMPRAS ACTIVOS','rinden más',GN,9.2],['3 · TE QUEDAS CON','la diferencia',AM,10.8]].forEach(([l1,l2,c,ts],i)=>{const y=340+i*260;slide(t,ts,()=>{panel(80,y,920,200,c);GL(l1,120,y+70,40,c,1,'left');GL(l2,120,y+140,36,AM,1,'left')});
+    if(i<2){const k=eout(prog(t,ts+.5,ts+1));ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=AM;ctx.beginPath();ctx.moveTo(540,y+215);ctx.lineTo(500,y+245);ctx.lineTo(580,y+245);ctx.fill();ctx.restore()}});
+  GL('riesgo: si el yen sube, la deuda pesa más',540,1190,32,RD,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;prompt(t,13.8,'BANCO DE JAPÓN · 31 JUL');
+  barsV(t,14.6,[['ANTES',.1/.25*.6,CY,'0,10 %'],['DESPUÉS',.6,RD,'0,25 %']],190,420,700,460,60,58);
+  GL('la tasa sube: el yen se fortalece',540,1050,36,AM,eout(prog(t,17.2,17.8)));GL('y el crédito en yenes sale más caro',540,1130,36,AM,eout(prog(t,18.2,18.8)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;prompt(t,20.8,'EE. UU. · EMPLEO DE JULIO');
+  bigNum(t,21.8,540,520,'114.000',190,AM);GL('empleos nuevos: menos de lo esperado',540,690,38,CY,eout(prog(t,23,23.6)));
+  card(t,24.2,780,150,RD,'Desempleo 4,3 %','el más alto desde oct. 2021',44);
+  card(t,25.8,980,150,CY,'Miedo a recesión + yen fuerte','muchos cierran carry trades',44);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;prompt(t,28.6,'NIKKEI · LUNES 5');
+  bigNum(t,29.2,540,480,'−4.451',230,RD);GL('puntos: récord en puntos',540,650,44,AM,eout(prog(t,30.2,30.8)));
+  barsH(t,31.2,[['1987 · caída de 14,9 %',.95,CY,'14,9'],['2024 · caída de 12,4 %',.79,RD,'12,4']],90,780,720,170,40);
+  GL('en porcentaje, solo 1987 fue peor',540,1170,36,AM,eout(prog(t,34,34.5)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;prompt(t,35.4,'MIEDO Y REBOTE');
+  card(t,36.4,300,170,RD,'VIX: máximo en 4 años','el «índice del miedo» se disparó',44);
+  const k=eout(prog(t,38.4,39.4));[['S&P 500 jueves',.35,GN,'+2,3 %']].forEach(([l,v,c,tx])=>{GL(l,100,640,44,AM,k,'left');ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=c;ctx.fillRect(100,690,520*k,70);ctx.restore();GL(tx,640,725,50,c,k,'left')});
+  card(t,40.4,860,170,CY,'Volatilidad extrema','spreads y gaps más amplios',44);
+  pop(t,41.8,540,1180,()=>{ctx.fillStyle=AM;ctx.fillRect(-320,-60,640,120);GL('CUIDADO CON EL APALANCAMIENTO',0,0,28,'#0b0700')});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Carry trade: puede deshacerse rápido','Menos apalancamiento, más margen',AM,CY)}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);GL('5 AGO 2024 · NIKKEI',540,250,46,CY);lineChart(99,0,1,NK,100,330,880,560,AM,14,20);
+  GL('−12,4 %',540,1110,230,RD);GL('EN UN SOLO DÍA',540,1290,70,AM);coverBtn('VER QUÉ PASÓ →',AM,'#0b0700')}
+</script></body></html>

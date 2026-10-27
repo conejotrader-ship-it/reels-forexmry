@@ -1,0 +1,59 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:SE;src:url(node_modules/@fontsource/special-elite/files/special-elite-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 37 (2.º uso): cinta de teletipo (papel crema, tinta negra y sellos rojos) — tema: el informe COT de la CFTC (60 s).
+const SPEC={name:'InformeCOT',hook:'EL INFORME COT: CADA VIERNES, LAS POSICIONES DE LOS GRANDES',dur:60,cta:56,bpm:100,mus:'soft',prog:[[38,'m'],[43,'M'],[41,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Cada viernes la CFTC publica el informe COT: las posiciones de los grandes.','Cada viernes la CFTC publica el informe C O T: las posiciones de los grandes operadores.'],
+ [6.4,13.4,'Sale los viernes a las 3:30 p. m. (hora del Este), con datos del martes anterior.','Sale los viernes a las tres y media de la tarde, hora del Este, con datos del martes anterior.'],
+ [13.6,20.4,'Agrupa posiciones en tres tipos: comerciales, no comerciales y no reportables.','Agrupa posiciones en tres tipos: comerciales, no comerciales y no reportables.'],
+ [20.6,28.2,'Hubo versiones desde 1924, con Agricultura de EE. UU.; el informe sale desde junio de 1962.','Hubo versiones desde mil novecientos veinticuatro, con Agricultura de Estados Unidos; el informe sale desde mil novecientos sesenta y dos.'],
+ [28.4,35.0,'Se informa un mercado si hay 20 o más operadores con posiciones sobre el nivel de reporte.','Se informa un mercado si hay veinte o más operadores con posiciones sobre el nivel de reporte.'],
+ [35.2,43.4,'Úsalo como contexto: los datos llegan con ≈ 3 días de retraso, del martes al viernes.','Úsalo como contexto: los datos llegan con unos tres días de retraso, del martes al viernes.'],
+ [43.6,49.6,'Para tu robot: el COT es contexto, no una señal garantizada. Educativo, sin garantías.','Para tu robot: el C O T es contexto, no una señal garantizada. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const PP='#efe6cc',INK='#1b1a17',RED='#c0392b',BL='#1f4e79',GR='#2e6b3e',DK='#1b1a17',ACC='#e8a33a',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(255,250,235,.97)',subStroke:INK,subFill:INK,ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','40px SE'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'SE, "Courier New", monospace',w:400,txt:INK,mu:'#6b6452',acc:RED,pn:'#fffaeb',c:[RED,BL,GR,INK],mono:true});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#fffaeb';ctx.fillRect(x,y,w,h);ctx.lineWidth=4;ctx.strokeStyle=INK;ctx.strokeRect(x,y,w,h);ctx.setLineDash([10,8]);ctx.lineWidth=3;ctx.strokeStyle=col;ctx.strokeRect(x+10,y+10,w-20,h-20);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=PP;ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(27,26,23,.05)';for(let y=0;y<H;y+=48)ctx.fillRect(0,y+((t*40)%48),W,2);
+  const off=(t*60)%64;ctx.fillStyle='#d8cca8';ctx.fillRect(0,0,70,H);ctx.fillRect(W-70,0,70,H);ctx.fillStyle=INK;for(let y=-64+off;y<H;y+=64){ctx.beginPath();ctx.arc(35,y,10,0,7);ctx.fill();ctx.beginPath();ctx.arc(W-35,y,10,0,7);ctx.fill()}
+  ctx.fillStyle=RED;ctx.fillRect(70,0,W-140,10)};
+function stamp(t,t0,cx,cy,txt,sz,col,rot=-.06){const k=eback(prog(t,t0,t0+.5));if(k<=.02)return;ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.scale(k,k);ctx.lineWidth=10;ctx.strokeStyle=col;const w=txt.length*sz*.62+60;ctx.strokeRect(-w/2,-sz*.8,w,sz*1.6);ctx.restore();ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.scale(k,k);Lb(txt,0,0,sz,col);ctx.restore()}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('CFTC · INFORME SEMANAL',540,235,46,BL,eout(prog(t,.2,.8)));
+  stamp(t,.8,540,520,'COT',250,RED);
+  Lb('CADA VIERNES',540,790,92,INK,eout(prog(t,2.6,3.2)));
+  const k=eout(prog(t,3.4,4.4));if(k>.02){[['LARGOS',.78,GR,'POSICIONES'],['CORTOS',.52,RED,'(ilustrativo)']].forEach(([l,v,c,s],i)=>{const y=930+i*150;Lb(l,100,y,40,INK,k,'left');ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=c;ctx.fillRect(350,y-34,560*v*k,68);ctx.restore();Lb(s,350+560*v*k+16,y,30,c,k,'left')})}
+  ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL CALENDARIO',BL);
+  const D=['LUN','MAR','MIÉ','JUE','VIE'];D.forEach((d,i)=>{const x=95+i*180;const k=eout(prog(t,7.0+i*.25,7.6+i*.25));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;const hi=(i==1||i==4);ctx.fillStyle=hi?(i==1?BL:RED):'#fffaeb';ctx.fillRect(x,360,150,200);ctx.lineWidth=4;ctx.strokeStyle=INK;ctx.strokeRect(x,360,150,200);ctx.restore();Lb(d,x+75,460,44,hi?'#fff':INK,k)});
+  Lb('DATOS',275,640,40,BL,eout(prog(t,8.8,9.4)));Lb('PUBLICA',995-175-25,640,40,RED,eout(prog(t,10.4,11)));
+  const k=eout(prog(t,9.4,10.6));if(k>.02){ctx.save();ctx.strokeStyle=INK;ctx.lineWidth=6;ctx.setLineDash([16,12]);ctx.beginPath();ctx.moveTo(275,330);ctx.quadraticCurveTo(540,180+0,lerp(275,795,k),330);ctx.stroke();ctx.restore()}
+  stamp(t,11.0,540,920,'3:30 P. M. ET',104,RED,-.04);Lb('hora del Este de EE. UU.',540,1060,38,INK,eout(prog(t,11.8,12.4)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'TRES TIPOS DE OPERADORES',RED);
+  card(t,14.6,300,200,BL,'1 · COMERCIALES','empresas que usan el mercado para cubrirse',38);
+  card(t,16.4,540,200,RED,'2 · NO COMERCIALES','participantes grandes con fines de inversión',38);
+  card(t,18.2,780,200,GR,'3 · NO REPORTABLES','posiciones pequeñas, bajo el nivel de reporte',38);
+  Lb('agregado por categoría, no por persona',540,1090,32,ST.mu,eout(prog(t,19.4,20)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'UN INFORME CON HISTORIA',BL);
+  line(140,640,940,640,INK,8);[[1924,'Agricultura de EE. UU.',RED,.0],[1962,'informe actual (jun.)',BL,.55],[2026,'hoy',GR,1]].forEach(([y,s,c,u],i)=>{const k=eback(prog(t,22.0+i*1.6,22.8+i*1.6));if(k<=.02)return;const x=280+u*520;ctx.save();ctx.translate(x,640);ctx.scale(k,k);ctx.fillStyle=c;ctx.beginPath();ctx.arc(0,0,30,0,7);ctx.fill();ctx.restore();
+    ctx.save();ctx.globalAlpha*=Math.min(1,k);Lb(String(y),x,i%2?740:540,i==2?86:96,c);Lb(s,x,i%2?820:470,30,INK);ctx.restore()});
+  Lb('versiones desde 1924 · informe desde 1962',540,1010,36,INK,eout(prog(t,26.4,27)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'¿QUÉ MERCADOS SE INFORMAN?',GR);
+  bigNum(t,29.4,540,520,'20+',280,RED);Lb('operadores con posiciones',540,730,50,INK,eout(prog(t,30.6,31.2)));Lb('sobre el nivel de reporte',540,800,50,INK,eout(prog(t,31.0,31.6)));
+  const k=eout(prog(t,32,33));for(let i=0;i<20;i++){const r=Math.floor(i/10),c=i%10;ctx.save();ctx.globalAlpha=a*(k>i/20?1:.12);ctx.fillStyle=i<20?BL:INK;ctx.fillRect(110+c*86,920+r*100,64,70);ctx.restore()}
+  Lb('el nivel exacto lo fija la CFTC en cada mercado',540,1190,32,ST.mu,eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'MIRA EL RETRASO',RED);
+  [['MAR','posiciones'],['MIÉ','se procesan'],['JUE','se procesan'],['VIE','se publica']].forEach(([d,s],i)=>{const k=eout(prog(t,36.4+i*.9,37.2+i*.9));if(k<=.02)return;const y=330+i*170;ctx.save();ctx.globalAlpha*=k;ctx.translate(lerp(-70,0,k),0);panel(100,y,880,130,i==0?BL:(i==3?RED:INK));Lb(d,170,y+65,56,i==3?RED:(i==0?BL:INK),1,'left');Lb(s,360,y+65,42,INK,1,'left');ctx.restore()});
+  stamp(t,40.8,540,1110,'≈ 3 DÍAS DE RETRASO',66,RED,-.03);Lb('contexto, no una señal por sí sola',540,1230,38,INK,eout(prog(t,42,42.6)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'COT = contexto, no garantía','Gestiona siempre el riesgo',RED,BL)}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('CFTC · CADA VIERNES',540,230,52,BL,1);stamp(99,0,540,640,'COT',330,RED,-.05);
+  Lb('LAS POSICIONES',540,1000,86,INK,1);Lb('DE LOS GRANDES',540,1110,86,INK,1);Lb('con 3 días de retraso',540,1250,52,RED,1);coverBtn('VER EL INFORME →',RED,'#fff')}
+</script></body></html>
