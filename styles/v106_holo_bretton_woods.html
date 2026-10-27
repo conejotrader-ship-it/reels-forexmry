@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:Orb;font-weight:700;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-700-normal.woff2)}
+@font-face{font-family:Orb;font-weight:800;src:url(node_modules/@fontsource/orbitron/files/orbitron-latin-800-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 39 (2.º uso): holograma azul futurista (cuadrícula en perspectiva, anillos, líneas de escaneo) — tema: Bretton Woods, 1944 (60 s).
+const SPEC={name:'BrettonWoods1944',hook:'JULIO 1944: EL DÓLAR QUEDÓ FIJO AL ORO A $35 LA ONZA',dur:60,cta:56,bpm:98,mus:'soft',prog:[[38,'m'],[43,'M'],[41,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Julio de 1944: el dólar quedó fijo al oro, a $35 la onza.','Julio de mil novecientos cuarenta y cuatro: el dólar quedó fijo al oro, a treinta y cinco por onza.'],
+ [6.4,13.4,'Delegados de 44 naciones se reunieron en el hotel Mount Washington, en Bretton Woods.','Delegados de cuarenta y cuatro naciones se reunieron en el hotel Mount Washington, en Bretton Woods.'],
+ [13.6,20.4,'El dólar quedó fijo al oro a $35 la onza; las otras monedas, fijas al dólar.','El dólar quedó fijo al oro a treinta y cinco por onza; las otras monedas, fijas al dólar.'],
+ [20.6,28.2,'Cada moneda solo podía moverse dentro de una banda de 1 % frente al dólar.','Cada moneda solo podía moverse dentro de una banda de uno por ciento frente al dólar.'],
+ [28.4,35.0,'Nacieron el FMI y el Banco Mundial; el FMI arrancó en diciembre de 1945.','Nacieron el FMI y el Banco Mundial; el FMI arrancó en diciembre de mil novecientos cuarenta y cinco.'],
+ [35.2,43.4,'El sistema duró hasta 1971, cuando Nixon terminó la convertibilidad del dólar en oro.','El sistema duró hasta mil novecientos setenta y uno, cuando Nixon terminó la convertibilidad del dólar en oro.'],
+ [43.6,49.6,'Para tu robot: hoy el oro flota libre y puede moverse con fuerza. Educativo, sin garantías.','Para tu robot: hoy el oro flota libre y puede moverse con fuerza. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const NV='#030b1a',CY='#35e0ff',BL='#3b82ff',MG='#ff4fd8',GD='#ffd166',WH='#e6fbff',DK='#030b1a',ACC='#35e0ff',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(3,11,26,.96)',subStroke:CY,subFill:WH,ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','700 40px Orb','800 40px Orb'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Orb, Inter, sans-serif',w:700,sc:.82,txt:WH,mu:'#6fa8c8',acc:CY,pn:'rgba(53,224,255,.08)',c:[CY,MG,GD,BL],mono:true});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(53,224,255,.07)';ctx.fillRect(x,y,w,h);ctx.lineWidth=3;ctx.strokeStyle=col;ctx.shadowColor=col;ctx.shadowBlur=18;ctx.strokeRect(x,y,w,h);ctx.shadowBlur=0;ctx.fillStyle=col;ctx.fillRect(x,y,40,6);ctx.fillRect(x,y,6,40);ctx.fillRect(x+w-40,y+h-6,40,6);ctx.fillRect(x+w-6,y+h-40,6,40);ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#04122b');g.addColorStop(1,NV);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(53,224,255,.28)';ctx.lineWidth=2;const hz=1180;for(let i=0;i<=14;i++){const x=540+(i-7)*260;ctx.beginPath();ctx.moveTo(540+(i-7)*30,hz);ctx.lineTo(x*1.0+(x-540)*1.6,H);ctx.stroke()}
+  for(let j=0;j<12;j++){const f=((j+t*.4)%12)/12;const y=hz+Math.pow(f,2.2)*(H-hz);ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  const sy=((t*180)%2100)-100;const sg=ctx.createLinearGradient(0,sy-60,0,sy+60);sg.addColorStop(0,'rgba(53,224,255,0)');sg.addColorStop(.5,'rgba(53,224,255,.10)');sg.addColorStop(1,'rgba(53,224,255,0)');ctx.fillStyle=sg;ctx.fillRect(0,sy-60,W,120);
+  ctx.fillStyle='rgba(53,224,255,.04)';for(let y=0;y<H;y+=6)ctx.fillRect(0,y,W,2);ctx.fillStyle=CY;ctx.fillRect(0,0,W,8)};
+function coin(cx,cy,r,t,txt){ctx.save();ctx.translate(cx,cy);const sx=Math.abs(Math.cos(t*1.4))*.85+.15;ctx.scale(sx,1);ctx.lineWidth=14;ctx.strokeStyle=GD;ctx.shadowColor=GD;ctx.shadowBlur=30;ctx.fillStyle='rgba(255,209,102,.16)';ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.fill();ctx.stroke();ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,0,r*.82,0,7);ctx.stroke();ctx.restore();
+  if(txt)Lb(txt,cx,cy,110,GD)}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('BRETTON WOODS · 1944',540,235,50,CY,eout(prog(t,.2,.8)));
+  const k=eout(prog(t,.6,1.6));ctx.save();ctx.globalAlpha*=k;coin(540,640,260,t,'$35');ctx.restore();
+  ctx.save();ctx.globalAlpha*=eout(prog(t,1.4,2.2));ctx.strokeStyle=CY;ctx.lineWidth=4;ctx.setLineDash([20,14]);ctx.beginPath();ctx.ellipse(540,640,340,340,t*.6,0,7);ctx.stroke();ctx.restore();
+  const kk=eback(prog(t,3.0,3.8));if(kk>.02){ctx.save();ctx.translate(540,1130);ctx.scale(kk,kk);Lb('1 ONZA DE ORO',0,-60,56,WH);Lb('= $35',0,60,150,GD);ctx.restore()}
+  Lb('el dólar, fijo al oro',540,1330,44,CY,eout(prog(t,4.2,4.8)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'LA CONFERENCIA',CY);
+  for(let i=0;i<44;i++){const r=Math.floor(i/11),c=i%11;const k=eout(prog(t,7.2+i*.05,7.8+i*.05));ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=i%5==0?MG:CY;ctx.shadowColor=CY;ctx.shadowBlur=12;ctx.beginPath();ctx.arc(110+c*86,330+r*100,26*k,0,7);ctx.fill();ctx.restore()}
+  bigNum(t,10.0,540,840,'44',230,GD);Lb('naciones · 730 delegados',540,990,48,WH,eout(prog(t,10.8,11.4)));
+  Lb('Mount Washington Hotel',540,1090,42,CY,eout(prog(t,11.6,12.2)));Lb('Bretton Woods, New Hampshire',540,1160,38,'#6fa8c8',eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LA CADENA FIJA',GD);
+  [['ORO','$35 por onza',GD,14.6],['DÓLAR','fijo al oro',CY,16.4],['OTRAS MONEDAS','fijas al dólar',MG,18.2]].forEach(([l1,l2,c,ts],i)=>{const y=320+i*300;slide(t,ts,()=>{panel(100,y,880,210,c);Lb(l1,540,y+85,60,c);Lb(l2,540,y+155,40,WH)});
+    if(i<2){const k=eout(prog(t,ts+.7,ts+1.2));ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=c;ctx.beginPath();ctx.moveTo(540,y+222);ctx.lineTo(500,y+262);ctx.lineTo(580,y+262);ctx.fill();ctx.restore()}});ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LA BANDA DE 1 %',CY);
+  const pts=[];for(let i=0;i<=30;i++){const u=i/30;pts.push([u,.5+.28*Math.sin(u*14)*(.9-.2*u)+.08*Math.sin(u*31)])}
+  ctx.save();ctx.globalAlpha*=eout(prog(t,21.4,22));ctx.fillStyle='rgba(53,224,255,.10)';ctx.fillRect(90,520,900,300);ctx.restore();
+  hline(520,CY,4,90,990);hline(820,CY,4,90,990);Lb('+1 %',140,490,36,CY,eout(prog(t,21.4,22)));Lb('−1 %',140,850,36,CY,eout(prog(t,21.4,22)));Lb('paridad con el dólar',540,890,34,GD,eout(prog(t,22,22.6)));
+  lineChart(t,22.2,26.6,pts.map(([u,v])=>[u,.28+v*.44]),90,380,900,560,MG,8,16);
+  Lb('la moneda debía quedarse dentro de la banda',540,1090,40,WH,eout(prog(t,26.2,26.8)));Lb('(trayecto ilustrativo)',540,1160,28,'#6fa8c8',eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'NACEN DOS INSTITUCIONES',MG);
+  card(t,29.4,320,220,CY,'FMI','Fondo Monetario Internacional',54);
+  card(t,31.0,600,220,GD,'BANCO MUNDIAL','hoy: Grupo Banco Mundial',54);
+  pop(t,32.6,540,1000,()=>{ctx.fillStyle='rgba(255,79,216,.18)';RR(-400,-110,800,220,12);ctx.fill();ctx.strokeStyle=MG;ctx.lineWidth=4;RR(-400,-110,800,220,12);ctx.stroke();Lb('DIC. 1945',0,-40,52,MG);Lb('el FMI nace con 29 países',0,40,38,WH)});ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'EL FINAL DEL SISTEMA',GD);
+  line(140,640,940,640,CY,8);[[1944,'Bretton Woods',CY,0],[1971,'Fin con Nixon',MG,1]].forEach(([y,s,c,u],i)=>{const k=eback(prog(t,36.4+i*2.2,37.2+i*2.2));if(k<=.02)return;const x=200+u*680;ctx.save();ctx.translate(x,640);ctx.scale(k,k);ctx.fillStyle=c;ctx.shadowColor=c;ctx.shadowBlur=20;ctx.beginPath();ctx.arc(0,0,32,0,7);ctx.fill();ctx.restore();
+    ctx.save();ctx.globalAlpha*=Math.min(1,k);Lb(String(y),x,520,100,c);Lb(s,x,760,32,WH);ctx.restore()});
+  const k2=eback(prog(t,39.6,40.4));if(k2>.02){ctx.save();ctx.translate(540,1000);ctx.scale(k2,k2);Lb('27 AÑOS',0,0,120,GD);ctx.restore();Lb('de dólar fijo al oro (cálculo propio)',540,1120,36,WH,eout(prog(t,40.6,41.2)))}ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Hoy el oro flota libre','Prepara tu riesgo para saltos',CY,GD)}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('BRETTON WOODS · JULIO 1944',540,250,46,CY,1);coin(540,720,300,0,'');Lb('$35',540,720,200,GD);Lb('POR ONZA',540,1070,92,WH,1);Lb('EL DÓLAR, FIJO AL ORO',540,1210,52,MG,1);coverBtn('VER LA HISTORIA →',CY,'#030b1a')}
+</script></body></html>
