@@ -1,0 +1,63 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 35 (2.º uso): acuarela con tinta (papel crema, magenta/índigo/verde) — tema: Lunes Negro, 19 oct 1987 (60 s).
+const SPEC={name:'BlackMonday1987',hook:'19 OCT 1987: EL DOW JONES CAYÓ 22,6 % EN UN SOLO DÍA',dur:60,cta:56,bpm:96,mus:'soft',prog:[[38,'m'],[43,'M'],[41,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'19 oct 1987: el Dow cayó 22,6 % en un solo día.','En mil novecientos ochenta y siete, el Dow cayó veintidós coma seis por ciento en un día.'],
+ [6.4,13.4,'Venía de subir 44 % en unos 7 meses, y se temía una burbuja.','Venía de subir cuarenta y cuatro por ciento en unos siete meses, y se temía una burbuja.'],
+ [13.6,20.4,'Ese lunes perdió 508 puntos: su mayor caída porcentual en un día.','Ese lunes perdió quinientos ocho puntos: su mayor caída porcentual en un día.'],
+ [20.6,28.2,'El seguro de portafolio, con futuros y opciones, aceleró la caída.','El seguro de portafolio, con futuros y opciones, aceleró la caída.'],
+ [28.4,35.0,'Al día siguiente, la Fed de Greenspan ofreció liquidez a los bancos.','Al día siguiente, la Fed de Greenspan ofreció liquidez a los bancos.'],
+ [35.2,43.4,'Nacieron los frenos: hoy se frena la bolsa si el S&P 500 cae 7, 13 y 20 %.','Nacieron los frenos: hoy se frena la bolsa si el S&P quinientos cae siete, trece y veinte por ciento.'],
+ [43.6,49.6,'Para tu robot: días extremos traen gaps y spreads amplios. Educativo, sin garantías.','Para tu robot: los días extremos traen saltos y spreads amplios. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const PAPER='#f7f0e1',INK='#1f2a44',MG='#d6336c',IN='#3b5bdb',GR='#0ca678',AM='#f08c00',DK='#1f2a44',ACC='#f08c00',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(247,240,225,.97)',subStroke:INK,subFill:INK,ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:INK,mu:'#5b6785',acc:MG,pn:'rgba(255,252,244,.92)',c:[MG,IN,GR,AM]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(255,252,244,.93)';RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=INK;ctx.stroke();ctx.lineWidth=10;ctx.strokeStyle=col;ctx.globalAlpha=.35;RR(x+6,y+6,w,h,18);ctx.stroke();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=PAPER;ctx.fillRect(0,0,W,H);const r=rng(11);const cols=[MG,IN,GR,AM,IN,MG];
+  for(let i=0;i<14;i++){const x=r()*W,y=r()*H,R=180+r()*260,c=cols[i%6];const g=ctx.createRadialGradient(x+Math.sin(t*.4+i)*14,y,10,x,y,R);g.addColorStop(0,c+'3a');g.addColorStop(.7,c+'1c');g.addColorStop(1,c+'00');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+  ctx.save();ctx.globalAlpha=.05;const q=rng(3);for(let i=0;i<500;i++){ctx.fillStyle=INK;ctx.fillRect(q()*W,q()*H,2,2)}ctx.restore();
+  ctx.fillStyle=INK;ctx.fillRect(0,0,W,10)};
+// Dow ilustrativo: ascenso hasta ago, meseta con altibajos, desplome final
+const DOW=[[0,.25],[.1,.34],[.2,.42],[.3,.55],[.4,.68],[.5,.8],[.58,.86],[.66,.82],[.74,.78],[.82,.8],[.9,.72],[.95,.7],[1,.12]];
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('LUNES NEGRO · 1987',540,230,52,IN,eout(prog(t,.2,.8)));
+  axes(70,330,940,760,INK);lineChart(t,.6,3.4,DOW,70,330,940,760,MG,12);
+  const k=eback(prog(t,3.4,4.2));if(k>.02){ctx.save();ctx.translate(540,1180);ctx.scale(k,k);Lb('19 OCT 1987',0,-110,56,AM);Lb('−22,6 %',0,20,170,MG);Lb('EN UN SOLO DÍA',0,120,44,INK);ctx.restore()}
+  Lb('(trayecto ilustrativo)',540,1400,26,'#5b6785',eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'ANTES DEL DESPLOME',IN);
+  axes(70,320,940,540,INK);lineChart(t,7.0,10.6,DOW.slice(0,8).map(([u,v])=>[u/.66,(v-.25)/.65]),70,320,940,540,GR,12);
+  bigNum(t,10.0,540,1010,'+44 %',170,GR);Lb('en unos 7 meses (hasta fines de ago. 1987)',540,1140,38,INK,eout(prog(t,10.8,11.4)));
+  Lb('se hablaba de una posible burbuja',540,1210,40,MG,eout(prog(t,11.6,12.2)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL LUNES 19',MG);
+  bigNum(t,14.4,540,520,'−508',230,MG);Lb('puntos en un solo día',540,680,50,INK,eout(prog(t,15.4,16)));
+  // columna: 100 % con tajo de 22,6 %
+  const x=240,y=780,w=600,h=300,k=eout(prog(t,16.2,17.4));ctx.save();ctx.fillStyle='rgba(12,166,120,.55)';RR(x,y,w,h,14);ctx.fill();ctx.fillStyle=MG;ctx.globalAlpha=k;RR(x+w*(1-.226*k),y,w*.226*k,h,14);ctx.fill();ctx.restore();
+  ctx.save();ctx.lineWidth=5;ctx.strokeStyle=INK;RR(x,y,w,h,14);ctx.stroke();ctx.restore();
+  Lb('−22,6 %',x+w*(1-.113),y-30,40,MG,k);Lb('100 % del índice',x+240,y+h/2,36,INK,k);
+  Lb('mayor caída porcentual en un día de su historia',540,1190,38,INK,eout(prog(t,18.2,18.8)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'SEGURO DE PORTAFOLIO',AM);
+  [['1 · Caen los precios',IN],['2 · La cobertura vende futuros',AM],['3 · Más ventas, más caída',MG]].forEach(([s,c],i)=>{card(t,22.0+i*1.7,300+i*210,150,c,s,null,42)});
+  const k=eout(prog(t,26.4,27.2));if(k>.02){ctx.save();ctx.globalAlpha=a*k;ctx.strokeStyle=MG;ctx.lineWidth=10;ctx.beginPath();ctx.arc(540,1010,110,.4,5.2);ctx.stroke();ctx.fillStyle=MG;ctx.beginPath();ctx.moveTo(610,880);ctx.lineTo(680,960);ctx.lineTo(560,960);ctx.fill();ctx.restore();Lb('círculo vicioso',540,1010,40,INK,k)}
+  Lb('técnica de cobertura con futuros y opciones',540,1230,34,'#5b6785',eout(prog(t,26.8,27.4)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'LA RESPUESTA',GR);
+  card(t,29.4,300,170,MG,'LUNES 19 · caída del 22,6 %','el pánico domina el mercado',44);
+  card(t,31.0,520,170,GR,'MARTES 20 · Greenspan (Fed)','«fuente de liquidez»',44);
+  card(t,32.6,740,170,IN,'La Fed animó a los bancos','a seguir prestando como siempre',44);
+  pop(t,33.6,540,1130,()=>{ctx.fillStyle=GR;RR(-300,-70,600,140,70);ctx.fill();Lb('LIQUIDEZ',0,0,64,'#fff')});ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'FRENOS DE MERCADO',IN);
+  Lb('S&P 500 en un día · hoy en la NYSE',540,265,36,INK,eout(prog(t,35.8,36.4)));
+  barsH(t,36.6,[['Nivel 1: caída de 7 %',.35,AM,'pausa'],['Nivel 2: caída de 13 %',.65,MG,'pausa'],['Nivel 3: caída de 20 %',1,INK,'cierre']],70,330,800,170,42);
+  Lb('nacieron después del crash de 1987',540,950,44,GR,eout(prog(t,40.6,41.2)));
+  pop(t,41.4,540,1150,()=>{ctx.fillStyle=IN;RR(-330,-60,660,120,60);ctx.fill();Lb('PAUSAS PARA RESPIRAR',0,0,44,'#fff')});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Gaps y spreads amplios','Riesgo pequeño por operación',MG,GR)}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('19 OCT 1987 · LUNES NEGRO',540,230,48,IN,1);axes(90,330,900,600,INK);lineChart(99,0,1,DOW,90,330,900,600,MG,16);
+  Lb('−22,6 %',540,1130,230,MG,1);Lb('EN UN SOLO DÍA',540,1290,66,INK,1);coverBtn('VER EL CRASH →',MG,'#fff')}
+</script></body></html>

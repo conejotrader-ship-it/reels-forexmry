@@ -1,0 +1,64 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:Lime;src:url(node_modules/@fontsource/limelight/files/limelight-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 36 (2.º uso): art déco (negro, oro y esmeralda, abanico y arcos) — tema: criterio de Kelly para el tamaño de posición (60 s).
+const SPEC={name:'KellyDeco',hook:'KELLY: CON 60 % DE ACIERTOS, EL ÓPTIMO ES 20 %',dur:60,cta:56,bpm:90,mus:'soft',prog:[[38,'m'],[43,'M'],[41,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Fórmula de Kelly: con 60 % de aciertos, el óptimo es 20 %.','Fórmula de Kelly: con sesenta por ciento de aciertos, el óptimo es veinte por ciento.'],
+ [6.4,13.4,'La describió John Kelly, de Bell Labs, en 1956; Edward Thorp la aplicó a los mercados.','La describió John Kelly, de Bell Labs, en mil novecientos cincuenta y seis; Edward Thorp la aplicó a los mercados.'],
+ [13.6,20.4,'f = p − q / b: p ganar, q perder, b la ganancia por unidad arriesgada.','f igual a p menos q entre b: p ganar, q perder, b la ganancia por unidad arriesgada.'],
+ [20.6,28.2,'Con 60 % y b = 1, sale 20 %. Con 55 %, 10 %. Con 50 %, cero.','Con sesenta por ciento y b igual a uno, sale veinte por ciento. Con cincuenta y cinco, diez por ciento. Con cincuenta, cero.'],
+ [28.4,35.0,'Arriesgar más que Kelly sube el riesgo de ruina; por eso muchos usan medio Kelly.','Arriesgar más que Kelly sube el riesgo de ruina; por eso muchos usan medio Kelly.'],
+ [35.2,43.4,'Kelly completo implica caídas fuertes y tus probabilidades son estimadas: por eso se reduce la fracción.','Kelly completo implica caídas fuertes y tus probabilidades son estimadas: por eso se reduce la fracción.'],
+ [43.6,49.6,'Para tu robot: sin ventaja medible, Kelly da cero. Educativo, sin garantías.','Para tu robot: sin ventaja medible, Kelly da cero. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BK='#0e0c10',GD='#e8c25a',GD2='#b8923a',EM='#1fa37a',RB='#d94b5c',CR='#f5ecd2',DK='#0e0c10',ACC='#e8c25a',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(14,12,16,.97)',subStroke:GD,subFill:CR,ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','40px Lime'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:CR,mu:'#a89a78',acc:GD,pn:'#17141a',c:[GD,EM,RB,CR]});
+const LL=(s,x,y,sz,col,a=1,al='center')=>T(fx(s),x,y,{font:`${sz}px Lime, Inter`,fill:col,a,align:al});ST.mono=false;
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#17141a';ctx.beginPath();const c=22;ctx.moveTo(x+c,y);ctx.lineTo(x+w-c,y);ctx.lineTo(x+w,y+c);ctx.lineTo(x+w,y+h-c);ctx.lineTo(x+w-c,y+h);ctx.lineTo(x+c,y+h);ctx.lineTo(x,y+h-c);ctx.lineTo(x,y+c);ctx.closePath();ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();ctx.lineWidth=2;ctx.strokeStyle=GD2;ctx.globalAlpha=.8;ctx.strokeRect(x+12,y+12,w-24,h-24);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=BK;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.translate(540,1900);for(let i=0;i<24;i++){const a0=-Math.PI+i*Math.PI/24,a1=a0+Math.PI/48;ctx.fillStyle=i%2?'rgba(232,194,90,.09)':'rgba(232,194,90,.03)';ctx.beginPath();ctx.moveTo(0,0);ctx.arc(0,0,2100,a0+Math.sin(t*.3)*.01,a1);ctx.fill()}ctx.restore();
+  ctx.save();ctx.strokeStyle=GD;ctx.lineWidth=6;ctx.strokeRect(34,34,W-68,H-68);ctx.lineWidth=2;ctx.strokeRect(54,54,W-108,H-108);
+  [[34,34,1,1],[W-34,34,-1,1],[34,H-34,1,-1],[W-34,H-34,-1,-1]].forEach(([x,y,sx,sy])=>{ctx.beginPath();ctx.moveTo(x,y+sy*120);ctx.lineTo(x+sx*120,y);ctx.stroke();ctx.beginPath();ctx.moveTo(x,y+sy*80);ctx.lineTo(x+sx*80,y);ctx.stroke()});ctx.restore()};
+function gauge(t,a,b,cx,cy,R,frac,col){const k=eio(prog(t,a,b));ctx.save();ctx.lineWidth=46;ctx.lineCap='butt';ctx.strokeStyle='#2a2430';ctx.beginPath();ctx.arc(cx,cy,R,Math.PI,2*Math.PI);ctx.stroke();
+  ctx.strokeStyle=col;ctx.beginPath();ctx.arc(cx,cy,R,Math.PI,Math.PI+Math.PI*frac*k);ctx.stroke();ctx.restore();return k}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('CRITERIO DE KELLY',540,235,50,GD,eout(prog(t,.2,.8)));
+  const k=gauge(t,.6,3.2,540,820,330,.2*2.5,EM);// el arco completo = 40 % (escala ilustrativa)
+  LL('0',210,860,40,ST.mu);LL('40 %',870,860,40,ST.mu);
+  const kk=eback(prog(t,3.2,4.0));if(kk>.02){ctx.save();ctx.translate(540,1050);ctx.scale(kk,kk);LL('20 %',0,0,200,GD);ctx.restore()}
+  Lb('de tu capital por operación (óptimo teórico)',540,1190,38,CR,eout(prog(t,4.2,4.8)));Lb('con 60 % de aciertos y pago 1 a 1',540,1250,38,EM,eout(prog(t,4.6,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL ORIGEN',GD);
+  bigNum(t,7.0,540,430,'1956',210,GD);
+  card(t,8.4,590,200,GD,'John L. Kelly Jr. · Bell Labs','«A New Interpretation of Information Rate»',40);
+  card(t,10.4,840,200,EM,'Edward O. Thorp','lo aplicó a juegos y a bolsa (1966, 1967)',40);
+  Lb('teoría de la información → tamaño de apuesta',540,1160,36,ST.mu,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LA FÓRMULA',EM);
+  pop(t,14.4,540,470,()=>{LL('f = p − q / b',0,0,110,GD)});
+  [['f','fracción del capital a arriesgar',GD,16.0],['p','probabilidad de ganar',EM,17.2],['q','probabilidad de perder (1 − p)',RB,18.4],['b','ganancia por unidad arriesgada',CR,19.4]].forEach(([l,s,c,ts],i)=>{
+    slide(t,ts,()=>{panel(60,640+i*150,960,120,c);LL(l,150,700+i*150,66,c);Lb(s,230,700+i*150,38,CR,1,'left')})});ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'EJEMPLOS (b = 1)',GD);
+  Lb('p = 0,6 → f = 0,6 − 0,4 / 1',540,300,44,CR,eout(prog(t,21.4,22)));
+  barsH(t,22.2,[['60 % de aciertos',1,EM,'20 %'],['55 % de aciertos',.5,GD,'10 %'],['50 % de aciertos',.02,RB,'0 %']],90,380,720,200,46);
+  Lb('sin ventaja, Kelly dice: no arriesgues',540,1050,44,RB,eout(prog(t,26.2,26.8)));Lb('(cálculo propio con la fórmula)',540,1130,28,ST.mu,eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'ARRIESGAR DE MÁS',RB);
+  const pts=[];for(let i=0;i<=40;i++){const u=i/40;pts.push([u,Math.max(.02,.12+Math.sin(u*Math.PI*.98)*.75*(1-u*.35)-u*u*.3)])}
+  axes(90,330,900,620,GD,'fracción apostada →');lineChart(t,29.2,32.4,pts,90,330,900,620,GD,10,14);
+  const k=eout(prog(t,32.6,33.4));if(k>.02){Lb('½ KELLY',380,300,36,EM,k);Lb('KELLY',560,300,36,GD,k);line(380,330,380,950,EM,3,[8,8]);line(560,330,560,950,GD,3,[8,8]);Lb('más riesgo de ruina →',830,420,34,RB,k)}
+  Lb('curva ilustrativa de crecimiento',540,1010,30,ST.mu,eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'POR QUÉ SE REDUCE',EM);
+  card(t,36.6,300,190,RB,'Kelly completo','caídas fuertes y difíciles de aguantar',44);
+  card(t,38.6,540,190,GD,'Tus probabilidades','son estimadas: el modelo puede fallar',44);
+  card(t,40.6,780,190,EM,'Solución habitual','usar una fracción, p. ej. medio Kelly',44);
+  pop(t,41.8,540,1130,()=>{ctx.fillStyle=GD;RR(-300,-62,600,124,20);ctx.fill();Lb('½ × KELLY',0,0,64,BK)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Sin ventaja medible: Kelly = 0','Fracciona y limita el riesgo',GD,EM)}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('FÓRMULA DE KELLY · 1956',540,250,52,GD,1);
+  gauge(99,0,1,540,720,330,.5,EM);LL('20 %',540,830,230,GD);LL('¿POR OPERACIÓN?',540,1090,92,CR);Lb('con 60 % de aciertos (ejemplo teórico)',540,1250,40,EM,1);coverBtn('VER LA FÓRMULA →',GD,BK)}
+</script></body></html>
