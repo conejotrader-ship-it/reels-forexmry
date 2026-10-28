@@ -1,0 +1,65 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 47 (2.º uso): mapa de calor animado — tema: Abraham Wald y el sesgo de supervivencia (60 s).
+const SPEC={name:'WALD',hook:'¿DÓNDE BLINDARÍAS EL AVIÓN? LA RESPUESTA ENSEÑA EL SESGO DE SUPERVIVENCIA',dur:60,cta:56,bpm:98,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Aviones que volvían de la Segunda Guerra Mundial, llenos de impactos: ¿dónde blindarías? La respuesta enseña el sesgo de supervivencia.','Aviones que volvían de la Segunda Guerra Mundial, llenos de impactos: ¿dónde blindarías? La respuesta enseña el sesgo de supervivencia.'],
+ [6.4,13.4,'Los militares querían reforzar las zonas con más agujeros en los aviones que regresaban.','Los militares querían reforzar las zonas con más agujeros en los aviones que regresaban.'],
+ [13.6,20.4,'Abraham Wald, del Grupo de Investigación Estadística de la Universidad de Columbia, propuso lo contrario: blindar donde no había agujeros.','Abraham Wald, del Grupo de Investigación Estadística de la Universidad de Columbia, propuso lo contrario: blindar donde no había agujeros.'],
+ [20.6,28.2,'Los aviones impactados en esas zonas no volvían, así que faltaban en los datos. Eso es sesgo de supervivencia.','Los aviones impactados en esas zonas no volvían, así que faltaban en los datos. Eso es sesgo de supervivencia.'],
+ [28.4,35.0,'En trading pasa igual: backtests solo con activos o robots que siguen vivos ocultan los fracasos.','En trading pasa igual: backtests solo con activos o robots que siguen vivos ocultan los fracasos.'],
+ [35.2,43.4,'Para evitarlo: incluye lo descartado, prueba fuera de muestra y registra todas tus pruebas, no solo la mejor.','Para evitarlo: incluye lo descartado, prueba fuera de muestra y registra todas tus pruebas, no solo la mejor.'],
+ [43.6,49.6,'Para tu robot: pregunta siempre qué datos faltan. Educativo, sin garantías.','Para tu robot: pregunta siempre qué datos faltan. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const NV='#0b1020',NV2='#18224a',HR='#ff3b30',HO='#ff9500',HY='#ffd60a',CY='#4de1ff',DK='#0b1020',ACC='#4de1ff',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(11,16,32,.97)',subStroke:CY,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:'#fff',mu:'#9fb0e0',acc:CY,pn:'#18224a',c:[CY,HY,HR,'#7dffb0']});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(77,225,255,.08)';RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,18);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,NV2);g.addColorStop(1,NV);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(159,176,224,.07)';ctx.lineWidth=2;for(let x=0;x<=W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<=H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.fillStyle=CY;ctx.fillRect(0,0,W,10)};
+// avión visto desde arriba, centrado en (0,0), mide ≈ 560 de ancho y 700 de largo a escala 1
+function planeShape(){ctx.beginPath();ctx.moveTo(0,-350);ctx.quadraticCurveTo(46,-300,46,-200);ctx.lineTo(46,-60);ctx.lineTo(280,40);ctx.lineTo(280,100);ctx.lineTo(46,70);ctx.lineTo(40,230);ctx.lineTo(150,290);ctx.lineTo(150,330);ctx.lineTo(30,310);ctx.lineTo(0,350);ctx.lineTo(-30,310);ctx.lineTo(-150,330);ctx.lineTo(-150,290);ctx.lineTo(-40,230);ctx.lineTo(-46,70);ctx.lineTo(-280,100);ctx.lineTo(-280,40);ctx.lineTo(-46,-60);ctx.lineTo(-46,-200);ctx.quadraticCurveTo(-46,-300,0,-350);ctx.closePath()}
+// impactos: [x,y,r] (solo alas, fuselaje central y cola; ninguno en motores ni cabina)
+const HITS=[[-200,50,60],[-240,80,40],[-150,30,50],[-110,60,40],[200,60,55],[240,75,40],[150,40,50],[120,65,38],[0,-20,52],[0,130,60],[10,170,45],[-10,95,40],[-110,300,38],[100,300,40],[0,260,50],[-30,-120,30],[35,-100,28],[-215,60,30],[260,70,28]];
+const ENG=[[-130,-5],[130,-5]],COCK=[0,-250];
+function plane(t,t0,cx,cy,s,heat,col){ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);ctx.fillStyle=col||'#2a3768';planeShape();ctx.fill();ctx.lineWidth=5;ctx.strokeStyle='#9fb0e0';ctx.stroke();
+  if(heat){ctx.save();planeShape();ctx.clip();HITS.forEach(([x,y,r],i)=>{const k=eout(prog(t,t0+i*.12,t0+i*.12+.6));if(k<=.02)return;const g=ctx.createRadialGradient(x,y,0,x,y,r*1.6*k);g.addColorStop(0,'rgba(255,59,48,.95)');g.addColorStop(.45,'rgba(255,149,0,.6)');g.addColorStop(1,'rgba(255,214,10,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r*1.6,0,7);ctx.fill()});ctx.restore()}
+  ctx.restore()}
+function marks(t,t0,cx,cy,s){const k=eout(prog(t,t0,t0+.8));if(k<=.02)return;const pul=1+.08*Math.sin(t*6);ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);ctx.globalAlpha*=k;ctx.strokeStyle=CY;ctx.lineWidth=8;ctx.setLineDash([16,10]);
+  [...ENG,COCK].forEach(([x,y])=>{ctx.beginPath();ctx.arc(x,y,62*pul,0,7);ctx.stroke()});ctx.restore()}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('SEGUNDA GUERRA MUNDIAL',540,235,50,CY,eout(prog(t,.2,.8)));
+  plane(t,.8,540,720,1.3,true);Lb('¿DÓNDE BLINDARÍAS?',540,1230,76,'#fff',eout(prog(t,4,4.6)));Lb('(mapa ilustrativo)',540,1310,28,'#9fb0e0',eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'LO QUE VEÍAN LOS MILITARES',CY);
+  plane(t,6.8,540,700,1.25,true);
+  Lb('más agujeros → más blindaje',540,1200,56,HY,eout(prog(t,10,10.6)));
+  Lb('(sobre los aviones que regresaban)',540,1280,30,'#9fb0e0',eout(prog(t,11,11.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LA IDEA DE WALD',CY);
+  plane(t,13.9,540,640,1.15,true);marks(t,16,540,640,1.15);
+  Lb('blindar donde NO hay agujeros',540,1090,56,CY,eout(prog(t,16.4,17)));
+  card(t,17.6,1170,180,CY,'Abraham Wald','Grupo de Investigación Estadística · Columbia',38);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LOS QUE NO VOLVIERON',HR);
+  for(let i=0;i<5;i++){const k=eout(prog(t,21.4+i*.5,22+i*.5));if(k<=.02)continue;const fy=(t-(21.4+i*.5))*30;ctx.save();ctx.globalAlpha*=k*.8;plane(t,0,150+i*195,480+(i%2)*60+Math.min(fy,40),.4,false,'#3a1f2a');ctx.restore();Lb('✕',150+i*195,480+(i%2)*60+Math.min(fy,40),60,HR,k)}
+  card(t,25.0,720,190,CY,'Impactos en motor o cabina','el avión no regresaba',42);
+  card(t,26.6,950,190,HR,'Faltan en los datos','solo ves a los sobrevivientes',42);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EN TRADING',CY);
+  card(t,29.2,300,190,HY,'Solo activos que siguen vivos','los que quebraron ya no aparecen',40);
+  card(t,31.0,540,190,HR,'Solo estrategias que funcionaron','las descartadas no se muestran',40);
+  card(t,32.8,780,190,CY,'Resultado inflado','se ve mejor de lo que fue',44);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'CÓMO EVITARLO',CY);
+  card(t,36.4,300,170,CY,'Incluye lo descartado','activos y robots que fallaron',40);
+  card(t,38.2,520,170,HY,'Prueba fuera de muestra','datos que no usaste para optimizar',40);
+  card(t,40.0,740,170,'#7dffb0','Registra todas tus pruebas','no solo la mejor',42);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=CY;RR(-330,-60,660,120,60);ctx.fill();Lb('¿QUÉ DATOS FALTAN?',0,0,48,DK)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Pregunta qué datos faltan','Incluye lo que falló',CY,HY)}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('LOS DATOS QUE FALTAN',540,250,72,CY,1);plane(99,0,540,740,1.2,true);
+  [...ENG,COCK].forEach(([x,y])=>{ctx.save();ctx.strokeStyle=CY;ctx.lineWidth=9;ctx.setLineDash([16,10]);ctx.beginPath();ctx.arc(540+x*1.2,740+y*1.2,70,0,7);ctx.stroke();ctx.restore()});
+  Lb('¿DÓNDE ESTÁN',540,1260,84,'#fff',1);Lb('LOS AGUJEROS?',540,1350,84,'#fff',1);coverBtn('VER EL ERROR →',CY,DK)}
+</script></body></html>
