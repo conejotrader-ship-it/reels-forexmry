@@ -1,0 +1,58 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 45 (2.º uso): libro o enciclopedia que pasa páginas — tema: límites de apalancamiento por país (60 s).
+const SPEC={name:'APALANC',hook:'EL ORO TIENE LÍMITE DE APALANCAMIENTO: 20 A 1 EN LA UNIÓN EUROPEA',dur:60,cta:56,bpm:90,mus:'soft',prog:[[38,'M'],[43,'m'],[36,'M'],[41,'m']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'En la Unión Europea, el apalancamiento máximo para el oro a minoristas es de 20 a 1 desde 2018.','En la Unión Europea, el apalancamiento máximo para el oro a minoristas es de veinte a uno desde dos mil dieciocho.'],
+ [6.4,13.4,'ESMA, 2018: 30 a 1 en divisas principales; 20 a 1 en oro e índices; 5 a 1 en acciones y 2 a 1 en cripto.','E S M A, dos mil dieciocho: treinta a uno en divisas principales; veinte a uno en oro e índices; cinco a uno en acciones y dos a uno en cripto.'],
+ [13.6,20.4,'Estados Unidos, CFTC 2010: 50 a 1 en divisas principales y 20 a 1 en las demás. Japón bajó a 25 a 1 en 2011.','Estados Unidos, la CFTC en dos mil diez: cincuenta a uno en divisas principales y veinte a uno en las demás. Japón bajó a veinticinco a uno en dos mil once.'],
+ [20.6,28.2,'El Reino Unido siguió a ESMA en 2019 y Australia fijó 30 a 1 para divisas en 2021: la tendencia es limitar.','El Reino Unido siguió a ESMA en dos mil diecinueve y Australia fijó treinta a uno para divisas en dos mil veintiuno: la tendencia es limitar.'],
+ [28.4,35.0,'Con 20 a 1 el margen es 5 % de la posición. ESMA exige cerrar automáticamente al llegar a 50 % del margen mínimo.','Con veinte a uno el margen es cinco por ciento de la posición. E S M A exige cerrar automáticamente al llegar a cincuenta por ciento del margen mínimo.'],
+ [35.2,43.4,'Máximo permitido no es lo recomendado: lo que cuenta es el riesgo por operación y el margen libre.','Máximo permitido no es lo recomendado: lo que cuenta es el riesgo por operación y el margen libre.'],
+ [43.6,49.6,'Para tu robot: configura el lote según el riesgo, no según el apalancamiento. Educativo, sin garantías.','Para tu robot: configura el lote según el riesgo, no según el apalancamiento. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const LE='#3a2418',LE2='#24140c',PG='#f4ead3',INK='#2a1a10',RDK='#a3211d',GRN='#2f6b3a',BLU='#1e4f8c',GLD='#b8860b',DK='#24140c',ACC='#e0a82e',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(36,20,12,.97)',subStroke:ACC,subFill:'#f4ead3',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:INK,mu:'#6b5540',acc:RDK,pn:'#efe1c2',c:[RDK,GRN,BLU,GLD]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(255,250,235,.8)';RR(x,y,w,h,12);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,12);ctx.stroke();ctx.restore()};
+const FLIPS=[6.4,13.6,20.6,28.4,35.2,43.6];
+ST.bg=t=>{ctx.fillStyle=LE;ctx.fillRect(0,0,W,H);ctx.fillStyle=LE2;ctx.fillRect(0,0,W,H);const g0=ctx.createLinearGradient(0,0,0,H);g0.addColorStop(0,LE);g0.addColorStop(1,LE2);ctx.fillStyle=g0;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=PG;RR(34,50,1012,1700,14);ctx.fill();
+  ctx.save();ctx.strokeStyle='rgba(120,90,50,.12)';ctx.lineWidth=2;for(let y=130;y<1700;y+=64){ctx.beginPath();ctx.moveTo(70,y);ctx.lineTo(1010,y);ctx.stroke()}ctx.restore();
+  ctx.save();ctx.strokeStyle=RDK;ctx.lineWidth=3;ctx.globalAlpha=.5;ctx.strokeRect(60,80,960,1640);ctx.restore();
+  for(const f of FLIPS){const p=prog(t,f-.15,f+.65);if(p>0&&p<1){const x=lerp(1046,34,eio(p));const g=ctx.createLinearGradient(x,0,x+160,0);g.addColorStop(0,'rgba(60,40,20,.45)');g.addColorStop(1,'rgba(60,40,20,0)');ctx.fillStyle=g;ctx.fillRect(x,50,160,1700);ctx.fillStyle='#fff7e0';ctx.fillRect(x-4,50,8,1700)}}
+  ctx.fillStyle=ACC;ctx.fillRect(0,0,W,10)};
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('CAPÍTULO 1 · REGLAS DEL APALANCAMIENTO',540,235,36,GLD,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,560,'20:1',360,RDK);Lb('máximo para el oro (minoristas, UE)',540,800,46,INK,eout(prog(t,2,2.6)));
+  Lb('desde 2018 · ESMA',540,880,56,GLD,eout(prog(t,3,3.6)));
+  Lb('para el mismo lote, menos apalancamiento = menos riesgo',540,1010,30,'#6b5540',eout(prog(t,4.2,4.8)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'UNIÓN EUROPEA · ESMA 2018',RDK);
+  barsH(t,7.0,[['Divisas principales',1,BLU,'30:1'],['Oro, otras divisas, índices',.667,RDK,'20:1'],['Otras materias primas',.333,GRN,'10:1'],['Acciones',.167,GLD,'5:1'],['Criptomonedas',.067,'#6b5540','2:1']],70,300,720,150,40);
+  ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'ESTADOS UNIDOS Y JAPÓN',RDK);
+  barsH(t,14.4,[['EE. UU. · CFTC 2010 · principales',1,BLU,'50:1'],['Japón · 2011',.5,GRN,'25:1'],['EE. UU. · CFTC · las demás',.4,RDK,'20:1']],70,330,720,190,38);
+  Lb('(minoristas; cifras de Wikipedia/ESMA)',540,980,28,'#6b5540',eout(prog(t,17.6,18.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LA TENDENCIA: LIMITAR',RDK);
+  [['2010','CFTC',BLU],['2011','Japón',GRN],['2018','ESMA',RDK],['2019','Reino Unido',GLD],['2021','Australia','#6b5540']].forEach(([y,n,c],i)=>{const k=eout(prog(t,21.4+i*.6,22+i*.6));if(k<=.02)return;const cx=140+i*200;ctx.save();ctx.globalAlpha*=k;
+    ctx.fillStyle=c;ctx.beginPath();ctx.arc(cx,560,24,0,7);ctx.fill();if(i<4)line(cx+24,560,cx+176,560,'#6b5540',5);ctx.restore();Lb(y,cx,500,38,c,k);Lb(n,cx,630,28,INK,k)});
+  card(t,25.0,780,170,GLD,'Reino Unido (FCA) sigue a ESMA','desde 2019',42);
+  card(t,26.4,980,170,'#6b5540','Australia (ASIC)','30:1 en divisas desde 2021',42);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'LA CUENTA DEL MARGEN',RDK);
+  bigNum(t,29.2,540,480,'5 %',300,RDK);Lb('margen = 1 ÷ 20',540,670,48,INK,eout(prog(t,30.4,31)));
+  card(t,32.0,780,190,BLU,'ESMA exige cierre automático','al llegar a 50 % del margen mínimo',40);
+  card(t,33.6,990,170,GLD,'Protección de saldo negativo','pérdidas limitadas al saldo (UE)',40);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LO QUE IMPORTA',RDK);
+  card(t,36.4,300,170,RDK,'Máximo ≠ recomendado','el límite es un techo, no un objetivo',40);
+  card(t,38.2,520,170,BLU,'Riesgo por operación','define el lote, no el apalancamiento',40);
+  card(t,40.0,740,170,GRN,'Margen libre','tu colchón ante una racha',42);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=RDK;RR(-330,-60,660,120,60);ctx.fill();Lb('LOTE SEGÚN EL RIESGO',0,0,48,PG)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Lote según el riesgo','No según el apalancamiento',RDK,GRN)}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('LÍMITE PARA EL ORO',540,300,76,RDK,1);Lb('20:1',540,720,400,INK,1);Lb('UNIÓN EUROPEA · 2018',540,1050,66,GLD,1);Lb('¿Y EN TU PAÍS?',540,1190,80,RDK,1);coverBtn('VER LAS REGLAS →',RDK,PG)}
+</script></body></html>
