@@ -1,0 +1,68 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 43 (2.º uso): montaña rusa (el gráfico como riel con carrito) — tema: caída del oro del 15 abr 2013 (60 s).
+const SPEC={name:'ORO2013',hook:'15 DE ABRIL DE 2013: EL ORO CAE CERCA DE 9 % EN UN SOLO DÍA',dur:60,cta:56,bpm:104,mus:'soft',prog:[[43,'m'],[38,'M'],[40,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'El 15 de abril de 2013 el oro cayó cerca de 9 % en un día, su mayor caída porcentual desde 1983.','El quince de abril de dos mil trece el oro cayó cerca de nueve por ciento en un día, su mayor caída porcentual desde mil novecientos ochenta y tres.'],
+ [6.4,13.4,'Venía de un récord de 1.920 dólares la onza en septiembre de 2011 y cerró cerca de 1.347: casi 30 % menos.','Venía de un récord de mil novecientos veinte dólares la onza en septiembre de dos mil once y cerró cerca de mil trescientos cuarenta y siete: casi treinta por ciento menos.'],
+ [13.6,20.4,'Perdió unos 125 dólares la onza en una sola sesión. La plata cayó casi 12 %.','Perdió unos ciento veinticinco dólares la onza en una sola sesión. La plata cayó casi doce por ciento.'],
+ [20.6,28.2,'Detonantes citados: venta de oro de Chipre, salida de fondos cotizados y una Fed cerca de reducir sus compras.','Detonantes citados: rumor de venta de oro de Chipre, salida de fondos cotizados y una Fed cerca de reducir sus compras de bonos.'],
+ [28.4,35.0,'Al perder el nivel de 1.500 dólares se aceleraron las ventas en cadena.','Al perder el nivel de mil quinientos dólares se aceleraron las ventas en cadena.'],
+ [35.2,43.4,'Lección: un activo refugio también puede caer con fuerza, y los niveles redondos aceleran el movimiento.','Lección: un activo refugio también puede caer con fuerza, y los niveles redondos aceleran el movimiento.'],
+ [43.6,49.6,'Para tu robot: define el riesgo antes de entrar. Contenido educativo, sin garantías.','Para tu robot: define el riesgo antes de entrar. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const SK1='#101c4a',SK2='#2b1a5e',OR='#ff8a2a',YL='#ffd23f',RD='#ff3b4e',CY='#4fd8ff',DK='#101c4a',ACC='#ff8a2a',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(16,28,74,.96)',subStroke:OR,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:'#fff',mu:'#a9b6e8',acc:OR,pn:'#1b2a6b',c:[OR,YL,RD,CY]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(255,255,255,.09)';RR(x,y,w,h,22);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,22);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,SK2);g.addColorStop(.6,SK1);g.addColorStop(1,'#0a1233');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.fillStyle='#fff';const r=rng(9);for(let i=0;i<60;i++){ctx.globalAlpha=.25+.25*Math.sin(t*2+i);ctx.fillRect(r()*W,r()*H*.8,3,3)}ctx.restore();
+  ctx.fillStyle=OR;ctx.fillRect(0,0,W,10)};
+// riel con soportes y carrito
+const GP=[[0,.95],[.06,.78],[.12,.35],[.3,.5],[.62,.75],[.78,.6],[.88,.43],[.96,.27],[1,.07]];
+function coaster(t,a,b,x,y,w,h,col,lw=10){const P=pathPts(GP,x,y,w,h);const r=eio(prog(t,a,b));if(r<=0)return;
+  // soportes
+  ctx.save();ctx.strokeStyle='rgba(255,255,255,.18)';ctx.lineWidth=4;const xs=P.map(p=>p[0]);
+  for(let i=0;i<P.length;i++){if(i/(P.length-1)>r)break;line(P[i][0],P[i][1],P[i][0],y+h+40,'rgba(255,255,255,.18)',4)}ctx.restore();
+  const hd=lineChart(t,a,b,GP,x,y,w,h,col,lw,14);if(!hd)return;
+  ctx.save();ctx.translate(hd[0],hd[1]-26);ctx.fillStyle=YL;RR(-30,-22,60,34,10);ctx.fill();ctx.fillStyle='#222';ctx.beginPath();ctx.arc(-16,16,9,0,7);ctx.arc(16,16,9,0,7);ctx.fill();ctx.restore()}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('15 DE ABRIL DE 2013',540,235,56,OR,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,520,'−9 %',380,RD);Lb('EL ORO EN UN SOLO DÍA',540,760,64,'#fff',eout(prog(t,1.6,2.2)));
+  coaster(t,2.2,4.6,90,880,900,300,OR,12);
+  Lb('mayor caída porcentual desde 1983',540,1300,42,YL,eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'DEL RÉCORD AL PRECIPICIO',OR);
+  coaster(t,7.0,11.4,90,340,900,600,OR,12);
+  Lb('1.920,30',330,330,44,YL,eout(prog(t,7.2,7.8)));Lb('récord · sep 2011',330,375,28,'#a9b6e8',eout(prog(t,7.4,8)));
+  Lb('≈ 1.347',830,960,46,RD,eout(prog(t,11,11.6)));Lb('15 abr 2013',830,1005,28,'#a9b6e8',eout(prog(t,11.2,11.8)));
+  Lb('≈ −30 % desde el máximo',540,1100,52,'#fff',eout(prog(t,11.4,12)));
+  Lb('(trayecto ilustrativo, precios aproximados)',540,1180,26,'#a9b6e8',eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'UNA SOLA SESIÓN',OR);
+  bigNum(t,14.2,540,500,'−$125',250,RD);Lb('por onza, la mayor caída diaria en dólares',540,680,38,'#fff',eout(prog(t,15.2,15.8)));
+  card(t,16.6,790,170,YL,'Oro al contado','mínimo ≈ $1.336 · cierre ≈ $1.347',40);
+  card(t,18.2,990,170,CY,'Plata −11,8 %','a $22,81 el mismo día',44);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'DETONANTES CITADOS',OR);
+  card(t,21.6,300,190,YL,'Chipre','rumor de venta de oro del banco central',42);
+  card(t,23.6,540,190,CY,'Fondos cotizados (ETF)','ventas y récord de salidas en febrero',40);
+  card(t,25.4,780,190,OR,'La Fed','cerca de reducir sus compras de bonos',42);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EL NIVEL DE 1.500',OR);
+  const y0=560;hline(y0,YL,5,90,990);Lb('1.500',990,y0-34,44,YL,eout(prog(t,29,29.6)),'right');
+  const pts=[[0,.75],[.15,.7],[.3,.74],[.45,.62],[.55,.5],[.6,.45],[.7,.2],[.85,.1],[1,.02]];
+  lineChart(t,29.4,32.4,pts,90,y0-220,900,620,OR,12,14);
+  Lb('ventas en cadena',760,1090,50,RD,eout(prog(t,32.4,33)));
+  Lb('(esquema ilustrativo)',540,1180,26,'#a9b6e8',eout(prog(t,33.2,33.8)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LA LECCIÓN',OR);
+  card(t,36.4,300,170,YL,'Un refugio también cae','el oro no es inmune a la volatilidad',40);
+  card(t,38.2,520,170,CY,'Los niveles redondos','aceleran el movimiento al romperse',40);
+  card(t,40.0,740,170,OR,'El gap existe','también en el oro: cuida tu stop',42);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=OR;RR(-330,-60,660,120,60);ctx.fill();Lb('RIESGO ANTES QUE ENTRADA',0,0,40,DK)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Define el riesgo antes de entrar','El oro también es volátil',OR,YL)}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('15 ABRIL 2013',540,230,60,OR,1);Lb('−9 %',540,620,340,RD,1);Lb('EL ORO EN UN DÍA',540,930,82,'#fff',1);
+  coaster(99,0,.01,90,1010,900,330,OR,14);coverBtn('VER LA CAÍDA →',OR,DK)}
+</script></body></html>
