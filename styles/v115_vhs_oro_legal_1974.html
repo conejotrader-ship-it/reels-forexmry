@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 46 (2.º uso): televisión retro VHS (líneas de barrido, aberración cromática) — tema: 31 dic 1974, el oro vuelve a ser legal en EE. UU. (60 s).
+const SPEC={name:'ORO1974',hook:'31 DE DICIEMBRE DE 1974: LOS ESTADOUNIDENSES VUELVEN A PODER TENER ORO',dur:60,cta:56,bpm:88,mus:'soft',prog:[[40,'M'],[45,'m'],[38,'M'],[43,'m']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'El 31 de diciembre de 1974 los estadounidenses vuelven a poder tener oro, 41 años después.','El treinta y uno de diciembre de mil novecientos setenta y cuatro, los estadounidenses vuelven a poder tener oro.'],
+ [6.4,13.4,'En 1933 la Orden Ejecutiva 6102 de Roosevelt prohibió acumular oro: el límite era de unas 5 onzas, unos 100 dólares.','En mil novecientos treinta y tres la Orden Ejecutiva seis mil ciento dos de Roosevelt prohibió acumular oro: el límite era de unas cinco onzas, unos cien dólares.'],
+ [13.6,20.4,'Ford firmó en agosto de 1974 la Ley Pública 93-373: tenencia privada permitida desde el 31 de diciembre.','Ford firmó en agosto de mil novecientos setenta y cuatro la ley que permitió la tenencia privada desde el treinta y uno de diciembre.'],
+ [20.6,28.2,'Ese mismo día arrancaron los futuros de oro en COMEX, en Nueva York, y en otras cuatro bolsas de Estados Unidos.','Ese mismo día arrancaron los futuros de oro en COMEX, en Nueva York, y en otras cuatro bolsas de Estados Unidos.'],
+ [28.4,35.0,'Fueron 41 años de prohibición. Desde entonces los ciudadanos pueden tener oro físico y usar contratos estandarizados.','Fueron cuarenta y un años de prohibición. Desde entonces los ciudadanos pueden tener oro físico y usar contratos estandarizados.'],
+ [35.2,43.4,'Hoy, al operar oro en CFD operas la variación del precio, sin recibir oro físico; revisa spread, margen y swap de tu broker.','Hoy, al operar oro en C F D operas la variación del precio, sin recibir oro físico; revisa spread, margen y swap de tu broker.'],
+ [43.6,49.6,'Para tu robot: conoce el instrumento, su historia y sus costos. Educativo, sin garantías.','Para tu robot: conoce el instrumento, su historia y sus costos. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const TB='#12121f',TB2='#1d1b3a',MG='#ff3fa4',CY='#3df0ff',YL='#ffe84a',GD='#ffc83d',DK='#12121f',ACC='#ff3fa4',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,10,24,.97)',subStroke:MG,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:'#fff',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:'#fff',mu:'#b9b6e0',acc:MG,pn:'#24214a',c:[MG,CY,YL,GD]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(255,255,255,.07)';RR(x,y,w,h,8);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.shadowColor=col;ctx.shadowBlur=14;RR(x,y,w,h,8);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,TB2);g.addColorStop(1,TB);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const r=rng(Math.floor(t*12)+3);ctx.save();for(let i=0;i<40;i++){ctx.globalAlpha=.05+r()*.07;ctx.fillStyle='#fff';ctx.fillRect(r()*W,r()*H,40+r()*120,2)}ctx.restore();
+  // banda de tracking que sube
+  const by=H-((t*260)%(H+300));ctx.save();ctx.globalAlpha=.10;ctx.fillStyle='#fff';ctx.fillRect(0,by,W,60);ctx.globalAlpha=.06;ctx.fillRect(0,by+70,W,16);ctx.restore();
+  ctx.fillStyle=MG;ctx.fillRect(0,0,W,10);
+  Lb('PLAY ▶',60,70,34,'#fff',.85,'left');Lb('SP  1974',1020,70,30,'#b9b6e0',.85,'right')};
+function scan(){ctx.save();ctx.globalAlpha=.10;ctx.fillStyle='#000';for(let y=0;y<H;y+=6)ctx.fillRect(0,y,W,2);ctx.restore()}
+function vhs(s,x,y,sz,col,a=1){Lb(s,x-5,y,sz,MG,a*.8);Lb(s,x+5,y,sz,CY,a*.8);Lb(s,x,y,sz,col,a)}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('31 DIC 1974',540,235,60,YL,eout(prog(t,.2,.8)));
+  const k=eback(prog(t,.8,1.5));if(k>.02){ctx.save();ctx.translate(540,640);ctx.scale(k,k);vhs('41 AÑOS',0,0,230,'#fff');ctx.restore()}
+  Lb('sin poder tener oro',540,830,64,GD,eout(prog(t,2,2.6)));
+  Lb('1933 → 1974',540,960,56,CY,eout(prog(t,3,3.6)));
+  Lb('(Estados Unidos, tenencia privada de oro)',540,1050,30,'#b9b6e0',eout(prog(t,4,4.6)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'ORDEN EJECUTIVA 6102',MG);
+  bigNum(t,7.0,540,500,'1933',260,GD);
+  card(t,8.6,700,190,MG,'Roosevelt prohíbe acumular oro','5 de abril de 1933',44);
+  card(t,10.4,930,190,CY,'Límite: unas 5 onzas','≈ US$ 100 de la época',44);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LA LEY DE FORD',MG);
+  bigNum(t,14.2,540,480,'14 AGO',210,YL);Lb('1974 · Ley Pública 93-373',540,640,50,'#fff',eout(prog(t,15.2,15.8)));
+  card(t,16.6,780,190,CY,'Efectiva el 31 de diciembre','tenencia privada permitida',44);
+  Lb('sin fanfarrias: Ford firmó sin ceremonia pública',540,1040,32,'#b9b6e0',eout(prog(t,18.6,19.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'31 DE DICIEMBRE DE 1974',MG);
+  bigNum(t,21.4,540,470,'COMEX',230,GD);Lb('abre futuros de oro',540,640,52,'#fff',eout(prog(t,22.6,23.2)));
+  card(t,24.0,760,170,CY,'+ 4 bolsas de EE. UU.','también abren contratos de oro',42);
+  card(t,25.6,970,170,MG,'Contratos estandarizados','el antecesor de lo que hoy sigues',42);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'41 AÑOS DE PROHIBICIÓN',MG);
+  const k1=eout(prog(t,29.2,30.2));ctx.save();ctx.globalAlpha*=k1;line(120,520,960,520,'#b9b6e0',6);ctx.restore();
+  [['1933','prohibido',120,MG],['1974','permitido',960,CY]].forEach(([y,l,x,c],i)=>{const k=eout(prog(t,29.6+i*1.6,30.2+i*1.6));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,520,34,0,7);ctx.fill();ctx.restore();Lb(y,x,430,64,c,k);Lb(l,x,620,40,'#fff',k)});
+  bigNum(t,31.8,540,860,'41 AÑOS',200,YL);Lb('(cálculo propio: 1974 − 1933)',540,1010,28,'#b9b6e0',eout(prog(t,33,33.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'HOY, EN TU PANTALLA',MG);
+  card(t,36.4,300,170,CY,'Oro en CFD (XAUUSD)','operas la variación del precio',42);
+  card(t,38.2,520,170,YL,'No recibes oro físico','es un contrato con tu broker',42);
+  card(t,40.0,740,170,MG,'Revisa los costos','spread, margen y swap',44);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=MG;RR(-330,-60,660,120,60);ctx.fill();Lb('CONOCE TU INSTRUMENTO',0,0,44,'#fff')});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Conoce el instrumento','Su historia y sus costos',MG,CY)}
+const _dr=drawBlocks;
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]]);scan()}
+function cover(){ST.bg(3);Lb('31 DIC 1974',540,250,64,YL,1);vhs('41',540,640,480,'#fff');vhs('AÑOS',540,960,200,'#fff');Lb('SIN PODER TENER ORO',540,1140,70,GD,1);Lb('EN ESTADOS UNIDOS',540,1240,50,CY,1);coverBtn('VER LA HISTORIA →',MG,'#fff');scan()}
+</script></body></html>
