@@ -51,6 +51,6 @@ Regla (Cristian, 18 oct 2026): cada video nuevo usa un estilo distinto. Elegir s
 | 45 | Libro o enciclopedia | Pasa páginas | Oro y petróleo: cuántos barriles compra una onza (v61_libro_oro_petroleo, escena 128, 21 oct 9:30) |
 | 46 | Televisión retro VHS | Años ochenta | Niveles redondos del oro: por qué atraen órdenes (v62_vhs_niveles_redondos, escena 129, 21 oct 13:00) |
 | 47 | Mapa de calor animado |  | Sesiones del día (Asia, Londres, Nueva York) y el oro (v63_mapacalor_sesiones_oro, escena 130, 21 oct 16:30) |
-| 48 | Burbujas flotantes | Cambian de tamaño | Robot de scalping en noticias y sus defensas (v64_burbujas_scalping_noticias, escena 131, 21 oct 20:00) |
+| 48 | Burbujas flotantes | Cambian de tamaño | Robot de scalping en noticias y sus defensas (v64_burbujas_scalping_noticias, escena 131, 21 oct 20:00); Rachas de pérdidas: 7 seguidas en ≈ 54 % de las series (simulación propia) (v110_burbujas_rachas_perdidas, escena 177, 28 oct 9:30, 2.º uso: burbujas verdes y rojas sobre violeta noche) |
 | 49 | Cámara que desciende por un gráfico gigante |  | Backtest en oro: ticks reales vs velas de 1 minuto (v65_camara_backtest_ticks, escena 132, 21 oct 23:30) |
 | 50 | Pizarra blanca con marcador a mano alzada |  | Mayores compradores de oro 2025: bancos centrales (v66_pizarrablanca_compradores_oro, escena 133, 22 oct 3:00) |

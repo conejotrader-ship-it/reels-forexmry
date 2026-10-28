@@ -1,0 +1,64 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 48 (2.º uso): burbujas flotantes que cambian de tamaño (aciertos verdes, pérdidas rojas) — tema: rachas de pérdidas (60 s).
+const SPEC={name:'RACHAS',hook:'¿CUÁNTAS PÉRDIDAS SEGUIDAS ES NORMAL? 7 EN 200 OPERACIONES',dur:60,cta:56,bpm:100,mus:'soft',prog:[[41,'M'],[38,'m'],[43,'M'],[36,'m']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Con 50 % de aciertos, en 200 operaciones una racha de 7 pérdidas seguidas aparece en más de la mitad de las series.','Con cincuenta por ciento de aciertos, en doscientas operaciones una racha de siete pérdidas seguidas aparece en más de la mitad de las series.'],
+ [6.4,13.4,'Moneda justa y aun así: 5 pérdidas seguidas aparecen en casi 97 de cada 100 series de 200 operaciones.','Moneda justa y aun así: cinco pérdidas seguidas aparecen en casi noventa y siete de cada cien series de doscientas operaciones.'],
+ [13.6,20.4,'Para 7 seguidas, unas 54 de cada 100; para 10 seguidas, unas 9 de cada 100. Simulación propia, cifras aproximadas.','Para siete seguidas, unas cincuenta y cuatro de cada cien; para diez, unas nueve de cada cien. Simulación propia, cifras aproximadas.'],
+ [20.6,28.2,'Con solo 40 % de aciertos: 7 seguidas en unas 91 de cada 100 series y 10 seguidas en unas 38.','Con solo cuarenta por ciento de aciertos: siete seguidas en unas noventa y una de cada cien y diez seguidas en unas treinta y ocho.'],
+ [28.4,35.0,'Lo que importa es el riesgo: con 2 % por operación, 10 pérdidas seguidas restan cerca de 18 %; con 5 %, cerca de 40 %.','Lo que importa es el riesgo: con dos por ciento por operación, diez pérdidas seguidas restan cerca de dieciocho por ciento; con cinco por ciento, cerca de cuarenta.'],
+ [35.2,43.4,'Protección: mide la racha máxima del backtest, reduce el riesgo por operación y revisa si la racha cambia con el mercado.','Protección: mide la racha máxima del backtest, reduce el riesgo por operación y revisa si la racha cambia con el mercado.'],
+ [43.6,49.6,'Las rachas son normales: lo que quiebra cuentas es el tamaño de la posición. Educativo, sin garantías.','Las rachas son normales: lo que quiebra cuentas es el tamaño de la posición. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BG1='#1c1140',BG2='#0e0824',GR='#3ee08f',RD='#ff4d6d',YL='#ffd84d',LV='#b9a6ff',DK='#0e0824',ACC='#b9a6ff',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(14,8,36,.96)',subStroke:LV,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:'#fff',mu:'#a99ad6',acc:LV,pn:'#241758',c:[LV,GR,RD,YL]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(185,166,255,.12)';RR(x,y,w,h,40);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,40);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,BG1);g.addColorStop(1,BG2);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const r=rng(11);for(let i=0;i<14;i++){const x=r()*W,y=(r()*H*1.2+t*(20+r()*30))%H,rr=20+r()*60;ctx.save();ctx.globalAlpha=.07;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y,rr,0,7);ctx.fill();ctx.restore()}
+  ctx.fillStyle=LV;ctx.fillRect(0,0,W,10)};
+// serie ilustrativa: 60 operaciones con racha de 7 pérdidas (índices 24-30)
+const SEQ=(()=>{const r=rng(21);const a=[];for(let i=0;i<60;i++){a.push(r()<.5)}for(let i=21;i<=27;i++)a[i]=false;a[20]=true;a[28]=true;return a})();
+function bubble(x,y,r,win,k,t){if(k<=.02)return;const f=Math.sin(t*2+x*.01+y*.02)*4;ctx.save();ctx.globalAlpha*=Math.min(1,k);ctx.translate(x,y+f);ctx.scale(k,k);
+  const c=win?GR:RD;const g=ctx.createRadialGradient(-r*.3,-r*.3,r*.1,0,0,r);g.addColorStop(0,'#fff');g.addColorStop(.25,c);g.addColorStop(1,win?'#127a49':'#9c1230');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.fill();ctx.restore()}
+function grid(t,t0,n,y0){for(let i=0;i<n;i++){const cx=84+(i%10)*104,cy=y0+Math.floor(i/10)*104;bubble(cx,cy,40,SEQ[i],eback(prog(t,t0+i*.055,t0+i*.055+.5)),t)}}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('SERIE DE 60 OPERACIONES (ilustrativa)',540,235,42,LV,eout(prog(t,.2,.8)));
+  grid(t,.6,60,330);
+  const k=eout(prog(t,4,4.6));if(k>.02){ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=YL;ctx.lineWidth=7;ctx.setLineDash([16,10]);RR(84+1*104-50,330+2*104-50,7*104-8,100,50);ctx.stroke();ctx.restore()}
+  bigNum(t,4.2,540,1090,'7 SEGUIDAS',150,RD);Lb('≈ 54 % de las series de 200 operaciones',540,1210,40,'#fff',eout(prog(t,5,5.6)));
+  Lb('50 % de aciertos · simulación propia',540,1290,28,'#a99ad6',eout(prog(t,5.2,5.8)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'MONEDA JUSTA',LV);
+  bigNum(t,7.0,540,520,'≈ 97 %',250,RD);Lb('de las series tienen 5 pérdidas seguidas',540,700,40,'#fff',eout(prog(t,8,8.6)));
+  card(t,9.4,830,170,GR,'50 % de aciertos','una operación gana o pierde como una moneda',38);
+  card(t,11.0,1040,170,LV,'Serie de 200 operaciones','100.000 repeticiones simuladas',38);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'50 % DE ACIERTOS',LV);
+  barsV(t,14.4,[['5 seguidas',.97,RD,'≈ 97 %'],['7 seguidas',.54,'#ff8a4d','≈ 54 %'],['10 seguidas',.09,YL,'≈ 9 %']],110,360,860,520,50,48);
+  Lb('% de series de 200 operaciones con esa racha',540,1010,32,'#a99ad6',eout(prog(t,17,17.6)));
+  Lb('(cifras aproximadas)',540,1060,28,'#a99ad6',eout(prog(t,18,18.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'CON SOLO 40 % DE ACIERTOS',LV);
+  barsV(t,21.4,[['5 seguidas',.999,RD,'≈ 100 %'],['7 seguidas',.91,'#ff8a4d','≈ 91 %'],['10 seguidas',.38,YL,'≈ 38 %']],110,360,860,520,50,48);
+  Lb('menos aciertos, rachas más largas y más frecuentes',540,1010,32,'#a99ad6',eout(prog(t,25,25.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'LO QUE IMPORTA: EL RIESGO',LV);
+  bigNum(t,29.2,540,470,'−18 %',230,RD);Lb('10 pérdidas seguidas con 2 % de riesgo',540,640,38,'#fff',eout(prog(t,30.2,30.8)));
+  card(t,31.4,760,160,YL,'Con 5 % por operación','10 pérdidas seguidas ≈ −40 %',42);
+  card(t,33.0,950,160,RD,'Con 10 % por operación','10 pérdidas seguidas ≈ −65 %',42);
+  Lb('(cálculo propio, riesgo compuesto)',540,1170,28,'#a99ad6',eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'CÓMO PROTEGER A TU ROBOT',GR);
+  card(t,36.4,300,170,LV,'Mide la racha máxima','de pérdidas en el backtest',42);
+  card(t,38.2,520,170,YL,'Reduce el riesgo','por operación',42);
+  card(t,40.0,740,170,GR,'Revisa si cambia','la racha con el mercado',42);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=LV;RR(-330,-60,660,120,60);ctx.fill();Lb('SOBREVIVE A LA RACHA',0,0,46,DK)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Las rachas son normales','Lo que quiebra es el tamaño',LV,RD)}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('SERIE DE 200 OPERACIONES',540,230,48,LV,1);
+  for(let i=0;i<20;i++){bubble(130+(i%10)*92,340+Math.floor(i/10)*92,34,i>=4&&i<=10?false:(i%3!=0),1,3)}
+  Lb('7 SEGUIDAS',540,780,150,RD,1);Lb('54 %',540,1000,330,YL,1);Lb('¿ES NORMAL?',540,1250,100,'#fff',1);coverBtn('VER LA SIMULACIÓN →',YL,DK)}
+</script></body></html>
