@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 44 (2.º uso): tablero de ajedrez y estrategia — tema: Paulson y la apuesta contra las hipotecas subprime, 2007 (60 s).
+const SPEC={name:'PAULSON',hook:'2007: PAULSON APOSTÓ CONTRA LAS HIPOTECAS Y GANÓ ≈ 15.000 MILLONES',dur:60,cta:56,bpm:96,mus:'soft',prog:[[36,'m'],[41,'M'],[38,'m'],[43,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'En 2007 John Paulson apostó contra las hipotecas subprime y su fondo ganó cerca de 15.000 millones de dólares, según reportes.','En dos mil siete John Paulson apostó contra las hipotecas subprime y su fondo ganó cerca de quince mil millones de dólares, según reportes.'],
+ [6.4,13.4,'Desde 2006 armó fondos con swaps de incumplimiento, seguros que pagan si las hipotecas fallan.','Desde dos mil seis armó fondos con swaps de incumplimiento, seguros que pagan si las hipotecas fallan.'],
+ [13.6,20.4,'Reportes: ≈ 15.000 millones sobre 12.500 millones invertidos; Paulson habría ganado 3.700 millones personalmente.','Reportes: unos quince mil millones sobre doce mil quinientos millones invertidos; Paulson habría ganado tres mil setecientos millones personalmente.'],
+ [20.6,28.2,'La clave fue la asimetría: una prima limitada frente a una ganancia enorme si el mercado se rompía.','La clave fue la asimetría: una prima limitada frente a una ganancia enorme si el mercado se rompía.'],
+ [28.4,35.0,'Pero un gran año no es un método: en 2011 sus fondos Advantage y Advantage Plus perdieron 36 % y 52 %.','Pero un gran año no es un método: en dos mil once sus fondos Advantage y Advantage Plus perdieron treinta y seis por ciento y cincuenta y dos por ciento.'],
+ [35.2,43.4,'Sus activos pasaron de unos 36.000 millones en 2011 a unos 9.000 millones en 2018.','Sus activos pasaron de unos treinta y seis mil millones en dos mil once a unos nueve mil millones en dos mil dieciocho.'],
+ [43.6,49.6,'Para tu robot: evalúa la consistencia en muchos años, no un solo golpe. Educativo, sin garantías.','Para tu robot: evalúa la consistencia en muchos años, no un solo golpe. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const CH='#15171c',CH2='#23262e',IV='#efe6d0',GD='#d4af37',RD='#d9483b',GR='#3fae6a',DK='#15171c',ACC='#d4af37',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(21,23,28,.97)',subStroke:GD,subFill:IV,ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:IV,mu:'#a8a392',acc:GD,pn:'#262a33',c:[GD,GR,RD,'#8fb8ff']});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(239,230,208,.08)';RR(x,y,w,h,14);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,14);ctx.stroke();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=CH;ctx.fillRect(0,0,W,H);ctx.save();ctx.globalAlpha=.07;ctx.fillStyle=IV;for(let r=0;r<12;r++)for(let c=0;c<7;c++){if((r+c)%2==0)ctx.fillRect(c*160-((t*8)%320)+(r%2?0:0),r*160,160,160)}ctx.restore();
+  const g=ctx.createRadialGradient(540,900,200,540,900,1200);g.addColorStop(0,'rgba(21,23,28,0)');g.addColorStop(1,'rgba(10,11,14,.85)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.fillStyle=GD;ctx.fillRect(0,0,W,10)};
+// piezas simples: peón y rey (base en 0,0)
+function pawn(col,s=1){ctx.save();ctx.scale(s,s);ctx.fillStyle=col;ctx.beginPath();ctx.arc(0,-130,34,0,7);ctx.fill();ctx.beginPath();ctx.moveTo(-26,-98);ctx.lineTo(26,-98);ctx.lineTo(20,-60);ctx.lineTo(48,-6);ctx.lineTo(-48,-6);ctx.lineTo(-20,-60);ctx.closePath();ctx.fill();RR(-60,-14,120,20,8);ctx.fill();ctx.restore()}
+function king(col,s=1){ctx.save();ctx.scale(s,s);ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(-34,-150);ctx.lineTo(34,-150);ctx.lineTo(24,-70);ctx.lineTo(56,-6);ctx.lineTo(-56,-6);ctx.lineTo(-24,-70);ctx.closePath();ctx.fill();RR(-70,-16,140,22,8);ctx.fill();
+  ctx.fillRect(-6,-230,12,80);ctx.fillRect(-30,-210,60,12);ctx.beginPath();ctx.arc(0,-168,22,0,7);ctx.fill();ctx.restore()}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('2007 · SUBPRIME',540,235,52,GD,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,520,'≈ $15.000 M',160,GD);Lb('ganó Paulson & Co. con una sola apuesta',540,660,42,IV,eout(prog(t,1.8,2.4)));
+  ctx.save();ctx.translate(330,1100);pawn(GD,2.0);ctx.restore();
+  const tip=eio(prog(t,2.4,3.6));ctx.save();ctx.translate(780,1100);ctx.rotate(tip*1.45);king(RD,2.0);ctx.restore();
+  Lb('contra el mercado hipotecario',540,1260,46,IV,eout(prog(t,4,4.6)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'LA JUGADA',GD);
+  bigNum(t,7.0,540,470,'2006',230,GD);
+  card(t,8.4,640,190,RD,'Fondos para apostar contra','el crédito hipotecario subprime',42);
+  card(t,10.2,870,190,GD,'Instrumento: swaps de incumplimiento','pagan si las hipotecas fallan',38);
+  Lb('(según reportes públicos)',540,1130,28,'#a8a392',eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LOS NÚMEROS REPORTADOS',GD);
+  barsV(t,14.4,[['Invertido',.833,'#8fb8ff','≈ 12.500'],['Ganancia',1,GR,'≈ 15.000']],160,340,760,480,90,46);
+  Lb('millones de US$ en 2007',540,930,34,'#a8a392',eout(prog(t,16.4,17)));
+  card(t,17.4,1000,170,GD,'Paulson, personalmente','≈ US$ 3.700 M (revista Alpha)',42);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LA ASIMETRÍA',GD);
+  barsV(t,21.4,[['Si no pasaba nada',.12,RD,'−prima'],['Si el mercado se rompía',1,GR,'+ enorme']],160,340,760,480,90,44);
+  Lb('(esquema ilustrativo, no a escala)',540,930,30,'#a8a392',eout(prog(t,24,24.6)));
+  Lb('riesgo limitado · premio grande',540,1060,50,IV,eout(prog(t,25,25.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'2011: LA OTRA CARA',RD);
+  barsV(t,29.2,[['Advantage',.36,RD,'−36 %'],['Advantage Plus',.52,'#ff7a5c','−52 %']],160,340,760,480,90,50);
+  Lb('rendimiento de los fondos en 2011',540,930,34,'#a8a392',eout(prog(t,31.6,32.2)));
+  Lb('un gran año no es un método',540,1060,52,GD,eout(prog(t,32.6,33.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'ACTIVOS BAJO GESTIÓN',GD);
+  barsV(t,36.0,[['2011',1,'#8fb8ff','≈ 36.000'],['2018',.25,RD,'≈ 9.000']],160,340,760,480,90,46);
+  Lb('millones de US$',540,930,34,'#a8a392',eout(prog(t,38,38.6)));
+  Lb('en 2020 devolvió el capital externo',540,1060,42,IV,eout(prog(t,39.6,40.2)));
+  Lb('y pasó a ser oficina familiar',540,1120,42,IV,eout(prog(t,40.4,41)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Consistencia, no un solo golpe','Evalúa muchos años',GD,GR)}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('2007 · UNA APUESTA',540,250,60,GD,1);Lb('$15.000',540,540,215,IV,1);Lb('MILLONES',540,730,130,GD,1);Lb('CONTRA TODO EL MERCADO',540,890,62,IV,1);
+  ctx.save();ctx.translate(280,1290);pawn(GD,1.6);ctx.restore();ctx.save();ctx.translate(690,1290);ctx.rotate(.85);king(RD,1.4);ctx.restore();coverBtn('VER LA JUGADA →',GD,DK)}
+</script></body></html>
