@@ -1,0 +1,68 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 42 (2.º uso): dominó en cadena (fichas marfil sobre fieltro verde) — tema: Crisis rusa de 1998 (60 s).
+const SPEC={name:'RUSIA98',hook:'17 DE AGOSTO DE 1998: RUSIA DEJA DE PAGAR Y CAE LA PRIMERA FICHA',dur:60,cta:56,bpm:92,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'El 17 de agosto de 1998 Rusia devalúa el rublo y deja de pagar su deuda interna.','El diecisiete de agosto de mil novecientos noventa y ocho Rusia devalúa el rublo y deja de pagar su deuda interna.'],
+ [6.4,13.4,'Ni tasas de hasta 150 % ni 22.600 millones de dólares del FMI evitaron la caída.','Ni tasas de hasta ciento cincuenta por ciento ni veintidós mil seiscientos millones de dólares del FMI evitaron la caída.'],
+ [13.6,20.4,'El rublo pasó de 6,4 por dólar a cerca de 21 en septiembre: perdió unos dos tercios.','El rublo pasó de seis coma cuatro por dólar a cerca de veintiuno en septiembre: perdió unos dos tercios.'],
+ [20.6,28.2,'Deuda interna sin pago, moratoria de la deuda externa e inflación de 84 % en 1998.','Deuda interna sin pago, moratoria de la deuda externa e inflación de ochenta y cuatro por ciento en mil novecientos noventa y ocho.'],
+ [28.4,35.0,'La onda llegó a Wall Street: LTCM, con 30 dólares de deuda por cada dólar propio, perdió 44 % en agosto.','L T C M, con treinta dólares de deuda por cada dólar propio, perdió cuarenta y cuatro por ciento en agosto.'],
+ [35.2,43.4,'El 23 de septiembre, 14 bancos pusieron unos 3.600 millones de dólares para rescatarlo, con la Reserva Federal de Nueva York como mediadora.','El veintitrés de septiembre, catorce bancos pusieron unos tres mil seiscientos millones de dólares para rescatarlo, con la Fed de Nueva York como mediadora.'],
+ [43.6,49.6,'Para tu robot: en las crisis los activos suben su correlación y caen juntos. Educativo, sin garantías.','En las crisis los activos suben su correlación y caen juntos. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const GB='#0c3526',GL='#14573f',IV='#f6efdc',GD='#f2c14e',RD='#e8503a',BK='#1a1a1a',DK='#082519',ACC='#f2c14e',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(8,37,25,.96)',subStroke:GD,subFill:IV,ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:IV,mu:'#a9c7b8',acc:GD,pn:'#0f4631',c:[GD,'#7fd6a0',RD,'#8fc7ff']});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(246,239,220,.10)';RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,18);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createRadialGradient(540,900,100,540,900,1200);g.addColorStop(0,GL);g.addColorStop(1,GB);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.06;ctx.fillStyle='#fff';const r=rng(5);for(let i=0;i<500;i++){ctx.fillRect(r()*W,r()*H,2,2)}ctx.restore();
+  ctx.fillStyle=GD;ctx.fillRect(0,0,W,10)};
+// ficha de dominó de pie: base en (x,y0), cae hacia la derecha con ángulo th
+function dom(x,y0,w,h,th,col,k){ctx.save();ctx.translate(x+w,y0);ctx.rotate(th);ctx.fillStyle=IV;RR(-w,-h,w,h,12);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();
+  ctx.strokeStyle=BK;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(-w+10,-h/2);ctx.lineTo(-10,-h/2);ctx.stroke();ctx.fillStyle=BK;
+  const pips=(cy,n)=>{const P=[[.5,.5],[.25,.25],[.75,.75],[.25,.75],[.75,.25],[.25,.5],[.75,.5]];const idx=[[0],[1,2],[0,1,2],[1,2,3,4],[0,1,2,3,4],[1,2,3,4,5,6]][n-1];idx.forEach(i=>{ctx.beginPath();ctx.arc(-w+P[i][0]*w,cy+(P[i][1]-.5)*(h/2-24),8,0,7);ctx.fill()})};
+  pips(-h*.75,(k%6)+1);pips(-h*.25,((k*2+1)%6)+1);ctx.restore()}
+function chain(t,t0,labels,cols,x0,y0,sp,w,h){labels.forEach((l,i)=>{const fall=eio(prog(t,t0+i*.75,t0+i*.75+.7));dom(x0+i*sp,y0,w,h,fall*1.35,cols[i],i);
+  Lb(l,x0+i*sp+w/2,y0+50,30,cols[i],eout(prog(t,t0-.5+i*.2,t0+.1+i*.2)))})}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;bigNum(t,.3,540,300,'17 AGO 1998',130,GD);
+  Lb('Rusia deja de pagar su deuda interna',540,430,46,IV,eout(prog(t,1,1.6)));
+  chain(t,2.2,['RUSIA','RUBLO','BONOS','BANCOS','FONDOS'],[RD,GD,'#8fc7ff','#7fd6a0',RD],70,1050,195,110,300);
+  Lb('una ficha tumba a la siguiente',540,1230,44,IV,eout(prog(t,4.6,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'JUNIO – JULIO DE 1998',GD);
+  bigNum(t,7.0,540,520,'150 %',230,RD);Lb('tasa de los bonos GKO en junio',540,690,44,IV,eout(prog(t,8,8.6)));
+  card(t,9.4,820,190,GD,'FMI y Banco Mundial','US$ 22.600 M aprobados el 13 jul',46);
+  card(t,11.0,1050,190,RD,'No bastó','el 17 ago llegó el default interno',46);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL RUBLO POR DÓLAR',GD);
+  axes(100,330,880,640,IV);const pts=[[0,.29],[.22,.29],[.28,.33],[.42,.37],[1,.96]];
+  hline(330+640-.29*640,'#a9c7b8',2,100,980);
+  lineChart(t,14.3,18.2,pts,100,330,880,640,RD,10,16);
+  Lb('14 ago · 6,29',210,1010,34,IV,eout(prog(t,14.4,15)));Lb('17 ago · 6,43',210,1060,34,IV,eout(prog(t,14.6,15.2)));
+  Lb('25 ago · 7,86',460,1010,34,IV,eout(prog(t,16,16.6)));Lb('≈ 21 · 21 sep',800,380,44,RD,eout(prog(t,18,18.6)));
+  Lb('≈ −2/3 de su valor en un mes',540,1170,52,GD,eout(prog(t,18.4,19)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LAS CONSECUENCIAS',GD);
+  bigNum(t,21.4,540,470,'84 %',240,RD);Lb('inflación rusa en 1998',540,640,44,IV,eout(prog(t,22.6,23.2)));
+  card(t,24.0,760,170,GD,'Deuda interna','sin pago el 17 ago de 1998',44);
+  card(t,25.6,970,170,'#8fc7ff','Deuda externa','moratoria declarada',44);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'LA ONDA LLEGA A WALL STREET',GD);
+  bigNum(t,29.2,300,520,'30:1',150,GD);Lb('deuda por cada $1 propio',300,640,30,IV,eout(prog(t,30,30.6)));
+  bigNum(t,30.4,780,520,'−44 %',150,RD);Lb('LTCM en agosto de 1998',780,640,30,IV,eout(prog(t,31.2,31.8)));
+  card(t,32.4,780,170,RD,'Los diferenciales se ampliaron','en vez de cerrarse, como apostaba',40);
+  Lb('(Fed de Nueva York: Long-Term Capital Management)',540,1030,28,'#a9c7b8',eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'EL RESCATE',GD);
+  bigNum(t,36.0,540,480,'23 SEP',210,GD);
+  card(t,37.4,640,170,'#7fd6a0','14 bancos y casas de bolsa','pusieron ≈ US$ 3.600 M',44);
+  card(t,39.2,850,170,GD,'La Fed de Nueva York','reunió a las partes, sin poner dinero',42);
+  Lb('a cambio del 90 % del fondo',540,1110,42,IV,eout(prog(t,41,41.6)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'En crisis, todo cae junto','La correlación sube',GD,RD)}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('17 AGOSTO 1998',540,230,56,GD,1);
+  chain(99,0,['','','','',''],[RD,GD,'#8fc7ff','#7fd6a0',RD],40,520,140,110,260);
+  Lb('EL RUBLO PERDIÓ',540,700,70,IV,1);Lb('2/3',540,1000,400,RD,1);Lb('EN UN MES',540,1250,110,GD,1);coverBtn('VER LA CAÍDA →',GD,DK)}
+</script></body></html>
