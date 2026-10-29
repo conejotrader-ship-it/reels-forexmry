@@ -1,0 +1,90 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:PM;src:url(node_modules/@fontsource/permanent-marker/files/permanent-marker-latin-400-normal.woff2)}
+@font-face{font-family:PH;src:url(node_modules/@fontsource/patrick-hand/files/patrick-hand-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 50 (2.º uso): pizarra blanca con marcador a mano alzada — tema: ATR (Wilder, 1978) y stops que se adaptan a la volatilidad (60 s).
+const SPEC={name:'ATR',hook:'ATR: EL INDICADOR QUE AJUSTA TU STOP A LA VOLATILIDAD DEL ORO',dur:60,cta:56,bpm:104,mus:'soft',prog:[[40,'M'],[45,'m'],[43,'M'],[38,'m']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'ATR: el indicador que ajusta tu stop a la volatilidad del oro.','A T R: el indicador que ajusta tu stop a la volatilidad del oro.'],
+ [6.4,13.4,'Lo creó J. Welles Wilder en su libro de 1978 sobre sistemas técnicos de trading.','Lo creó Welles Wilder en su libro de mil novecientos setenta y ocho sobre sistemas técnicos de trading.'],
+ [13.6,20.4,'Primero, el rango verdadero: el mayor de tres valores, con máximo, mínimo y cierre previo.','Primero, el rango verdadero: el mayor de tres valores, calculados con el máximo, el mínimo y el cierre previo.'],
+ [20.6,28.2,'El ATR es el promedio suavizado de ese rango. Wilder recomendó 14 periodos. Mide volatilidad, no dirección.','El A T R es el promedio suavizado de ese rango. Wilder recomendó catorce periodos. Mide volatilidad, no dirección.'],
+ [28.4,35.0,'Úsalo en tu stop: por ejemplo, dos veces el ATR. En calma se acerca; con volatilidad se aleja. Ilustrativo.','Úsalo en tu stop: por ejemplo, dos veces el A T R. En calma se acerca; con volatilidad se aleja. Ilustrativo.'],
+ [35.2,43.4,'Con un stop más ancho, el lote debe ser menor para arriesgar lo mismo. El ATR ajusta ambos. Ejemplo ilustrativo.','Con un stop más ancho, el lote debe ser menor para arriesgar lo mismo. El A T R ajusta ambos. Ejemplo ilustrativo.'],
+ [43.6,49.6,'Para tu robot: un stop fijo en puntos no se adapta. Pruébalo en demo. Educativo, sin garantías.','Para tu robot: un stop fijo en puntos no se adapta. Pruébalo en demo. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#1b1f2a',ACC='#ffd23f',FAM='Inter',BD='#f6f5ef',INK='#1d2433',BL='#1f5fbf',RDm='#d7263d',GNm='#1f9d55',OR='#e8890c';
+const STY={subFont:'800 42px Inter',subBg:'rgba(27,31,42,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['40px PM','40px PH'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+function bg(t){ctx.fillStyle='#c9ccd2';ctx.fillRect(0,0,W,H);ctx.save();ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=30;ctx.shadowOffsetY=10;RR(40,150,1000,1290,22);ctx.fillStyle=BD;ctx.fill();ctx.restore();
+  ctx.lineWidth=14;ctx.strokeStyle='#9aa0aa';RR(40,150,1000,1290,22);ctx.stroke();
+  ctx.save();ctx.globalAlpha=.05;ctx.fillStyle='#000';const r=rng(3);for(let i=0;i<40;i++){ctx.fillRect(60+r()*900,170+r()*1240,100+r()*160,5)}ctx.restore()}
+function mk(s,x,y,sz,col,a=1,al='center'){T(_s(s),x,y,{font:`${sz}px PM`,fill:col,a,align:al})}
+function ph(s,x,y,sz,col,a=1,al='center'){T(_s(s),x,y,{font:`${sz}px PH`,fill:col,a,align:al})}
+function wob(x1,y1,x2,y2,col,lw,up=1,seed=1){const r=rng(seed*13+5);ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();const n=14,m=up*n;for(let i=0;i<=Math.floor(m);i++){const f=i/n;ctx.lineTo(lerp(x1,x2,f)+(r()-.5)*5,lerp(y1,y2,f)+(r()-.5)*5)}if(m<n){const f=m/n;ctx.lineTo(lerp(x1,x2,f),lerp(y1,y2,f))}ctx.stroke();ctx.restore()}
+function hbar(x,y,w,h,col,up,seed=1){ // barra con relleno rayado dibujado a marcador
+  if(up<=0)return;const ww=w*up;ctx.save();ctx.beginPath();ctx.rect(x,y,ww,h);ctx.clip();ctx.strokeStyle=col;ctx.lineWidth=7;ctx.globalAlpha=.55;for(let i=-h;i<ww+h;i+=16){ctx.beginPath();ctx.moveTo(x+i,y+h);ctx.lineTo(x+i+h,y);ctx.stroke()}ctx.restore();
+  ctx.save();ctx.strokeStyle=col;ctx.lineWidth=6;ctx.lineJoin='round';ctx.strokeRect(x+2,y+2,ww-4,h-4);ctx.restore()}
+function vbar(x,yb,w,h,col,up){if(up<=0)return;const hh=h*up;ctx.save();ctx.beginPath();ctx.rect(x,yb-hh,w,hh);ctx.clip();ctx.strokeStyle=col;ctx.lineWidth=8;ctx.globalAlpha=.55;for(let i=-hh;i<w+hh;i+=18){ctx.beginPath();ctx.moveTo(x+i,yb);ctx.lineTo(x+i+hh,yb-hh);ctx.stroke()}ctx.restore();ctx.save();ctx.strokeStyle=col;ctx.lineWidth=7;ctx.strokeRect(x+3,yb-hh+3,w-6,hh-6);ctx.restore()}
+function hd(t,t0,s,col=BL){mk(s,540,290,58,col,eout(prog(t,t0,t0+.5)));wob(200,330,880,330,col,6,eout(prog(t,t0+.2,t0+.9)),3)}
+function erase(t,t0){const k=prog(t,t0-.3,t0+.3);if(k<=0||k>=1)return;const x=lerp(-200,1280,k);ctx.fillStyle=BD;ctx.fillRect(x-220,160,220,1270)}
+
+Object.assign(ST,{txt:INK,mu:'#555',acc:BL,c:[BL,RDm,GNm,OR],pn:'#fff',w:900});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(255,255,255,.55)';RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=col;RR(x,y,w,h,18);ctx.stroke();ctx.restore()};
+ST.bg=bg;
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  mk('¿CUÁNTO SE MUEVE',540,330,76,INK,eout(prog(t,.2,.9)));mk('EL ORO?',540,440,100,BL,eout(prog(t,.7,1.4)));wob(220,505,860,505,RDm,8,eout(prog(t,1.3,2.2)),2);
+  const k=Math.min(1,eback(prog(t,2.2,3.2))*1.2);if(k>.02){ctx.save();ctx.translate(540,800);ctx.scale(k,k);mk('ATR',0,0,250,OR);ctx.restore()}
+  ph('tu stop puede respirar con el mercado',540,1000,46,INK,eout(prog(t,3.6,4.2)));
+  ph('Average True Range',540,1090,40,'#555',eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'¿QUIÉN LO CREÓ?');
+  mk('1978',540,560,230,BL,Math.min(1,eback(prog(t,7.4,8.4))*2));
+  ph('J. Welles Wilder Jr.',540,760,56,INK,eout(prog(t,9,9.6)));
+  const k=eout(prog(t,10,10.8));ctx.save();ctx.globalAlpha*=k;RR(250,860,580,300,14);ctx.fillStyle='#fff';ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=INK;ctx.stroke();ph('New Concepts in',540,960,44,INK);ph('Technical Trading',540,1020,44,INK);ph('Systems',540,1080,44,INK);ctx.restore();ctx.restore()}
+const Y=p=>1150-(p-3995)*18;
+function cndl(x,o,c,h,l,col,up){const yo=Y(o),yc=Y(c);wob(x,Y(h),x,Y(l),col,7,up,3);ctx.save();ctx.strokeStyle=col;ctx.lineWidth=7;ctx.fillStyle=col+'66';ctx.globalAlpha*=Math.min(1,up*2);ctx.fillRect(x-45,Math.min(yo,yc),90,Math.abs(yo-yc));ctx.strokeRect(x-45,Math.min(yo,yc),90,Math.abs(yo-yc));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'RANGO VERDADERO · TR');
+  cndl(260,3996,4000,4001,3994,INK,eout(prog(t,14.4,15.2)));
+  const k0=eout(prog(t,15.4,16.2));ctx.save();ctx.globalAlpha*=k0;ctx.setLineDash([14,10]);line(150,Y(4000),900,Y(4000),'#555',4);ctx.restore();ph('cierre previo 4.000',620,Y(4000)+40,32,'#555',k0);
+  cndl(640,4008,4024,4030,4005,BL,eout(prog(t,16,17)));
+  const g=eout(prog(t,17.4,18.2));if(g>.02){ph('(precios ILUSTRATIVOS)',540,1260,30,'#555',g)}
+  const k1=eout(prog(t,17.8,18.5));if(k1>.02){wob(800,Y(4030),800,Y(4005),GNm,8,k1,5);ph('H−L = 25',940,Y(4017),38,GNm,k1,'center')}
+  const k2=eout(prog(t,18.4,19.1));if(k2>.02){wob(740,Y(4030),740,Y(4000),RDm,8,k2,6);ph('|H−Cprev| = 30',560,Y(4030)-30,36,RDm,k2,'center')}
+  const k3=eout(prog(t,19,19.7));if(k3>.02){wob(870,Y(4005),870,Y(4000),OR,8,k3,7);ph('5',930,Y(4002),38,OR,k3)}
+  mk('TR = 30  (el mayor)',540,1340,64,RDm,eout(prog(t,19.4,20.1)));ctx.restore()}
+const RG=[140,170,120,210,160,250,190,140,230,180,260,200,150,220];
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'ATR = PROMEDIO SUAVIZADO');
+  const yb=1050;line(80,yb,1000,yb,INK,5);
+  RG.forEach((v,i)=>vbar(100+i*64,yb,40,v*1.6,BL,eout(prog(t,21.4+i*.18,22.2+i*.18))));
+  const U=eio(prog(t,24.6,26.6));if(U>0){let e=RG[0];const P=RG.map(v=>{e=e+(v-e)/6;return e});ctx.save();ctx.strokeStyle=RDm;ctx.lineWidth=10;ctx.lineCap='round';ctx.beginPath();const n=P.length-1,m=U*n;for(let i=0;i<=Math.floor(m);i++){const x=120+i*64,y=yb-P[i]*1.6;i?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke();ctx.restore()}
+  ph('cada barra = rango verdadero (ILUSTRATIVO)',540,1130,32,'#555',eout(prog(t,23.8,24.4)));
+  mk('ATR(14)',540,1260,76,RDm,eout(prog(t,26,26.8)));
+  ph('mide volatilidad, no dirección',540,1350,40,INK,eout(prog(t,26.8,27.4)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'STOP = 2 × ATR · EJEMPLO',OR);
+  const yb=1080,s=13;line(120,yb,960,yb,INK,5);
+  [[240,'CALMA',6,GNm,29.4],[700,'VOLÁTIL',18,RDm,31]].forEach(([cx,n,atr,c,ts])=>{vbar(cx-90,yb,80,atr*s,'#888',eout(prog(t,ts,ts+1.2)));vbar(cx+10,yb,80,atr*2*s,c,eout(prog(t,ts+1.2,ts+2.6)));
+    ph('ATR '+atr,cx-50,yb+50,34,INK,eout(prog(t,ts,ts+.6)));mk('STOP '+atr*2,cx+50,yb-atr*2*s-40,44,c,eout(prog(t,ts+2.4,ts+3)));mk(n,cx,430,52,c,eout(prog(t,ts-.4,ts+.2)))});
+  ph('puntos ILUSTRATIVOS: calma 6 → stop 12 · volátil 18 → stop 36',540,1220,30,'#555',eout(prog(t,33,33.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'MÁS STOP = MENOS LOTE',OR);
+  const yb=1060;line(120,yb,960,yb,INK,5);
+  vbar(220,yb,200,520,GNm,eout(prog(t,36.4,38.2)));vbar(620,yb,200,520/3,RDm,eout(prog(t,38.4,40.2)));
+  mk('LOTE 1,00',320,yb-520-50,52,GNm,eout(prog(t,37.8,38.4)));mk('LOTE 0,33',720,yb-520/3-50,52,RDm,eout(prog(t,39.8,40.4)));
+  ph('stop de 12 puntos',320,yb+55,36,INK,eout(prog(t,36.4,37)));ph('stop de 36 puntos',720,yb+55,36,INK,eout(prog(t,38.4,39)));
+  mk('MISMO RIESGO EN DINERO',540,1230,52,BL,eout(prog(t,40.6,41.2)));ph('ejemplo ILUSTRATIVO · riesgo fijo por operación',540,1310,32,'#555',eout(prog(t,41.4,42)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'PARA TU ROBOT');
+  [['STOP FIJO NO SE ADAPTA',RDm,45],['PRUEBA STOPS POR ATR',GNm,46.6],['PRIMERO EN DEMO',BL,48.2]].forEach(([s,c,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;const y=470+i*230;RR(100,y-70,880,150,22);ctx.fillStyle='#fff';ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=c;ctx.stroke();mk(s,540,y+5,48,c);ctx.restore()});
+  ph('Contenido educativo, no es asesoría financiera',540,1260,32,'#555',eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){bg(2);
+  mk('WILDER · 1978',540,310,66,INK);mk('2 × ATR',540,560,210,BL);wob(180,690,900,690,RDm,9,1,5);
+  mk('UN STOP QUE',540,830,90,INK);mk('RESPIRA',540,980,130,RDm);
+  ph('se adapta a la volatilidad del oro',540,1110,46,'#555');
+  ctx.save();ctx.strokeStyle=OR;ctx.lineWidth=10;ctx.lineCap='round';ctx.beginPath();[[180,1300],[300,1240],[400,1330],[520,1220],[640,1320],[760,1230],[900,1300]].forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.stroke();ctx.restore();
+  coverBtn('VER CÓMO →',ACC,DK)}
+
+</script></body></html>
