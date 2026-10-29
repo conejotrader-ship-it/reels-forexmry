@@ -1,0 +1,66 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:GH;src:url(node_modules/@fontsource/gochi-hand/files/gochi-hand-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 4 (3.er uso): pizarra con tiza — tema: ranking de la demanda mundial de oro 2025 por componente, World Gold Council (60 s). Pizarra negro azulado con tiza de colores y marco de madera.
+const SPEC={name:'DemandaOro2025',hook:'¿QUIÉN COMPRÓ LAS 5.002 TONELADAS DE ORO DE 2025?',dur:60,cta:56,bpm:100,mus:'soft',prog:[[45,'m'],[40,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'En 2025 el mundo demandó unas 5.002 toneladas de oro, un récord, según el World Gold Council.','En dos mil veinticinco el mundo demandó unas cinco mil dos toneladas de oro, un récord, según el World Gold Council.'],
+ [6.4,13.4,'Primero, la joyería: ≈ 1.638 toneladas, 19 % menos. Aun así su valor fue récord: ≈ US$ 172.000 millones.','Primero, la joyería: unas mil seiscientas treinta y ocho toneladas, diecinueve por ciento menos. Aun así su valor fue récord: unos ciento setenta y dos mil millones de dólares.'],
+ [13.6,20.4,'Segundo, barras y monedas: ≈ 1.374 toneladas, 16 % más, el nivel más alto en 12 años.','Segundo, barras y monedas: unas mil trescientas setenta y cuatro toneladas, dieciséis por ciento más, el nivel más alto en doce años.'],
+ [20.6,28.2,'Tercero, bancos centrales: ≈ 863 toneladas, 21 % menos. Cuarto, los ETF: ≈ 801 toneladas de entradas.','Tercero, bancos centrales: unas ochocientas sesenta y tres toneladas, veintiuno por ciento menos. Cuarto, los ETF: unas ochocientas una toneladas de entradas.'],
+ [28.4,35.0,'Quinto, la tecnología: ≈ 323 toneladas, casi igual: electrónica, otros usos industriales y odontología.','Quinto, la tecnología: unas trescientas veintitrés toneladas, casi igual: electrónica, otros usos industriales y odontología.'],
+ [35.2,43.4,'Barras, monedas y ETF suman ≈ 2.175 toneladas de inversión: 84 % más y por encima de la joyería.','Barras, monedas y ETF suman unas dos mil ciento setenta y cinco toneladas de inversión: ochenta y cuatro por ciento más y por encima de la joyería.'],
+ [43.6,49.6,'Para tu robot: la demanda es contexto, no una señal de entrada. Gestiona tu riesgo. Educativo, sin garantías.','Para tu robot: la demanda es contexto, no una señal de entrada. Gestiona tu riesgo. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#10232e',ACC='#ffd95a',FAM='Inter',CH='#f2f0e6',YL='#ffd95a',PK='#ff8fb1',CY='#7fe3ff',GN='#9be86b',OR='#ffa45b';
+const STY={subFont:'800 42px Inter',subBg:'rgba(16,35,46,.97)',subStroke:YL,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['40px GH'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+Object.assign(ST,{txt:CH,mu:'#a8bcc6',acc:YL,c:[YL,CY,GN,PK],pn:'#173543',fam:'GH',w:400});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(255,255,255,.05)';RR(x,y,w,h,14);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.setLineDash([22,6]);RR(x,y,w,h,14);ctx.stroke();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle='#6b4a2b';ctx.fillRect(0,0,W,H);ctx.fillStyle='#4a331d';for(let y=0;y<H;y+=140)ctx.fillRect(0,y,W,6);
+  const g=ctx.createRadialGradient(540,800,200,540,800,1000);g.addColorStop(0,'#1d3b4b');g.addColorStop(1,'#0f2029');ctx.fillStyle=g;RR(40,150,1000,1290,16);ctx.fill();ctx.lineWidth=14;ctx.strokeStyle='#8b6238';ctx.stroke();
+  ctx.save();ctx.globalAlpha=.06;ctx.fillStyle='#fff';const r=rng(4);for(let i=0;i<50;i++)ctx.fillRect(60+r()*900,170+r()*1240,60+r()*200,8);ctx.restore()};
+function ck(s,x,y,sz,col,a=1,al='center'){T(fx(s),x,y,{font:`${sz}px GH`,fill:col,a,align:al,glow:col,gb:2})}
+function cl(x1,y1,x2,y2,col,lw,k=1){if(k<=0)return;ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineCap='round';ctx.globalAlpha*=.92;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(lerp(x1,x2,k),lerp(y1,y2,k));ctx.stroke();ctx.restore()}
+function hb(x,y,w,h,col,k){if(k<=0)return;const ww=w*k;ctx.save();ctx.beginPath();ctx.rect(x,y,ww,h);ctx.clip();ctx.strokeStyle=col;ctx.lineWidth=6;ctx.globalAlpha=.55;for(let i=-h;i<ww+h;i+=14){ctx.beginPath();ctx.moveTo(x+i,y+h);ctx.lineTo(x+i+h,y);ctx.stroke()}ctx.restore();ctx.save();ctx.strokeStyle=col;ctx.lineWidth=5;ctx.lineJoin='round';ctx.strokeRect(x+2,y+2,ww-4,h-4);ctx.restore()}
+function hd(t,t0,s,col=YL){ck(s,540,270,62,col,eout(prog(t,t0,t0+.5)));cl(180,310,900,310,col,5,eout(prog(t,t0+.2,t0+.9)))}
+const RK=[['JOYERÍA (fabricación)',1638,'1.638 t',YL],['BARRAS Y MONEDAS',1374,'1.374 t',GN],['BANCOS CENTRALES',863,'863 t',CY],['ETF Y SIMILARES',801,'801 t',PK],['TECNOLOGÍA',323,'323 t',OR]];
+function rank(t,t0,n){RK.slice(0,n).forEach(([lab,v,tx,c],i)=>{const cur=i==n-1;const k=cur?eout(prog(t,t0+i*0,t0+1.4)):1;const y=430+i*190;ck(lab,70,y,52,CH,cur?eout(prog(t,t0,t0+.4)):1,'left');hb(70,y+38,(v/1638)*620,84,c,k);if(k>.9)ck(tx,70+(v/1638)*620+20,y+82,62,c,1,'left')})}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;ck('DEMANDA MUNDIAL DE ORO · 2025',540,300,50,CY,eout(prog(t,.2,.8)));
+  const k=eback(prog(t,.8,1.6));if(k>.02){ctx.save();ctx.translate(540,640);ctx.scale(k,k);ck('5.002',0,0,300,YL);ctx.restore()}
+  ck('TONELADAS · RÉCORD',540,860,76,CH,eout(prog(t,2,2.6)));
+  ck('¿quién las compró?',540,1010,64,PK,eout(prog(t,3.2,3.8)));
+  ck('fuente: World Gold Council',540,1130,40,'#a8bcc6',eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'N.º 1 · JOYERÍA');rank(t,7.2,1);
+  ck('−19 % vs 2024',540,720,76,PK,eout(prog(t,9.6,10.2)));
+  ck('pero su valor fue récord:',540,860,54,CH,eout(prog(t,10.4,11)));ck('≈ US$ 172.000 millones',540,970,70,YL,eout(prog(t,11,11.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'N.º 2 · BARRAS Y MONEDAS');rank(t,14.4,2);
+  ck('+16 % · nivel más alto en 12 años',540,860,54,GN,eout(prog(t,16.6,17.2)));
+  ck('barras ≈ 1.068 t · monedas oficiales ≈ 171 t',540,960,40,'#a8bcc6',eout(prog(t,17.6,18.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'N.º 3 y 4 · BANCOS Y ETF');rank(t,21.4,3);
+  const k=eout(prog(t,24,24.4));ctx.save();ctx.globalAlpha*=k;const yy=430+3*190;ck(RK[3][0],70,yy,52,CH,1,'left');hb(70,yy+38,(RK[3][1]/1638)*620,84,PK,eout(prog(t,24.4,25.8)));if(t>25.8)ck(RK[3][2],70+(RK[3][1]/1638)*620+20,yy+82,62,PK,1,'left');ctx.restore();
+  ck('bancos centrales: −21 %',540,1250,52,CY,eout(prog(t,26,26.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'N.º 5 · TECNOLOGÍA');rank(t,29.2,5);
+  ck('−1 % · electrónica ≈ 270 t',540,1380,48,OR,eout(prog(t,32,32.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'INVERSIÓN = BARRAS + ETF',GN);
+  ck('1.374 + 801',540,450,100,CH,eout(prog(t,36.2,36.8)));cl(300,520,780,520,CH,6,eout(prog(t,36.8,37.4)));
+  const k=eback(prog(t,37.4,38.4));if(k>.02){ctx.save();ctx.translate(540,670);ctx.scale(k,k);ck('≈ 2.175 t',0,0,150,GN);ctx.restore()}
+  ck('+84 % vs 2024',540,830,64,PK,eout(prog(t,39,39.6)));
+  hb(70,930,(2175/2175)*880,60,GN,eout(prog(t,40,41.2)));ck('inversión',70,910,38,GN,eout(prog(t,40,40.4)),'left');
+  hb(70,1090,(1638/2175)*880,60,YL,eout(prog(t,41.2,42.4)));ck('joyería',70,1070,38,YL,eout(prog(t,41.2,41.6)),'left');ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;hd(t,43.8,'PARA TU ROBOT');
+  [['LA DEMANDA ES CONTEXTO',CY,45],['NO ES SEÑAL DE ENTRADA',PK,46.6],['GESTIONA TU RIESGO',GN,48.2]].forEach(([s,c,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;const y=480+i*230;panel(100,y-70,880,150,c);ck(s,540,y+8,54,c);ctx.restore()});
+  ck('Contenido educativo, no es asesoría financiera',540,1260,32,'#a8bcc6',eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);ck('DEMANDA DE ORO · 2025',540,300,56,CY);ck('5.002',540,560,330,YL);ck('TONELADAS',540,790,100,CH);
+  cl(160,860,920,860,PK,8);ck('¿QUIÉN COMPRÓ MÁS?',540,990,86,PK);
+  [[330,1180],[540,1180],[750,1180],[435,1105],[645,1105]].forEach(([x,y])=>{ctx.save();ctx.translate(x,y);ctx.beginPath();ctx.moveTo(-90,36);ctx.lineTo(-60,-36);ctx.lineTo(60,-36);ctx.lineTo(90,36);ctx.closePath();ctx.fillStyle='rgba(255,217,90,.35)';ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=YL;ctx.stroke();ctx.restore()});
+  coverBtn('VER EL RANKING →',YL,DK)}
+
+</script></body></html>
