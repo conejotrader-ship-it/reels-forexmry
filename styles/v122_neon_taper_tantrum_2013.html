@@ -1,0 +1,72 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 3 (3.er uso): neón synthwave — tema: taper tantrum de 2013 (Bernanke, 22 mayo; Fed sin recorte, 18 sep) y el oro (60 s). Cielo azul noche con sol naranja-rosa y cuadrícula cian.
+const SPEC={name:'TaperTantrum',hook:'2013: BERNANKE HABLÓ Y EL RENDIMIENTO DEL TESORO PASÓ DE 2 % A 3 %',dur:60,cta:56,bpm:108,mus:'soft',prog:[[45,'m'],[41,'M'],[43,'m'],[40,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Mayo de 2013: Bernanke habló y el rendimiento del Tesoro a 10 años pasó de ≈ 2 % a más de 3 %.','Mayo de dos mil trece: Bernanke habló y el rendimiento del Tesoro a diez años pasó de cerca de dos por ciento a más de tres por ciento.'],
+ [6.4,13.4,'Tras la crisis, la Fed llevaba casi cinco años comprando bonos para estimular la economía.','Tras la crisis, la Fed llevaba casi cinco años comprando bonos para estimular la economía.'],
+ [13.6,20.4,'El 22 de mayo de 2013 Bernanke anunció que la Fed empezaría a reducir esas compras más adelante.','El veintidós de mayo de dos mil trece Bernanke anunció que la Fed empezaría a reducir esas compras más adelante.'],
+ [20.6,28.2,'Los inversores vendieron bonos: el rendimiento a 10 años subió de ≈ 2 % en mayo a más de 3 % en diciembre.','Los inversores vendieron bonos: el rendimiento a diez años subió de cerca de dos por ciento en mayo a más de tres por ciento en diciembre.'],
+ [28.4,35.0,'El 18 de septiembre la Fed sorprendió: mantuvo las compras en US$ 85.000 millones al mes. El rendimiento cayó a 2,68 %.','El dieciocho de septiembre la Fed sorprendió: mantuvo las compras en ochenta y cinco mil millones de dólares al mes. El rendimiento cayó a dos coma sesenta y ocho por ciento.'],
+ [35.2,43.4,'Ese día el oro subió hasta ≈ US$ 1.363 y el dólar cayó ≈ 1,1 % frente a una canasta de divisas.','Ese día el oro subió hasta cerca de mil trescientos sesenta y tres dólares y el dólar cayó cerca de uno coma uno por ciento.'],
+ [43.6,49.6,'Para tu robot: el tono de la Fed mueve bonos, dólar y oro. Usa filtros de noticias. Educativo, sin garantías.','Para tu robot: el tono de la Fed mueve bonos, dólar y oro. Usa filtros de noticias. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0b0a24',ACC='#ff4fa3',FAM='Inter',CY='#27f0ff',PK='#ff4fa3',OR='#ff9e3d',YL='#ffe45e',GN='#5dffb0';
+const STY={subFont:'800 42px Inter',subBg:'rgba(11,10,36,.97)',subStroke:CY,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:'#fff',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+Object.assign(ST,{txt:'#fff',mu:'#b6b3ee',acc:CY,c:[CY,PK,YL,GN],pn:'rgba(18,14,60,.92)'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(14,12,48,.9)';RR(x,y,w,h,14);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.shadowColor=col;ctx.shadowBlur=18;RR(x,y,w,h,14);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,1000);g.addColorStop(0,'#090726');g.addColorStop(.7,'#2a0f55');g.addColorStop(1,'#7a1d6e');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const sy=900;const sg=ctx.createLinearGradient(0,sy-300,0,sy);sg.addColorStop(0,'#ffe45e');sg.addColorStop(.5,'#ff9e3d');sg.addColorStop(1,'#ff4fa3');ctx.save();ctx.beginPath();ctx.arc(540,sy,300,Math.PI,0);ctx.clip();ctx.fillStyle=sg;ctx.fillRect(0,sy-300,W,300);ctx.fillStyle='#2a0f55';for(let i=0;i<6;i++){const yy=sy-230+i*40;ctx.fillRect(0,yy,W,4+i*3)}ctx.restore();
+  ctx.fillStyle='#0b0a24';ctx.fillRect(0,sy,W,H-sy);
+  ctx.save();ctx.strokeStyle=CY;ctx.lineWidth=3;ctx.shadowColor=CY;ctx.shadowBlur=10;ctx.globalAlpha=.65;
+  for(let i=-12;i<=12;i++){ctx.beginPath();ctx.moveTo(540+i*40,sy);ctx.lineTo(540+i*220,H);ctx.stroke()}
+  for(let k=0;k<12;k++){const f=((k+t*.5)%12)/12;const y=sy+Math.pow(f,2.2)*(H-sy);ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.fillStyle='rgba(11,10,36,.55)';ctx.fillRect(0,0,W,H)};
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('MAYO DE 2013 · LA FED',540,235,56,YL,eout(prog(t,.2,.8)));
+  const k=eback(prog(t,.8,1.6));if(k>.02){ctx.save();ctx.translate(540,560);ctx.scale(k,k);ctx.shadowColor=PK;ctx.shadowBlur=30;Lb('2 % → 3 %',0,0,160,'#fff');ctx.restore()}
+  Lb('RENDIMIENTO DEL TESORO A 10 AÑOS',540,760,44,CY,eout(prog(t,2.2,2.8)));
+  Lb('solo por unas palabras',540,900,64,PK,eout(prog(t,3.4,4)));
+  Lb('(cifras aproximadas)',540,1010,32,ST.mu,eout(prog(t,4.6,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'ANTES DEL TANTRUM',YL);
+  bigNum(t,7.2,540,500,'≈ 5 AÑOS',180,CY);
+  card(t,8.8,700,190,PK,'La Fed comprando bonos','para estimular la economía',44);
+  card(t,10.6,920,190,YL,'Compras de US$ 85.000 M al mes','según Reuters (sep 2013)',40);
+  Lb('después de la crisis financiera',540,1180,38,ST.mu,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'22 DE MAYO DE 2013',YL);
+  bigNum(t,14.4,540,520,'BERNANKE',140,'#fff');
+  card(t,15.8,700,200,PK,'Anuncia que la Fed reducirá','sus compras de activos más adelante',40);
+  card(t,17.6,930,190,CY,'A eso se le llamó "taper"','reducir gradualmente (tapering)',42);
+  Lb('el mercado lo vio como un shock',540,1190,38,ST.mu,eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LOS BONOS SE VENDEN',YL);
+  panel(60,260,960,820,CY);axes(130,320,820,680,ST.mu);
+  const P=[[0,.15],[.12,.2],[.3,.35],[.5,.55],[.7,.7],[.85,.82],[1,.9]];
+  lineChart(t,21.6,26,P,130,320,820,680,PK,10,22);
+  const k1=eout(prog(t,21.8,22.4));Lb('≈ 2 %',260,760,56,CY,k1);Lb('mayo 2013',260,810,30,ST.mu,k1);
+  const k2=eout(prog(t,26,26.6));Lb('> 3 %',690,350,64,PK,k2);Lb('dic 2013',690,400,30,ST.mu,k2);
+  Lb('trayecto ILUSTRATIVO · solo los hitos son datos',540,1130,28,ST.mu,eout(prog(t,22.6,23.2)));
+  Lb('rendimiento del bono a 10 años',540,1190,36,'#fff',eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'18 DE SEPTIEMBRE DE 2013',YL);
+  bigNum(t,29.2,540,480,'SIN RECORTE',120,YL);
+  card(t,30.4,660,190,CY,'La Fed mantiene las compras','US$ 85.000 millones al mes',44);
+  bigNum(t,32.4,540,1000,'2,68 %',190,PK);Lb('rendimiento a 10 años: −17 pb en el día',540,1160,36,'#fff',eout(prog(t,33.6,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'ESE MISMO DÍA',YL);
+  card(t,36,290,230,YL,'ORO (spot): hasta ≈ US$ 1.363','más de US$ 60 sobre su nivel de la mañana anterior',36);
+  card(t,38.2,570,230,CY,'DÓLAR: −1,1 % frente a una canasta','mínimo desde febrero · EUR/USD ≈ 1,3529',36);
+  card(t,40.4,850,230,PK,'Rendimientos del Tesoro a la baja','la tasa a 10 años cayó 17 pb',38);
+  Lb('fuente: Reuters vía Business Standard',540,1180,30,ST.mu,eout(prog(t,42,42.6)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'El tono de la Fed mueve el oro','Usa filtros de noticias',PK,CY)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(1);Lb('MAYO DE 2013',540,250,64,YL,1);Lb('LA FED',540,430,180,'#fff',1);Lb('SOLO HABLÓ',540,610,150,PK,1);
+  ctx.save();ctx.shadowColor=CY;ctx.shadowBlur=26;Lb('2 % → 3 %',540,900,170,CY,1);ctx.restore();Lb('rendimiento del Tesoro a 10 años',540,1060,44,'#fff',1);
+  Lb('(cifras aproximadas)',540,1130,30,ST.mu,1);
+  coverBtn('VER LA HISTORIA →',PK,'#fff')}
+
+</script></body></html>
