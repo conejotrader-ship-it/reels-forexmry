@@ -1,0 +1,77 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 5 (3.er uso): terminal tipo MetaTrader — tema: correlación entre robots y diversificación, fórmula de Markowitz 1952 (60 s). Ventana gris clásica con gráfico negro.
+const SPEC={name:'CorrelacionRobots',hook:'3 ROBOTS EN EL MISMO ORO: ¿3 APUESTAS O LA MISMA?',dur:60,cta:56,bpm:110,mus:'soft',prog:[[38,'m'],[43,'M'],[40,'m'],[45,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Tres robots en el mismo oro: ¿tres apuestas distintas o la misma tres veces?','Tres robots en el mismo oro: ¿tres apuestas distintas o la misma tres veces?'],
+ [6.4,13.4,'Cada robot es una curva de capital. Si dos suben y bajan juntos, casi no diversifican.','Cada robot es una curva de capital. Si dos suben y bajan juntos, casi no diversifican.'],
+ [13.6,20.4,'La correlación va de menos 1 a 1. Con 1 se mueven igual; con 0 son independientes.','La correlación va de menos uno a uno. Con uno se mueven igual; con cero son independientes.'],
+ [20.6,28.2,'Markowitz, 1952: con tres robots de igual riesgo, el riesgo conjunto es la raíz de (1 + 2ρ) entre 3, veces el individual.','Markowitz, mil novecientos cincuenta y dos: con tres robots de igual riesgo, el riesgo conjunto es la raíz de uno más dos veces la correlación, entre tres, veces el individual.'],
+ [28.4,35.0,'Con ρ = 0,8 el riesgo baja solo ≈ 7 %; con 0,5, ≈ 18 %; con 0,2, ≈ 32 %; con 0, ≈ 42 %.','Con correlación de cero coma ocho el riesgo baja solo cerca de siete por ciento; con cero coma cinco, dieciocho; con cero coma dos, treinta y dos; con cero, cuarenta y dos.'],
+ [35.2,43.4,'Ojo: son cálculos propios con riesgos iguales. La correlación cambia con el tiempo: mídela con tus datos reales.','Ojo: son cálculos propios con riesgos iguales. La correlación cambia con el tiempo: mídela con tus datos reales.'],
+ [43.6,49.6,'Para tu robot: mide la correlación antes de sumar otro. Educativo, sin garantías.','Para tu robot: mide la correlación antes de sumar otro. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0a1020',ACC='#00e5ff',FAM='Inter',CY='#00e5ff',YL='#ffeb3b',RD='#ff5252',GN='#00e676',GR='#d4d0c8';
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,16,32,.97)',subStroke:CY,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+Object.assign(ST,{txt:'#fff',mu:'#9fb4c8',acc:CY,c:[CY,YL,GN,RD],pn:'#0c1a2c'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(8,18,34,.94)';ctx.fillRect(x,y,w,h);ctx.lineWidth=4;ctx.strokeStyle=col;ctx.strokeRect(x,y,w,h);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle='#3a6ea5';ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=GR;ctx.fillRect(30,120,1020,1360);ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.strokeRect(30,120,1020,1360);
+  const g=ctx.createLinearGradient(30,0,1050,0);g.addColorStop(0,'#0a246a');g.addColorStop(1,'#a6caf0');ctx.fillStyle=g;ctx.fillRect(34,124,1012,56);
+  T('MetaTrader 5 — Probador de estrategias',60,152,{font:'800 28px Inter',fill:'#fff',align:'left'});
+  [['✕',1010],['□',960],['–',910]].forEach(([s,x])=>{ctx.fillStyle=GR;ctx.fillRect(x-20,134,36,36);T(s,x-2,153,{font:'800 24px Inter',fill:'#000'})});
+  ctx.fillStyle='#e8e4dc';ctx.fillRect(34,184,1012,44);['Archivo','Ver','Insertar','Gráficos','Herramientas'].forEach((s,i)=>T(s,60+i*160,207,{font:'700 24px Inter',fill:'#222',align:'left'}));
+  ctx.fillStyle='#000';ctx.fillRect(50,246,980,1190);ctx.strokeStyle='rgba(0,230,118,.18)';ctx.lineWidth=2;for(let x=50;x<1030;x+=70){ctx.beginPath();ctx.moveTo(x,246);ctx.lineTo(x,1436);ctx.stroke()}for(let y=246;y<1436;y+=70){ctx.beginPath();ctx.moveTo(50,y);ctx.lineTo(1030,y);ctx.stroke()}
+  T('XAUUSD,H1 · capital',70,268,{font:'700 24px Inter',fill:GN,align:'left'});T('datos ILUSTRATIVOS',1010,268,{font:'700 24px Inter',fill:'#9fb4c8',align:'right'});
+  ctx.fillStyle=GR;ctx.fillRect(34,1438,1012,38);T('Listo',60,1457,{font:'700 22px Inter',fill:'#222',align:'left'})};
+// curvas ILUSTRATIVAS: correlación alta o baja
+function mkCurves(seed,common,n=3,len=60){const r=rng(seed);const base=[];for(let i=0;i<len;i++)base.push((r()-.5)*2);const out=[];for(let c=0;c<n;c++){const rr=rng(seed*7+c*13+1);let v=0;const p=[];for(let i=0;i<len;i++){v+=common*base[i]+(1-common)*((rr()-.5)*2)+.12;p.push(v)}out.push(p)}return out}
+function norm(cs){let lo=1e9,hi=-1e9;cs.forEach(p=>p.forEach(v=>{lo=Math.min(lo,v);hi=Math.max(hi,v)}));return cs.map(p=>p.map((v,i)=>[i/(p.length-1),(v-lo)/(hi-lo)]))}
+const HI=norm(mkCurves(5,.92)),LO=norm(mkCurves(5,.12));
+const CC=[CY,YL,RD];
+function curves(t,t0,t1,data,x,y,w,h,lw=6){data.forEach((p,i)=>lineChart(t,t0+i*.3,t1+i*.3,p,x,y,w,h,CC[i],lw,10))}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  const k=eback(prog(t,.4,1.2));if(k>.02){ctx.save();ctx.translate(540,520);ctx.scale(k,k);Lb('3 ROBOTS',0,0,150,YL);ctx.restore()}
+  Lb('EN EL MISMO ORO',540,720,70,'#fff',eout(prog(t,1.6,2.2)));
+  Lb('¿3 APUESTAS',540,900,96,CY,eout(prog(t,2.8,3.4)));Lb('O LA MISMA?',540,1030,96,RD,eout(prog(t,3.6,4.2)));
+  Lb('(correlación entre robots)',540,1180,34,ST.mu,eout(prog(t,4.6,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;Lb('CURVAS DE CAPITAL · ρ ALTA',540,330,44,YL,eout(prog(t,6.6,7.1)));
+  axes(100,400,880,640,ST.mu);curves(t,7.4,11.4,HI,100,400,880,640);
+  ['ROBOT A','ROBOT B','ROBOT C'].forEach((s,i)=>Lb(s,200+i*300,1110,34,CC[i],eout(prog(t,8+i*.4,8.6+i*.4))));
+  Lb('suben y bajan juntos',540,1220,52,'#fff',eout(prog(t,11.4,12)));
+  Lb('ILUSTRATIVO',540,1300,30,ST.mu,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;Lb('CORRELACIÓN ρ',540,330,56,YL,eout(prog(t,13.8,14.3)));
+  const x0=140,x1=940,y=650;const k=eout(prog(t,14.4,15.4));ctx.save();ctx.globalAlpha*=k;const g=ctx.createLinearGradient(x0,0,x1,0);g.addColorStop(0,GN);g.addColorStop(.5,YL);g.addColorStop(1,RD);ctx.fillStyle=g;RR(x0,y-24,(x1-x0),48,24);ctx.fill();ctx.restore();
+  [[-1,'−1','opuestos'],[0,'0','independientes'],[1,'1','iguales']].forEach(([v,l,d],i)=>{const kk=eout(prog(t,15.6+i*1.2,16.3+i*1.2));if(kk<=.02)return;const x=lerp(x0,x1,(v+1)/2);ctx.save();ctx.globalAlpha*=kk;ctx.beginPath();ctx.arc(x,y,34,0,7);ctx.fillStyle='#000';ctx.fill();ctx.lineWidth=6;ctx.strokeStyle='#fff';ctx.stroke();ctx.restore();Lb(l,x,y,40,'#fff',kk);Lb(d,x,y+90,36,[GN,YL,RD][i],kk)});
+  Lb('con ρ = 1 no hay diversificación',540,980,48,RD,eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;Lb('MARKOWITZ · 1952',540,330,56,YL,eout(prog(t,20.8,21.3)));
+  slide(t,21.6,()=>{panel(60,420,960,330,CY);Lb('3 robots · mismo riesgo σ',540,490,40,ST.mu);Lb('σ conjunto = σ × √((1 + 2ρ) / 3)',540,610,48,'#fff');Lb('"Portfolio Selection", J. of Finance',540,700,30,ST.mu)});
+  card(t,24,810,150,GN,'ρ = 0  →  √(1/3) = 0,58',null,44);card(t,25.4,990,150,RD,'ρ = 1  →  √(3/3) = 1,00',null,44);
+  Lb('cálculo propio con la fórmula de portafolio',540,1220,30,ST.mu,eout(prog(t,26.8,27.4)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;Lb('¿CUÁNTO BAJA EL RIESGO?',540,330,56,YL,eout(prog(t,28.6,29.1)));
+  barsV(t,29.2,[['ρ = 0,8',.07/.45,RD,'−7 %'],['ρ = 0,5',.18/.45,YL,'−18 %'],['ρ = 0,2',.32/.45,CY,'−32 %'],['ρ = 0',.42/.45,GN,'−42 %']],90,420,900,640,26,44);
+  Lb('reducción del riesgo con 3 robots de igual riesgo',540,1190,32,ST.mu,eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;Lb('CURVAS DE CAPITAL · ρ BAJA',540,330,44,GN,eout(prog(t,35.4,35.9)));
+  axes(100,400,880,640,ST.mu);curves(t,36.2,40,LO,100,400,880,640);
+  const k=eout(prog(t,40.2,40.8));Lb('se compensan entre sí',540,1130,52,'#fff',k);
+  Lb('la correlación cambia con el tiempo',540,1230,40,YL,eout(prog(t,41,41.6)));
+  Lb('ILUSTRATIVO',540,1310,30,ST.mu,eout(prog(t,41.6,42.2)));ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;Lb('PARA TU ROBOT',540,330,56,YL,eout(prog(t,43.8,44.3)));
+  [['Mide la correlación',CY,45],['Antes de sumar otro robot',GN,46.4]].forEach(([s,c,ts],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;panel(80,410+i*140,920,110,c);Lb(s,540,465+i*140,46,'#fff');ctx.restore()});
+  robot(300,720,640,eout(prog(t,47.6,48.4)));
+  Lb('Contenido educativo, no es asesoría financiera',540,1390,30,ST.mu,eout(prog(t,48.6,49.2)));ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('¿3 ROBOTS',540,420,148,YL,1);Lb('= 1 SOLO',540,590,150,'#fff',1);Lb('RIESGO?',540,760,150,RD,1);
+  lineChartStatic();Lb('ρ = 0,8 → solo −7 % de riesgo',540,1250,50,CY,1);
+  coverBtn('VER LA CUENTA →',YL,DK)}
+function lineChartStatic(){HI.forEach((p,i)=>{ctx.save();ctx.strokeStyle=CC[i];ctx.lineWidth=7;ctx.lineJoin='round';ctx.beginPath();p.forEach(([u,v],j)=>{const x=140+u*800,y=1180-v*300;j?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();ctx.restore()})}
+
+</script></body></html>
