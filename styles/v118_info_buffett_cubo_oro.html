@@ -1,0 +1,65 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 2 (3.er uso): infografía de tarjetas — tema: Buffett y el cubo de oro, carta de 2011 (60 s). Paleta menta con bloques verde azulado, coral y amarillo.
+const SPEC={name:'BuffettCubo',hook:'TODO EL ORO DEL MUNDO CABRÍA EN UN CUBO DE 21 METROS',dur:60,cta:56,bpm:96,mus:'soft',prog:[[43,'M'],[40,'m'],[45,'M'],[41,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Todo el oro extraído cabría en un cubo de unos 21 metros por lado. Eso calculó Buffett.','Todo el oro extraído cabría en un cubo de unos veintiún metros por lado. Eso calculó Buffett.'],
+ [6.4,13.4,'En su carta de 2011 contó unas 170.000 toneladas de oro: un cubo de unos 68 pies, que cabría en un campo de béisbol.','En su carta de dos mil once contó unas ciento setenta mil toneladas de oro: un cubo de unos sesenta y ocho pies, que cabría en un campo de béisbol.'],
+ [13.6,20.4,'A US$ 1.750 la onza, ese cubo valdría ≈ US$ 9,6 billones. Cifras de entonces.','A mil setecientos cincuenta dólares la onza, ese cubo valdría unos nueve coma seis billones de dólares. Cifras de entonces.'],
+ [20.6,28.2,'Con esa suma, decía, compraría toda la tierra de cultivo de EE. UU., 16 ExxonMobil, y sobraría ≈ US$ 1 billón.','Con esa suma, decía, compraría toda la tierra de cultivo de Estados Unidos, dieciséis ExxonMobil, y sobraría cerca de un billón de dólares.'],
+ [28.4,35.0,'Su idea: la tierra y las empresas producen; el oro solo está ahí. «Puedes acariciar el cubo, pero no responde».','Su idea: la tierra y las empresas producen; el oro solo está ahí. Puedes acariciar el cubo, pero no responde.'],
+ [35.2,43.4,'Ojo: es su opinión. Un análisis de Callan halló que subestimó la tierra agrícola de EE. UU. Son cifras de 2011.','Ojo: es su opinión. Un análisis de Callan halló que subestimó la tierra agrícola de Estados Unidos. Son cifras de dos mil once.'],
+ [43.6,49.6,'Para tu robot: opera con reglas y riesgo definido, no con relatos. Educativo, sin garantías.','Para tu robot: opera con reglas y riesgo definido, no con relatos. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0b3a3f',ACC='#f6c445',FAM='Inter',TL='#0d5c63',CO='#d14b48',MU='#b57d00',VI='#5b4bb7',IK='#10262a';
+const STY={subFont:'800 42px Inter',subBg:'rgba(11,58,63,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+Object.assign(ST,{txt:IK,mu:'#4d6b6e',acc:TL,c:[TL,CO,MU,VI],pn:'#fff'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.shadowColor='rgba(11,58,63,.25)';ctx.shadowBlur=18;ctx.shadowOffsetY=8;ctx.fillStyle='#fff';RR(x,y,w,h,24);ctx.fill();ctx.restore();ctx.save();ctx.fillStyle=col;RR(x,y,22,h,12);ctx.fill();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle='#e6f6ef';ctx.fillRect(0,0,W,H);ctx.save();ctx.globalAlpha=.9;const bl=[[-60,1380,420,220,'#f6c445'],[700,1500,420,200,'#ef6f6c']];bl.forEach(([x,y,w,h,c],i)=>{ctx.fillStyle=c;ctx.save();ctx.translate(x+w/2,y+h/2);ctx.rotate(Math.sin(t*.5+i)*.03+(i%2?.06:-.06));RR(-w/2,-h/2,w,h,36);ctx.fill();ctx.restore()});ctx.restore();
+  ctx.fillStyle='rgba(11,58,63,.06)';for(let i=0;i<14;i++)for(let j=0;j<24;j++){ctx.beginPath();ctx.arc(40+i*80,40+j*80,3,0,7);ctx.fill()}};
+function cube(cx,cy,s,a=1){ctx.save();ctx.globalAlpha*=a;const dx=s*.87,dy=s*.5;
+  const top=[[cx,cy-s-dy],[cx+dx,cy-s],[cx,cy-s+dy],[cx-dx,cy-s]],left=[[cx-dx,cy-s],[cx,cy-s+dy],[cx,cy+dy],[cx-dx,cy]],right=[[cx+dx,cy-s],[cx,cy-s+dy],[cx,cy+dy],[cx+dx,cy]];
+  [[top,'#ffe27a'],[left,'#e0a912'],[right,'#c28a00']].forEach(([p,c])=>{ctx.beginPath();p.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.fillStyle=c;ctx.fill();ctx.lineWidth=5;ctx.strokeStyle='#7a5a00';ctx.lineJoin='round';ctx.stroke()});
+  ctx.fillStyle='rgba(255,255,255,.35)';ctx.beginPath();ctx.moveTo(cx-dx*.7,cy-s*.9);ctx.lineTo(cx-dx*.4,cy-s*.95+dy*.2);ctx.lineTo(cx-dx*.4,cy-s*.4);ctx.lineTo(cx-dx*.7,cy-s*.35);ctx.fill();ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('CARTA DE BUFFETT · 2011',540,230,52,TL,eout(prog(t,.2,.8)));
+  const k=eback(prog(t,.6,1.6));cube(540,820,300*Math.max(k,0),1);
+  Lb('≈ 21 METROS',540,1090,90,CO,eout(prog(t,2.2,2.9)));
+  Lb('por lado: todo el oro extraído',540,1190,44,IK,eout(prog(t,3.2,3.8)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL CÁLCULO DE BUFFETT',TL);
+  cube(300,720,170,eout(prog(t,7,7.8)));
+  card(t,8,860,170,TL,'≈ 170.000 toneladas','todo el oro extraído hasta 2011',44);
+  card(t,9.8,1060,170,CO,'Cubo de ≈ 68 pies por lado','unos 20,7 metros',44);
+  card(t,11.6,260,150,MU,'Cabría en un campo de béisbol',null,40);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'¿CUÁNTO VALDRÍA?',TL);
+  bigNum(t,14.4,540,520,'US$ 1.750',200,MU);Lb('por onza (precio de 2011)',540,700,44,IK,eout(prog(t,15.4,16)));
+  bigNum(t,16.8,540,950,'≈ US$ 9,6',190,CO);Lb('BILLONES en total (12 ceros)',540,1120,48,TL,eout(prog(t,18.2,18.8)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LA "PILA B" DE BUFFETT',TL);
+  card(t,21.6,290,200,TL,'Toda la tierra de cultivo de EE. UU.','≈ 400 millones de acres (según Buffett)',40);
+  card(t,23.2,530,200,CO,'+ 16 ExxonMobil','y aún sobraría dinero',44);
+  card(t,24.8,770,200,MU,'≈ US$ 1 billón de sobra','cifras de 2011',44);
+  Lb('compra hipotética, solo una comparación',540,1060,34,'#4d6b6e',eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'SU ARGUMENTO',TL);
+  slide(t,29.2,()=>{panel(60,300,960,300,TL);Lb('LA TIERRA Y LAS EMPRESAS',560,400,46,IK);Lb('PRODUCEN',560,470,90,TL);Lb('(cosechas, utilidades)',560,550,34,'#4d6b6e')});
+  slide(t,31,()=>{panel(60,640,960,300,CO);Lb('EL ORO',560,740,46,IK);Lb('SOLO ESTÁ AHÍ',560,810,76,CO);Lb('(no genera flujo de caja)',560,890,34,'#4d6b6e')});
+  Lb('"Puedes acariciar el cubo,',540,1060,44,IK,eout(prog(t,32.8,33.4)));Lb('pero no responde"',540,1120,44,IK,eout(prog(t,33.2,33.8)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'OJO CON LOS DATOS',CO);
+  card(t,36.2,290,190,CO,'Es la opinión de Buffett','no una verdad universal',44);
+  card(t,38,520,200,MU,'Callan: subestimó la tierra','≈ 880 millones de acres vs 400',42);
+  card(t,39.8,770,190,TL,'Cifras de 2011','el oro y los precios cambian',44);
+  Lb('el oro también se usa como refugio y diversificador',540,1040,34,'#4d6b6e',eout(prog(t,41.4,42)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Opera con reglas','Riesgo definido, no relatos',CO,TL)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('TODO EL ORO DEL MUNDO',540,230,62,TL,1);
+  cube(540,820,330,1);Lb('EN UN CUBO',540,1090,120,IK,1);
+  Lb('US$ 9,6 BILLONES',540,1230,84,CO,1);Lb('según Buffett · 2011',540,1320,42,'#4d6b6e',1);
+  coverBtn('VER LAS CUENTAS →',DK,'#fff')}
+
+</script></body></html>
