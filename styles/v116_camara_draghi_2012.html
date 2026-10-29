@@ -1,0 +1,73 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 49 (2.º uso): cámara que desciende por un gráfico gigante — tema: Draghi, "whatever it takes", 26 jul 2012 (60 s).
+const SPEC={name:'Draghi2012',hook:'JULIO DE 2012: EL BONO ESPAÑOL ROZÓ EL 7,7 % Y HABLÓ DRAGHI',dur:60,cta:56,bpm:92,mus:'soft',prog:[[43,'m'],[38,'M'],[40,'m'],[45,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'En julio de 2012 el bono español rozó el 7,7 %. Entonces habló Draghi.','En julio de dos mil doce el bono español rozó el siete coma siete por ciento. Entonces habló Draghi.'],
+ [6.4,13.4,'El 25 de julio de 2012 el bono español a 10 años llegó a ≈ 7,7 %; la prima rozó 640 puntos.','El veinticinco de julio de dos mil doce el bono español a diez años llegó a cerca de siete coma siete por ciento; la prima rozó seiscientos cuarenta puntos.'],
+ [13.6,20.4,'El 26 de julio, en Londres, Draghi dijo que el BCE haría lo necesario para preservar el euro: «y créanme, será suficiente».','El veintiséis de julio, en Londres, Draghi dijo que el BCE haría lo necesario para preservar el euro: y créanme, será suficiente.'],
+ [20.6,28.2,'Ese día el bono español bajó del 7 % por primera vez en una semana, y el italiano cayó a 6,1 % desde 6,7 %.','Ese día el bono español bajó del siete por ciento, y el italiano cayó a seis coma uno por ciento desde seis coma siete.'],
+ [28.4,35.0,'El 6 de septiembre el BCE detalló compras de deuda a 1 y 3 años, sin límite, para países que las pidieran.','El seis de septiembre el BCE detalló compras de deuda a uno y tres años, sin límite, para países que las pidieran.'],
+ [35.2,43.4,'El BCE no llegó a activarlo, y en 2017 el bono español rondaba ≈ 1,5 %. Una promesa creíble movió el mercado. Cifras aproximadas.','El BCE no llegó a activarlo, y en dos mil diecisiete el bono español rondaba el uno coma cinco por ciento. Una promesa creíble movió el mercado. Cifras aproximadas.'],
+ [43.6,49.6,'Para tu robot: un anuncio de banco central dispara volatilidad y spread. Gestiona el riesgo. Educativo, sin garantías.','Para tu robot: un anuncio de banco central dispara la volatilidad y el spread. Gestiona el riesgo. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#06121f',ACC='#ffd23f',FAM='Inter',BL='#4aa8ff',RD='#ff5d73',GN='#3ddc97',CY='#2fd6c6',YL='#ffd23f';
+const STY={subFont:'800 42px Inter',subBg:'rgba(6,18,31,.96)',subStroke:BL,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+Object.assign(ST,{txt:'#fff',mu:'#9fc3e6',acc:YL,pn:'rgba(6,18,31,.93)',c:[YL,BL,GN,RD]});
+// mundo: gráfico gigante de rendimientos (trayecto ILUSTRATIVO; solo los hitos son datos)
+const PTS=[];{const r=rng(5);for(let i=0;i<=90;i++){const f=i/90;let v=7.7-6.2*Math.pow(f,.7)+(r()-.5)*.5*(1-f*.6);if(f<.12)v=7.4+(r()-.5)*.5;PTS.push([300+f*4200,260+(v-1)*190])}}
+function bg(t){const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0a2038');g.addColorStop(1,'#040c16');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const k=eio(clamp(t/58));const z=lerp(.7,1.35,k),fx=lerp(700,3700,k),fy=lerp(450,1250,k);
+  ctx.save();ctx.translate(540,820);ctx.scale(z,z);ctx.translate(-fx,-fy);
+  ctx.strokeStyle='rgba(74,168,255,.14)';ctx.lineWidth=2/z;for(let y=0;y<2200;y+=100){ctx.beginPath();ctx.moveTo(-200,y);ctx.lineTo(5000,y);ctx.stroke()}for(let x=0;x<5000;x+=200){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,2200);ctx.stroke()}
+  ctx.lineWidth=14;ctx.lineJoin='round';ctx.strokeStyle=BL;ctx.shadowColor=BL;ctx.shadowBlur=24;ctx.beginPath();PTS.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.stroke();
+  ctx.shadowBlur=0;ctx.lineTo(PTS[PTS.length-1][0],2200);ctx.lineTo(PTS[0][0],2200);ctx.globalAlpha=.1;ctx.fillStyle=BL;ctx.fill();ctx.restore();
+  ctx.fillStyle='rgba(4,12,22,.45)';ctx.fillRect(0,0,W,H)}
+ST.bg=bg;
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('JULIO DE 2012',540,230,60,YL,eout(prog(t,.2,.8)));
+  const k=eback(prog(t,.8,1.5));if(k>.02){ctx.save();ctx.translate(540,640);ctx.scale(k,k);Lb('7,7 %',0,0,330,RD);ctx.restore()}
+  Lb('BONO ESPAÑOL A 10 AÑOS',540,880,64,'#fff',eout(prog(t,2,2.6)));
+  Lb('y entonces habló Draghi',540,1000,56,YL,eout(prog(t,3.2,3.8)));
+  Lb('(cifras aproximadas)',540,1100,32,ST.mu,eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'ANTES DEL DISCURSO · 25 JUL 2012',YL);
+  bigNum(t,7.2,540,480,'≈ 7,7 %',200,RD);
+  card(t,8.6,680,190,BL,'Bono español a 10 años','rendimiento ≈ 7,7 %',44);
+  card(t,10.2,900,190,RD,'Prima de riesgo','≈ 640 puntos básicos',44);
+  card(t,11.6,1120,170,YL,'Italia: 6,7 % ese mismo día','máximo de la semana',42);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LONDRES · 26 DE JULIO DE 2012',YL);
+  slide(t,14.4,()=>{panel(60,300,960,600,BL);Lb('«…el BCE está listo para',540,420,52,'#fff');Lb('hacer lo que sea necesario',540,500,52,YL);Lb('para preservar el euro.',540,580,52,'#fff');Lb('Y créanme, será suficiente.»',540,720,56,YL)});
+  Lb('Mario Draghi, presidente del BCE',540,960,40,ST.mu,eout(prog(t,17.4,18)));
+  Lb('Global Investment Conference',540,1030,34,ST.mu,eout(prog(t,18.2,18.8)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LA REACCIÓN DEL MISMO DÍA',YL);
+  barsV(t,21.6,[['ESP 25 jul',7.7/8,RD,'≈ 7,7'],['ESP 26 jul',6.9/8,GN,'< 7'],['ITA máx.',6.7/8,RD,'6,7'],['ITA 26 jul',6.1/8,GN,'6,1']],90,420,900,620,24,40);
+  Lb('rendimiento a 10 años, en %',540,1180,34,ST.mu,eout(prog(t,25,25.6)));
+  Lb('la barra "< 7" es ILUSTRATIVA: solo se sabe que bajó de 7 %',540,1235,26,ST.mu,eout(prog(t,25.4,26)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'6 DE SEPTIEMBRE DE 2012',YL);
+  bigNum(t,29.2,540,480,'SIN LÍMITE',150,YL);
+  card(t,30.6,670,190,BL,'Compras de deuda pública','bonos a 1 y 3 años',44);
+  card(t,32.2,890,190,GN,'Condición','el país debe pedir ayuda formalmente',40);
+  Lb('el programa se conoce como OMT',540,1150,38,ST.mu,eout(prog(t,33.6,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'EL RESULTADO',YL);
+  panel(60,280,960,760,BL);axes(120,330,860,640,ST.mu);
+  const P=[[0,.95],[.1,.9],[.25,.7],[.45,.45],[.7,.25],[1,.12]];
+  const e=lineChart(t,36.2,41,P,120,330,860,640,BL,10,18);
+  const k1=eout(prog(t,36.4,37));if(k1>.02){Lb('≈ 7,7 %',260,360,46,RD,k1);Lb('jul 2012',260,410,30,ST.mu,k1)}
+  const k2=eout(prog(t,41,41.6));if(k2>.02){Lb('≈ 1,5 %',830,830,52,GN,k2);Lb('2017',830,880,30,ST.mu,k2)}
+  Lb('trayecto ILUSTRATIVO · solo los hitos son datos',540,1100,28,ST.mu,eout(prog(t,37.5,38.1)));
+  Lb('el BCE no llegó a activar el programa',540,1180,40,YL,eout(prog(t,41.8,42.4)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Anuncio = volatilidad y spread','Gestiona tu riesgo',RD,GN)}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){bg(40);Lb('26 JUL 2012',540,250,64,YL,1);Lb('UNA FRASE',540,470,150,'#fff',1);
+  Lb('BAJÓ EL BONO ESPAÑOL',540,640,76,YL,1);Lb('DEL 7 %',540,800,190,RD,1);
+  ctx.save();ctx.lineWidth=16;ctx.strokeStyle=GN;ctx.lineCap='round';ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(180,1000);ctx.lineTo(420,1030);ctx.lineTo(560,1180);ctx.lineTo(900,1330);ctx.stroke();ctx.beginPath();ctx.moveTo(900,1330);ctx.lineTo(820,1320);ctx.moveTo(900,1330);ctx.lineTo(880,1250);ctx.stroke();ctx.restore();
+  coverBtn('VER LA HISTORIA →',YL,DK)}
+
+</script></body></html>
