@@ -1,0 +1,65 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 1 (3.er uso): velas animadas — tema: el Reino Unido abandona el patrón oro, 21 sep 1931 (60 s). Velas marfil y magenta sobre violeta oscuro.
+const SPEC={name:'Libra1931',hook:'1931: EL REINO UNIDO SOLTÓ EL PATRÓN ORO Y LA LIBRA PERDIÓ ≈ 23 %',dur:60,cta:56,bpm:90,mus:'soft',prog:[[41,'m'],[36,'M'],[43,'m'],[38,'m']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'En septiembre de 1931 el Reino Unido soltó el patrón oro. Su libra perdió ≈ 23 %.','En septiembre de mil novecientos treinta y uno el Reino Unido soltó el patrón oro. Su libra perdió cerca de veintitrés por ciento.'],
+ [6.4,13.4,'Con el patrón oro, cada moneda se cambiaba por oro. El 21 de septiembre de 1931 el Reino Unido retiró esa promesa.','Con el patrón oro, cada moneda se cambiaba por oro. El veintiuno de septiembre de mil novecientos treinta y uno el Reino Unido retiró esa promesa.'],
+ [13.6,20.4,'Venía de la Gran Depresión, del colapso del banco austriaco Creditanstalt y de un desempleo masivo.','Venía de la Gran Depresión, del colapso del banco austriaco Creditanstalt y de un desempleo masivo.'],
+ [20.6,28.2,'Entre el segundo y el cuarto trimestre de 1931, el tipo de cambio efectivo de la libra cayó ≈ 23 %.','Entre el segundo y el cuarto trimestre de mil novecientos treinta y uno, el tipo de cambio efectivo de la libra cayó cerca de veintitrés por ciento.'],
+ [28.4,35.0,'En EE. UU., los extranjeros cambiaron dólares por oro y las reservas cayeron; en octubre la Fed subió su tasa de descuento.','En Estados Unidos, los extranjeros cambiaron dólares por oro y las reservas cayeron; en octubre la Fed subió su tasa de descuento.'],
+ [35.2,43.4,'EE. UU. salió del patrón oro en 1933 y Francia en 1936. Quienes devaluaron antes ganaron ventaja en producción y exportaciones.','Estados Unidos salió del patrón oro en mil novecientos treinta y tres y Francia en mil novecientos treinta y seis. Quienes devaluaron antes ganaron ventaja en producción y exportaciones.'],
+ [43.6,49.6,'Para tu robot: un cambio de régimen mueve el precio con saltos. Usa stops y vigila la exposición. Educativo, sin garantías.','Para tu robot: un cambio de régimen mueve el precio con saltos. Usa stops y vigila la exposición. Contenido educativo, sin garantías.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#150d2b',ACC='#ff3d8b',FAM='Inter',IV='#f4efe0',MG='#ff3d8b',CY='#5ee7ff',GD='#ffd166';
+const STY={subFont:'800 42px Inter',subBg:'rgba(21,13,43,.97)',subStroke:MG,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:'#fff',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+Object.assign(ST,{txt:'#fff',mu:'#b9aee0',acc:MG,c:[GD,CY,MG,IV],pn:'rgba(36,22,70,.94)'});
+// velas ILUSTRATIVAS (trayecto): caída de ≈ 23 %
+const CD=[];{const r=rng(31);let p=100;for(let i=0;i<22;i++){const o=p;const dr=(i<4?.1:-1.15)+(r()-.5)*1.6;const c=o+dr;CD.push([o,c,Math.max(o,c)+r()*1.4,Math.min(o,c)-r()*1.4]);p=c}}
+function candles(t,t0,x,y,w,h,n=CD.length,lo=74,hi=104){const bw=w/n;CD.slice(0,n).forEach(([o,c,hh,l],i)=>{const k=eout(prog(t,t0+i*.14,t0+i*.14+.5));if(k<=.02)return;const cx=x+i*bw+bw/2;const Y=v=>y+h-(v-lo)/(hi-lo)*h;const up=c>=o;const col=up?IV:MG;
+  ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(cx,Y(hh));ctx.lineTo(cx,Y(l));ctx.stroke();const bt=Math.min(Y(o),Y(c)),bh=Math.max(6,Math.abs(Y(o)-Y(c)));ctx.fillRect(cx-bw*.34,bt,bw*.68,bh);ctx.restore()})}
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#241646');g.addColorStop(1,'#0e0820');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(185,174,224,.10)';ctx.lineWidth=2;for(let y=0;y<H;y+=96){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  ctx.save();ctx.globalAlpha=.16;const bw=1080/22;CD.forEach(([o,c,hh,l],i)=>{const cx=i*bw+bw/2,Y=v=>1750-(v-70)/34*900;ctx.strokeStyle=ctx.fillStyle=c>=o?IV:MG;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(cx,Y(hh));ctx.lineTo(cx,Y(l));ctx.stroke();ctx.fillRect(cx-16,Math.min(Y(o),Y(c)),32,Math.max(6,Math.abs(Y(o)-Y(c))))});ctx.restore()};
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('LIBRA ESTERLINA · 1931',540,230,56,GD,eout(prog(t,.2,.8)));
+  const k=eback(prog(t,.8,1.6));if(k>.02){ctx.save();ctx.translate(540,560);ctx.scale(k,k);Lb('−23 %',0,0,260,MG);ctx.restore()}
+  Lb('el día que soltó el oro',540,830,70,'#fff',eout(prog(t,2.2,2.8)));
+  Lb('21 DE SEPTIEMBRE DE 1931',540,960,50,CY,eout(prog(t,3.4,4)));
+  candles(t,3,60,1040,960,330);Lb('(trayecto ILUSTRATIVO)',540,1420,28,ST.mu,eout(prog(t,4.8,5.4)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL PATRÓN ORO',GD);
+  card(t,7.2,300,190,CY,'Cada moneda = cantidad fija de oro','la promesa del banco central',42);
+  card(t,9.2,540,190,GD,'Se podía cambiar billetes por oro','a un precio fijo',44);
+  card(t,11,780,200,MG,'21 sep 1931: Reino Unido','retira esa promesa',46);
+  bigNum(t,12,540,1120,'1931',200,IV);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL CONTEXTO',GD);
+  card(t,14.4,300,190,MG,'Gran Depresión','caída de precios y actividad',46);
+  card(t,16,540,190,CY,'Creditanstalt (Austria)','el colapso de un gran banco',44);
+  card(t,17.6,780,190,GD,'Desempleo masivo','presión sobre la economía británica',42);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'TIPO DE CAMBIO EFECTIVO',GD);
+  panel(60,260,960,880,CY);candles(t,21.4,90,300,900,780);
+  const k=eback(prog(t,25.4,26.4));if(k>.02){ctx.save();ctx.translate(780,430);ctx.scale(k,k);Lb('−23 %',0,0,130,MG);ctx.restore()}
+  Lb('2.º → 4.º trimestre de 1931',540,1190,38,'#fff',eout(prog(t,26,26.6)));
+  Lb('solo el −23 % es dato; velas ILUSTRATIVAS',540,1250,28,ST.mu,eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'MIENTRAS TANTO, EN EE. UU.',GD);
+  card(t,29.2,300,190,CY,'Extranjeros cambian dólares por oro','las reservas de oro bajan',40);
+  card(t,31,540,190,MG,'Octubre de 1931','la Fed sube la tasa de descuento',44);
+  card(t,32.8,780,190,GD,'Bancos quebrando','crisis bancaria hasta 1932',44);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'¿QUIÉN SALIÓ Y CUÁNDO?',GD);
+  const y=640;const k0=eout(prog(t,36,37));line(120,y,120+840*k0,y,'#b9aee0',8);
+  [[1931,'Reino Unido',120,MG,36.6],[1933,'EE. UU.',540,CY,38.4],[1936,'Francia',960,GD,40.2]].forEach(([yr,n,x,c,ts])=>{const kk=eback(prog(t,ts,ts+.7));if(kk<=.02)return;ctx.save();ctx.translate(x,y);ctx.scale(kk,kk);ctx.beginPath();ctx.arc(0,0,34,0,7);ctx.fillStyle=c;ctx.fill();ctx.lineWidth=7;ctx.strokeStyle='#fff';ctx.stroke();ctx.restore();Lb(String(yr),x,y-100,70,c,Math.min(1,kk));Lb(n,x,y+95,40,'#fff',Math.min(1,kk))});
+  card(t,41.2,860,200,GD,'Quienes devaluaron antes','ganaron ventaja en producción y exportaciones',36);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Régimen cambia, precio salta','Stops y exposición bajo control',MG,CY)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('21 SEP 1931',540,250,64,GD,1);Lb('LA LIBRA',540,470,170,'#fff',1);Lb('SOLTÓ EL ORO',540,640,120,CY,1);Lb('−23 %',540,900,240,MG,1);
+  candles(99,0,60,1020,960,300);Lb('(velas ILUSTRATIVAS)',540,1370,28,ST.mu,1);
+  coverBtn('VER LA HISTORIA →',MG,'#fff')}
+
+</script></body></html>
