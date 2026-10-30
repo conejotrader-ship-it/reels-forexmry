@@ -1,0 +1,57 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:PF;font-weight:900;src:url(node_modules/@fontsource/playfair-display/files/playfair-display-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 9 (3.er uso): billete verde y crema — tema: hiperinflación alemana de 1923 y el Rentenmark (60 s). Guilloche verde sobre crema, marcos tipo billete.
+const SPEC={name:"Weimar1923",hook:"ALEMANIA 1923: DE 4,2 MARCOS POR DÓLAR A 4,2 BILLONES",dur:60,cta:56,bpm:92,mus:'soft',prog:[[41, 'm'], [36, 'M'], [43, 'm'], [38, 'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Alemania, 1923: de 4,2 marcos por dólar a 4,2 billones.","Alemania, mil novecientos veintitrés: de cuatro coma dos marcos por dólar a cuatro coma dos billones."],[6.4,13.4,"En octubre de 1923 los precios subían ≈ 21 % por día: unos 29.500 % en el mes.","En octubre de mil novecientos veintitrés los precios subían cerca de veintiuno por ciento por día: unos veintinueve mil quinientos por ciento en el mes."],[13.6,20.4,"El oro lo mostraba: un marco oro costaba ≈ 101.000 marcos en julio y 1 billón el 30 de noviembre.","El oro lo mostraba: un marco oro costaba cerca de cien mil marcos en julio y un billón el treinta de noviembre."],[20.6,28.2,"El 15 de noviembre de 1923 llegó el Rentenmark: 1 equivalía a 1 billón de marcos viejos.","El quince de noviembre de mil novecientos veintitrés llegó el Rentenmark: uno equivalía a un billón de marcos viejos."],[28.4,35.0,"Lo respaldaban hipotecas sobre tierras y negocios, valoradas en 3.200 millones de marcos oro.","Lo respaldaban hipotecas sobre tierras y negocios, valoradas en tres mil doscientos millones de marcos oro."],[35.2,43.4,"El 30 de agosto de 1924 el Reichsmark lo reemplazó, a la par. La moneda nueva necesitó un respaldo creíble.","El treinta de agosto de mil novecientos veinticuatro el Reichsmark lo reemplazó, a la par. La moneda nueva necesitó un respaldo creíble."],[43.6,49.6,"Para tu robot: el riesgo de divisa existe. Diversifica y pruébalo en demo. Educativo, sin garantías.","Para tu robot: el riesgo de divisa existe. Diversifica y pruébalo en demo. Contenido educativo."],[49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#1b3d2b',ACC='#b3261e';
+const STY={subFont:'800 42px Inter',subBg:'rgba(27,61,43,.97)',subStroke:'#efe6c9',subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:'#efe6c9',ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px PF','900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+const GRN='#2f6b4a',DG='#1b3d2b',CRM='#efe6c9',BRN='#8a5a2b',RED='#b3261e',GLD='#b8892b';
+Object.assign(ST,{fam:'PF',w:900,mono:true,txt:DG,mu:'#6b6a4f',acc:GRN,c:[GRN,RED,BRN,GLD],pn:'#fbf5e2'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#fbf5e2';RR(x,y,w,h,12);ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=col;ctx.stroke();ctx.lineWidth=2;ctx.strokeStyle=col;RR(x+10,y+10,w-20,h-20,8);ctx.stroke();ctx.restore()};
+function rosette(cx,cy,R,n,col,al){ctx.save();ctx.globalAlpha=al;ctx.strokeStyle=col;ctx.lineWidth=1.6;for(let i=0;i<n;i++){ctx.save();ctx.translate(cx,cy);ctx.rotate(i*Math.PI/n);ctx.beginPath();ctx.ellipse(0,0,R,R*.42,0,0,7);ctx.stroke();ctx.restore()}ctx.restore()}
+ST.bg=t=>{ctx.fillStyle=CRM;ctx.fillRect(0,0,W,H);rosette(180,420,300,40,GRN,.22);rosette(900,1300,330,44,GRN,.22);rosette(540,960,420,50,BRN,.10);
+  ctx.save();ctx.strokeStyle=GRN;ctx.globalAlpha=.16;ctx.lineWidth=2;for(let y=0;y<H;y+=14){ctx.beginPath();for(let x=0;x<=W;x+=20){const yy=y+Math.sin(x*.03+y*.05)*5;x?ctx.lineTo(x,yy):ctx.moveTo(x,yy)}ctx.stroke()}ctx.restore();
+  ctx.lineWidth=14;ctx.strokeStyle=GRN;ctx.strokeRect(24,24,W-48,H-48);ctx.lineWidth=3;ctx.strokeRect(46,46,W-92,H-92)};
+function note(cx,cy,w,h,txt,sub,col){RR(cx-w/2,cy-h/2,w,h,14);ctx.fillStyle='#fbf5e2';ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=col;ctx.stroke();ctx.lineWidth=2;RR(cx-w/2+12,cy-h/2+12,w-24,h-24,8);ctx.stroke();rosette(cx-w/2+70,cy,50,18,col,.5);rosette(cx+w/2-70,cy,50,18,col,.5);Lb(txt,cx,cy-8,txt.length>12?52:60,DG);Lb(sub,cx,cy+50,30,col)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('ALEMANIA · 1923',540,230,56,RED,eout(prog(t,.2,.8)));
+  pop(t,.6,540,500,()=>{note(0,0,800,230,'4,2 MARCOS','por 1 dólar · 1914',GRN)});
+  const k=eout(prog(t,2.2,3));if(k>.02){ctx.save();ctx.globalAlpha*=k;Lb('▼',540,700,80,RED,1);ctx.restore()}
+  pop(t,3,540,950,()=>{note(0,0,900,250,'4,2 BILLONES','de marcos por 1 dólar · fines de 1923',RED)});
+  Lb('1 billón = 10¹² (un millón de millones)',540,1230,36,DG,eout(prog(t,4.4,5)));ctx.restore()}
+function ticker(t,t0,x,y,v0,v1,fmt,sz,col){const k=eio(prog(t,t0,t0+2.2));Lb(fmt(lerp(v0,v1,k)),x,y,sz,col)}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'OCTUBRE DE 1923',RED);
+  bigNum(t,7.2,540,480,'21 %',280,RED);Lb('POR DÍA',540,690,70,DG,eout(prog(t,8.2,8.8)));
+  slide(t,9.4,()=>{panel(60,800,960,300,GRN);Lb('≈ 29.500 %',540,920,120,GRN);Lb('en un solo mes',540,1040,46,DG)});
+  Lb('cifras aproximadas · Papiermark',540,1170,32,ST.mu,eout(prog(t,11.4,12)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'PRECIO DE 1 MARCO ORO',RED);
+  const it=[['JUL 1923','≈ 101.000 marcos',.18,GLD],['SEP 1923','≈ 13 millones',.5,BRN],['30 NOV 1923','1 billón de marcos',1,RED]];
+  it.forEach(([l,v,f,c],i)=>{const k=eout(prog(t,14.4+i*1.6,15.6+i*1.6));if(k<=.02)return;const y=330+i*270;ctx.save();ctx.globalAlpha*=k;Lb(l,100,y,42,DG,1,'left');Lb(v,980,y,38,c,1,'right');ctx.fillStyle=c;RR(100,y+40,800*f*k+20,90,12);ctx.fill();ctx.restore()});
+  Lb('escala logarítmica ILUSTRATIVA · 1 marco oro = 1 marco de oro',540,1190,30,ST.mu,eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'15 NOV 1923 · RENTENMARK',GRN);
+  pop(t,21.4,540,420,()=>{note(0,0,860,200,'1 RENTENMARK','nueva moneda',GRN)});
+  Lb('=',540,600,100,DG,eout(prog(t,23.4,24)));
+  const z='1.000.000.000.000';const k=eout(prog(t,24,26));Lb(z.slice(0,Math.max(1,Math.ceil(z.length*k))),540,760,86,RED,eout(prog(t,23.8,24.4)));
+  Lb('marcos viejos (1 billón)',540,860,48,DG,eout(prog(t,26.2,26.8)));
+  card(t,26.6,980,150,GRN,'US$ 1 = 4,2 Rentenmark',null,46);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'¿QUÉ LO RESPALDABA?',GRN);
+  card(t,29.2,280,200,GRN,'Hipotecas sobre tierras','y sobre negocios',48);
+  bigNum(t,31,540,700,'3.200',230,RED);Lb('millones de marcos oro',540,860,52,DG,eout(prog(t,32,32.6)));
+  card(t,33,1000,150,GLD,'valor de las tierras hipotecadas',null,38);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'DEL RENTENMARK AL REICHSMARK',GRN);
+  const y=620;line(120,y,960,y,DG,8);
+  [[120,'15 NOV 1923','Rentenmark',GRN,36],[960,'30 AGO 1924','Reichsmark · a la par',RED,38]].forEach(([x,d,n,c,ts])=>{const k=eback(prog(t,ts,ts+.7));if(k<=.02)return;ctx.save();ctx.translate(x,y);ctx.scale(k,k);ctx.beginPath();ctx.arc(0,0,34,0,7);ctx.fillStyle=c;ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=DG;ctx.stroke();ctx.restore();Lb(d,x==120?160:900,y-90,40,c,k,x==120?'left':'right');Lb(n,x==120?120:960,y+90,36,DG,k,x==120?'left':'right')});
+  card(t,40,860,200,RED,'La moneda nueva necesitó','un respaldo creíble',44);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'El riesgo de divisa existe','Diversifica y prueba en demo',RED,GRN)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('ALEMANIA · 1923',540,250,60,RED,1);Lb('4,2',540,500,330,GRN,1);Lb('BILLONES',540,720,150,RED,1);Lb('DE MARCOS = 1 DÓLAR',540,860,60,DG,1);
+  note(540,1130,860,220,'1 RENTENMARK','= 1 billón de marcos viejos',GRN);coverBtn('VER LA HISTORIA →',RED,'#fff')}
+
+</script></body></html>
