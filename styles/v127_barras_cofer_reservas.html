@@ -1,0 +1,48 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 10 (3.er uso): tablero de barras a escala — tema: monedas de reserva del FMI (COFER) 4T 2025 (60 s). Negro con barras rojas, doradas y blancas.
+const SPEC={name:"COFER",hook:"RESERVAS MUNDIALES: EL DÓLAR AÚN PESA 56,77 % (FMI, 4T 2025)",dur:60,cta:56,bpm:108,mus:'soft',prog:[[43, 'm'], [38, 'M'], [40, 'm'], [36, 'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Reservas de los bancos centrales: ¿en qué monedas? El dólar aún pesa 56,77 %.","Reservas de los bancos centrales: ¿en qué monedas? El dólar aún pesa cincuenta y seis coma setenta y siete por ciento."],[6.4,13.4,"Según el FMI (COFER), al cuarto trimestre de 2025 las reservas sumaban US$ 13,14 billones.","Según el FMI, en su informe COFER, al cuarto trimestre de dos mil veinticinco las reservas sumaban trece coma catorce billones de dólares."],[13.6,20.4,"Dólar: 56,77 %, solo 0,16 puntos menos que el trimestre anterior. Euro: 20,25 %.","Dólar: cincuenta y seis coma setenta y siete por ciento, solo cero coma dieciséis puntos menos que el trimestre anterior. Euro: veinte coma veinticinco."],[20.6,28.2,"Yen, libra, dólar australiano, dólar canadiense y franco suizo suman juntos 14,90 %.","Yen, libra, dólar australiano, dólar canadiense y franco suizo suman juntos catorce coma noventa por ciento."],[28.4,35.0,"El renminbi pesa 1,95 % y otras monedas, 6,13 %.","El renminbi pesa uno coma noventa y cinco por ciento y otras monedas, seis coma trece."],[35.2,43.4,"Por qué importa: el oro cotiza en dólares, y un dólar fuerte o débil cambia el precio del XAUUSD.","Por qué importa: el oro cotiza en dólares, y un dólar fuerte o débil cambia el precio del X A U U S D."],[43.6,49.6,"Para tu robot: vigila el dólar y prueba en demo. Educativo, sin garantías.","Para tu robot: vigila el dólar y prueba en demo. Contenido educativo."],[49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#070707',ACC='#f2b632';
+const STY={subFont:'800 42px Inter',subBg:'rgba(7,7,7,.97)',subStroke:'#f2b632',subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+const RD='#e63946',GL='#f2b632',WH='#f5f5f5',GY='#8a8a8a';
+Object.assign(ST,{txt:'#fff',mu:'#a9a9a9',acc:GL,c:[GL,RD,WH,GY],pn:'#141414'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#141414';RR(x,y,w,h,8);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();ctx.fillStyle=col;ctx.fillRect(x,y,14,h);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle='#070707';ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(242,182,50,.10)';ctx.lineWidth=2;for(let y=120;y<H;y+=100){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  ctx.fillStyle=GL;ctx.fillRect(0,0,W,12);ctx.fillStyle=RD;ctx.fillRect(0,12,W,8)};
+const SEG=[['USD',56.77,RD],['EUR',20.25,GL],['5 MONEDAS',14.90,WH],['OTRAS',6.13,GY],['CNY',1.95,'#4caf50']];
+function stack(t,t0,x,y,w,h){let acc=0;const k=eio(prog(t,t0,t0+2));SEG.forEach(([n,v,c])=>{const ww=w*v/100*k;ctx.fillStyle=c;ctx.fillRect(x+w*acc/100*k,y,ww,h);acc+=v});ctx.strokeStyle='#fff';ctx.lineWidth=4;ctx.strokeRect(x,y,w*k,h)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('RESERVAS MUNDIALES · FMI',540,230,46,GL,eout(prog(t,.2,.8)));
+  bigNum(t,.6,540,520,'56,77 %',230,RD);Lb('del total está en DÓLARES',540,720,54,'#fff',eout(prog(t,1.8,2.5)));
+  stack(t,2.6,90,860,900,140);Lb('USD',90+900*.28,1045,36,RD,eout(prog(t,4.2,4.8)));Lb('EUR',90+900*.67,1045,36,GL,eout(prog(t,4.4,5)));
+  Lb('cuarto trimestre de 2025',540,1180,38,'#fff',eout(prog(t,4.6,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'CUÁNTO SON LAS RESERVAS',GL);
+  bigNum(t,7.2,540,520,'US$ 13,14',190,GL);Lb('BILLONES (millón de millones)',540,700,46,'#fff',eout(prog(t,8.4,9)));
+  card(t,9.6,860,190,RD,'FMI · COFER · 4T 2025','reservas cambiarias oficiales',44);
+  card(t,11.4,1090,150,GL,'Base: monedas identificadas',null,38);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LAS DOS GRANDES',GL);
+  barsH(t,14.4,[['DÓLAR (USD)',56.77/75,RD,'56,77 %'],['EURO (EUR)',20.25/75,GL,'20,25 %']],90,330,860,260,46);
+  Lb('el dólar bajó 0,16 puntos',540,900,46,'#fff',eout(prog(t,18,18.6)));Lb('(56,93 % → 56,77 %, 3T → 4T 2025)',540,970,36,GL,eout(prog(t,18.6,19.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'EL GRUPO DE CINCO',GL);
+  ['JPY · yen','GBP · libra','AUD · dólar australiano','CAD · dólar canadiense','CHF · franco suizo'].forEach((s,i)=>{const k=eout(prog(t,21.4+i*.7,22+i*.7));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.translate(lerp(-60,0,k),0);panel(100,290+i*130,880,105,WH);Lb(s,150,342+i*130,40,'#fff',1,'left');ctx.restore()});
+  bigNum(t,25.4,540,1060,'14,90 %',160,WH);Lb('en conjunto',540,1190,40,GL,eout(prog(t,26.4,27)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EL RESTO',GL);
+  barsH(t,29.2,[['RENMINBI (CNY)',1.95/75,'#4caf50','1,95 %'],['OTRAS MONEDAS',6.13/75,GY,'6,13 %'],['5 MONEDAS (juntas)',14.90/75,WH,'14,90 %']],90,330,860,220,42);
+  Lb('barras a la misma escala',540,1040,36,'#fff',eout(prog(t,32.4,33)));Lb('suma total = 100 %',540,1100,36,GL,eout(prog(t,33,33.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'POR QUÉ IMPORTA AL ORO',GL);
+  pop(t,36,540,520,()=>{panel(-340,-170,680,340,GL);Lb('XAU / USD',0,-60,110,GL);Lb('el oro cotiza en dólares',0,70,44,'#fff')});
+  card(t,38.2,800,170,RD,'Dólar fuerte o débil','cambia el precio del XAUUSD',44);
+  card(t,40,1010,170,WH,'No es la única variable','tasas, miedo, bancos centrales…',42);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Vigila el dólar','Pruébalo primero en demo',GL,RD)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('RESERVAS MUNDIALES · FMI',540,250,48,GL,1);Lb('EL DÓLAR',540,430,120,'#fff',1);Lb('AÚN MANDA',540,560,120,'#fff',1);Lb('56,77 %',540,830,250,RD,1);
+  stack(99,0,90,1080,900,150);Lb('4T 2025 · reservas cambiarias oficiales',540,1310,38,'#fff',1);coverBtn('VER EL RANKING →',RD,'#fff')}
+
+</script></body></html>
