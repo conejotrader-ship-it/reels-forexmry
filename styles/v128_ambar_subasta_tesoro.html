@@ -1,0 +1,52 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:VT;src:url(node_modules/@fontsource/vt323/files/vt323-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 11 (3.er uso): terminal ámbar sobre negro — tema: cómo funciona la subasta del Tesoro de EE. UU. (60 s). Pantalla ámbar con líneas de barrido y texto tipo terminal.
+const SPEC={name:"Subasta",hook:"SUBASTA DEL TESORO DE EE. UU.: PRECIO ÚNICO DESDE 1998 Y EL STOP-OUT",dur:60,cta:56,bpm:96,mus:'soft',prog:[[38, 'm'], [43, 'm'], [41, 'M'], [36, 'm']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Desde 1998, el Tesoro de EE. UU. subasta su deuda a precio único. Así funciona.","Desde mil novecientos noventa y ocho, el Tesoro de Estados Unidos subasta su deuda a precio único. Así funciona."],[6.4,13.4,"Hay dos tipos de oferta. Competitiva: dices cuánto quieres y qué rendimiento aceptas. Es para instituciones.","Hay dos tipos de oferta. Competitiva: dices cuánto quieres y qué rendimiento aceptas. Es para instituciones."],[13.6,20.4,"No competitiva: aceptas el rendimiento que salga y recibes todo lo pedido, hasta US$ 10 millones.","No competitiva: aceptas el rendimiento que salga y recibes todo lo pedido, hasta diez millones de dólares."],[20.6,28.2,"Primero se adjudican las no competitivas. Luego las competitivas, del menor rendimiento hacia arriba, hasta completar.","Primero se adjudican las no competitivas. Luego las competitivas, del menor rendimiento hacia arriba, hasta completar."],[28.4,35.0,"La última oferta aceptada fija el rendimiento de corte, el stop-out. Todos pagan ese mismo precio.","La última oferta aceptada fija el rendimiento de corte, el stop out. Todos pagan ese mismo precio."],[35.2,43.4,"Ningún postor puede recibir más del 35 % de la oferta. Los resultados se publican tras la subasta.","Ningún postor puede recibir más del treinta y cinco por ciento de la oferta. Los resultados se publican tras la subasta."],[43.6,49.6,"Para tu robot: una subasta puede mover bonos y dólar. Revisa el calendario. Educativo, sin garantías.","Para tu robot: una subasta puede mover bonos y dólar. Revisa el calendario. Contenido educativo."],[49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#0a0600',ACC='#ffb000';
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,6,0,.97)',subStroke:'#ffb000',subFill:'#ffd24a',ctaBg:DK,ctaSub:'#ffd24a',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['40px VT','900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+const AM='#ffb000',AB='#ffd24a',AD='#a86e00',WT='#fff2cc';
+Object.assign(ST,{fam:'VT',w:400,sc:1.32,mono:true,txt:AM,mu:AD,acc:AB,c:[AM,AB,WT,'#ff7b00'],pn:'#120a00'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#120a00';ctx.fillRect(x,y,w,h);ctx.lineWidth=4;ctx.strokeStyle=col;ctx.strokeRect(x,y,w,h);ctx.lineWidth=1.5;ctx.strokeRect(x+8,y+8,w-16,h-16);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle='#0a0600';ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,900,100,540,900,1100);g.addColorStop(0,'rgba(255,176,0,.10)');g.addColorStop(1,'rgba(255,176,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='rgba(0,0,0,.28)';for(let y=0;y<H;y+=6)ctx.fillRect(0,y,W,2);ctx.fillStyle=AM;ctx.fillRect(0,96,W,4);Lb('UST>AUCTION  █',40,56,34,AD,1,'left')};
+function typed(t,t0,s,x,y,sz,col,al='left'){const n=Math.floor((t-t0)*28);if(n<=0)return;const o=s.slice(0,Math.min(s.length,n));Lb(o+((t-t0)*28<s.length&&Math.floor(t*4)%2?'█':''),x,y,sz,col,1,al)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;typed(t,.2,'> SUBASTA DEL TESORO DE EE. UU.',60,230,46,AB);
+  bigNum(t,1,540,560,'PRECIO',230,AM);bigNum(t,1.6,540,760,'ÚNICO',230,AM);
+  slide(t,2.8,()=>{panel(60,930,960,230,AB);Lb('desde noviembre de 1998',540,1010,64,AB);Lb('todos pagan el mismo precio',540,1100,56,WT)});
+  typed(t,4.2,'> rendimiento = oferta mínima aceptada',60,1260,40,AD);ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'DOS TIPOS DE OFERTA',AB);
+  slide(t,7.2,()=>{panel(60,280,960,360,AM);Lb('COMPETITIVA',100,350,72,AB,1,'left');Lb('indicas monto Y rendimiento',100,450,52,AM,1,'left');Lb('para instituciones (TAAPS)',100,540,52,AM,1,'left')});
+  slide(t,10.2,()=>{panel(60,720,960,360,AB);Lb('NO COMPETITIVA',100,790,72,AB,1,'left');Lb('aceptas el rendimiento que salga',100,890,52,AM,1,'left');Lb('individuos vía TreasuryDirect',100,980,52,AM,1,'left')});ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LA NO COMPETITIVA',AB);
+  bigNum(t,14.4,540,500,'US$ 10 M',210,AB);Lb('límite por oferta',540,650,56,WT,eout(prog(t,15.6,16.2)));
+  card(t,16.4,780,170,AM,'Desde US$ 100','en múltiplos de US$ 100',54);
+  card(t,18.2,980,170,AB,'Se adjudica completa','recibes todo lo que pediste',54);ctx.restore()}
+const BIDS=[['3,98 %',20],['4,00 %',25],['4,02 %',25],['4,03 %',20],['4,05 %',30],['4,07 %',20]];
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'EL ORDEN DE ADJUDICACIÓN',AB);
+  Lb('oferta del Tesoro: 100 (unidades ILUSTRATIVAS)',540,260,40,WT,eout(prog(t,21.2,21.8)));
+  let acc=0;BIDS.forEach(([y,v],i)=>{const k=eout(prog(t,22+i*.7,22.8+i*.7));const yy=330+i*130;if(k>.02){ctx.save();ctx.globalAlpha*=k;Lb(y,100,yy+40,60,AM,1,'left');const full=acc+v<=100.1;ctx.fillStyle=i==4?'#ff7b00':(full?AM:AD);ctx.fillRect(330,yy,v*10*k,80);Lb(String(v),330+v*10+20,yy+40,52,WT,1,'left');ctx.restore()}acc+=v});
+  const k2=eout(prog(t,26.4,27.2));if(k2>.02){ctx.save();ctx.globalAlpha*=k2;ctx.setLineDash([16,10]);line(60,330+5*130-20,1020,330+5*130-20,'#ff7b00',6);ctx.restore();Lb('la oferta se completa en 4,05 %',540,330+5*130+60,52,'#ff7b00',k2)}ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'STOP-OUT = RENDIMIENTO DE CORTE',AB);
+  pop(t,29.2,540,480,()=>{panel(-380,-160,760,320,'#ff7b00');Lb('4,05 %',0,-20,180,'#ff7b00');Lb('(ejemplo ILUSTRATIVO)',0,110,42,WT)});
+  ['postor A','postor B','no competitivas'].forEach((s,i)=>{const k=eout(prog(t,31+i*.8,31.6+i*.8));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;panel(80+i*320,780,300,160,AM);Lb(s,230+i*320,830,i==2?32:42,AB);Lb('4,05 %',230+i*320,890,64,WT);ctx.restore()});
+  Lb('todos pagan el mismo precio',540,1060,60,AB,eout(prog(t,33.6,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'EL TOPE DEL 35 %',AB);
+  const k=eio(prog(t,36,38));ctx.save();ctx.lineWidth=60;ctx.strokeStyle='#2a1a00';ctx.beginPath();ctx.arc(540,590,200,0,7);ctx.stroke();ctx.strokeStyle=AM;ctx.lineCap='butt';ctx.beginPath();ctx.arc(540,590,200,-Math.PI/2,-Math.PI/2+Math.PI*2*.35*k);ctx.stroke();ctx.restore();Lb('35 %',540,590,150,AB,eout(prog(t,37,37.8)));
+  card(t,38.4,880,170,AM,'Máximo por postor','sobre el monto de la oferta',54);
+  card(t,40.2,1080,170,AB,'Ej. oferta de US$ 10.000 M','tope ≈ US$ 3.500 M (ILUSTRATIVO)',48);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Revisa el calendario','Pruébalo primero en demo',AM,AB)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('> TESORO DE EE. UU.',540,250,50,AB,1);Lb('¿CÓMO SE FIJA',540,420,100,WT,1);Lb('EL RENDIMIENTO?',540,560,100,AM,1);Lb('4,05 %',540,820,300,'#ff7b00',1);
+  Lb('stop-out · precio único desde 1998',540,1030,52,AB,1);Lb('(ejemplo ILUSTRATIVO)',540,1100,40,AD,1);
+  coverBtn('VER LA SUBASTA →',AM,'#0a0600')}
+
+</script></body></html>
