@@ -1,0 +1,58 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 8 (3.er uso): gráfico de línea con suelo — tema: GVZ, el índice de volatilidad implícita del oro (60 s). Azul noche con línea turquesa y suelo luminoso.
+const SPEC={name:"GVZ",hook:"GVZ: LO QUE EL MERCADO ESPERA QUE SE MUEVA EL ORO EN 30 DÍAS",dur:60,cta:56,bpm:100,mus:'soft',prog:[[38, 'm'], [43, 'M'], [41, 'm'], [45, 'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"GVZ: lo que el mercado espera que se mueva el oro en los próximos 30 días.","G V Z: lo que el mercado espera que se mueva el oro en los próximos treinta días."],[6.4,13.4,"Lo calcula Cboe con opciones del ETF GLD, SPDR Gold Shares, con la metodología del VIX.","Lo calcula Cboe con opciones del ETF G L D, SPDR Gold Shares, con la metodología del VIX."],[13.6,20.4,"Mira 30 días hacia adelante: es volatilidad implícita, lo que el mercado espera, no lo que ya pasó.","Mira treinta días hacia adelante: es volatilidad implícita, lo que el mercado espera, no lo que ya pasó."],[20.6,28.2,"Regla práctica: divide el GVZ entre √12. Con GVZ de 15, ≈ 4,3 % al mes a una desviación estándar. Ilustrativo.","Regla práctica: divide el G V Z entre la raíz de doce. Con G V Z de quince, cerca de cuatro coma tres por ciento al mes, a una desviación estándar. Ilustrativo."],[28.4,35.0,"Es una expectativa, no una garantía: el oro puede moverse más o menos. Implícita no es realizada.","Es una expectativa, no una garantía: el oro puede moverse más o menos. Implícita no es realizada."],[35.2,43.4,"Si el GVZ sube, el mercado espera más movimiento: stops más holgados y lote menor. Si baja, al revés.","Si el G V Z sube, el mercado espera más movimiento: stops más holgados y lote menor. Si baja, al revés."],[43.6,49.6,"Para tu robot: ajusta el riesgo a la volatilidad. Pruébalo en demo. Educativo, sin garantías.","Para tu robot: ajusta el riesgo a la volatilidad. Pruébalo en demo. Contenido educativo."],[49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#050c1d',ACC='#19e3d1';
+const STY={subFont:'800 42px Inter',subBg:'rgba(5,12,29,.97)',subStroke:'#19e3d1',subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+const TQ='#19e3d1',BL2='#4f8cff',OR='#ffb347',PK='#ff6b8b';
+Object.assign(ST,{txt:'#fff',mu:'#8aa3c9',acc:TQ,c:[TQ,OR,PK,BL2],pn:'rgba(14,34,70,.95)'});
+const FL=1330;
+const WAV=[[0,.45],[.08,.5],[.16,.42],[.24,.58],[.32,.5],[.4,.66],[.48,.55],[.56,.72],[.64,.6],[.72,.8],[.8,.66],[.9,.86],[1,.7]];
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0b1d3f');g.addColorStop(1,'#050c1d');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.16;const P=pathPts(WAV,0,520,W,700);ctx.strokeStyle=TQ;ctx.lineWidth=8;ctx.beginPath();P.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.stroke();ctx.restore();
+  const f=ctx.createLinearGradient(0,FL,0,H);f.addColorStop(0,'rgba(25,227,209,.22)');f.addColorStop(1,'rgba(25,227,209,0)');ctx.fillStyle=f;ctx.fillRect(0,FL,W,H-FL);ctx.fillStyle=TQ;ctx.fillRect(0,FL-3,W,6)};
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('CBOE · ÍNDICE DE VOLATILIDAD DEL ORO',540,230,38,TQ,eout(prog(t,.2,.8)));
+  bigNum(t,.6,540,520,'GVZ',300,'#fff');Lb('próximos 30 días',540,720,64,OR,eout(prog(t,2,2.7)));
+  lineChart(t,2.6,5.4,WAV,90,800,900,420,TQ,12,18);Lb('(trayecto ILUSTRATIVO)',540,1260,28,ST.mu,eout(prog(t,4.8,5.4)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'¿DE DÓNDE SALE?',TQ);
+  card(t,7.2,290,180,TQ,'Lo calcula Cboe','la bolsa de opciones de Chicago',44);
+  card(t,9,520,180,OR,'Opciones del ETF GLD','SPDR Gold Shares',44);
+  card(t,10.8,750,180,BL2,'Misma metodología del VIX','aplicada al oro',44);
+  bigNum(t,12,540,1120,'GVZ',170,TQ);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'IMPLÍCITA, NO REALIZADA',TQ);
+  const y=620;const k0=eout(prog(t,14.4,15.2));line(80,y,80+920*k0,y,'#8aa3c9',8);
+  Lb('PASADO',260,y-80,44,PK,eout(prog(t,15,15.6)));Lb('lo que ya pasó',260,y+70,32,ST.mu,eout(prog(t,15.4,16)));Lb('volatilidad realizada',260,y+120,34,PK,eout(prog(t,15.8,16.4)));
+  const kh=eback(prog(t,16.4,17.2));if(kh>.02){ctx.save();ctx.translate(540,y);ctx.scale(kh,kh);ctx.beginPath();ctx.arc(0,0,32,0,7);ctx.fillStyle='#fff';ctx.fill();ctx.restore();Lb('HOY',540,y-80,44,'#fff',kh)}
+  Lb('PRÓXIMOS 30 DÍAS',810,y-80,32,TQ,eout(prog(t,17.4,18)));Lb('lo que espera el mercado',810,y+70,32,ST.mu,eout(prog(t,17.8,18.4)));Lb('volatilidad implícita',810,y+120,34,TQ,eout(prog(t,18.2,18.8)));
+  card(t,19,900,170,TQ,'El GVZ es la parte de la derecha',null,40);ctx.restore()}
+function cone(t,t0,cx,cy,len,hh,col){const k=eout(prog(t,t0,t0+1.6));if(k<=0)return;ctx.save();ctx.globalAlpha*=.3;ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+len*k,cy-hh*k);ctx.lineTo(cx+len*k,cy+hh*k);ctx.closePath();ctx.fill();ctx.restore();ctx.save();ctx.strokeStyle=col;ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+len*k,cy-hh*k);ctx.moveTo(cx,cy);ctx.lineTo(cx+len*k,cy+hh*k);ctx.stroke();ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'UNA REGLA PRÁCTICA',TQ);
+  slide(t,21.4,()=>{Lb('GVZ ÷ √12',540,330,110,'#fff')});
+  bigNum(t,23,540,560,'15 → ≈ 4,3 %',120,OR);Lb('al mes · ≈ 1 desviación estándar (≈ 68 %)',540,670,34,'#fff',eout(prog(t,24.2,24.8)));
+  cone(t,24.4,160,1000,760,200,TQ);Lb('hoy',160,1160,34,'#fff',eout(prog(t,24.6,25.2)));Lb('+4,3 %',840,770,34,TQ,eout(prog(t,25.8,26.4)));Lb('−4,3 %',840,1230,34,TQ,eout(prog(t,25.8,26.4)));
+  Lb('ejemplo ILUSTRATIVO · cálculo propio',540,1270,30,ST.mu,eout(prog(t,26.4,27)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EXPECTATIVA ≠ GARANTÍA',TQ);
+  const x=90,y=330,w=900,h=600;panel(60,260,960,760,BL2);cone(t,29,x,y+h/2+40,w,160,TQ);
+  const PA=[[0,.5],[.1,.56],[.2,.52],[.3,.64],[.4,.58],[.5,.7],[.6,.83],[.7,.9],[.8,.78],[.9,.6],[1,.45]];
+  lineChart(t,30.2,34,PA,x,y+20,w,h,OR,10);Lb('trayecto ILUSTRATIVO',540,1070,32,ST.mu,eout(prog(t,30.6,31.2)));
+  const k=eback(prog(t,32.6,33.4));if(k>.02){ctx.save();ctx.translate(560,390);ctx.scale(k,k);Lb('¡se sale del cono!',0,0,40,PK);ctx.restore()}
+  Lb('a veces el oro se mueve más de lo esperado',540,1160,36,'#fff',eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'CÓMO USARLO',TQ);
+  slide(t,36,()=>{panel(60,280,960,400,PK);Lb('GVZ SUBE ▲',100,350,56,PK,1,'left');Lb('se espera más movimiento',100,450,40,'#fff',1,'left');Lb('stops más holgados · lote menor',100,540,40,OR,1,'left');Lb('mismo riesgo en dinero',100,620,32,ST.mu,1,'left')});
+  slide(t,39.2,()=>{panel(60,760,960,400,TQ);Lb('GVZ BAJA ▼',100,830,56,TQ,1,'left');Lb('se espera menos movimiento',100,930,40,'#fff',1,'left');Lb('stops más ajustados',100,1020,40,OR,1,'left');Lb('sin olvidar los saltos por noticias',100,1100,32,ST.mu,1,'left')});
+  Lb('idea educativa, no una regla fija',540,1250,32,ST.mu,eout(prog(t,41.8,42.4)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Riesgo según la volatilidad','Pruébalo primero en demo',TQ,OR)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('GVZ · CBOE · 30 DÍAS',540,250,52,TQ,1);Lb('¿CUÁNTO SE',540,440,110,'#fff',1);Lb('MOVERÁ EL',540,570,110,'#fff',1);Lb('ORO?',540,740,200,OR,1);
+  lineChart(99,0,2,[[0,.3],[.2,.45],[.4,.4],[.6,.6],[.8,.55],[1,.8]],90,900,900,380,TQ,14,20);
+  Lb('GVZ 15 → ≈ 4,3 % al mes',540,1380,50,'#fff',1);coverBtn('VER CÓMO SE LEE →',TQ,'#05202a')}
+
+</script></body></html>

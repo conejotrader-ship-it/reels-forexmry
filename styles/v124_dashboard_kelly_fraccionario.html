@@ -1,0 +1,54 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 7 (3.er uso): dashboard con indicadores — tema: Kelly completo, medio Kelly y la regla del 1 % (60 s). Azul marino con medidores cian, verde, naranja y rojo.
+const SPEC={name:"Kelly1",hook:"KELLY COMPLETO, MEDIO KELLY O REGLA DEL 1 %: ¿CUÁNTO ARRIESGAR?",dur:60,cta:56,bpm:104,mus:'soft',prog:[[40, 'm'], [45, 'M'], [43, 'm'], [47, 'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Kelly completo, medio Kelly o regla del 1 %: ¿cuánto arriesgar por operación?","Kelly completo, medio Kelly o regla del uno por ciento: ¿cuánto arriesgar por operación?"],[6.4,13.4,"John Kelly, de Bell Labs, publicó su criterio en 1956. Maximiza el crecimiento a largo plazo si conoces tu ventaja.","John Kelly, de Bell Labs, publicó su criterio en mil novecientos cincuenta y seis. Maximiza el crecimiento a largo plazo si conoces tu ventaja."],[13.6,20.4,"El problema: tu ventaja se estima con error, y apostar de más dispara el riesgo de ruina.","El problema: tu ventaja se estima con error, y apostar de más dispara el riesgo de ruina."],[20.6,28.2,"Medio Kelly conserva cerca del 75 % del crecimiento teórico con cerca del 25 % de la varianza. Es un modelo, no una garantía.","Medio Kelly conserva cerca del setenta y cinco por ciento del crecimiento teórico con cerca del veinticinco por ciento de la varianza. Es un modelo, no una garantía."],[28.4,35.0,"La regla del 1 %: arriesga cerca del 1 % del capital en cada operación. Simple y fija.","La regla del uno por ciento: arriesga cerca del uno por ciento del capital en cada operación. Simple y fija."],[35.2,43.4,"Diez pérdidas seguidas: con 1 % pierdes ≈ 9,6 %; con 2 %, ≈ 18 %; con 5 %, ≈ 40 %. Cálculo propio.","Diez pérdidas seguidas: con uno por ciento pierdes cerca de nueve coma seis por ciento; con dos por ciento, dieciocho; con cinco por ciento, cuarenta. Cálculo propio."],[43.6,49.6,"Para tu robot: riesgo fijo y pequeño por operación. Pruébalo en demo. Educativo, sin garantías.","Para tu robot: riesgo fijo y pequeño por operación. Pruébalo en demo. Contenido educativo."],[49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#071428',ACC='#38e1ff';
+const STY={subFont:'800 42px Inter',subBg:'rgba(7,20,40,.97)',subStroke:'#38e1ff',subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+const CY='#38e1ff',GR='#3ddc97',OG='#ffb347',RE='#ff5d73';
+Object.assign(ST,{txt:'#fff',mu:'#8fb0d6',acc:CY,c:[CY,GR,OG,RE],pn:'rgba(18,48,90,.96)'});
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0d2a52');g.addColorStop(1,'#071428');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(56,225,255,.08)';ctx.lineWidth=2;for(let x=0;x<W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  ctx.fillStyle='rgba(56,225,255,.16)';ctx.fillRect(0,0,W,96)};
+function gauge(t,t0,cx,cy,r,v,col,lab,val){const k=eout(prog(t,t0,t0+1.2));if(k<=.02)return;ctx.save();ctx.globalAlpha*=Math.min(1,k*2);ctx.lineWidth=34;ctx.lineCap='round';ctx.strokeStyle='rgba(143,176,214,.25)';ctx.beginPath();ctx.arc(cx,cy,r,Math.PI*.8,Math.PI*2.2);ctx.stroke();ctx.strokeStyle=col;ctx.beginPath();ctx.arc(cx,cy,r,Math.PI*.8,Math.PI*.8+Math.PI*1.4*v*k);ctx.stroke();ctx.restore();Lb(val,cx,cy+6,Math.round(r*.46),col,k);Lb(lab,cx,cy+r+60,36,'#fff',k)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('¿CUÁNTO ARRIESGAR?',540,230,60,CY,eout(prog(t,.2,.8)));
+  gauge(t,.8,300,640,190,1,RE,'KELLY','100 %');gauge(t,1.8,780,640,190,.5,OG,'½ KELLY','½');gauge(t,2.8,540,1100,190,.1,GR,'REGLA DEL','1 %');
+  Lb('tres formas de dimensionar el riesgo',540,1380,40,'#fff',eout(prog(t,4.2,4.8)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL CRITERIO DE KELLY',CY);
+  bigNum(t,7.2,540,520,'1956',250,OG);
+  card(t,8.6,780,190,CY,'John L. Kelly Jr. · Bell Labs','«A New Interpretation of Information Rate»',38);
+  card(t,10.4,1010,190,GR,'Maximiza el crecimiento a largo plazo','si conoces tu ventaja con exactitud',40);ctx.restore()}
+const G=x=>2*x-x*x;
+function curve(t,t0,x,y,w,h,col){const r=eio(prog(t,t0,t0+2));if(r<=0)return;ctx.save();ctx.strokeStyle=col;ctx.lineWidth=10;ctx.lineCap='round';ctx.beginPath();const n=60;for(let i=0;i<=n*r;i++){const u=i/n*2.3,v=G(u);const px=x+u/2.3*w,py=y+h*.55-v*h*.5;i?ctx.lineTo(px,py):ctx.moveTo(px,py)}ctx.stroke();ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'APOSTAR DE MÁS DUELE',CY);
+  panel(60,260,960,760,CY);const x=110,y=320,w=860,h=700;axes(x,y,w,h-60,'#8fb0d6','fracción apostada');
+  ctx.save();ctx.strokeStyle='rgba(143,176,214,.5)';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(x,y+h*.55-60+60);ctx.lineTo(x+w,y+h*.55-60+60);ctx.stroke();ctx.restore();
+  curve(t,14.4,x,y+50,w,h,GR);
+  const k1=eback(prog(t,16.6,17.4));if(k1>.02){ctx.save();ctx.translate(x+w/2.3,y+h*.55+50-h*.5);ctx.scale(k1,k1);ctx.beginPath();ctx.arc(0,0,20,0,7);ctx.fillStyle=OG;ctx.fill();Lb('Kelly',0,-44,36,OG);ctx.restore()}
+  const k2=eback(prog(t,18,18.8));if(k2>.02){ctx.save();ctx.translate(x+w*2/2.3,y+h*.55+50);ctx.scale(k2,k2);ctx.beginPath();ctx.arc(0,0,20,0,7);ctx.fillStyle=RE;ctx.fill();Lb('2× Kelly',0,50,34,RE);ctx.restore()}
+  Lb('crecimiento ≈ 0 al doble de Kelly',540,1090,40,RE,eout(prog(t,18.4,19)));Lb('curva ILUSTRATIVA (modelo simple)',540,1150,30,ST.mu,eout(prog(t,19,19.6)));
+  card(t,19.2,1210,130,OG,'Tu ventaja se estima con error',null,38);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'MEDIO KELLY',CY);
+  barsH(t,21.6,[['CRECIMIENTO TEÓRICO',.75,GR,'≈ 75 %'],['VARIANZA',.25,OG,'≈ 25 %']],90,330,860,230,44);
+  Lb('frente a Kelly completo = 100 %',540,820,40,'#fff',eout(prog(t,24.4,25)));
+  card(t,25,930,190,CY,'Menos crecimiento, mucha menos varianza','modelo teórico, no una garantía',38);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'LA REGLA DEL 1 %',CY);
+  const cs=70,x0=170,y0=300;for(let i=0;i<100;i++){const r=Math.floor(i/10),c=i%10;const k=eout(prog(t,29.2+i*.012,29.7+i*.012));if(k<=.02)continue;ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=i==0?RE:'rgba(56,225,255,.28)';RR(x0+c*cs,y0+r*cs,cs-10,cs-10,10);ctx.fill();ctx.restore()}
+  const k=eback(prog(t,31.4,32.2));if(k>.02){ctx.save();ctx.translate(540,1130);ctx.scale(k,k);Lb('1 de 100',0,0,90,RE);ctx.restore()}
+  Lb('≈ 1 % del capital en riesgo por operación',540,1260,38,'#fff',eout(prog(t,32.6,33.2)));Lb('regla práctica, no garantía',540,1320,32,ST.mu,eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'10 PÉRDIDAS SEGUIDAS',CY);
+  barsV(t,36.2,[['1 %',.24,GR,'−9,6 %'],['2 %',.46,OG,'−18 %'],['5 %',1,RE,'−40 %']],120,360,840,700,50,60);
+  Lb('riesgo por operación',540,1180,38,'#fff',eout(prog(t,40,40.6)));Lb('cálculo propio: 1 − (1 − r)^10',540,1240,32,ST.mu,eout(prog(t,40.6,41.2)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Riesgo fijo y pequeño','Pruébalo primero en demo',GR,CY)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('KELLY · 1 % · ½ KELLY',540,250,52,CY,1);Lb('¿CUÁNTO',540,450,110,'#fff',1);Lb('ARRIESGAR?',540,610,130,OG,1);
+  gauge(99,0,540,1010,230,.1,GR,'','1 %');Lb('regla del',540,1190,44,'#fff',1);
+  Lb('10 pérdidas: −9,6 % vs −40 %',540,1330,44,RE,1);coverBtn('VER LA COMPARACIÓN →',CY,'#06182f')}
+
+</script></body></html>
