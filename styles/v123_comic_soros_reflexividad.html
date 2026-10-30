@@ -1,0 +1,56 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:PM;src:url(node_modules/@fontsource/permanent-marker/files/permanent-marker-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 6 (3.er uso): cómic pop-art — tema: Soros y la reflexividad (60 s). Crema con tramado, viñetas negras, globos y rojo/azul/amarillo.
+const SPEC={name:"Soros",hook:"REFLEXIVIDAD: LA IDEA DE SOROS DE QUE EL PRECIO CAMBIA LA REALIDAD",dur:60,cta:56,bpm:112,mus:'soft',prog:[[40, 'M'], [47, 'M'], [45, 'm'], [43, 'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Reflexividad: la idea de Soros de que el precio también cambia la realidad.","Reflexividad: la idea de Soros de que el precio también cambia la realidad."],[6.4,13.4,"George Soros la describió en su libro La alquimia de las finanzas, publicado en 1987.","George Soros la describió en su libro La alquimia de las finanzas, publicado en mil novecientos ochenta y siete."],[13.6,20.4,"La teoría clásica dice que el precio refleja la realidad. Soros dice que también la modifica.","La teoría clásica dice que el precio refleja la realidad. Soros dice que también la modifica."],[20.6,28.2,"Es un bucle: el precio sube, crece el optimismo, entra más dinero y el precio sube otra vez.","Es un bucle: el precio sube, crece el optimismo, entra más dinero y el precio sube otra vez."],[28.4,35.0,"Al final el precio se separa de los fundamentos, el bucle se rompe y llega la corrección. Gráfico ilustrativo.","Al final el precio se separa de los fundamentos, el bucle se rompe y llega la corrección. Gráfico ilustrativo."],[35.2,43.4,"En 1992 su fondo vendió en corto más de US$ 10.000 millones en libras y ganó más de US$ 1.000 millones (estimado).","En mil novecientos noventa y dos su fondo vendió en corto más de diez mil millones de dólares en libras y ganó más de mil millones, según estimaciones."],[43.6,49.6,"Para tu robot: una tendencia se alimenta sola, pero puede revertir. Usa stops. Educativo, sin garantías.","Para tu robot: una tendencia se alimenta sola, pero puede revertir. Usa stops. Contenido educativo."],[49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#1a1209',ACC='#e63946';
+const STY={subFont:'800 42px Inter',subBg:'rgba(26,18,9,.96)',subStroke:'#ffd60a',subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:'#ffd60a',ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['40px PM','900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+const BK='#111',RD='#e63946',BLU='#1d6fe0',YL='#ffd60a',CR='#fff6dc';
+Object.assign(ST,{fam:'PM',w:400,mono:true,txt:BK,mu:'#5a4a2a',acc:RD,c:[RD,BLU,'#0a8f4e',BK],pn:'#fff'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle=BK;RR(x+10,y+10,w,h,16);ctx.fill();ctx.fillStyle='#fff';RR(x,y,w,h,16);ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=BK;ctx.stroke();ctx.fillStyle=col;ctx.fillRect(x+4,y+4,16,h-8);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=CR;ctx.fillRect(0,0,W,H);ctx.save();ctx.fillStyle='rgba(230,57,70,.22)';for(let y=0;y<H+30;y+=34)for(let x=((y/34)%2)*17;x<W+30;x+=34){ctx.beginPath();ctx.arc(x,y,7,0,7);ctx.fill()}ctx.restore();
+  ctx.fillStyle=YL;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(W,0);ctx.lineTo(W,90);ctx.lineTo(0,150);ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=BK;ctx.stroke()};
+function burst(cx,cy,r,col,n=14,rot=0){ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.beginPath();for(let i=0;i<n*2;i++){const a=i*Math.PI/n,rr=i%2?r*.72:r;ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr)}ctx.closePath();ctx.fillStyle=col;ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=BK;ctx.stroke();ctx.restore()}
+function balloon(x,y,w,h,txt,sz,k=1){if(k<=.02)return;ctx.save();ctx.globalAlpha*=Math.min(1,k*1.5);ctx.translate(x+w/2,y+h/2);ctx.scale(k,k);ctx.translate(-w/2,-h/2);RR(0,0,w,h,h/2);ctx.fillStyle='#fff';ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=BK;ctx.stroke();ctx.beginPath();ctx.moveTo(w*.25,h-6);ctx.lineTo(w*.15,h+50);ctx.lineTo(w*.4,h-6);ctx.fillStyle='#fff';ctx.fill();ctx.stroke();Lb(txt,w/2,h/2,sz,BK);ctx.restore()}
+function arrow(x1,y1,x2,y2,col,lw=12,k=1){if(k<=0)return;const xx=lerp(x1,x2,k),yy=lerp(y1,y2,k);ctx.save();ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=lw;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(xx,yy);ctx.stroke();if(k>.9){const a=Math.atan2(y2-y1,x2-x1);ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-34*Math.cos(a-.5),y2-34*Math.sin(a-.5));ctx.lineTo(x2-34*Math.cos(a+.5),y2-34*Math.sin(a+.5));ctx.fill()}ctx.restore()}
+function loop(t,t0,cx,cy,R){const N=[['PRECIO','SUBE',RD],['MÁS','OPTIMISMO',BLU],['MÁS','COMPRAS','#0a8f4e'],['PRECIO','SUBE DE NUEVO',RD]];
+  N.forEach(([a,b,c],i)=>{const ang=-Math.PI/2+i*Math.PI/2,x=cx+Math.cos(ang)*R,y=cy+Math.sin(ang)*R;pop(t,t0+i*.9,x,y,()=>{RR(-150,-58,300,116,24);ctx.fillStyle='#fff';ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=BK;ctx.stroke();ctx.fillStyle=c;ctx.fillRect(-146,-54,292,14);Lb(a,0,-8,34,BK);Lb(b,0,32,i==3?30:36,c)})});
+  const k=eout(prog(t,t0+3.6,t0+4.6));if(k>0){ctx.save();ctx.strokeStyle=BLU;ctx.lineWidth=12;ctx.lineCap='round';ctx.setLineDash([22,16]);ctx.beginPath();ctx.arc(cx,cy,R*.36,-Math.PI*.5,-Math.PI*.5+Math.PI*2*k);ctx.stroke();ctx.restore();Lb('BUCLE',cx,cy,56,BLU,k)}}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('GEORGE SOROS · 1987',540,255,52,RD,eout(prog(t,.2,.8)));
+  const k=eback(prog(t,.8,1.6));if(k>.02){ctx.save();ctx.translate(540,560);ctx.scale(k,k);burst(0,0,360,YL,16,.1);Lb('REFLEXI-',0,-50,110,BK);Lb('VIDAD',0,70,150,RD);ctx.restore()}
+  balloon(120,960,840,150,'¡el precio cambia la realidad!',54,eback(prog(t,2.4,3.2)));
+  Lb('el precio no solo mira: también empuja',540,1260,44,BK,eout(prog(t,3.8,4.4)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL LIBRO',RD);
+  pop(t,7.2,540,640,()=>{ctx.save();ctx.rotate(-.05);ctx.fillStyle=BK;RR(-250+14,-330+14,500,660,14);ctx.fill();RR(-250,-330,500,660,14);ctx.fillStyle=BLU;ctx.fill();ctx.lineWidth=8;ctx.strokeStyle=BK;ctx.stroke();ctx.fillStyle=YL;ctx.fillRect(-250,-330,48,660);Lb('THE ALCHEMY',30,-170,64,'#fff');Lb('OF FINANCE',30,-90,64,'#fff');Lb('1987',30,70,150,YL);Lb('George Soros',30,230,50,'#fff');ctx.restore()});
+  card(t,9.4,1030,170,RD,'Publicado en 1987','donde explica la reflexividad',44);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'DOS VISIONES',RD);
+  slide(t,14.4,()=>{panel(60,260,960,430,BLU);Lb('TEORÍA CLÁSICA',100,320,52,BLU,1,'left');Lb('REALIDAD',250,500,56,BK);arrow(380,500,700,500,BLU,14,eout(prog(t,15.4,16.2)));Lb('PRECIO',830,500,56,BK);Lb('el precio solo refleja',540,620,40,'#5a4a2a')});
+  slide(t,16.8,()=>{panel(60,760,960,480,RD);Lb('SOROS',100,820,52,RD,1,'left');Lb('REALIDAD',250,1000,56,BK);const k=eout(prog(t,17.8,18.6));arrow(380,975,700,975,RD,14,k);arrow(700,1035,380,1035,RD,14,eout(prog(t,18.4,19.2)));Lb('PRECIO',830,1000,56,BK);Lb('el precio también la modifica',540,1150,40,'#5a4a2a')});ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'EL BUCLE DE REALIMENTACIÓN',RD);loop(t,21.4,540,760,310);
+  Lb('optimismo → compras → precio → más optimismo',540,1230,34,BK,eout(prog(t,25.6,26.4)));ctx.restore()}
+const BOOM=[[0,.1],[.12,.16],[.25,.28],[.38,.42],[.5,.6],[.62,.78],[.72,.92],[.8,.97],[.86,.7],[.92,.4],[1,.18]];
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'BOOM Y CORRECCIÓN',RD);
+  panel(60,260,960,860,BLU);axes(110,320,860,740,BK);lineChart(t,29.4,33.4,BOOM,130,340,830,700,RD,12);
+  const k=eback(prog(t,31.6,32.4));if(k>.02){ctx.save();ctx.translate(560,380);ctx.scale(k,k);burst(0,0,110,YL,12);Lb('¡EUFORIA!',0,0,36,BK);ctx.restore()}
+  const k2=eback(prog(t,33.4,34.2));if(k2>.02){ctx.save();ctx.translate(860,880);ctx.scale(k2,k2);Lb('RUPTURA',0,0,46,RD);ctx.restore()}
+  Lb('gráfico ILUSTRATIVO',540,1170,34,'#5a4a2a',eout(prog(t,29.8,30.4)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'1992: LA LIBRA',RD);
+  pop(t,36,540,520,()=>{burst(0,0,300,YL,14,.2);Lb('> US$ 1.000 M',0,-20,86,BK);Lb('ganancia estimada',0,70,40,RD)});
+  card(t,37.6,900,170,BLU,'16 sep 1992 · Miércoles Negro','su fondo vendió libras en corto',38);
+  card(t,39.6,1100,170,RD,'Venta en corto > US$ 10.000 M','según estimaciones públicas',40);
+  Lb('cifras aproximadas',540,1330,32,'#5a4a2a',eout(prog(t,41.6,42.2)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Tendencias se alimentan solas','También revierten: usa stops',RD,BLU)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('SOROS · 1987',540,250,64,RD,1);Lb('EL PRECIO',540,430,120,BK,1);Lb('CAMBIA LA',540,570,110,BK,1);Lb('REALIDAD',540,730,150,RD,1);
+  burst(540,1060,250,YL,14,.15);Lb('BUCLE',540,1030,100,BK,1);Lb('reflexividad',540,1130,50,RD,1);
+  coverBtn('VER LA IDEA →',RD,'#fff')}
+
+</script></body></html>
