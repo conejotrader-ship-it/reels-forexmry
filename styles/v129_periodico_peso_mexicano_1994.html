@@ -1,0 +1,58 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:PF;font-weight:900;src:url(node_modules/@fontsource/playfair-display/files/playfair-display-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 12 (3.er uso): periódico de época — tema: la crisis del peso mexicano de diciembre de 1994 (60 s). Papel prensa gris, tinta azul marino y rojo, edición extra.
+const SPEC={name:"Peso1994",hook:"DICIEMBRE DE 1994: EL PESO MEXICANO PASÓ DE 3,46 A 4,8 POR DÓLAR EN 3 DÍAS",dur:60,cta:56,bpm:92,mus:'soft',prog:[[38, 'm'], [41, 'M'], [36, 'm'], [43, 'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Diciembre de 1994: el peso mexicano pasó de ≈ 3,46 a ≈ 4,8 por dólar en solo tres días.","Diciembre de mil novecientos noventa y cuatro: el peso mexicano pasó de cerca de tres coma cuarenta y seis a cerca de cuatro coma ocho por dólar en solo tres días."],[6.4,13.4,"El 20 de diciembre México bajó el piso de su banda cambiaria 15 %. Al día siguiente decidió flotar el peso.","El veinte de diciembre México bajó el piso de su banda cambiaria quince por ciento. Al día siguiente decidió flotar el peso."],[13.6,20.4,"Los tesobonos, deuda ligada al dólar, pasaron de ≈ 6 % a ≈ 50 % de la deuda durante 1994.","Los tesobonos, deuda ligada al dólar, pasaron de cerca de seis por ciento a cerca de cincuenta por ciento de la deuda durante mil novecientos noventa y cuatro."],[20.6,28.2,"El banco central perdió US$ 6.400 millones de reservas en una semana. A inicios de enero quedaban casi en cero.","El banco central perdió seis mil cuatrocientos millones de dólares de reservas en una semana. A inicios de enero quedaban casi en cero."],[28.4,35.0,"En enero de 1995 se anunció un paquete de ≈ US$ 50.000 millones: EE. UU. 20.000, FMI 17.800 y BIS 10.000.","En enero de mil novecientos noventa y cinco se anunció un paquete de cerca de cincuenta mil millones de dólares: Estados Unidos veinte mil, FMI diecisiete mil ochocientos y BIS diez mil."],[35.2,43.4,"A fines de enero el peso rondaba 6,35 por dólar. Una banda fija puede romperse de golpe.","A fines de enero el peso rondaba seis coma treinta y cinco por dólar. Una banda fija puede romperse de golpe."],[43.6,49.6,"Para tu robot: los regímenes fijos pueden romperse con saltos. Usa stops. Educativo, sin garantías.","Para tu robot: los regímenes fijos pueden romperse con saltos. Usa stops. Contenido educativo."],[49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#14213d',ACC='#b3202a';
+const STY={subFont:'800 42px Inter',subBg:'rgba(20,33,61,.97)',subStroke:'#e6e3d9',subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:'#ff4d58',ctaBtnText:'#fff',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px PF','900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+const INK='#14213d',RDN='#b3202a',NP='#e6e3d9',GR2='#6e6b62',BLU3='#2c5aa0';
+Object.assign(ST,{fam:'PF',w:900,mono:true,txt:INK,mu:GR2,acc:RDN,c:[RDN,BLU3,INK,'#7a5c1e'],pn:'#f3f0e6'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#f3f0e6';ctx.fillRect(x,y,w,h);ctx.lineWidth=4;ctx.strokeStyle=INK;ctx.strokeRect(x,y,w,h);ctx.fillStyle=col;ctx.fillRect(x,y,w,12);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=NP;ctx.fillRect(0,0,W,H);ctx.save();ctx.globalAlpha=.06;ctx.fillStyle='#000';const r=rng(9);for(let i=0;i<260;i++)ctx.fillRect(r()*W,r()*H,2+r()*5,1+r()*2);ctx.restore();
+  ctx.fillStyle=INK;ctx.fillRect(40,28,W-80,5);ctx.fillRect(40,150,W-80,3);ctx.fillRect(40,158,W-80,1);
+  Lb('LA GACETA DEL MERCADO',540,92,56,INK);Lb('recreación editorial · no es un periódico real',540,128,22,GR2);
+  ctx.save();ctx.strokeStyle='rgba(20,33,61,.18)';ctx.lineWidth=2;[360,720].forEach(x=>{ctx.beginPath();ctx.moveTo(x,180);ctx.lineTo(x,1440);ctx.stroke()});ctx.restore()};
+function head(t,t0,s,col){Lb(s,540,212,46,col||ST.acc,eout(prog(t,t0,t0+.5)))}
+function ps(t,t0,cx,cy,s,sz,col,al='center'){Lb(s,cx,cy,sz,col,eout(prog(t,t0,t0+.5)),al)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('EDICIÓN EXTRA · 22 DE DICIEMBRE DE 1994',540,215,32,RDN,eout(prog(t,.2,.7)));
+  pop(t,.6,540,420,()=>{Lb('EL PESO',0,-40,170,INK);Lb('SE ROMPE',0,100,170,RDN)});
+  ctx.fillStyle=INK;ctx.fillRect(60,610,960,5);
+  bigNum(t,2.2,540,800,'3,46 a 4,8',190,INK);
+  ps(t,3.4,540,940,'pesos por dólar · del 19 al 22 de diciembre',36,GR2);
+  lineChart(t,3.6,5.6,[[0,.1],[.3,.15],[.55,.2],[.7,.6],[1,.95]],120,1000,840,300,RDN,12);ps(t,5,540,1370,'(trayecto ILUSTRATIVO)',26,GR2);ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'DOS DÍAS DECISIVOS',RDN);
+  slide(t,7.2,()=>{panel(60,260,960,420,RDN);Lb('20 DIC',100,340,80,RDN,1,'left');Lb('Baja el piso de la banda',100,440,48,INK,1,'left');Lb('15 % hasta 4,0016 pesos',100,520,52,RDN,1,'left');Lb('(el día anterior: ≈ 3,46)',100,600,34,GR2,1,'left')});
+  slide(t,10.2,()=>{panel(60,760,960,420,BLU3);Lb('21–22 DIC',100,840,80,BLU3,1,'left');Lb('Se decide flotar el peso',100,940,48,INK,1,'left');Lb('22 dic: ≈ 4,8 por dólar',100,1020,52,BLU3,1,'left');Lb('sin banda que lo contenga',100,1100,34,GR2,1,'left')});ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LOS TESOBONOS',RDN);
+  Lb('deuda del gobierno ligada al dólar',540,260,40,INK,eout(prog(t,14.2,14.8)));
+  barsV(t,15,[['FEB 1994',.12,BLU3,'≈ 6 %'],['NOV 1994',1,RDN,'≈ 50 %']],160,360,760,620,160,64);
+  Lb('de la deuda del gobierno',540,1090,40,INK,eout(prog(t,18,18.6)));Lb('(cifras aproximadas)',540,1150,30,GR2,eout(prog(t,18.6,19.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LAS RESERVAS SE ACABAN',RDN);
+  bigNum(t,21.4,540,470,'−US$ 6.400 M',150,RDN);Lb('en una semana',540,610,56,INK,eout(prog(t,22.6,23.2)));
+  const k=eio(prog(t,24,26.5));panel(100,720,880,200,INK);ctx.fillStyle=BLU3;ctx.fillRect(130,790,820*(1-.97*k),60);ctx.strokeStyle=INK;ctx.lineWidth=3;ctx.strokeRect(130,790,820,60);
+  Lb('reservas netas · inicios de enero de 1995',540,760,32,INK,1);Lb('≈ 0',540,1010,110,RDN,eout(prog(t,26.4,27)));Lb('"cerca de cero"',540,1110,40,GR2,eout(prog(t,27,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EL PAQUETE DE ENERO DE 1995',RDN);
+  const it=[['EE. UU.',20,BLU3],['FMI',17.8,RDN],['BIS',10,'#7a5c1e']];let acc=0;it.forEach(([n,v,c],i)=>{const k=eout(prog(t,29.2+i*1,30+i*1));const w=860*v/50*k;ctx.fillStyle=c;ctx.fillRect(110+860*acc/50*k,420,w,150);acc+=v;if(k>.5)Lb(n,110+860*(acc-v/2)/50,640+(i%2)*60,38,c)});
+  Lb('20.000',110+860*10/50,495,44,'#fff',eout(prog(t,30,30.6)));Lb('17.800',110+860*28.9/50,495,44,'#fff',eout(prog(t,31,31.6)));Lb('10.000',110+860*42.8/50,495,40,'#fff',eout(prog(t,32,32.6)));
+  Lb('millones de dólares · total anunciado ≈ US$ 50.000 M',540,830,40,INK,eout(prog(t,33,33.6)));Lb('(en el tramo de EE. UU. + FMI + BIS)',540,890,30,GR2,eout(prog(t,33.6,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'PESOS POR DÓLAR',RDN);
+  panel(60,250,960,900,INK);axes(110,330,860,740,INK);
+  const P=[['19 dic',3.46],['22 dic',4.8],['26 dic',5.15],['30 ene',6.35]];const X=i=>150+i*260,Y=v=>1030-(v-3)/3.6*640;
+  P.forEach(([d,v],i)=>{const k=eback(prog(t,36.4+i*1.5,37.2+i*1.5));if(k<=.02)return;ctx.save();ctx.translate(X(i),Y(v));ctx.scale(k,k);ctx.beginPath();ctx.arc(0,0,20,0,7);ctx.fillStyle=i==0?BLU3:RDN;ctx.fill();ctx.restore();Lb('≈ '+String(v).replace('.',','),X(i),Y(v)-50,46,i==0?BLU3:RDN,k);Lb(d,X(i),1105,34,INK,k);
+    if(i>0){const kk=eout(prog(t,36.4+i*1.5,37.2+i*1.5));ctx.save();ctx.strokeStyle=RDN;ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(X(i-1),Y(P[i-1][1]));ctx.lineTo(lerp(X(i-1),X(i),kk),lerp(Y(P[i-1][1]),Y(v),kk));ctx.stroke();ctx.restore()}});
+  Lb('Fuente: IMF (Tearing Down Walls, cap. 10) · cifras aproximadas',540,1230,28,GR2,eout(prog(t,41.5,42.1)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Un régimen fijo puede romperse','Stops y riesgo de divisa',RDN,BLU3)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('DICIEMBRE DE 1994',540,250,50,RDN,1);Lb('EL PESO',540,420,150,INK,1);Lb('SE ROMPIÓ',540,570,150,RDN,1);ctx.fillStyle=INK;ctx.fillRect(80,680,920,6);
+  Lb('3,46 a 4,8',540,860,190,INK,1);Lb('pesos por dólar en 3 días',540,990,50,GR2,1);
+  lineChart(99,0,2,[[0,.1],[.3,.15],[.55,.2],[.7,.6],[1,.95]],120,1060,840,300,RDN,14);coverBtn('VER LA CRISIS →',RDN,'#fff')}
+
+</script></body></html>
