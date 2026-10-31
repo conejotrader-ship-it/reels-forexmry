@@ -1,0 +1,63 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 16 (3.er uso): plano técnico (blueprint) — tema: ranking de los peores días del S&P 500 (60 s). Azul cianotipo con cotas y sello ámbar.
+const SPEC={name:'PeoresDiasSP500',hook:'EL PEOR DÍA DEL S&P 500: −20,47 % EL 19 DE OCTUBRE DE 1987',dur:60,cta:56,bpm:100,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'hit'],[10.0,'down'],[13.6,'wipe'],[15.0,'hit'],[17.0,'down'],[19.0,'ding'],[20.6,'wipe'],[22.0,'hit'],[24.0,'down'],[26.0,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[33.6,'ding'],[35.2,'wipe'],[37.0,'hit'],[39.0,'down'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[46.6,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"El peor día del S&P 500: −20,47 % el 19 de octubre de 1987.","El peor día del S y P quinientos: menos veinte coma cuarenta y siete por ciento el diecinueve de octubre de mil novecientos ochenta y siete."],
+ [6.4,13.4,"Puesto 1: 19 de octubre de 1987, −20,47 %. Mucho más que el segundo, −12,34 %.","Puesto uno: diecinueve de octubre de mil novecientos ochenta y siete, menos veinte coma cuarenta y siete por ciento. Mucho más que el segundo, menos doce coma treinta y cuatro."],
+ [13.6,20.4,"Puestos 2, 4 y 5: octubre y noviembre de 1929, con −12,34 %, −10,16 % y −9,92 %.","Puestos dos, cuatro y cinco: octubre y noviembre de mil novecientos veintinueve, con menos doce coma treinta y cuatro, menos diez coma dieciséis y menos nueve coma noventa y dos por ciento."],
+ [20.6,28.2,"Puesto 3: 16 de marzo de 2020, −11,98 %, en plena pandemia.","Puesto tres: dieciséis de marzo de dos mil veinte, menos once coma noventa y ocho por ciento, en plena pandemia."],
+ [28.4,35.0,"Tres de las cinco peores caídas ocurrieron en menos de dos semanas de 1929.","Tres de las cinco peores caídas ocurrieron en menos de dos semanas de mil novecientos veintinueve."],
+ [35.2,43.4,"Un salto así atraviesa tu stop: el precio de ejecución puede ser mucho peor. Antes de 1957 el índice es reconstruido.","Un salto así atraviesa tu stop: el precio de ejecución puede ser mucho peor. Antes de mil novecientos cincuenta y siete el índice es reconstruido."],
+ [43.6,49.6,"Para tu robot: los días extremos existen. Tamaño prudente y stops. Educativo, sin garantías.","Para tu robot: los días extremos existen. Tamaño prudente y stops. Contenido educativo, sin garantías."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],
+ [56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#06284d',ACC='#ffc247',BL='#0b3a6e',LN='#9fd3ff',WT='#eaf6ff',AM='#ffc247',RDX='#ff6b5e';
+const STY={subFont:'800 42px Inter',subBg:'rgba(6,40,77,.97)',subStroke:LN,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:AM,ctaAccent:AM,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:WT,mu:'#8fb8e0',acc:AM,c:[AM,LN,RDX,'#8fb8e0'],pn:'#0a3566'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(10,53,102,.85)';ctx.fillRect(x,y,w,h);ctx.setLineDash([14,8]);ctx.lineWidth=4;ctx.strokeStyle=col;ctx.strokeRect(x,y,w,h);ctx.restore();ctx.fillStyle=col;[[x,y],[x+w,y],[x,y+h],[x+w,y+h]].forEach(([a,b])=>ctx.fillRect(a-7,b-7,14,14))};
+ST.bg=t=>{ctx.fillStyle=BL;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle='rgba(159,211,255,.12)';ctx.lineWidth=2;for(let x=0;x<=W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<=H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  ctx.strokeStyle='rgba(159,211,255,.35)';ctx.lineWidth=3;for(let x=0;x<=W;x+=300){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}ctx.strokeStyle=LN;ctx.lineWidth=4;ctx.strokeRect(24,24,W-48,H-48);ctx.restore();
+  Lb('PLANO 133 · S&P 500 · PEORES DÍAS',60,60,26,LN,1,'left')};
+const hd=(t,t0,s,col)=>Lb(s,540,175,56,col||AM,eout(prog(t,t0,t0+.5)));
+function cota(x1,y,x2,s,col,a=1){ctx.save();ctx.globalAlpha*=a;line(x1,y,x2,y,col,4);line(x1,y-16,x1,y+16,col,4);line(x2,y-16,x2,y+16,col,4);ctx.restore();Lb(s,(x1+x2)/2,y-34,30,col,a)}
+const RK=[['1987 · 19 OCT',20.47,'−20,47 %'],['1929 · 28 OCT',12.34,'−12,34 %'],['2020 · 16 MAR',11.98,'−11,98 %'],['1929 · 29 OCT',10.16,'−10,16 %'],['1929 · 6 NOV',9.92,'−9,92 %']];
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('19 OCTUBRE 1987 · LUNES NEGRO',540,270,38,AM,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,560,'−20,47 %',200,RDX);Lb('en un solo día',540,740,64,WT,eout(prog(t,2,2.6)));
+  Lb('el peor día del S&P 500',540,830,48,LN,eout(prog(t,2.6,3.2)));
+  const k=eout(prog(t,3.2,5));cota(120,1000,120+840*k,'−20,47 %',AM,k);
+  ctx.save();ctx.fillStyle=RDX;ctx.fillRect(120,1040,840*k,70);ctx.restore();Lb('(cifra aproximada · Wikipedia)',540,1190,28,'#8fb8e0',eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'PUESTO 1');
+  Lb('19 de octubre de 1987',540,265,46,WT,eout(prog(t,7,7.6)));
+  barsV(t,7.8,[['2.º · 1929',12.34/20.47,LN,'−12,34 %'],['1.º · 1987',1,RDX,'−20,47 %']],180,400,720,560,180,52);
+  Lb('casi 1,7 veces la segunda caída',540,1130,44,AM,eout(prog(t,11,11.6)));Lb('(20,47 ÷ 12,34 ≈ 1,66)',540,1190,30,'#8fb8e0',eout(prog(t,11.6,12.2)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'1929: TRES EN SEMANAS');
+  [['28 OCT 1929','−12,34 %','puesto 2',14.2],['29 OCT 1929','−10,16 %','puesto 4',16.2],['6 NOV 1929','−9,92 %','puesto 5',18.2]].forEach(([d,v,p,ts],i)=>slide(t,ts,()=>{const y=260+i*270;panel(60,y,960,230,i==0?RDX:LN);Lb(d,100,y+70,44,WT,1,'left');Lb(p,100,y+160,36,AM,1,'left');Lb(v,980,y+115,100,i==0?RDX:LN,1,'right')}));
+  Lb('índice reconstruido antes de 1957',540,1130,32,'#8fb8e0',eout(prog(t,19.4,20)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'PUESTO 3');
+  bigNum(t,21.4,540,470,'16 MAR 2020',140,WT);bigNum(t,22.6,540,700,'−11,98 %',190,RDX);
+  Lb('en plena pandemia',540,900,56,AM,eout(prog(t,24.6,25.2)));
+  lineChart(t,25.2,27.4,[[0,.9],[.3,.82],[.55,.6],[.7,.35],[.85,.05],[1,.2]],120,980,840,300,RDX,10);Lb('(trayecto ILUSTRATIVO)',540,1340,28,'#8fb8e0',eout(prog(t,27.2,27.8)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'EL RANKING');
+  barsH(t,29.2,RK.map(([l,v,tx],i)=>[l,v/20.47,i==0?RDX:(i==2?AM:LN),tx]),70,250,600,150,34);
+  Lb('fuente: Wikipedia · cifras aproximadas',540,1130,30,'#8fb8e0',eout(prog(t,32.4,33)));
+  Lb('3 de las 5: octubre–noviembre de 1929',540,1000,40,AM,eout(prog(t,33.4,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'EL SALTO Y TU STOP');
+  panel(60,260,960,760,LN);axes(120,320,840,640,LN);
+  const sy=520;line(120,sy,960,sy,AM,5,[14,8]);Lb('tu stop',140,sy-34,34,AM,eout(prog(t,36.2,36.8)),'left');
+  const k=eio(prog(t,36.6,38.4));ctx.save();ctx.strokeStyle=WT;ctx.lineWidth=10;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(160,440);ctx.lineTo(160+300*k,440+20*k);ctx.stroke();ctx.restore();
+  const kg=eout(prog(t,38.6,39.6));if(kg>.02){ctx.save();ctx.globalAlpha*=kg;ctx.strokeStyle=RDX;ctx.lineWidth=10;ctx.setLineDash([16,10]);ctx.beginPath();ctx.moveTo(460,460);ctx.lineTo(470,860);ctx.stroke();ctx.restore();ctx.fillStyle=RDX;ctx.beginPath();ctx.arc(470,860,22,0,7);ctx.fill()}
+  Lb('hueco (gap)',700,700,48,RDX,eout(prog(t,39.6,40.2)));Lb('ejecución muy por debajo del stop',540,1090,38,WT,eout(prog(t,40.6,41.2)));Lb('esquema ILUSTRATIVO',540,1150,28,'#8fb8e0',eout(prog(t,41.4,42)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Los días extremos existen','Tamaño prudente y stops',AM,LN)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('UN SOLO DÍA',540,250,56,AM,1);
+  Lb('−20,47 %',540,470,190,RDX,1);Lb('EL PEOR DÍA',540,690,120,WT,1);Lb('DEL S&P 500',540,820,120,WT,1);
+  cota(100,950,980,'19 OCT 1987',AM);
+  Lb('TOP 5',540,1090,200,LN,1);Lb('peores caídas diarias',540,1230,50,'#8fb8e0',1);coverBtn('VER EL RANKING →',AM,DK)}
+</script></body></html>
