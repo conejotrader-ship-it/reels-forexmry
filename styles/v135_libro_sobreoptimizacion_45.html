@@ -1,0 +1,67 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 18 (3.er uso): libro de órdenes — tema: sobreoptimización de backtests, límite de 45 configuraciones con 5 años de datos (60 s). Escalera de configuraciones con barras compradoras (verde) y vendedoras (rojo).
+const SPEC={name:'Sobreopt45',hook:'CON 5 AÑOS DE DATOS, NO PRUEBES MÁS DE 45 CONFIGURACIONES',dur:60,cta:56,bpm:108,mus:'soft',prog:[[40,'m'],[43,'M'],[36,'m'],[41,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'tick'],[10.0,'tick'],[12.0,'down'],[13.6,'wipe'],[15.0,'tick'],[17.0,'ding'],[19.0,'ding'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'down'],[39.0,'down'],[41.0,'alert'],[43.6,'wipe'],[45.2,'ding'],[46.6,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Con 5 años de datos, no pruebes más de 45 configuraciones. Más, y el sobreajuste es casi seguro.","Con cinco años de datos, no pruebes más de cuarenta y cinco configuraciones. Más, y el sobreajuste es casi seguro."],
+ [6.4,13.4,"Sobreoptimizar es ajustar el robot al pasado. Cuantas más configuraciones pruebas, más probable el sobreajuste.","Sobreoptimizar es ajustar el robot al pasado. Cuantas más configuraciones pruebas, más probable el sobreajuste."],
+ [13.6,20.4,"Bailey y coautores: con solo 10 configuraciones, esperas hallar un Sharpe de 1,57 en el pasado.","Bailey y coautores: con solo diez configuraciones, esperas hallar un Sharpe de uno coma cincuenta y siete en el pasado."],
+ [20.6,28.2,"Pero fuera de muestra, el Sharpe esperado de todas esas estrategias es cero.","Pero fuera de muestra, el Sharpe esperado de todas esas estrategias es cero."],
+ [28.4,35.0,"Con 5 años de datos, el artículo recomienda no más de 45 configuraciones independientes.","Con cinco años de datos, el artículo recomienda no más de cuarenta y cinco configuraciones independientes."],
+ [35.2,43.4,"Con efectos de memoria, el sobreajuste puede dar retornos esperados negativos fuera de muestra.","Con efectos de memoria, el sobreajuste puede dar retornos esperados negativos fuera de muestra."],
+ [43.6,49.6,"Para tu robot: pocos parámetros y validación fuera de muestra. Educativo, sin garantías.","Para tu robot: pocos parámetros y validación fuera de muestra. Contenido educativo, sin garantías."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],
+ [56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#0a0f1e',ACC='#21d07a',GRN='#21d07a',RDD='#ff4d5e',YL='#ffd24a',TX='#e6edf7';
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,15,30,.96)',subStroke:GRN,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:GRN,ctaAccent:GRN,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:TX,mu:'#7d8aa6',acc:GRN,c:[GRN,YL,RDD,'#7d8aa6'],pn:'#111a30'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#111a30';ctx.fillRect(x,y,w,h);ctx.fillStyle=col;ctx.fillRect(x,y,w,8);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=DK;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle='rgba(125,138,166,.12)';ctx.lineWidth=2;for(let y=110;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  Lb('LIBRO DE CONFIGURACIONES · XAUUSD',60,60,26,'#7d8aa6',1,'left');ctx.fillStyle=GRN;ctx.fillRect(1000,48,20,24)};
+const hd=(t,t0,s,col)=>Lb(s,540,175,56,col||GRN,eout(prog(t,t0,t0+.5)));
+const IS=[.62,.88,.7,1.57,1.05,.8,1.2,.55,.95,1.1],OS=[.06,-.1,.12,-.04,.09,-.12,.03,.1,-.07,.05];
+// escalera: IS a la izquierda (verde) y OOS a la derecha (rojo); k = revelado
+function ladder(t,t0,y0,showIS,showOS,oT){for(let i=0;i<10;i++){const y=y0+i*86;const k=eout(prog(t,t0+i*.18,t0+i*.18+.6));if(k<=.02)continue;ctx.save();ctx.globalAlpha*=k;
+  Lb('cfg '+(i+1),540,y,28,'#7d8aa6');
+  if(showIS){const w=IS[i]/1.57*380;ctx.fillStyle=IS[i]==1.57?YL:GRN;ctx.fillRect(490-w,y-26,w,52);Lb(IS[i].toFixed(2).replace('.',','),480-w,y,28,TX,1,'right')}
+  if(showOS){const ko=eout(prog(t,oT+i*.12,oT+i*.12+.5));const w=Math.abs(OS[i])/1.57*380*ko+6;ctx.fillStyle=RDD;ctx.fillRect(592,y-26,w,52);Lb(OS[i].toFixed(2).replace('.',','),602+w,y,28,TX,ko,'left')}
+  ctx.restore()}}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('BACKTEST DE ROBOTS · ARTÍCULO DE BAILEY ET AL.',540,265,30,GRN,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,560,'45',560,YL);Lb('configuraciones máximo',540,860,60,TX,eout(prog(t,2.2,2.8)));Lb('con 5 años de datos',540,950,60,GRN,eout(prog(t,2.8,3.4)));
+  Lb('más pruebas → más probabilidad de sobreajuste',540,1090,36,'#7d8aa6',eout(prog(t,3.8,4.4)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'AJUSTAR AL PASADO');
+  panel(60,250,960,640,GRN);axes(110,300,860,540,'#7d8aa6');
+  const r=rng(5);const pts=[];for(let i=0;i<=22;i++)pts.push([i/22*.62,.45+Math.sin(i*.8)*.14+(r()-.5)*.2]);
+  lineChart(t,7.2,10.4,pts,110,300,860,540,GRN,8);
+  const kf=eio(prog(t,10.6,12.4));if(kf>.02){ctx.save();ctx.globalAlpha*=kf;ctx.strokeStyle=RDD;ctx.lineWidth=8;ctx.setLineDash([16,10]);ctx.beginPath();ctx.moveTo(110+860*.62,300+540*.55);ctx.lineTo(110+860*(.62+.38*kf),300+540*(.55+.3*kf));ctx.stroke();ctx.restore()}
+  Lb('en la muestra',110+860*.31,930,34,GRN,eout(prog(t,10.4,11)));Lb('después',110+860*.81,930,34,RDD,eout(prog(t,11.4,12)));
+  Lb('esquema ILUSTRATIVO · fuente: Bailey, Borwein, López de Prado, Zhu',540,1040,26,'#7d8aa6',eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'10 CONFIGURACIONES');
+  Lb('Sharpe en la muestra (IS)',540,255,36,GRN,eout(prog(t,14.2,14.8)));ladder(t,14.4,340,true,false,0);
+  const kb=eout(prog(t,18.4,19.2));if(kb>.02){ctx.save();ctx.globalAlpha*=kb;ctx.strokeStyle=YL;ctx.lineWidth=6;RR(40,340+3*86-40,1000,80,10);ctx.stroke();ctx.restore();Lb('la mejor: 1,57',540,1250,80,YL,kb)}
+  Lb('valores ILUSTRATIVOS · el máximo coincide con el artículo',540,1340,26,'#7d8aa6',eout(prog(t,19.4,20)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'FUERA DE MUESTRA',RDD);
+  Lb('IS (verde)  ·  OOS (rojo)',540,255,36,TX,eout(prog(t,21.2,21.8)));ladder(t,21.2,340,true,true,23.4);
+  Lb('esperado: 0',540,1250,100,RDD,eout(prog(t,26.4,27)));Lb('el Sharpe de cada estrategia fuera de muestra',540,1340,32,TX,eout(prog(t,27,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'EL LÍMITE',YL);
+  bigNum(t,29.2,540,480,'5 años',200,TX);Lb('de datos diarios',540,630,44,'#7d8aa6',eout(prog(t,30.2,30.8)));
+  const k=eout(prog(t,31,33));panel(60,720,960,260,YL);ctx.fillStyle=GRN;ctx.fillRect(100,820,820*k*45/100,70);ctx.strokeStyle=TX;ctx.lineWidth=3;ctx.strokeRect(100,820,820,70);
+  Lb('45',100+820*.45*k+30,855,60,YL,k,'left');Lb('configuraciones independientes · máximo',540,1060,38,TX,eout(prog(t,33.4,34)));Lb('(barra ILUSTRATIVA)',540,1120,28,'#7d8aa6',eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'CON MEMORIA',RDD);
+  Lb('retorno esperado fuera de muestra',540,255,38,TX,eout(prog(t,35.8,36.4)));
+  panel(60,320,960,620,RDD);axes(110,380,860,500,'#7d8aa6');line(110,630,970,630,'#7d8aa6',3,[10,8]);Lb('cero',140,600,28,'#7d8aa6',eout(prog(t,36.4,37)),'left');
+  lineChart(t,36.6,40.8,[[0,.5],[.2,.46],[.4,.38],[.6,.3],[.8,.2],[1,.1]],110,380,860,500,RDD,10);
+  Lb('negativo, no solo cero',540,1060,56,RDD,eout(prog(t,40.8,41.4)));Lb('esquema ILUSTRATIVO',540,1130,28,'#7d8aa6',eout(prog(t,41.4,42)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Pocos parámetros','Validación fuera de muestra',GRN,YL)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('CUIDADO CON TU BACKTEST',540,260,60,RDD,1);
+  Lb('MÁS DE',540,430,110,TX,1);Lb('45',540,700,480,YL,1);Lb('CONFIGURACIONES',540,960,92,GRN,1);
+  Lb('con 5 años de datos',540,1070,54,'#7d8aa6',1);
+  ctx.fillStyle=RDD;ctx.fillRect(110,1150,860,8);Lb('sobreoptimización',540,1250,64,TX,1);coverBtn('VER POR QUÉ →',GRN,DK)}
+</script></body></html>
