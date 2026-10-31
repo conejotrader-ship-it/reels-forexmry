@@ -1,0 +1,66 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 14 (3.er uso): lingotes dorados — tema: volatilidad realizada vs implícita (60 s). Bóveda verde botella con lingotes dorados y latón.
+const SPEC={name:'VolRealImp',hook:'DOS VOLATILIDADES: LA QUE PASÓ Y LA QUE SE ESPERA',dur:60,cta:56,bpm:98,mus:'soft',prog:[[43,'m'],[38,'M'],[41,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'tick'],[13.6,'wipe'],[15.0,'ding'],[17.0,'hit'],[19.0,'ding'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[26.0,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'alert'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[46.6,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Dos volatilidades: la que ya pasó y la que el mercado espera. Distínguelas.","Dos volatilidades: la que ya pasó y la que el mercado espera. Distínguelas."],
+ [6.4,13.4,"La realizada mide cuánto se movió el precio de verdad, con retornos pasados: 20 o 30 días.","La realizada mide cuánto se movió el precio de verdad, con retornos pasados: veinte o treinta días."],
+ [13.6,20.4,"Se anualiza con √252. Ejemplo ilustrativo: 0,6 % diario es ≈ 9,5 % anual.","Se anualiza con raíz de doscientos cincuenta y dos. Ejemplo ilustrativo: cero coma seis por ciento diario es cerca de nueve coma cinco anual."],
+ [20.6,28.2,"La implícita sale de los precios de las opciones: es lo que el mercado espera hacia adelante.","La implícita sale de los precios de las opciones: es lo que el mercado espera hacia adelante."],
+ [28.4,35.0,"La brecha entre ambas es la prima de riesgo de volatilidad. Si la implícita supera a la realizada, ventaja para quien vende opciones.","La brecha entre ambas es la prima de riesgo de volatilidad. Si la implícita supera a la realizada, ventaja para quien vende opciones."],
+ [35.2,43.4,"Si la realizada supera a la implícita, el mercado subestimó el movimiento. Es contexto, no una señal de entrada.","Si la realizada supera a la implícita, el mercado subestimó el movimiento. Es contexto, no una señal de entrada."],
+ [43.6,49.6,"Para tu robot: la realizada ajusta stops y tamaño; la implícita avisa. Educativo, sin garantías.","Para tu robot: la realizada ajusta stops y tamaño; la implícita avisa. Contenido educativo, sin garantías."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],
+ [56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#0a1a14',ACC='#e8b923',GD='#e8b923',GD2='#b8860b',CR='#f3ead2',EM='#2ecc8f',RDD='#e0584b';
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,26,20,.96)',subStroke:GD,subFill:'#f3ead2',ctaBg:DK,ctaSub:'#f3ead2',ctaGlow:GD,ctaAccent:GD,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:CR,mu:'#9fb3a8',acc:GD,c:[GD,EM,CR,RDD],pn:'#12291f'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();const g=ctx.createLinearGradient(0,y,0,y+h);g.addColorStop(0,'#16352a');g.addColorStop(1,'#0e231a');ctx.fillStyle=g;RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();ctx.restore()};
+function ingot(x,y,w,h,col1,col2,a=1){ctx.save();ctx.globalAlpha*=a;const g=ctx.createLinearGradient(0,y,0,y+h);g.addColorStop(0,col1);g.addColorStop(1,col2);ctx.fillStyle=g;
+  ctx.beginPath();ctx.moveTo(x+w*.12,y);ctx.lineTo(x+w*.88,y);ctx.lineTo(x+w,y+h);ctx.lineTo(x,y+h);ctx.closePath();ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.28)';ctx.beginPath();ctx.moveTo(x+w*.16,y+h*.12);ctx.lineTo(x+w*.84,y+h*.12);ctx.lineTo(x+w*.86,y+h*.3);ctx.lineTo(x+w*.14,y+h*.3);ctx.closePath();ctx.fill();ctx.restore()}
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0d2219');g.addColorStop(1,'#06100c');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(232,185,35,.08)';ctx.lineWidth=2;for(let y=120;y<H;y+=140){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ingot(20,1700,170,70,GD,GD2);ingot(200,1700,170,70,GD,GD2);ingot(110,1630,170,70,'#f4d35e',GD);ingot(890,1700,170,70,GD,GD2);ingot(710,1700,170,70,GD,GD2);ingot(800,1630,170,70,'#f4d35e',GD);
+  Lb('VOLATILIDAD · REALIZADA vs IMPLÍCITA',540,60,28,GD,.95)};
+const hd=(t,t0,s,col)=>Lb(s,540,175,58,col||GD,eout(prog(t,t0,t0+.5)));
+function priceWalk(t,t0,t1,x,y,w,h,col,amp){const r=rng(7);const pts=[];let v=.5;for(let i=0;i<=24;i++){v=clamp(v+(r()-.5)*amp,.1,.9);pts.push([i/24,v])}return lineChart(t,t0,t1,pts,x,y,w,h,col,8)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('2 VOLATILIDADES',540,300,110,GD,eout(prog(t,.2,.9)));
+  slide(t,1.2,()=>{panel(60,430,460,360,EM);Lb('REALIZADA',290,520,48,EM);Lb('la que ya pasó',290,600,32,CR);Lb('retornos',290,690,40,CR);Lb('pasados',290,740,40,CR)},-90);
+  slide(t,2.0,()=>{panel(560,430,460,360,GD);Lb('IMPLÍCITA',790,520,48,GD);Lb('la que se espera',790,600,32,CR);Lb('precios de',790,690,40,CR);Lb('opciones',790,740,40,CR)},90);
+  bigNum(t,3.2,540,1010,'√252 ≈ 15,87',150,CR);Lb('el factor para pasar de diaria a anual',540,1130,34,ST.mu,eout(prog(t,4.2,4.8)));
+  ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'REALIZADA · HISTÓRICA',EM);
+  Lb('lo que el precio se movió de verdad',540,255,40,CR,eout(prog(t,7,7.6)));
+  panel(60,320,960,560,EM);priceWalk(t,7.4,11.6,110,370,860,460,EM,.34);
+  Lb('ventana típica',540,970,40,ST.mu,eout(prog(t,11.4,12)));bigNum(t,11.6,540,1090,'20 a 30',200,GD);Lb('retornos diarios',540,1220,46,CR,eout(prog(t,12.2,12.8)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'CÓMO SE ANUALIZA',GD);
+  slide(t,14.2,()=>{panel(60,260,960,300,GD);Lb('retorno = ln(Cierre / Cierre anterior)',100,340,38,CR,1,'left');Lb('desviación estándar de la ventana',100,420,36,CR,1,'left');Lb('× √252 (días de mercado al año)',100,490,36,GD,1,'left')});
+  bigNum(t,16.4,540,720,'0,6 %',230,CR);Lb('movimiento diario típico',540,860,40,ST.mu,eout(prog(t,17.4,18)));Lb('× 15,87',540,970,110,GD,eout(prog(t,18,18.6)));bigNum(t,18.8,540,1190,'≈ 9,5 %',230,EM);Lb('anual · ejemplo ILUSTRATIVO',540,1340,38,ST.mu,eout(prog(t,19.6,20.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'IMPLÍCITA · HACIA ADELANTE',GD);
+  slide(t,21.4,()=>{panel(60,260,420,260,GD);Lb('PRECIO',270,360,44,CR);Lb('de la opción',270,430,36,CR)},-90);
+  const k=eout(prog(t,22.4,23));if(k>.02){ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=GD;ctx.beginPath();ctx.moveTo(500,360);ctx.lineTo(560,390);ctx.lineTo(500,420);ctx.closePath();ctx.fill();ctx.restore()}
+  slide(t,23.2,()=>{panel(600,260,420,260,EM);Lb('VOL.',810,360,44,CR);Lb('implícita',810,430,36,CR)},90);
+  priceWalk(t,24,26,110,640,860,380,GD,.2);
+  const kf=eout(prog(t,25.4,26.4));ctx.save();ctx.globalAlpha*=kf;ctx.fillStyle='rgba(232,185,35,.16)';ctx.beginPath();ctx.moveTo(700,780);ctx.lineTo(970,600);ctx.lineTo(970,980);ctx.closePath();ctx.fill();ctx.restore();
+  Lb('lo que el mercado espera',540,1120,52,GD,eout(prog(t,26.4,27)));Lb('ej. oro: GVZ (Cboe) = volatilidad esperada a 30 días',540,1200,30,ST.mu,eout(prog(t,27,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'LA BRECHA',GD);
+  barsV(t,29.2,[['REALIZADA',.52,EM,'9,5 %'],['IMPLÍCITA',.76,GD,'14 %']],180,330,720,620,160,64);
+  const k=eout(prog(t,31.6,32.4));if(k>.02){ctx.save();ctx.globalAlpha*=k;line(240,1130-.76*620-0,880,1130-.76*620,GD,5,[12,8]);line(240,1130-.52*620,880,1130-.52*620,EM,5,[12,8]);ctx.restore();Lb('prima',540,880,56,CR,k)}
+  Lb('implícita > realizada · ejemplo ILUSTRATIVO',540,1250,34,ST.mu,eout(prog(t,32.8,33.4)));Lb('ventaja para quien vende opciones',540,1320,40,GD,eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'EL CASO INVERSO',RDD);
+  barsV(t,36,[['REALIZADA',.8,EM,'14 %'],['IMPLÍCITA',.5,GD,'9 %']],180,330,720,620,160,64);
+  Lb('realizada > implícita',540,1250,56,RDD,eout(prog(t,38.6,39.2)));Lb('el mercado subestimó el movimiento',540,1330,38,CR,eout(prog(t,39.4,40)));Lb('ejemplo ILUSTRATIVO · es contexto, no señal de entrada',540,1400,28,ST.mu,eout(prog(t,41,41.6)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Realizada: stops y tamaño','Implícita: aviso de eventos',GD,EM)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('REALIZADA vs IMPLÍCITA',540,250,52,GD,1);
+  Lb('LA VOLATILIDAD',540,420,120,CR,1);Lb('QUE PASÓ',540,570,170,EM,1);Lb('vs la',540,690,60,ST.mu,1);Lb('QUE SE ESPERA',540,810,130,GD,1);
+  ctx.fillStyle=GD;ctx.fillRect(90,910,900,8);
+  Lb('√252',540,1100,300,CR,1);Lb('≈ 15,87 para anualizar',540,1280,50,ST.mu,1);coverBtn('VER LA DIFERENCIA →',GD,DK)}
+</script></body></html>
