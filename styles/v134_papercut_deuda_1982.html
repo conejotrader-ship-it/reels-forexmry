@@ -1,0 +1,60 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 17 (3.er uso): papercut — tema: crisis de la deuda latinoamericana de 1982 (60 s). Capas de papel terracota, mostaza y verde azulado con sombras.
+const SPEC={name:'Deuda1982',hook:'AGOSTO DE 1982: MÉXICO NO PUEDE PAGAR ≈ US$ 80.000 MILLONES',dur:60,cta:56,bpm:94,mus:'soft',prog:[[41,'m'],[45,'M'],[38,'m'],[43,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'ding'],[12.0,'ding'],[13.6,'wipe'],[15.0,'down'],[17.0,'down'],[19.0,'hit'],[20.6,'wipe'],[22.0,'hit'],[24.0,'alert'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[33.6,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'rise',1.6],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[46.6,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Agosto de 1982: México dice que no puede pagar su deuda de ≈ US$ 80.000 millones.","Agosto de mil novecientos ochenta y dos: México dice que no puede pagar su deuda de cerca de ochenta mil millones de dólares."],
+ [6.4,13.4,"La deuda latinoamericana pasó de US$ 29.000 millones en 1970 a US$ 327.000 millones en 1982.","La deuda latinoamericana pasó de veintinueve mil millones de dólares en mil novecientos setenta a trescientos veintisiete mil millones en mil novecientos ochenta y dos."],
+ [13.6,20.4,"Subieron las tasas, llegó la recesión mundial de 1981 y los bancos acortaron los plazos.","Subieron las tasas, llegó la recesión mundial de mil novecientos ochenta y uno y los bancos acortaron los plazos."],
+ [20.6,28.2,"Los nueve mayores bancos de EE. UU. tenían deuda latinoamericana equivalente al 176 % de su capital.","Los nueve mayores bancos de Estados Unidos tenían deuda latinoamericana equivalente al ciento setenta y seis por ciento de su capital."],
+ [28.4,35.0,"Dieciséis países latinoamericanos reestructuraron sus deudas: la llamada década perdida.","Dieciséis países latinoamericanos reestructuraron sus deudas: la llamada década perdida."],
+ [35.2,43.4,"En 1989, el plan Brady: los acreedores perdonaron US$ 61.000 millones, cerca de un tercio de la deuda.","En mil novecientos ochenta y nueve, el plan Brady: los acreedores perdonaron sesenta y un mil millones de dólares, cerca de un tercio de la deuda."],
+ [43.6,49.6,"Para tu robot: una crisis de deuda mueve divisas de golpe. Tamaño prudente y stops. Educativo.","Para tu robot: una crisis de deuda mueve divisas de golpe. Tamaño prudente y stops. Contenido educativo."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],
+ [56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#1d3557',ACC='#f2a541',TC='#c8553d',MO='#f2a541',CRM='#f6e8d0',TL='#2a6f6b',NV='#1d3557';
+const STY={subFont:'800 42px Inter',subBg:'rgba(29,53,87,.97)',subStroke:MO,subFill:'#fff',ctaBg:NV,ctaSub:CRM,ctaGlow:MO,ctaAccent:MO,ctaBtnText:NV,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:NV,mu:'#6b5b4a',acc:TC,c:[TC,TL,NV,'#8a5a1f'],pn:CRM});
+function paper(x,y,w,h,col,r=18){ctx.save();ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=18;ctx.shadowOffsetY=10;ctx.fillStyle=col;RR(x,y,w,h,r);ctx.fill();ctx.restore()}
+ST.panel=(x,y,w,h,col)=>{paper(x,y,w,h,CRM);ctx.save();ctx.fillStyle=col;RR(x,y,16,h,8);ctx.fill();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=CRM;ctx.fillRect(0,0,W,H);
+  const lay=[[1500,TL,.0],[1640,TC,.8],[1760,MO,1.6],[1860,NV,2.4]];lay.forEach(([y0,col,ph])=>{ctx.save();ctx.shadowColor='rgba(0,0,0,.3)';ctx.shadowBlur=20;ctx.shadowOffsetY=-6;ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(0,H);for(let x=0;x<=W;x+=20)ctx.lineTo(x,y0+Math.sin(x/160+ph)*26);ctx.lineTo(W,H);ctx.closePath();ctx.fill();ctx.restore()});
+  paper(60,40,360,50,TC,12);Lb('DEUDA · AMÉRICA LATINA',240,66,24,CRM)};
+const hd=(t,t0,s,col)=>Lb(s,540,175,58,col||TC,eout(prog(t,t0,t0+.5)));
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('AGOSTO DE 1982 · MÉXICO',540,270,40,TC,eout(prog(t,.2,.8)));
+  pop(t,.7,540,640,()=>{paper(-440,-200,880,430,TC,24);Lb('≈ US$ 80.000 M',0,-60,88,CRM);Lb('de deuda',0,70,70,MO)});
+  Lb('NO PUEDE PAGAR',540,1010,110,NV,eout(prog(t,2.4,3.0)));Lb('cifra aproximada · Fed History',540,1100,32,ST.mu,eout(prog(t,3.4,4)));
+  [0,1,2,3,4].forEach(i=>{const k=eback(prog(t,3.6+i*.2,4.4+i*.2));if(k<=.02)return;ctx.save();ctx.translate(180+i*180,1250);ctx.scale(k,k);paper(-60,-60,120,120,[MO,TL,TC,NV,MO][i]);ctx.restore()});ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'LA DEUDA SE DISPARA');
+  barsV(t,7.2,[['1970',29/327,TL,'US$ 29 mil M'],['1978',159/327,MO,'US$ 159 mil M'],['1982',1,TC,'US$ 327 mil M']],100,330,880,640,50,40);
+  Lb('deuda total de América Latina · mil millones = 10⁹',540,1090,34,ST.mu,eout(prog(t,11,11.6)));Lb('fuente: Federal Reserve History',540,1150,28,ST.mu,eout(prog(t,11.6,12.2)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'EL GIRO');
+  card(t,14.2,280,190,TC,'1 · Suben las tasas nominales','la política monetaria se aprieta',44);
+  card(t,16.2,520,190,TL,'2 · Recesión mundial en 1981','caen los ingresos para pagar',44);
+  card(t,18.2,760,190,'#8a5a1f','3 · Los bancos acortan plazos','y suben el costo de los préstamos',44);
+  Lb('fuente: Federal Reserve History',540,1040,28,ST.mu,eout(prog(t,19.4,20)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'LOS BANCOS DE EE. UU.');
+  bigNum(t,21.4,540,500,'176 %',330,TC);Lb('de su capital en deuda latinoamericana',540,720,42,NV,eout(prog(t,22.8,23.4)));Lb('los 9 mayores bancos · 1982',540,780,36,ST.mu,eout(prog(t,23.4,24)));
+  const k=eout(prog(t,24.4,26));paper(100,900,880,90,TL);paper(100,900,880*1.76/2*k,90,TC);Lb('capital = 100 %',350,945,34,CRM,eout(prog(t,24.4,25)));
+  line(100+880*.5,880,100+880*.5,1010,NV,4,[8,6]);Lb('100 %',100+880*.5,1050,32,NV,k);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'LA DÉCADA PERDIDA');
+  bigNum(t,29.2,540,420,'16',300,TC);Lb('países de América Latina reestructuraron deuda',540,610,40,NV,eout(prog(t,30.2,30.8)));
+  for(let i=0;i<16;i++){const k=eback(prog(t,30.6+i*.1,31.4+i*.1));if(k<=.02)continue;const cx=210+(i%8)*95,cy=820+Math.floor(i/8)*110;ctx.save();ctx.translate(cx,cy);ctx.scale(k,k);paper(-38,-38,76,76,i%2?MO:TL,14);ctx.restore()}
+  Lb('desempleo alto e ingreso per cápita en caída',540,1110,36,NV,eout(prog(t,33,33.6)));Lb('fuente: Federal Reserve History',540,1170,28,ST.mu,eout(prog(t,33.6,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'PLAN BRADY · 1989');
+  bigNum(t,36,540,480,'US$ 61.000 M',116,TL);Lb('perdonados por los acreedores',540,610,44,NV,eout(prog(t,37.4,38)));
+  const k=eout(prog(t,38,40));paper(100,730,880,110,CRM);paper(100,730,880*k/3*1,110,TL);paper(100+880/3*k,730,880*2/3*k,110,'#d9c9a8');
+  Lb('1/3',100+880/6,785,48,CRM,k);Lb('1989–1994 · 18 países',540,960,48,TC,eout(prog(t,40.2,40.8)));Lb('cifras aproximadas',540,1030,30,ST.mu,eout(prog(t,40.8,41.4)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Una crisis de deuda mueve divisas','Tamaño prudente y stops',TC,TL)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);paper(70,260,940,110,TC,24);Lb('AGOSTO DE 1982',540,315,64,CRM,1);
+  Lb('MÉXICO',540,500,200,NV,1);Lb('NO PUEDE',540,680,150,TC,1);Lb('PAGAR',540,830,200,TC,1);
+  paper(150,950,780,120,TL,24);Lb('≈ US$ 80.000 M',540,1010,80,CRM,1);
+  Lb('y empezó la década perdida',540,1170,48,NV,1);coverBtn('VER LA CRISIS →',TC,'#fff')}
+</script></body></html>
