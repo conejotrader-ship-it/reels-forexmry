@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 19 (3.er uso): cuaderno — tema: Barings 1995, cuenta 88888 y Nick Leeson (60 s). Hoja cuadriculada menta con espiral, bolígrafo azul y resaltador naranja.
+const SPEC={name:'Barings1995',hook:'1995: UN TRADER DE 28 AÑOS HUNDIÓ UN BANCO DE 233 AÑOS',dur:60,cta:56,bpm:96,mus:'soft',prog:[[43,'m'],[38,'M'],[41,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'scribble',2],[10.0,'ding'],[13.6,'wipe'],[15.0,'scribble',2],[17.0,'ding'],[19.0,'alert'],[20.6,'wipe'],[22.0,'hit'],[24.0,'hit'],[26.0,'hit'],[28.4,'wipe'],[30.0,'alert'],[32.0,'down'],[33.6,'down'],[35.2,'wipe'],[37.0,'hit'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[46.6,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Febrero de 1995: un trader de 28 años hundió Barings, un banco fundado en 1762.","Febrero de mil novecientos noventa y cinco: un trader de veintiocho años hundió Barings, un banco fundado en mil setecientos sesenta y dos."],
+ [6.4,13.4,"Nick Leeson, en Singapur, manejaba las operaciones y también su liquidación, con poca supervisión.","Nick Leeson, en Singapur, manejaba las operaciones y también su liquidación, con poca supervisión."],
+ [13.6,20.4,"Con la cuenta 88888 ocultó pérdidas: a fines de 1994 eran S$ 373,9 millones.","Con la cuenta ocho, ocho, ocho, ocho, ocho ocultó pérdidas: a fines de mil novecientos noventa y cuatro eran trescientos setenta y cuatro millones de dólares de Singapur."],
+ [20.6,28.2,"En enero de 1995 apostó a que el Nikkei seguiría sobre 19.000 puntos, y siguió duplicando apuestas.","En enero de mil novecientos noventa y cinco apostó a que el Nikkei seguiría sobre diecinueve mil puntos, y siguió duplicando apuestas."],
+ [28.4,35.0,"El 17 de enero, el terremoto de Kobe hundió al Nikkei y Barings no pudo cubrir las llamadas de margen.","El diecisiete de enero, el terremoto de Kobe hundió al Nikkei y Barings no pudo cubrir las llamadas de margen."],
+ [35.2,43.4,"Pérdida: ≈ 830 millones de libras. Barings quebró a fines de febrero y ING la compró por 1 libra.","Pérdida: cerca de ochocientos treinta millones de libras. Barings quebró a fines de febrero y ING la compró por una libra."],
+ [43.6,49.6,"Para tu robot: no dupliques para recuperar. Separa controles y usa stops. Educativo.","Para tu robot: no dupliques para recuperar. Separa controles y usa stops. Contenido educativo."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],
+ [56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#16323d',ACC='#ff9a2e',PEN='#1f4fd1',HL='#ff9a2e',RDM='#d63a3a',SHEET='#e7f5ee',GRIDC='rgba(31,79,209,.16)',INK2='#1d2a33';
+const STY={subFont:'800 42px Inter',subBg:'rgba(255,253,235,.97)',subStroke:PEN,subFill:'#1d2a33',ctaBg:DK,ctaSub:'#e7f5ee',ctaGlow:HL,ctaAccent:HL,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:INK2,mu:'#5b6b73',acc:PEN,c:[RDM,PEN,'#1c8a5a','#5b6b73'],pn:'#fffdeb'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.shadowColor='rgba(0,0,0,.25)';ctx.shadowBlur=12;ctx.shadowOffsetY=6;ctx.fillStyle='#fffdeb';ctx.fillRect(x,y,w,h);ctx.restore();ctx.fillStyle=col;ctx.fillRect(x,y,12,h);ctx.save();ctx.strokeStyle='rgba(0,0,0,.15)';ctx.lineWidth=2;ctx.strokeRect(x,y,w,h);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=SHEET;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle=GRIDC;ctx.lineWidth=2;for(let x=130;x<W;x+=50){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=20;y<H;y+=50){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.fillStyle='rgba(214,58,58,.55)';ctx.fillRect(120,0,4,H);
+  for(let y=110;y<H-40;y+=120){ctx.fillStyle='#16323d';ctx.beginPath();ctx.arc(46,y,16,0,7);ctx.fill();ctx.strokeStyle='#9aa7ad';ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(30,y);ctx.lineTo(96,y);ctx.stroke()}
+  Lb('BARINGS · FEB 1995',560,52,26,'#5b6b73')};
+const hd=(t,t0,s,col)=>{const k=eout(prog(t,t0,t0+.5));Lb(s,560,175,56,col||PEN,k);if(k>.02){ctx.save();ctx.globalAlpha*=.6*k;ctx.fillStyle=HL;ctx.fillRect(560-440*k,212,880*k,14);ctx.restore()}};
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('FEBRERO DE 1995',560,270,40,RDM,eout(prog(t,.2,.8)));
+  bigNum(t,.7,560,520,'233 años',170,PEN);Lb('de historia, desde 1762',560,690,46,INK2,eout(prog(t,1.8,2.4)));
+  bigNum(t,2.4,560,900,'28 años',170,RDM);Lb('el trader que lo hundió',560,1050,46,INK2,eout(prog(t,3.6,4.2)));
+  Lb('Barings Bank · Nick Leeson',560,1180,36,'#5b6b73',eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'UNA SOLA PERSONA');
+  slide(t,7.2,()=>{panel(180,280,780,160,PEN);Lb('Nick Leeson · Singapur',230,360,46,INK2,1,'left')});
+  slide(t,8.8,()=>{panel(180,520,360,260,RDM);Lb('OPERACIONES',360,610,34,RDM);Lb('(trading)',360,680,34,INK2)},-90);
+  slide(t,9.8,()=>{panel(600,520,360,260,RDM);Lb('LIQUIDACIÓN',780,610,34,RDM);Lb('(settlement)',780,680,34,INK2)},90);
+  Lb('sin separación de funciones',560,900,56,RDM,eout(prog(t,11,11.6)));Lb('poca supervisión',560,980,44,INK2,eout(prog(t,11.6,12.2)));Lb('fuente: Britannica',560,1090,28,'#5b6b73',eout(prog(t,12.2,12.8)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'CUENTA 88888',RDM);
+  bigNum(t,14.2,560,480,'88888',250,PEN);Lb('la cuenta que usó para ocultar pérdidas',560,680,38,INK2,eout(prog(t,15.4,16)));slide(t,16.4,()=>{panel(180,780,780,260,RDM);Lb('A fines de 1994',230,860,40,INK2,1,'left');Lb('S$ 373,9 millones',230,950,70,RDM,1,'left')});
+  Lb('dólares de Singapur · ocultos',560,1120,36,'#5b6b73',eout(prog(t,18.4,19)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'LA APUESTA',PEN);
+  Lb('Nikkei por encima de 19.000',560,280,50,INK2,eout(prog(t,21.2,21.8)));
+  panel(180,350,780,420,PEN);line(220,520,930,520,RDM,5,[14,8]);Lb('19.000',250,490,32,RDM,eout(prog(t,22,22.6)),'left');
+  lineChart(t,22.2,25.4,[[0,.6],[.2,.64],[.4,.6],[.6,.66],[.8,.62],[1,.65]],220,380,710,330,PEN,8);
+  [1,2,4,8].forEach((v,i)=>{const k=eback(prog(t,25.6+i*.5,26.2+i*.5));if(k<=.02)return;ctx.save();ctx.translate(260+i*200,1030);ctx.scale(k,k);ctx.fillStyle=HL;const s=30+v*18;ctx.fillRect(-s/2,-s/2,s,s);ctx.restore();Lb('×'+v,260+i*200,1130,40,INK2,k)});
+  Lb('apuestas cada vez más grandes (esquema ILUSTRATIVO)',560,1230,30,'#5b6b73',eout(prog(t,27.4,28)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'17 DE ENERO DE 1995',RDM);
+  Lb('Terremoto de Kobe',560,400,76,INK2,eout(prog(t,29.2,29.8)));
+  lineChart(t,30,32.2,[[0,.85],[.35,.8],[.55,.5],[.7,.25],[1,.1]],220,500,710,360,RDM,10);Lb('el Nikkei se desploma (trayecto ILUSTRATIVO)',560,930,34,'#5b6b73',eout(prog(t,32,32.6)));
+  slide(t,33,()=>{panel(180,1010,780,200,RDM);Lb('Llamadas de margen',230,1080,46,RDM,1,'left');Lb('Barings no pudo cubrirlas',230,1150,40,INK2,1,'left')});ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'EL RESULTADO',PEN);
+  bigNum(t,36,560,480,'≈ £830 M',160,RDM);Lb('pérdida total · cifra aproximada',560,650,38,INK2,eout(prog(t,37.2,37.8)));
+  bigNum(t,39,560,880,'£ 1',320,PEN);Lb('lo que pagó ING por Barings',560,1080,44,INK2,eout(prog(t,40.2,40.8)));Lb('administración: fines de febrero de 1995',560,1150,32,'#5b6b73',eout(prog(t,40.8,41.4)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'No dupliques para recuperar','Controles separados y stops',RDM,PEN)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);ctx.fillStyle=HL;ctx.fillRect(170,260,780,12);Lb('FEBRERO DE 1995',560,230,52,RDM,1);
+  Lb('1 TRADER',560,410,150,PEN,1);Lb('1 CUENTA',560,560,150,PEN,1);Lb('88888',560,800,250,RDM,1);
+  ctx.fillStyle=HL;ctx.globalAlpha=.6;ctx.fillRect(130,960,860,16);ctx.globalAlpha=1;
+  Lb('hundió un banco de 233 años',560,1060,52,INK2,1);Lb('≈ £830 M de pérdida',560,1150,52,RDM,1);coverBtn('VER LA HISTORIA →',RDM,'#fff')}
+</script></body></html>
