@@ -1,0 +1,59 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 13 (3.er uso): tipografía suiza invertida (negro, blanco y rojo, bloques) — tema: Lehman 2008 y la caída del oro (60 s).
+const SPEC={name:'Lehman2008Oro',hook:'2008: EL ORO CAYÓ ≈ 30 % EN PLENA CRISIS',dur:60,cta:56,bpm:104,mus:'soft',prog:[[40,'m'],[43,'M'],[38,'m'],[45,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'hit'],[26.0,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'rise',1.6],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[46.6,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"2008: el oro cayó ≈ 30 % en plena crisis. El refugio también sufrió.","Dos mil ocho: el oro cayó cerca de treinta por ciento en plena crisis. El refugio también sufrió."],
+ [6.4,13.4,"En marzo de 2008 el oro superó US$ 1.000 por primera vez: récord nominal de ≈ US$ 1.011.","En marzo de dos mil ocho el oro superó mil dólares por primera vez: récord de cerca de mil once dólares."],
+ [13.6,20.4,"El 15 de septiembre quebró Lehman Brothers. Hubo que liquidar posiciones y el oro cayó a ≈ US$ 700.","El quince de septiembre quebró Lehman Brothers. Hubo que liquidar posiciones y el oro cayó a cerca de setecientos dólares."],
+ [20.6,28.2,"De máximo a mínimo: ≈ −30 %, de ≈ 1.011 a ≈ 700. No fue un refugio sin caídas.","De máximo a mínimo: cerca de menos treinta por ciento, de mil once a unos setecientos dólares. No fue un refugio sin caídas."],
+ [28.4,35.0,"Aun así, 2008 cerró cerca de US$ 870, sobre el inicio del año, y 2009 cerró cerca de US$ 1.087.","Aun así, dos mil ocho cerró cerca de ochocientos setenta dólares, sobre el inicio del año, y dos mil nueve cerca de mil ochenta y siete."],
+ [35.2,43.4,"En el verano de 2011 llegó a casi US$ 1.900. Un refugio puede caer primero y recuperarse después.","En el verano de dos mil once llegó a casi mil novecientos dólares. Un refugio puede caer primero y recuperarse después."],
+ [43.6,49.6,"Para tu robot: en pánicos de liquidez todo se correlaciona. Tamaño prudente y stops. Educativo.","Para tu robot: en pánicos de liquidez todo se correlaciona. Tamaño prudente y stops. Contenido educativo."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],
+ [56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#0b0b0b',ACC='#ff2a1f',RD='#ff2a1f',WH='#f4f4f0';
+const STY={subFont:'800 42px Inter',subBg:'rgba(255,255,255,.97)',subStroke:RD,subFill:'#0b0b0b',ctaBg:DK,ctaSub:'#fff',ctaGlow:RD,ctaAccent:RD,ctaBtnText:'#fff',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:WH,mu:'#9a9a94',acc:RD,c:[RD,WH,'#ffb3ae','#9a9a94'],pn:'#171717'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#171717';ctx.fillRect(x,y,w,h);ctx.fillStyle=col;ctx.fillRect(x,y,16,h);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=DK;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle='rgba(255,255,255,.06)';ctx.lineWidth=2;for(let x=90;x<=990;x+=180){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}ctx.restore();
+  ctx.fillStyle=RD;ctx.fillRect(60,28,40,40);Lb('2008 · ORO',120,50,28,WH,1,'left');line(60,90,1020,90,WH,5)};
+const hd=(t,t0,s,col)=>Lb(s,540,235,60,col||RD,eout(prog(t,t0,t0+.5)));
+function goldPath(t,t0,t1,x,y,w,h,col){ // trayecto ILUSTRATIVO del oro 2008: máx. marzo, mínimo otoño, cierre
+  const pts=[[0,.5],[.12,.78],[.22,1],[.34,.9],[.5,.8],[.62,.55],[.72,.32],[.8,.12],[.9,.36],[1,.46]];
+  return lineChart(t,t0,t1,pts,x,y,w,h,col,12)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('15 SEP 2008 · LEHMAN BROTHERS',540,260,36,RD,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,520,'−30 %',330,RD);
+  Lb('EL ORO',540,760,120,WH,eout(prog(t,1.8,2.4)));Lb('DE MÁXIMO A MÍNIMO',540,860,60,WH,eout(prog(t,2.2,2.8)));
+  goldPath(t,3.0,5.4,120,960,840,360,WH);Lb('(trayecto ILUSTRATIVO)',540,1390,28,ST.mu,eout(prog(t,4.5,5.1)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'MARZO DE 2008');
+  bigNum(t,7.2,540,520,'US$ 1.000',200,WH);Lb('por primera vez',540,680,60,RD,eout(prog(t,8.4,9)));
+  card(t,9.8,800,200,RD,'Récord nominal ≈ US$ 1.011','la onza, primer trimestre de 2008',46);
+  Lb('fuente: GainesvilleCoins · cifras aproximadas',540,1100,28,ST.mu,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'LEHMAN QUIEBRA');
+  slide(t,14.2,()=>{panel(60,300,960,300,RD);Lb('15 SEP',100,400,100,RD,1,'left');Lb('Chapter 11 · el Dow cayó ≈ 500 puntos ese día',100,510,40,WH,1,'left')});
+  slide(t,16.4,()=>{panel(60,660,960,300,WH);Lb('LIQUIDAR',100,760,100,WH,1,'left');Lb('posiciones vendidas para conseguir efectivo',100,870,38,WH,1,'left')});
+  bigNum(t,18.2,540,1130,'≈ US$ 700',170,RD);Lb('mínimo del oro en otoño de 2008',540,1280,38,ST.mu,eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'PICO A MÍNIMO');
+  barsV(t,21.4,[['MAR 2008',1,WH,'≈ 1.011'],['OTOÑO 2008',.69,RD,'≈ 700']],160,380,760,640,160,70);
+  bigNum(t,25.4,540,1180,'≈ −30 %',200,RD);Lb('(cifras aproximadas · mínimo intradía ≈ 692)',540,1330,30,ST.mu,eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'EL CIERRE DE CADA AÑO');
+  barsV(t,29.2,[['2008',.55,WH,'≈ 870'],['2009',.69,RD,'≈ 1.087'],['2010',.9,WH,'≈ 1.420']],100,340,880,640,60,56);
+  Lb('onza de oro · cierre anual · cifras aproximadas',540,1160,34,ST.mu,eout(prog(t,32.4,33)));
+  Lb('fuente: StoneX Futures',540,1220,28,ST.mu,eout(prog(t,33,33.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'VERANO DE 2011');
+  bigNum(t,36,540,520,'≈ 1.900',280,RD);Lb('dólares por onza',540,720,56,WH,eout(prog(t,37.2,37.8)));
+  goldPath(t,38,41.5,120,820,840,380,WH);Lb('→ la caída fue un tramo, no el final',540,1330,40,RD,eout(prog(t,41.6,42.2)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'En pánico, todo se correlaciona','Tamaño prudente y stops',RD,WH)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('SEPTIEMBRE DE 2008',540,260,48,RD,1);
+  Lb('EL ORO',540,450,190,WH,1);Lb('TAMBIÉN',540,600,150,WH,1);Lb('CAYÓ',540,800,230,RD,1);
+  ctx.fillStyle=RD;ctx.fillRect(90,940,900,10);Lb('−30 %',540,1140,300,WH,1);
+  Lb('de máximo a mínimo en 2008',540,1320,52,ST.mu,1);coverBtn('VER QUÉ PASÓ →',RD,'#fff')}
+</script></body></html>
