@@ -1,0 +1,76 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 21 (3.er uso): línea de tiempo horizontal con hitos — tema: Black Friday 1869 (60 s). Verde bosque oscuro con eje dorado que se desplaza y hitos con tarjetas.
+const SPEC={name:'BlackFriday1869',hook:'24 SEP 1869: EL ORO CAYO DE 160 A 138 DOLARES EN MINUTOS',dur:60,cta:56,bpm:92,mus:'soft',prog:[[45,'m'],[41,'M'],[43,'m'],[40,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'hit'],[10.0,'ding'],[13.6,'wipe'],[15.0,'hit'],[17.0,'ding'],[20.6,'wipe'],[22.0,'rise',3],[26.0,'alert'],[28.4,'wipe'],[30.0,'hit'],[32.0,'down'],[33.6,'down'],[35.2,'wipe'],[37.0,'hit'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[46.6,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"24 de septiembre de 1869: el oro cayó de 160 a 138 dólares en minutos.","Veinticuatro de septiembre de mil ochocientos sesenta y nueve: el oro cayó de ciento sesenta a ciento treinta y ocho dólares en minutos."],
+ [6.4,13.4,"Jay Gould y James Fisk querían acaparar el oro de Nueva York y subir su precio.","Jay Gould y James Fisk querían acaparar el oro de Nueva York y subir su precio."],
+ [13.6,20.4,"Compraron oro y buscaron frenar las ventas del Tesoro a través de Abel Corbin, cuñado del presidente Grant.","Compraron oro y buscaron frenar las ventas del Tesoro a través de Abel Corbin, cuñado del presidente Grant."],
+ [20.6,28.2,"El oro llegó a 160 dólares. Con el Tesoro vendiendo, el plan de la camarilla se rompía.","El oro llegó a ciento sesenta dólares. Con el Tesoro vendiendo, el plan de la camarilla se rompía."],
+ [28.4,35.0,"Grant ordenó vender 4 millones de dólares en oro. En minutos, el precio bajó a 138.","Grant ordenó vender cuatro millones de dólares en oro. En minutos, el precio bajó a ciento treinta y ocho."],
+ [35.2,43.4,"Decenas de casas de bolsa quebraron y las acciones cayeron cerca de 20 % hasta el 1 de octubre.","Decenas de casas de bolsa quebraron y las acciones cayeron cerca de veinte por ciento hasta el primero de octubre."],
+ [43.6,49.6,"Para tu robot: el precio también cambia por decisiones. Limita tu riesgo y usa stops. Educativo.","Para tu robot: el precio también cambia por decisiones. Limita tu riesgo y usa stops. Contenido educativo."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],
+ [56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#07140f',ACC='#f2b632',GOLD='#f2b632',RED='#ff5a4d',MINT='#4fe0b0',CREAM='#f6efd8';
+const STY={subFont:'800 42px Inter',subBg:'rgba(7,20,15,.92)',subStroke:GOLD,subFill:CREAM,ctaBg:DK,ctaSub:CREAM,ctaGlow:GOLD,ctaAccent:GOLD,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:CREAM,mu:'#9bb8ac',acc:GOLD,c:[GOLD,MINT,RED,'#7fb7ff'],pn:'#0f2a21'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#10302a';RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=4;ctx.strokeStyle=col;ctx.stroke();ctx.restore();ctx.fillStyle=col;ctx.fillRect(x+14,y+12,6,h-24)};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0a1c17');g.addColorStop(1,'#12362c');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(242,182,50,.07)';ctx.lineWidth=2;for(let x=-60+(t*14)%60;x<W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}ctx.restore();
+  // eje del tiempo (se desplaza)
+  const ay=1260;ctx.save();ctx.strokeStyle=GOLD;ctx.lineWidth=6;ctx.globalAlpha=.7;ctx.beginPath();ctx.moveTo(0,ay);ctx.lineTo(W,ay);ctx.stroke();ctx.lineWidth=3;
+  for(let x=-120+(t*40)%120;x<W;x+=120){ctx.beginPath();ctx.moveTo(x,ay-12);ctx.lineTo(x,ay+12);ctx.stroke()}ctx.restore();
+  Lb('NUEVA YORK · SEPTIEMBRE DE 1869',540,52,26,'#9bb8ac')};
+const LbA=(...a)=>{const m=ST.mono;ST.mono=false;Lb(...a);ST.mono=m};
+const hd=(t,t0,s,col)=>{const k=eout(prog(t,t0,t0+.5));Lb(s,540,175,56,col||GOLD,k);if(k>.02){ctx.save();ctx.globalAlpha*=.7*k;ctx.fillStyle=col||GOLD;ctx.fillRect(540-300*k,212,600*k,8);ctx.restore()}};
+// hito sobre el eje: x, fecha, etiqueta (pop)
+const hito=(t,t0,x,fecha,txt,col)=>{pop(t,t0,x,1260,()=>{ctx.fillStyle=col;ctx.beginPath();ctx.arc(0,0,22,0,7);ctx.fill();ctx.fillStyle=DK;ctx.beginPath();ctx.arc(0,0,9,0,7);ctx.fill()});const k=eout(prog(t,t0+.2,t0+.8));if(k>.02){Lb(fecha,x,1315,32,col,k);Lb(txt,x,1355,26,'#9bb8ac',k)}};
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('VIERNES 24 DE SEPTIEMBRE',540,290,44,RED,eout(prog(t,.2,.8)));
+  bigNum(t,.7,540,560,'1869',320,GOLD);
+  Lb('el primer "viernes negro" de Wall Street',540,760,40,CREAM,eout(prog(t,1.8,2.4)));
+  pop(t,2.4,540,980,()=>LbA('$160 → $138',0,0,130,RED));Lb('precio del oro en minutos',540,1090,44,CREAM,eout(prog(t,3.6,4.2)));
+  Lb('(dólares por onza, referencia histórica)',540,1160,28,'#9bb8ac',eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'EL PLAN');
+  slide(t,7.2,()=>{panel(80,290,420,230,GOLD);Lb('JAY GOULD',290,370,40,GOLD);Lb('financiero',290,440,32,CREAM)},-90);
+  slide(t,8.0,()=>{panel(580,290,420,230,GOLD);Lb('JAMES FISK',790,370,40,GOLD);Lb('socio',790,440,32,CREAM)},90);
+  Lb('"Gold Ring"',540,620,64,RED,eout(prog(t,9.2,9.8)));Lb('(la camarilla del oro)',540,690,34,'#9bb8ac',eout(prog(t,9.8,10.4)));
+  pop(t,10.4,540,880,()=>{ctx.fillStyle=GOLD;ctx.beginPath();ctx.moveTo(-190,60);ctx.lineTo(190,60);ctx.lineTo(130,-60);ctx.lineTo(-130,-60);ctx.closePath();ctx.fill();Lb('ORO',0,0,70,DK)});
+  Lb('acaparar el oro y subir su precio',540,1040,46,CREAM,eout(prog(t,11.4,12)));
+  hito(t,12,300,'1 SEP','compras de oro',GOLD);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'LA PIEZA CLAVE',MINT);
+  slide(t,14.2,()=>{panel(80,290,920,200,MINT);Lb('Abel Corbin',130,370,50,MINT,1,'left');Lb('cuñado del presidente Ulysses Grant',130,440,34,CREAM,1,'left')});
+  slide(t,15.4,()=>{panel(80,540,920,200,GOLD);Lb('el objetivo',130,620,50,GOLD,1,'left');Lb('que el Tesoro dejara de vender oro',130,690,34,CREAM,1,'left')},90);
+  const k=eout(prog(t,16.8,17.6));if(k>.02){ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=RED;RR(80,800,920,150,18);ctx.fill();ctx.restore();Lb('Si el Tesoro vendía oro, el precio no subía',540,875,40,'#fff',k)}
+  hito(t,18,300,'1 SEP','≈ US$ 1,5 M en oro',GOLD);hito(t,19,780,'SEP','presionan a Grant',MINT);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'EL PICO',GOLD);
+  axes(100,330,860,560,'#9bb8ac');hline(520,RED,4,100,960);Lb('$155: el Tesoro vende',130,480,32,RED,eout(prog(t,22,22.6)),'left');
+  const h=lineChart(t,22,26,[[0,.18],[.25,.25],[.5,.45],[.7,.58],[.9,.72],[1,.92]],110,350,830,520,GOLD,10,12);
+  if(h){const k=eout(prog(t,25.6,26.4));if(k>.02)Lb('$160',h[0]-40,h[1]-50,70,GOLD,k)}
+  Lb('trayecto ILUSTRATIVO · pico ≈ $160',540,960,32,'#9bb8ac',eout(prog(t,26.4,27)));
+  hito(t,26.6,540,'24 SEP','el oro en $160',RED);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'LA ORDEN DE GRANT',RED);
+  bigNum(t,29,540,420,'$4 M',250,GOLD);Lb('en oro que vende el Tesoro',540,580,44,CREAM,eout(prog(t,30.2,30.8)));
+  axes(100,660,860,420,'#9bb8ac');
+  lineChart(t,31.2,33.4,[[0,.95],[.3,.9],[.5,.5],[.7,.2],[1,.1]],110,680,830,380,RED,10,12);
+  Lb('$160',140,700,48,GOLD,eout(prog(t,31.4,32)),'left');Lb('$138',900,1060,48,MINT,eout(prog(t,33,33.6)),'right');
+  Lb('en minutos (trayecto ILUSTRATIVO)',540,1130,32,'#9bb8ac',eout(prog(t,33.6,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'EL COSTO',RED);
+  slide(t,36,()=>{panel(80,290,920,230,RED);Lb('Acciones',130,370,44,CREAM,1,'left');Lb('≈ −20 %',130,455,84,RED,1,'left');Lb('del 24 sep al 1 oct',600,455,32,'#9bb8ac',1,'left')});
+  slide(t,37.8,()=>{panel(80,570,920,200,GOLD);Lb('Decenas de casas de bolsa',130,650,42,CREAM,1,'left');Lb('quebraron',130,715,48,GOLD,1,'left')},90);
+  slide(t,39.6,()=>{panel(80,820,920,200,MINT);Lb('Investigación del Congreso',130,900,40,CREAM,1,'left');Lb('criticó a Gould y a Corbin',130,965,40,MINT,1,'left')});
+  hito(t,41,540,'1 OCT','la bolsa sigue débil',GOLD);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'El precio también lo mueven decisiones','Limita el riesgo y usa stops',RED,GOLD)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('VIERNES 24 SEP 1869',540,230,50,RED,1);
+  Lb('$160',540,470,300,GOLD,1);LbA('→ $138',540,720,230,RED,1);
+  ctx.fillStyle=GOLD;ctx.globalAlpha=.7;ctx.fillRect(140,860,800,12);ctx.globalAlpha=1;
+  Lb('EL ORO CAYÓ EN MINUTOS',540,980,64,CREAM,1);Lb('Gould y Fisk quisieron acaparar el oro',540,1075,38,'#9bb8ac',1);
+  coverBtn('VER LA HISTORIA →',GOLD,DK)}
+</script></body></html>
