@@ -1,0 +1,68 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 22 (3.er uso): noticiero de última hora — tema: Flash Crash del 6 mayo 2010 (60 s). Estudio azul eléctrico con rótulo amarillo, insignia EN VIVO y cinta inferior.
+const SPEC={name:'FlashCrash2010',hook:'6 MAYO 2010: EL DOW CAYO CERCA DE 9 % EN MINUTOS',dur:60,cta:56,bpm:108,prog:[[41,'m'],[36,'M'],[38,'m'],[43,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'alert'],[3.6,'hit'],[6.4,'wipe'],[7.6,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'hit'],[17.0,'down'],[20.6,'wipe'],[22.0,'down'],[25.0,'alert'],[28.4,'wipe'],[30.0,'rise',3],[33.0,'ding'],[35.2,'wipe'],[37.0,'hit'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[46.6,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"6 de mayo de 2010: el Dow llegó a caer cerca de 9 % en minutos.","Seis de mayo de dos mil diez: el Dow llegó a caer cerca de nueve por ciento en minutos."],
+ [6.4,13.4,"A las 2:32 p. m., un gran inversor lanzó una venta de 75.000 contratos E-mini, ≈ 4.100 millones de dólares.","A las dos y treinta y dos de la tarde, un gran inversor lanzó una venta de setenta y cinco mil contratos E-mini, cerca de cuatro mil cien millones de dólares."],
+ [13.6,20.4,"El algoritmo la ejecutó en unos 20 minutos. Meses antes, una orden así tardó al menos 5 horas.","El algoritmo la ejecutó en unos veinte minutos. Meses antes, una orden así tardó al menos cinco horas."],
+ [20.6,28.2,"Los creadores de mercado se retiraron y la liquidez se evaporó: los precios se movieron muy rápido.","Los creadores de mercado se retiraron y la liquidez se evaporó: los precios se movieron muy rápido."],
+ [28.4,35.0,"Cerca de las 3 p. m. se recuperó la mayor parte. El Dow cerró con una baja de 3 %.","Cerca de las tres de la tarde se recuperó la mayor parte. El Dow cerró con una baja de tres por ciento."],
+ [35.2,43.4,"El informe de la SEC y la CFTC mostró que una sola orden automática grande puede desestabilizar un mercado.","El informe de la SEC y la CFTC mostró que una sola orden automática grande puede desestabilizar un mercado."],
+ [43.6,49.6,"Para tu robot: limita el tamaño por orden y ten un freno de emergencia. Educativo.","Para tu robot: limita el tamaño por orden y ten un freno de emergencia. Contenido educativo."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],
+ [56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#04122e',ACC='#ffd400',YL='#ffd400',RD='#ff2d3d',BL='#2d8cff',GR='#35e08a',TX='#ffffff';
+const STY={subFont:'800 42px Inter',subBg:'rgba(4,18,46,.95)',subStroke:YL,subFill:TX,ctaBg:DK,ctaSub:TX,ctaGlow:YL,ctaAccent:YL,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:TX,mu:'#9fb6e0',acc:YL,c:[YL,RD,BL,GR],pn:'#0a2250'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(8,28,70,.92)';ctx.fillRect(x,y,w,h);ctx.fillStyle=col;ctx.fillRect(x,y,w,10);ctx.strokeStyle='rgba(255,255,255,.18)';ctx.lineWidth=2;ctx.strokeRect(x,y,w,h);ctx.restore()};
+const TICK='ÚLTIMA HORA  ·  FLASH CRASH 6 MAYO 2010  ·  DOW ≈ −9 % INTRADÍA  ·  75.000 E-MINI ≈ US$ 4.100 M  ·  CIERRE ≈ −3 %  ·  ';
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0a2a66');g.addColorStop(1,'#04122e');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=2;for(let i=-6;i<12;i++){ctx.beginPath();ctx.moveTo(540+i*140,230);ctx.lineTo(540+i*400,1330);ctx.stroke()}ctx.restore();
+  // insignia EN VIVO + barra superior
+  ctx.fillStyle=RD;ctx.fillRect(0,0,W,86);ctx.fillStyle='#fff';ctx.globalAlpha=.5+.5*Math.abs(Math.sin(t*3));ctx.beginPath();ctx.arc(60,43,14,0,7);ctx.fill();ctx.globalAlpha=1;Lb('EN VIVO',120,43,36,'#fff',1,'left');Lb('ÚLTIMA HORA',760,43,40,'#fff',1,'center');
+  // cinta
+  ctx.fillStyle=YL;ctx.fillRect(0,1350,W,64);ctx.save();ctx.beginPath();ctx.rect(0,1350,W,64);ctx.clip();ctx.font='900 34px Inter';const s=fx(TICK);const w=ctx.measureText(s).width;const off=(t*160)%w;ctx.fillStyle=DK;ctx.textBaseline='middle';ctx.textAlign='left';for(let x=-off;x<W;x+=w)ctx.fillText(s,x,1383);ctx.restore()};
+const LbA=(...a)=>{const m=ST.mono;ST.mono=false;Lb(...a);ST.mono=m};
+const hd=(t,t0,s,col)=>{const k=eout(prog(t,t0,t0+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=col||YL;ctx.fillRect(60,130,960*k,86);ctx.restore();Lb(s,540,175,50,DK,k)};
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('JUEVES 6 DE MAYO DE 2010',540,290,44,YL,eout(prog(t,.2,.8)));
+  bigNum(t,.7,540,540,'−9 %',330,RD);Lb('el Dow Jones, en minutos',540,740,52,TX,eout(prog(t,1.8,2.4)));
+  slide(t,2.6,()=>{panel(80,840,920,230,YL);Lb('y luego casi todo volvió',130,920,46,TX,1,'left');Lb('cierre ≈ −3 %',130,1005,60,YL,1,'left')});
+  Lb('Flash Crash · informe SEC + CFTC',540,1170,34,'#9fb6e0',eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'2:32 P. M.');
+  bigNum(t,7.2,540,420,'75.000',260,YL);Lb('contratos E-mini S&P 500 en venta',540,590,44,TX,eout(prog(t,8.4,9)));
+  slide(t,9.4,()=>{panel(80,680,920,200,RD);Lb('≈ US$ 4.100 millones',130,770,64,RD,1,'left');Lb('valor aproximado de la orden',130,840,32,TX,1,'left')});
+  slide(t,11,()=>{panel(80,930,920,170,BL);Lb('un solo algoritmo, un solo vendedor',130,1015,42,TX,1,'left')},90);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'LA VELOCIDAD DE LA ORDEN',RD);
+  barsH(t,14.4,[['Esta vez: algoritmo',.16,RD,'≈ 20 min'],['Meses antes: orden parecida',1,BL,'≥ 5 horas']],80,300,880,200,42);
+  Lb('el tamaño y la velocidad cambiaron el mercado',540,780,42,YL,eout(prog(t,18,18.6)));Lb('barras proporcionales a 20 min y 5 h',540,850,28,'#9fb6e0',eout(prog(t,18.6,19.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'SE EVAPORÓ LA LIQUIDEZ',BL);
+  panel(80,290,920,560,BL);Lb('libro de órdenes (ILUSTRATIVO)',540,340,32,'#9fb6e0');
+  const k=eout(prog(t,22,25));for(let i=0;i<8;i++){const y=380+i*55;const wb=lerp(300,40,k*(.6+.05*i)),wa=lerp(300,30,k*(.55+.05*i));ctx.fillStyle=GR;ctx.fillRect(540-wb-10,y,wb,40);ctx.fillStyle=RD;ctx.fillRect(550,y,wa,40)}
+  Lb('compra',280,860+10,30,GR);Lb('venta',800,870,30,RD);
+  slide(t,25.6,()=>{panel(80,930,920,170,YL);Lb('los creadores de mercado se retiraron',130,1015,42,TX,1,'left')});ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'LA RECUPERACIÓN',GR);
+  panel(80,290,920,640,GR);axes(120,330,840,520,'#9fb6e0');
+  lineChart(t,29.2,34,[[0,.78],[.3,.76],[.38,.1],[.45,.08],[.55,.55],[.7,.7],[1,.72]],130,340,820,500,YL,9,10);
+  Lb('2:30',250,880,28,'#9fb6e0',eout(prog(t,29.2,29.8)));Lb('3:00 p. m.',700,880,28,'#9fb6e0',eout(prog(t,31,31.6)));
+  Lb('≈ −9 %',500,780,60,RD,eout(prog(t,30.4,31)));
+  Lb('trayecto ILUSTRATIVO',540,980,30,'#9fb6e0',eout(prog(t,33,33.6)));
+  slide(t,33.2,()=>{panel(80,1030,920,170,GR);Lb('cierre del día: ≈ −3 %',130,1115,52,TX,1,'left')});ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'EL INFORME',YL);
+  slide(t,36,()=>{panel(80,290,920,230,YL);Lb('SEC + CFTC',130,370,64,YL,1,'left');Lb('informe conjunto sobre el 6 de mayo',130,455,34,TX,1,'left')});
+  slide(t,38,()=>{panel(80,570,920,250,RD);Lb('una orden grande y automática',130,650,44,TX,1,'left');Lb('puede desestabilizar el mercado',130,720,44,RD,1,'left')},90);
+  slide(t,40.2,()=>{panel(80,870,920,170,BL);Lb('fuente: informe SEC/CFTC (2010)',130,955,36,TX,1,'left')});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Limita el tamaño por orden','Ten un freno de emergencia',RD,YL)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);ctx.save();ctx.fillStyle='rgba(0,0,0,.0)';ctx.restore();Lb('FLASH CRASH · 6 MAYO 2010',540,190,48,YL,1);
+  LbA('−9 %',540,520,340,RD,1);Lb('EL DOW EN MINUTOS',540,800,76,TX,1);
+  ctx.fillStyle=YL;ctx.fillRect(140,880,800,12);
+  Lb('una orden de ≈ US$ 4.100 millones',540,990,46,TX,1);Lb('y luego casi todo volvió',540,1070,46,YL,1);
+  coverBtn('VER QUÉ PASÓ →',YL,DK)}
+</script></body></html>
