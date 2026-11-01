@@ -1,0 +1,69 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 20 (3.er uso): pixel-art arcade en canvas 2D — tema: kill switch de un robot (60 s). Noche morada con estrellas, paneles de esquinas cortadas, barras de vida y botón rojo de píxeles.
+const SPEC={name:'KillSwitch',hook:'KILL SWITCH: EL BOTON QUE APAGA TU ROBOT Y CANCELA TODO',dur:60,cta:56,bpm:112,prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'alert'],[3.6,'hit'],[6.4,'wipe'],[8.0,'down'],[9.0,'down'],[10.0,'down'],[13.6,'wipe'],[15.0,'hit'],[17.0,'ding'],[20.6,'wipe'],[22.0,'ding'],[24.0,'ding'],[26.0,'ding'],[28.4,'wipe'],[30.0,'alert'],[32.0,'hit'],[33.6,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[46.6,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Kill switch: el botón que apaga tu robot y cancela todo en segundos.","Kill switch: el botón que apaga tu robot y cancela todo en segundos."],
+ [6.4,13.4,"En Europa, la norma de trading algorítmico exige poder retirar de inmediato todas o parte de las órdenes pendientes.","En Europa, la norma de trading algorítmico exige poder retirar de inmediato todas o parte de las órdenes pendientes."],
+ [13.6,20.4,"También exige saber qué algoritmo envió cada orden. Sin trazabilidad no hay control.","También exige saber qué algoritmo envió cada orden. Sin trazabilidad no hay control."],
+ [20.6,28.2,"Tu robot también necesita límites: pérdida diaria máxima, drawdown máximo y número máximo de operaciones.","Tu robot también necesita límites: pérdida diaria máxima, drawdown máximo y número máximo de operaciones."],
+ [28.4,35.0,"Al llegar a un límite: cancelar pendientes, proteger posiciones y pausar hasta revisar.","Al llegar a un límite: cancelar pendientes, proteger posiciones y pausar hasta revisar."],
+ [35.2,43.4,"Pruébalo en demo: simula caída de conexión, spreads enormes y órdenes repetidas.","Pruébalo en demo: simula caída de conexión, spreads enormes y órdenes repetidas."],
+ [43.6,49.6,"Define tus límites antes de operar y revisa tu robot. Contenido educativo.","Define tus límites antes de operar y revisa tu robot. Contenido educativo."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],
+ [56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#150b2e',ACC='#ffe14a',YL='#ffe14a',RD='#ff4a5a',MN='#4af2c0',PK='#ff7ad9',BL='#5aa8ff',TX='#fff7e0';
+const STY={subFont:'800 42px Inter',subBg:'rgba(21,11,46,.95)',subStroke:YL,subFill:TX,ctaBg:DK,ctaSub:TX,ctaGlow:MN,ctaAccent:YL,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:TX,mu:'#b9a7e6',acc:YL,c:[YL,RD,MN,PK],pn:'#2a1b52'});
+const S=12; // tamaño de píxel
+function pxBox(x,y,w,h,fill,edge){ctx.fillStyle=edge;ctx.fillRect(x+S,y,w-2*S,h);ctx.fillRect(x,y+S,w,h-2*S);ctx.fillStyle=fill;ctx.fillRect(x+S,y+S,w-2*S,h-2*S)}
+ST.panel=(x,y,w,h,col)=>{ctx.fillStyle='rgba(0,0,0,.45)';ctx.fillRect(x+S,y+S+S,w,h);pxBox(x,y,w,h,'#2a1b52',col)};
+const STARS=(()=>{const r=rng(9),a=[];for(let i=0;i<60;i++)a.push([r()*W,230+r()*1050,r()*6.3,6+Math.floor(r()*2)*6]);return a})();
+ST.bg=t=>{ctx.fillStyle='#150b2e';ctx.fillRect(0,0,W,H);ctx.fillStyle='#1d1040';for(let i=0;i<10;i++)ctx.fillRect(0,230+i*110,W,50);
+  STARS.forEach(([x,y,p,s])=>{ctx.fillStyle=(Math.sin(t*3+p)>0)?'#fff7e0':'#7a68b8';ctx.fillRect(Math.round(x/6)*6,Math.round(y/6)*6,s,s)});
+  // suelo de ladrillos
+  ctx.fillStyle='#6b3fa0';ctx.fillRect(0,1330,W,100);for(let i=0;i<9;i++)for(let j=0;j<2;j++){ctx.fillStyle=(i+j)%2?'#8a55c4':'#7646b0';ctx.fillRect(i*120+(j%2?60:0)-60,1330+j*50,116,46)}
+  Lb('NIVEL · KILL SWITCH',540,52,26,'#b9a7e6')};
+const hd=(t,t0,s,col)=>{const k=eout(prog(t,t0,t0+.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;pxBox(190,128,700,84,'#2a1b52',col||YL);ctx.restore();Lb(s,540,172,44,col||YL,k)};
+// barra de vida
+function hp(x,y,w,frac,col,lab){Lb(lab,x,y-24,28,TX,1,'left');ctx.fillStyle='#000';ctx.fillRect(x-8,y-8,w+16,52);ctx.fillStyle='#3a2a68';ctx.fillRect(x,y,w,36);const n=Math.round(w/24*frac);for(let i=0;i<n;i++){ctx.fillStyle=col;ctx.fillRect(x+i*24+2,y+2,20,32)}}
+// botón rojo de píxeles
+function bigButton(cx,cy,sz,press){const d=press?10:0;ctx.fillStyle='#000';ctx.fillRect(cx-sz-S,cy-sz+S*2+d*0,sz*2+2*S,sz*1.4);ctx.fillStyle='#7a1d2b';ctx.fillRect(cx-sz,cy-sz*.2,sz*2,sz*.9);ctx.fillRect(cx-sz+S,cy-sz*.2-S,sz*2-2*S,S);
+  ctx.fillStyle=RD;const hh=sz*.9-d;ctx.fillRect(cx-sz+S,cy-sz*.9+d,sz*2-2*S,hh);ctx.fillRect(cx-sz+2*S,cy-sz*.9-S+d,sz*2-4*S,S);
+  ctx.fillStyle='#ff9aa4';ctx.fillRect(cx-sz+3*S,cy-sz*.8+d,sz*1.2,S);ctx.fillRect(cx-sz+2*S,cy-sz*.8+d+S,S,S*2)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('¿TU ROBOT TIENE',540,290,56,YL,eout(prog(t,.2,.8)));
+  const k=eback(prog(t,.6,1.3));if(k>.02){ctx.save();ctx.translate(540,640);ctx.scale(k,k);ctx.translate(-540,-640);bigButton(540,700,230,t>3.4&&t<3.9);ctx.restore()}
+  bigNum(t,1.8,540,930,'KILL SWITCH',110,TX);
+  Lb('apaga el robot y cancela órdenes',540,1030,44,MN,eout(prog(t,3,3.6)));
+  hp(140,1130,800,t>3.6?.15:1,RD,'CAPITAL EN RIESGO');Lb('(ilustrativo)',540,1215,26,'#b9a7e6',eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'LA NORMA EUROPEA');
+  slide(t,7,()=>{panel(70,280,940,220,BL);Lb('Reglamento Delegado (UE) 2017/589',120,350,38,BL,1,'left');Lb('Art. 12 · "kill functionality"',120,430,36,TX,1,'left')});
+  for(let i=0;i<4;i++){const t0=7.8+i*.6,k=eout(prog(t,t0,t0+.4));if(k<=.02)continue;const y=560+i*110,x0=70;const dead=prog(t,10+i*.8,10.6+i*.8);ctx.save();ctx.globalAlpha*=k;pxBox(x0,y,940,90,'#3a2a68',MN);Lb('ORDEN PENDIENTE #'+(i+1),110,y+45,36,TX,1,'left');if(dead>0){ctx.fillStyle=RD;ctx.fillRect(x0+S,y+40,940*dead-2*S,10);Lb('CANCELADA',940,y+45,34,RD,dead,'right')}ctx.restore()}
+  Lb('retirar de inmediato todas o parte',540,1050,42,YL,eout(prog(t,12,12.6)));Lb('de las órdenes pendientes',540,1110,42,YL,eout(prog(t,12.2,12.8)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'TRAZABILIDAD',MN);
+  const bx=(x,y,w,l,c,t0)=>{const k=eback(prog(t,t0,t0+.6));if(k<=.02)return;ctx.save();ctx.translate(x+w/2,y+70);ctx.scale(k,k);pxBox(-w/2,-70,w,140,'#2a1b52',c);Lb(l,0,0,34,c);ctx.restore()};
+  bx(70,330,260,'ALGORITMO',MN,14.4);bx(410,330,260,'ORDEN',YL,15.4);bx(750,330,260,'MERCADO',BL,16.4);
+  [[330,400],[670,740]].forEach(([a1,b1],i)=>{const k=eout(prog(t,15.2+i,15.8+i));if(k>.02){ctx.fillStyle=TX;for(let x=0;x<(b1-a1-20)*k;x+=24)ctx.fillRect(a1+10+x,400,12,12)}});
+  slide(t,17.4,()=>{panel(70,600,940,260,PK);Lb('¿qué algoritmo envió esta orden?',120,680,40,TX,1,'left');Lb('debe poder identificarse',120,760,46,PK,1,'left');Lb('(y el trader, mesa o cliente)',120,830,30,'#b9a7e6',1,'left')});ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'LÍMITES DE TU ROBOT',YL);
+  [['PÉRDIDA DIARIA MÁXIMA',.7,RD,22],['DRAWDOWN MÁXIMO',.5,PK,24],['Nº MÁXIMO DE OPERACIONES',.85,BL,26]].forEach(([l,f,c,t0],i)=>{const y=330+i*250,k=eout(prog(t,t0-1,t0));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;panel(70,y-60,940,200,c);hp(120,y+40,780*0+800,f*k,c,l);ctx.fillStyle=TX;ctx.fillRect(120+800*.9-6,y-14,12,64);Lb('límite',120+800*.9,y+80,24,TX);ctx.restore()});
+  Lb('valores ILUSTRATIVOS · los defines tú',540,1130,30,'#b9a7e6',eout(prog(t,27,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'AL LLEGAR AL LÍMITE',RD);
+  slide(t,29,()=>{panel(70,280,940,150,RD);Lb('LÍMITE ALCANZADO',540,355,56,RD)});
+  [['1','Cancelar órdenes pendientes',MN,30.4],['2','Proteger o cerrar posiciones (según tu plan)',YL,31.8],['3','Pausar hasta revisar',BL,33.2]].forEach(([n,l,c,t0],i)=>{slide(t,t0,()=>{const y=500+i*190;panel(70,y,940,150,c);ctx.fillStyle=c;ctx.fillRect(110,y+35,80,80);Lb(n,150,y+78,56,DK);Lb(l,230,y+78,l.length>30?32:40,TX,1,'left')})});ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'PRUÉBALO EN DEMO',MN);
+  [['caída de conexión',36.4],['spreads enormes',38],['órdenes repetidas',39.6]].forEach(([l,t0],i)=>{const y=300+i*220;slide(t,t0-.6,()=>{panel(70,y,940,170,MN);ctx.fillStyle='#000';ctx.fillRect(120,y+40,90,90);ctx.fillStyle='#3a2a68';ctx.fillRect(126,y+46,78,78);const k=eout(prog(t,t0+.4,t0+.9));if(k>.02){ctx.fillStyle=MN;ctx.fillRect(138,y+86,16*k,16);ctx.fillRect(150,y+98,16*k,16);ctx.fillRect(166,y+80,16*k,16);ctx.fillRect(182,y+62,16*k,16)}Lb(l,250,y+85,44,TX,1,'left')})});
+  Lb('si falla el freno, mejor descubrirlo sin dinero real',540,1010,34,YL,eout(prog(t,41.2,41.8)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Define límites antes de operar','Todo robot necesita freno',RD,MN)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('KILL SWITCH',540,230,52,MN,1);bigButton(540,500,200,false);
+  Lb('¿TU ROBOT TIENE',540,720,64,TX,1);Lb('FRENO?',540,900,215,YL,1);
+  ctx.fillStyle=RD;ctx.fillRect(140,1050,800,14);
+  Lb('de emergencia, límites y alertas',540,1150,46,TX,1);Lb('(contenido educativo)',540,1215,30,'#b9a7e6',1);coverBtn('VER CÓMO →',YL,DK)}
+</script></body></html>
