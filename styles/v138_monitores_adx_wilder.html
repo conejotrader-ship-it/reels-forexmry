@@ -1,0 +1,70 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 26 (3.er uso): sala de operaciones con monitores — tema: ADX de Wilder (60 s). Carbón con monitores de bisel, acentos cian/ámbar/magenta.
+const SPEC={name:'ADXWilder',hook:'ADX: LA FUERZA DE LA TENDENCIA, NO SU DIRECCION',dur:60,cta:56,bpm:100,prog:[[45,'m'],[41,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'hit'],[17.0,'ding'],[20.6,'wipe'],[22.0,'rise',3],[25.0,'ding'],[27.0,'ding'],[28.4,'wipe'],[30.0,'hit'],[33.0,'hit'],[35.2,'wipe'],[37.0,'hit'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[46.6,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"ADX: el indicador de Wilder que mide la fuerza de una tendencia, no su dirección.","ADX: el indicador de Wilder que mide la fuerza de una tendencia, no su dirección."],
+ [6.4,13.4,"J. Welles Wilder lo presentó en su libro de 1978. Por defecto usa 14 periodos.","J. Welles Wilder lo presentó en su libro de mil novecientos setenta y ocho. Por defecto usa catorce periodos."],
+ [13.6,20.4,"Se calcula con +DI y −DI, que miden el impulso alcista y bajista frente al rango verdadero promedio.","Se calcula con más D I y menos D I, que miden el impulso alcista y bajista frente al rango verdadero promedio."],
+ [20.6,28.2,"Bajo 20, la tendencia es débil. Sobre 40, es fuerte, y sobre 50, excepcionalmente fuerte.","Bajo veinte, la tendencia es débil. Sobre cuarenta, es fuerte, y sobre cincuenta, excepcionalmente fuerte."],
+ [28.4,35.0,"Un ADX alto no dice si el precio sube o baja: solo que hay tendencia.","Un ADX alto no dice si el precio sube o baja: solo que hay tendencia."],
+ [35.2,43.4,"En un robot sirve como filtro: estrategias de tendencia con ADX alto y pausa en rangos. Prueba los umbrales.","En un robot sirve como filtro: estrategias de tendencia con ADX alto y pausa en rangos. Prueba los umbrales."],
+ [43.6,49.6,"Filtra por régimen de mercado y valida los umbrales con backtest. Contenido educativo.","Filtra por régimen de mercado y valida los umbrales con backtest. Contenido educativo."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],
+ [56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#0d1117',ACC='#27d3ff',CY='#27d3ff',AM='#ffb020',MG='#ff4fa3',GR='#3ddc84',RD='#ff5a5a',TX='#e8eef5';
+const STY={subFont:'800 42px Inter',subBg:'rgba(13,17,23,.94)',subStroke:CY,subFill:TX,ctaBg:DK,ctaSub:TX,ctaGlow:CY,ctaAccent:CY,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:TX,mu:'#8b98a8',acc:CY,c:[CY,AM,MG,GR],pn:'#10161f'});
+// monitor: bisel, pantalla con borde de color y pie
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#232b36';RR(x-14,y-14,w+28,h+28,22);ctx.fill();ctx.fillStyle='#070a0f';RR(x,y,w,h,12);ctx.fill();ctx.lineWidth=3;ctx.strokeStyle=col;ctx.shadowColor=col;ctx.shadowBlur=14;ctx.stroke();ctx.shadowBlur=0;ctx.fillStyle=col;ctx.beginPath();ctx.arc(x+w-6,y+h+8,4,0,7);ctx.fill();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0b0f15');g.addColorStop(1,'#141c27');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.fillStyle='rgba(39,211,255,.05)';for(let i=0;i<5;i++){ctx.fillRect(0,300+i*230+((t*20)%230),W,2)}ctx.restore();
+  ctx.fillStyle='#1b2431';ctx.fillRect(0,1420,W,14);Lb('SALA DE OPERACIONES · ADX',540,52,26,'#8b98a8')};
+const LbA=(...a)=>{const m=ST.mono;ST.mono=false;Lb(...a);ST.mono=m};
+const hd=(t,t0,s,col)=>{const k=eout(prog(t,t0,t0+.5));Lb(s,540,175,56,col||CY,k);if(k>.02){ctx.save();ctx.globalAlpha*=.8*k;ctx.fillStyle=col||CY;ctx.fillRect(540-300*k,212,600*k,6);ctx.restore()}};
+// velas ilustrativas
+function candles(t,t0,x,y,w,h,n,seed,drift,vol){const r=rng(seed);let p=.5;const bw=w/n;const k=eout(prog(t,t0,t0+2.2));const m=Math.floor(n*k);let prev=p;const pts=[];
+  for(let i=0;i<n;i++){const o=p;p=clamp(p+drift+(r()-.5)*vol,.06,.94);pts.push([o,p,Math.max(o,p)+r()*vol*.4,Math.min(o,p)-r()*vol*.4])}
+  for(let i=0;i<m;i++){const [o,c,hi,lo]=pts[i];const col=c>=o?GR:RD;const cx=x+i*bw+bw/2;line(cx,y+h-hi*h,cx,y+h-lo*h,col,3);ctx.fillStyle=col;ctx.fillRect(cx-bw*.3,y+h-Math.max(o,c)*h,bw*.6,Math.max(4,Math.abs(c-o)*h))}}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  slide(t,.2,()=>{panel(70,280,940,520,CY);candles(t,.4,90,300,900,480,30,7,.016,.09)});
+  bigNum(t,1.8,540,990,'ADX',260,CY);
+  Lb('fuerza de la tendencia',540,1140,52,AM,eout(prog(t,3,3.6)));Lb('no su dirección',540,1215,52,MG,eout(prog(t,3.8,4.4)));
+  Lb('J. Welles Wilder · 1978',540,1300,34,'#8b98a8',eout(prog(t,4.6,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'SU ORIGEN');
+  slide(t,7.2,()=>{panel(70,290,940,330,AM);bigNum2(t,8.2);Lb('libro de J. Welles Wilder',540,545,38,TX,1)});
+  slide(t,9.4,()=>{panel(70,700,450,300,CY);Lb('14',295,820,130,CY);Lb('periodos por defecto',295,930,28,TX)},-90);
+  slide(t,10.4,()=>{panel(560,700,450,300,MG);Lb('3',785,820,130,MG);Lb('pasos: DM, DI y ADX',785,930,28,TX)},90);
+  Lb('fuente: Wikipedia (Average directional movement index)',540,1100,26,'#8b98a8',eout(prog(t,12,12.6)));ctx.restore()}
+function bigNum2(t,t0){const k=eback(prog(t,t0,t0+.7));if(k<=.02)return;ctx.save();ctx.translate(540,440);ctx.scale(k,k);Lb('1978',0,0,190,AM);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'CÓMO SE CALCULA',MG);
+  slide(t,14.2,()=>{panel(70,290,450,360,GR);Lb('+DI',295,360,60,GR);Lb('impulso alcista',295,430,28,TX);lineChart(t,14.6,17,[[0,.2],[.3,.5],[.6,.45],[1,.85]],100,460,390,150,GR,7)},-90);
+  slide(t,15.2,()=>{panel(560,290,450,360,RD);Lb('−DI',785,360,60,RD);Lb('impulso bajista',785,430,28,TX);lineChart(t,15.6,18,[[0,.8],[.3,.5],[.6,.55],[1,.2]],590,460,390,150,RD,7)},90);
+  slide(t,17.6,()=>{panel(70,730,940,300,CY);Lb('ADX = 100 × media suavizada de',130,810,36,TX,1,'left');Lb('|+DI − −DI| / (+DI + −DI)',130,880,56,CY,1,'left');Lb('los DI usan el rango verdadero promedio (ATR)',130,970,28,'#8b98a8',1,'left')});
+  ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'LECTURA DEL ADX',AM);
+  const bands=[[0,20,'#3b4654','DÉBIL  < 20'],[20,40,'#26527a','MEDIA  20–40'],[40,50,'#a9701a','FUERTE  > 40'],[50,60,MG,'EXCEPCIONAL  > 50']];
+  panel(70,280,940,760,AM);
+  bands.forEach(([a0,b0,c,l],i)=>{const k=eout(prog(t,21.4+i*.4,22+i*.4));if(k<=.02)return;const yy=1000-b0*11,hh=(b0-a0)*11;ctx.save();ctx.globalAlpha*=.9*k;ctx.fillStyle=c;ctx.fillRect(100,yy,880,hh-4);ctx.restore();Lb(l,130,yy+hh/2-2,34,TX,k,'left')});
+  lineChart(t,23,27.2,[[0,.05],[.2,.1],[.4,.3],[.55,.55],[.75,.75],[1,.9]],180,330,760,680,CY,10,14);
+  Lb('curva ILUSTRATIVA',900,1075,26,'#8b98a8',eout(prog(t,27,27.6)),'right');ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'¡OJO!',RD);
+  slide(t,29,()=>{panel(70,290,450,420,GR);candles(t,29.4,90,310,410,380,14,3,.03,.06);Lb('sube',295,745,40,GR)},-90);
+  slide(t,29.8,()=>{panel(560,290,450,420,RD);candles(t,30.2,580,310,410,380,14,9,-.03,.06);Lb('baja',785,745,40,RD)},90);
+  bigNum(t,31.6,540,880,'ADX 45',170,CY);Lb('el mismo valor en ambos casos',540,1010,40,TX,eout(prog(t,32.8,33.4)));Lb('mide fuerza, no dirección',540,1075,44,AM,eout(prog(t,33.6,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'FILTRO PARA ROBOTS',GR);
+  const sw=(y,col,l1,l2,on,t0)=>slide(t,t0,()=>{panel(70,y,940,230,col);Lb(l1,130,y+75,48,col,1,'left');Lb(l2,130,y+150,32,TX,1,'left');ctx.fillStyle=on?col:'#3b4654';RR(790,y+70,150,80,40);ctx.fill();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(on?900:830,y+110,30,0,7);ctx.fill();Lb(on?'ON':'OFF',865,y+190,28,TX)});
+  sw(290,GR,'ADX alto','activar estrategia de tendencia',true,36);sw(560,AM,'ADX bajo','pausar o usar rango',false,37.8);
+  slide(t,39.6,()=>{panel(70,830,940,200,MG);Lb('los umbrales se prueban',130,900,44,MG,1,'left');Lb('en backtest, no se asumen',130,965,40,TX,1,'left')});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Filtra por régimen de mercado','Valida umbrales con backtest',CY,AM)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);ctx.save();ctx.globalAlpha=.9;ST.panel(110,300,860,420,CY);candles(99,0,130,320,820,380,26,11,.018,.09);ctx.restore();
+  Lb('J. WELLES WILDER · 1978',540,230,44,AM,1);Lb('ADX',540,900,330,CY,1);
+  Lb('FUERZA, NO DIRECCIÓN',540,1130,76,TX,1);ctx.fillStyle=MG;ctx.globalAlpha=.8;ctx.fillRect(160,1190,760,12);ctx.globalAlpha=1;
+  Lb('¿hay tendencia o solo ruido?',540,1290,50,AM,1);coverBtn('VER CÓMO USARLO →',CY,DK)}
+</script></body></html>
