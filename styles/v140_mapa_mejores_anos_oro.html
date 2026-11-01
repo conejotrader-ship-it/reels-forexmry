@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 23 (3.er uso): mapa con rutas de flujo — tema: los 5 mejores años del oro desde 1971 (60 s). Carta náutica azul marino con ruta dorada que une los años como paradas.
+const SPEC={name:'MejoresAnosOro',hook:'LOS MEJORES AÑOS DEL ORO DESDE 1971: 1979, +127 %',dur:60,cta:56,bpm:98,prog:[[40,'m'],[43,'M'],[45,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[3.6,'hit'],[6.4,'wipe'],[7.4,'ding'],[10.0,'hit'],[13.6,'wipe'],[14.4,'ding'],[16.9,'ding'],[20.6,'wipe'],[21.6,'ding'],[24.0,'hit'],[28.4,'wipe'],[29.2,'alert'],[31.0,'rise',2],[35.2,'wipe'],[37.0,'down'],[39.0,'down'],[41.0,'hit'],[43.6,'wipe'],[45.2,'ding'],[46.6,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Los mejores años del oro desde 1971: el primero, 1979, con cerca de 127 %.","Los mejores años del oro desde mil novecientos setenta y uno: el primero, mil novecientos setenta y nueve, con cerca de ciento veintisiete por ciento."],
+ [6.4,13.4,"Quinto: 1972, con cerca de 49 %.","Quinto: mil novecientos setenta y dos, con cerca de cuarenta y nueve por ciento."],
+ [13.6,20.4,"Cuarto: 1974, cerca de 66 %. Tercero: 2025, cerca de 67 %.","Cuarto: mil novecientos setenta y cuatro, cerca de sesenta y seis por ciento. Tercero: dos mil veinticinco, cerca de sesenta y siete por ciento."],
+ [20.6,28.2,"Segundo: 1973, con cerca de 73 %, el año previo al récord de 1974.","Segundo: mil novecientos setenta y tres, con cerca de setenta y tres por ciento."],
+ [28.4,35.0,"Primero: 1979, de 226 a 512 dólares, cerca de 127 %, con inflación alta y crisis energética.","Primero: mil novecientos setenta y nueve, de doscientos veintiséis a quinientos doce dólares, cerca de ciento veintisiete por ciento, con inflación alta y crisis energética."],
+ [35.2,43.4,"Hubo años negativos: 1981, cerca de −33 %, y 2013, cerca de −27 %.","Hubo años negativos: mil novecientos ochenta y uno, menos treinta y tres por ciento, y dos mil trece, menos veintisiete por ciento."],
+ [43.6,49.6,"Rendimientos pasados no garantizan nada. Gestiona el riesgo. Contenido educativo.","Rendimientos pasados no garantizan nada. Gestiona el riesgo. Contenido educativo."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],
+ [56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#06182c',ACC='#f5b942',GOLD='#f5b942',CORAL='#ff6b57',SEA='#08203a',LAND='#134067',TX='#eaf3ff',MINT='#46e0b6';
+const STY={subFont:'800 42px Inter',subBg:'rgba(6,24,44,.94)',subStroke:GOLD,subFill:TX,ctaBg:DK,ctaSub:TX,ctaGlow:GOLD,ctaAccent:GOLD,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:TX,mu:'#8fb0d2',acc:GOLD,c:[GOLD,CORAL,MINT,'#7fb7ff'],pn:'#0b2a4a'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(6,24,44,.9)';RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=4;ctx.strokeStyle=col;ctx.stroke();ctx.restore()};
+const LbA=(...a)=>{const m=ST.mono;ST.mono=false;Lb(...a);ST.mono=m};
+// islas (polígonos fijos)
+const ISL=(()=>{const r=rng(5),o=[];[[170,420,150],[700,330,170],[880,820,140],[250,1060,130],[560,900,120],[130,780,90],[820,560,100]].forEach(([cx,cy,R])=>{const p=[];for(let i=0;i<14;i++){const a=i/14*6.283,rr=R*(.65+r()*.5);p.push([cx+Math.cos(a)*rr,cy+Math.sin(a)*rr*.75])}o.push(p)});return o})();
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0a2a4c');g.addColorStop(1,'#06182c');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(143,176,210,.14)';ctx.lineWidth=2;for(let x=60;x<W;x+=120){ctx.beginPath();ctx.moveTo(x,230);ctx.lineTo(x,1380);ctx.stroke()}for(let y=230;y<1400;y+=115){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  ISL.forEach(p=>{ctx.beginPath();p.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.fillStyle='rgba(19,64,103,.8)';ctx.fill();ctx.strokeStyle='rgba(245,185,66,.35)';ctx.lineWidth=3;ctx.stroke()});ctx.restore();
+  // rosa de los vientos
+  ctx.save();ctx.translate(960,1300);ctx.strokeStyle=GOLD;ctx.lineWidth=3;ctx.globalAlpha=.6;for(let i=0;i<4;i++){ctx.rotate(1.5708);ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,-48);ctx.stroke()}ctx.beginPath();ctx.arc(0,0,20,0,7);ctx.stroke();ctx.restore();Lb('N',960,1228,24,GOLD,.7);
+  Lb('MAPA DEL ORO · 1971–2025',540,52,26,'#8fb0d2')};
+const hd=(t,t0,s,col)=>{const k=eout(prog(t,t0,t0+.5));Lb(s,540,175,56,col||GOLD,k);if(k>.02){ctx.save();ctx.globalAlpha*=.7*k;ctx.fillStyle=col||GOLD;ctx.fillRect(540-300*k,212,600*k,8);ctx.restore()}};
+// paradas: rank, año, %, pos, t aparición
+const PIN=[[5,'1972','+49 %',190,1090,7.2],[4,'1974','+66 %',420,900,14.2],[3,'2025','+67 %',250,700,16.6],[2,'1973','+73 %',640,560,21.4],[1,'1979','+127 %',830,380,29.2]];
+function route(t,upto){ctx.save();ctx.strokeStyle=GOLD;ctx.lineWidth=8;ctx.setLineDash([22,14]);ctx.lineDashOffset=-t*40;ctx.lineCap='round';
+  for(let i=1;i<PIN.length;i++){const a=PIN[i-1],b=PIN[i];const k=eout(prog(t,b[5]-.8,b[5]));if(k<=.01)continue;ctx.globalAlpha=.85;ctx.beginPath();ctx.moveTo(a[3],a[4]);ctx.lineTo(lerp(a[3],b[3],k),lerp(a[4],b[4],k));ctx.stroke()}ctx.restore()}
+function pins(t,hl){route(t);PIN.forEach(([rk,yr,pc,x,y,t0],i)=>{pop(t,t0,x,y,()=>{const r=34+(6-rk)*8;ctx.fillStyle=rk==1?CORAL:GOLD;ctx.beginPath();ctx.arc(0,0,r,0,7);ctx.fill();ctx.fillStyle=DK;ctx.beginPath();ctx.arc(0,0,r-8,0,7);ctx.fill();Lb(String(rk),0,2,r*.9,rk==1?CORAL:GOLD)});
+  const k=eout(prog(t,t0+.3,t0+.9));if(k>.02){const lx=x>600?x-95:x+95,al=x>600?'right':'left';Lb(yr,lx,y-26,54,TX,k,al);Lb(pc,lx,y+28,48,rk==1?CORAL:GOLD,k,al)}})}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('DESDE 1971',540,300,48,'#8fb0d2',eout(prog(t,.2,.8)));bigNum(t,.7,540,520,'1979',300,GOLD);
+  bigNum(t,2.2,540,800,'+127 %',190,CORAL);Lb('el mejor año del oro',540,950,50,TX,eout(prog(t,3.4,4)));
+  Lb('226 → 512 dólares por onza',540,1030,38,'#8fb0d2',eout(prog(t,4.2,4.8)));ctx.restore()}
+function mapB(t,a,t0,title,col){ctx.save();ctx.globalAlpha=a;hd(t,t0,title,col);pins(t);ctx.restore()}
+function b1(t,a){mapB(t,a,6.6,'RANKING: LA RUTA DEL ORO')}
+function b2(t,a){mapB(t,a,13.8,'CUARTO Y TERCERO')}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'SEGUNDO',GOLD);pins(t);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'PRIMERO',CORAL);pins(t);
+  slide(t,31.4,()=>{panel(60,1000,960,230,CORAL);Lb('226 → 512 USD/oz',110,1070,52,TX,1,'left');Lb('inflación alta + crisis energética',110,1150,36,GOLD,1,'left')});ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'TAMBIÉN HUBO CAÍDAS',CORAL);
+  slide(t,36,()=>{panel(60,290,960,260,CORAL);Lb('1981',110,380,70,TX,1,'left');Lb('≈ −33 %',110,480,80,CORAL,1,'left');Lb('año con fuerte baja',600,480,30,'#8fb0d2',1,'left')});
+  slide(t,38.2,()=>{panel(60,610,960,260,CORAL);Lb('2013',110,700,70,TX,1,'left');Lb('≈ −27 %',110,800,80,CORAL,1,'left');Lb('otra caída del oro',600,800,30,'#8fb0d2',1,'left')},90);
+  Lb('cierre LBMA PM · cifras aproximadas',540,960,32,'#8fb0d2',eout(prog(t,40.4,41)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Pasado no garantiza futuro','Gestiona siempre el riesgo',CORAL,GOLD)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('RANKING DESDE 1971',540,230,46,'#8fb0d2',1);
+  Lb('+127 %',540,500,250,GOLD,1);
+  ctx.fillStyle=CORAL;ctx.globalAlpha=.85;ctx.fillRect(140,700,800,14);ctx.globalAlpha=1;
+  Lb('EL MEJOR AÑO DEL ORO',540,830,70,TX,1);Lb('1979 · de 226 a 512 dólares',540,930,44,GOLD,1);
+  ctx.save();ctx.translate(540,1130);for(let i=0;i<5;i++){ctx.fillStyle=i==4?CORAL:GOLD;ctx.beginPath();ctx.arc(-240+i*120,0,26+i*5,0,7);ctx.fill();ctx.fillStyle=DK;ctx.beginPath();ctx.arc(-240+i*120,0,18+i*5,0,7);ctx.fill()}ctx.restore();
+  coverBtn('VER EL RANKING →',GOLD,DK)}
+</script></body></html>
