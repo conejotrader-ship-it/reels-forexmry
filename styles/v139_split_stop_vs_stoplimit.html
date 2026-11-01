@@ -1,0 +1,74 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 24 (3.er uso): pantalla dividida A vs B — tema: orden stop vs stop-limit (60 s). Mitad rosa/violeta vs mitad turquesa, divisor central.
+const SPEC={name:'StopVsStopLimit',hook:'STOP O STOP-LIMIT: UNA GARANTIZA LA SALIDA, LA OTRA EL PRECIO',dur:60,cta:56,bpm:104,prog:[[43,'m'],[38,'M'],[40,'m'],[45,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'hit'],[17.0,'down'],[20.6,'wipe'],[22.0,'ding'],[25.0,'alert'],[28.4,'wipe'],[30.0,'hit'],[32.5,'down'],[33.6,'alert'],[35.2,'wipe'],[37.0,'hit'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[46.6,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Stop o stop-limit: una garantiza la salida, la otra el precio.","Stop o stop-limit: una garantiza la salida, la otra el precio."],
+ [6.4,13.4,"La stop espera a que el precio toque tu nivel y entonces se convierte en orden de mercado.","La stop espera a que el precio toque tu nivel y entonces se convierte en orden de mercado."],
+ [13.6,20.4,"Casi siempre se ejecuta, pero el precio de salida puede ser peor que tu nivel en mercados rápidos.","Casi siempre se ejecuta, pero el precio de salida puede ser peor que tu nivel en mercados rápidos."],
+ [20.6,28.2,"La stop-limit se vuelve orden límite: solo se ejecuta al precio límite o mejor. Si el precio salta, puede no ejecutarse.","La stop-limit se vuelve orden límite: solo se ejecuta al precio límite o mejor. Si el precio salta, puede no ejecutarse."],
+ [28.4,35.0,"Ejemplo ilustrativo: stop en 4.000, límite en 3.990. Si el precio salta a 3.950, la stop sale; la stop-limit no.","Ejemplo ilustrativo: stop en cuatro mil, límite en tres mil novecientos noventa. Si el precio salta a tres mil novecientos cincuenta, la stop sale; la stop-limit no."],
+ [35.2,43.4,"La stop sale casi segura, con deslizamiento. La stop-limit cuida el precio, pero puedes quedar dentro. Depende de tu bróker.","La stop sale casi segura, con deslizamiento. La stop-limit cuida el precio, pero puedes quedar dentro. Depende de tu bróker."],
+ [43.6,49.6,"Decide qué riesgo aceptas: perder precio o quedar dentro. Contenido educativo.","Decide qué riesgo aceptas: perder precio o quedar dentro. Contenido educativo."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],
+ [56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#0e0818',ACC='#ff3d8b',PK='#ff3d8b',TL='#2ee6c9',YL='#ffd23f',TX='#f4f0ff';
+const STY={subFont:'800 42px Inter',subBg:'rgba(14,8,24,.95)',subStroke:YL,subFill:TX,ctaBg:DK,ctaSub:TX,ctaGlow:PK,ctaAccent:PK,ctaBtnText:'#fff',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:TX,mu:'#a99fc4',acc:YL,c:[YL,PK,TL,'#9d7bff'],pn:'#1a1030'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(10,5,20,.82)';RR(x,y,w,h,20);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle='#1b0a2c';ctx.fillRect(0,0,540,H);ctx.fillStyle='#07201f';ctx.fillRect(540,0,540,H);
+  ctx.save();ctx.globalAlpha=.07;ctx.fillStyle=PK;for(let i=0;i<14;i++)ctx.fillRect(0,(i*160+t*30)%H,540,3);ctx.fillStyle=TL;for(let i=0;i<14;i++)ctx.fillRect(540,(i*160+t*30)%H,540,3);ctx.restore();
+  ctx.fillStyle=YL;ctx.fillRect(536,0,8,1440);
+  Lb('STOP  vs  STOP-LIMIT',540,52,26,'#a99fc4')};
+const LbA=(...a)=>{const m=ST.mono;ST.mono=false;Lb(...a);ST.mono=m};
+const hd=(t,t0,s,col)=>{const k=eout(prog(t,t0,t0+.5));ctx.save();ctx.fillStyle=DK;RR(240,128,600,84,42);ctx.globalAlpha*=k;ctx.fill();ctx.restore();Lb(s,540,172,46,col||YL,k)};
+const colL=(t,t0,fn)=>slide(t,t0,fn,-90),colR=(t,t0,fn)=>slide(t,t0,fn,90);
+const L=270,R=810; // centros de columnas
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  pop(t,.3,L,420,()=>Lb('STOP',0,0,120,PK));pop(t,.8,R,420,()=>{Lb('STOP',0,-60,100,TL);Lb('-LIMIT',0,60,100,TL)});
+  const k=eback(prog(t,1.4,2.1));if(k>.02){ctx.save();ctx.translate(540,420);ctx.scale(k,k);ctx.fillStyle=YL;ctx.beginPath();ctx.arc(0,0,60,0,7);ctx.fill();LbA('VS',0,0,56,DK);ctx.restore()}
+  colL(t,2.6,()=>{panel(40,700,470,230,PK);Lb('garantiza',275,770,32,TX);Lb('LA SALIDA',275,850,56,PK)});
+  colR(t,3.4,()=>{panel(570,700,470,230,TL);Lb('garantiza',805,770,32,TX);Lb('EL PRECIO',805,850,56,TL)});
+  Lb('pero ninguna garantiza las dos cosas',540,1050,40,YL,eout(prog(t,4.4,5)));ctx.restore()}
+function mini(t,t0,t1,x,col,pts,stopY,limY,lab){panel(x,300,470,520,col);axes(x+30,330,410,440,'#a99fc4');hline(stopY,YL,3,x+30,x+450);Lb('stop',x+50,stopY-22,26,YL,1,'left');if(limY){hline(limY,col,3,x+30,x+450);Lb('límite',x+50,limY+26,26,col,1,'left')}lineChart(t,t0,t1,pts,x+30,330,410,440,col,9)}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'AL TOCAR EL NIVEL');
+  const P=[[0,.85],[.3,.7],[.6,.45],[1,.2]];
+  mini(t,7.2,10.4,40,PK,P,640,0);mini(t,7.2,10.4,570,TL,P,640,670);
+  colL(t,10.6,()=>{panel(40,860,470,200,PK);Lb('orden de',275,920,34,TX);Lb('MERCADO',275,990,60,PK)});
+  colR(t,11.4,()=>{panel(570,860,470,200,TL);Lb('orden',805,920,34,TX);Lb('LÍMITE',805,990,60,TL)});
+  Lb('ilustrativo',540,1130,28,'#a99fc4',eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'LA STOP',PK);
+  panel(40,300,1000,520,PK);Lb('nivel stop',140,380,36,YL,1,'left');hline(400,YL,4,100,980);
+  const k=eout(prog(t,15,16.6));if(k>.02){ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=PK;ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(300,400);ctx.lineTo(300+k*0,400+k*260);ctx.stroke();ctx.fillStyle=PK;ctx.beginPath();ctx.moveTo(300,680);ctx.lineTo(270,620);ctx.lineTo(330,620);ctx.fill();ctx.restore()}
+  Lb('el relleno puede quedar más abajo',640,560,38,TX,eout(prog(t,16.4,17)),'center');Lb('(deslizamiento)',640,620,32,PK,eout(prog(t,17,17.6)));
+  card(t,18,880,150,PK,'Casi siempre se ejecuta','el precio no está garantizado',42);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'LA STOP-LIMIT',TL);
+  panel(40,300,1000,520,TL);Lb('stop',140,360,34,YL,1,'left');hline(380,YL,4,100,980);Lb('límite',140,540,34,TL,1,'left');hline(520,TL,4,100,980);
+  const k=eout(prog(t,22,24));if(k>.02){ctx.save();ctx.globalAlpha*=.35*k;ctx.fillStyle=TL;ctx.fillRect(100,520,880,300);ctx.restore();Lb('zona sin ejecutar',540,680,40,TX,k)}
+  Lb('solo ejecuta al límite o mejor',540,450,38,TL,eout(prog(t,24.4,25)));
+  card(t,25.4,880,150,TL,'Si el precio salta, no sale','puedes quedar dentro',42);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'CON UN GAP',YL);
+  panel(40,300,1000,430,YL);axes(80,330,920,370,'#a99fc4');
+  hline(440,YL,3,80,1000);Lb('stop 4.000',100,415,28,YL,1,'left');hline(480,TL,3,80,1000);Lb('límite 3.990',100,520,28,TL,1,'left');
+  lineChart(t,29,31,[[0,.9],[.3,.88],[.5,.86],[.51,.4],[1,.38]],90,330,900,370,TX,8);Lb('gap → 3.950',700,640,36,PK,eout(prog(t,31,31.6)));
+  colL(t,32,()=>{panel(40,780,470,300,PK);Lb('STOP',275,840,38,PK);Lb('SALE',275,925,84,TX);Lb('≈ 3.950',275,1020,48,PK)});
+  colR(t,33,()=>{panel(570,780,470,300,TL);Lb('STOP-LIMIT',805,840,38,TL);Lb('NO SALE',805,925,70,TX);Lb('sin ejecutar',805,1020,40,TL)});
+  Lb('ejemplo ILUSTRATIVO · cifras inventadas',540,1130,28,'#a99fc4',eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'ELIGE TU RIESGO',YL);
+  const rows=[['Salida','casi segura','no garantizada'],['Precio','puede empeorar','protegido'],['Riesgo','deslizamiento','quedar dentro']];
+  rows.forEach(([r,l,rr],i)=>{const y=300+i*250,t0=36+i*1.4;Lb(r,540,y-10,34,YL,eout(prog(t,t0,t0+.5)));
+    colL(t,t0,()=>{panel(40,y+10,470,170,PK);Lb(l,275,y+95,42,TX)});colR(t,t0+.3,()=>{panel(570,y+10,470,170,TL);Lb(rr,805,y+95,42,TX)})});
+  Lb('en CFD, los tipos de orden dependen del bróker',540,1090,30,'#a99fc4',eout(prog(t,40.8,41.4)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Define: ¿precio o salida?','Conoce tus tipos de orden',PK,TL)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('SI HAY UN GAP',540,200,56,YL,1);
+  Lb('STOP',270,380,70,PK,1);Lb('STOP-LIMIT',810,380,48,TL,1);
+  Lb('SALE',270,620,170,PK,1);Lb('NO',810,540,150,TL,1);Lb('SALE',810,700,150,TL,1);
+  ctx.fillStyle=YL;ctx.fillRect(100,850,880,10);
+  Lb('la orden que elijas cambia el resultado',540,960,44,TX,1);Lb('(ejemplo ilustrativo)',540,1030,30,'#a99fc4',1);coverBtn('VER LA DIFERENCIA →',YL,DK)}
+</script></body></html>
