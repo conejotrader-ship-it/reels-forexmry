@@ -1,0 +1,86 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 31 (3.er uso): semáforo de riesgo — tema: profit factor de un robot, qué número es sano (60 s).
+const SPEC={name:'ProfitFactor',hook:'PROFIT FACTOR: ¿QUÉ NÚMERO ES SANO?',dur:60,cta:56,bpm:98,prog:[[41,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.4,'ding'],[13.6,'wipe'],[15.0,'tick'],[17.0,'hit'],[20.6,'wipe'],[22.0,'tick'],[24.0,'tick'],[26.0,'alert'],[28.4,'wipe'],[30.0,'tick'],[32.4,'hit'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[47.8,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Profit factor: ganancias brutas divididas entre pérdidas brutas. Un 1,5 es ganar 1,5 por cada 1 que pierdes.','Profit factor: ganancias brutas divididas entre pérdidas brutas. Un uno coma cinco es ganar uno coma cinco por cada uno que pierdes.'],
+ [6.4,13.4,'Ejemplo ilustrativo: ganas 150, 90 y 60, y pierdes 80 y 120. Ganancias 300, pérdidas 200: factor de 1,5.','Ejemplo ilustrativo: ganas ciento cincuenta, noventa y sesenta, y pierdes ochenta y ciento veinte. Ganancias trescientos, pérdidas doscientos: factor de uno coma cinco.'],
+ [13.6,20.4,'Por debajo de 1, el sistema perdió dinero. Por encima de 1, ganó, si cuentas comisiones y slippage.','Por debajo de uno, el sistema perdió dinero. Por encima de uno, ganó, si cuentas comisiones y slippage.'],
+ [20.6,28.2,'Entre 1,5 y 2, muchos lo ven prometedor con muestra grande. Por encima de 3, sospecha de sobreoptimización.','Entre uno coma cinco y dos, muchos lo ven prometedor con muestra grande. Por encima de tres, sospecha de sobreoptimización.'],
+ [28.4,35.0,'Una sola operación enorme puede inflarlo, y no mide el drawdown: buen factor y meses en pérdida.'],
+ [35.2,43.4,'Sin operaciones perdedoras no se puede calcular: señal de muestra pequeña. Exige una muestra grande.'],
+ [43.6,49.6,'Para tu robot: míralo junto al drawdown y el número de operaciones. Fuentes: LuxAlgo, TradeStation. Educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#1c1f24',ACC='#ffd400',FAM='Inter';
+const BG='#23262b',PN='#2d3138',YL='#ffd400',RD='#ff3b3b',AM='#ffb300',GN='#2ee66b',WH='#ffffff',MU='#a3abb7',PU='#b277ff';
+const STY={subFont:'800 42px Inter',subBg:'rgba(28,31,36,.96)',subStroke:YL,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:YL,ctaAccent:YL,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=WH,a=1,al='center',maxW=960){s=_s(s);ctx.save();while(sz>20){ctx.font=`900 ${sz}px Inter`;if(ctx.measureText(s).width<=maxW)break;sz-=2}ctx.restore();T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+window.FONTS=['900 40px Inter'];
+function bg(t){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(255,255,255,.03)';for(let i=0;i<40;i++)ctx.fillRect((i*137)%W,(i*263)%H,6,6);
+  ctx.fillStyle=YL;for(let y=-40;y<H;y+=120)ctx.fillRect(0,y+((0)%120),14,60);for(let y=-40;y<H;y+=120)ctx.fillRect(W-14,y,14,60)}
+function head(t,t0,s,col=YL){L(s,540,175,54,col,eout(prog(t,t0,t0+.5)))}
+function panel(x,y,w,h,col){ctx.save();ctx.fillStyle=PN;RR(x,y,w,h,22);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();ctx.restore()}
+function light(x,y,r,on){const cols=[[RD,0],[AM,1],[GN,2]];ctx.save();ctx.fillStyle='#111';RR(x-r*1.5,y-r*4.1,r*3,r*8.2,r*.7);ctx.fill();ctx.strokeStyle='#444';ctx.lineWidth=6;ctx.stroke();
+  cols.forEach(([c,i])=>{const cy=y+(i-1)*r*2.6;const lit=on==i;ctx.beginPath();ctx.arc(x,cy,r,0,7);ctx.fillStyle=lit?c:'#2a2a2a';if(lit){ctx.shadowColor=c;ctx.shadowBlur=50}ctx.fill();ctx.shadowBlur=0});ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;L('PROFIT FACTOR',540,200,84,YL,eout(prog(t,.2,.8)),'center',900);
+  const on=t<1.2?0:(t<2.2?1:2);const k=eback(prog(t,.3,1.1));ctx.save();ctx.translate(300,900);ctx.scale(k,k);light(0,0,70,on);ctx.restore();
+  L('GANANCIA BRUTA',700,640,34,GN,eout(prog(t,1,1.6)),'center',520);line(500,690,900,690,WH,8);L('PÉRDIDA BRUTA',700,750,34,RD,eout(prog(t,1.2,1.8)),'center',520);
+  L('= 1,5',700,950,150,WH,eout(prog(t,2,2.7)),'center',520);
+  const k2=eback(prog(t,3.0,3.8));ctx.save();ctx.translate(540,1300);ctx.rotate(-.03);ctx.scale(Math.max(k2,.001),Math.max(k2,.001));RR(-440,-60,880,120,22);ctx.fillStyle=YL;ctx.fill();L('¿QUÉ NÚMERO ES SANO?',0,14,60,DK,1,'center',820);ctx.restore();ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EJEMPLO (ILUSTRATIVO)');
+  const base=1000,u=1.5;const W1=[150,90,60],L1=[80,120];
+  let y=base;W1.forEach((v,i)=>{const k=eout(prog(t,7.2+i*.7,8+i*.7));const h=v*u*k;ctx.fillStyle=GN;ctx.globalAlpha=a;RR(190,y-h,260,h-4,8);ctx.fill();if(k>.5)L('+'+v,320,y-h/2+10,44,DK,1);y-=h});
+  L('300',320,y-50,70,GN,eout(prog(t,9.6,10.2)));L('GANANCIAS',320,base+54,34,MU,1);
+  y=base;L1.forEach((v,i)=>{const k=eout(prog(t,9.6+i*.7,10.4+i*.7));const h=v*u*k;ctx.fillStyle=RD;RR(630,y-h,260,h-4,8);ctx.fill();if(k>.5)L('−'+v,760,y-h/2+10,44,WH,1);y-=h});
+  L('200',760,y-50,70,RD,eout(prog(t,11.2,11.8)));L('PÉRDIDAS',760,base+54,34,MU,1);
+  line(140,base,940,base,MU,4);
+  const k=eback(prog(t,11.8,12.6));if(k>.02){ctx.save();ctx.translate(540,1230);ctx.scale(k,k);RR(-400,-60,800,120,22);ctx.fillStyle=YL;ctx.fill();L('300 ÷ 200 = 1,5',0,14,66,DK,1,'center',760);ctx.restore()}ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL UMBRAL: 1');
+  const x0=120,x1=960,y=700;
+  ctx.fillStyle=RD;RR(x0,y-50,(x1-x0)*.4,100,12);ctx.fill();ctx.fillStyle=GN;RR(x0+(x1-x0)*.4,y-50,(x1-x0)*.6,100,12);ctx.fill();
+  for(let i=0;i<=5;i++){const x=lerp(x0,x1,i/5*1.0*(1));}
+  const xm=x0+(x1-x0)*.4;line(xm,y-100,xm,y+100,WH,8);L('1,0',xm,y-140,64,WH,eout(prog(t,15,15.6)));
+  L('0',x0+10,y+90,36,MU,1);L('2',x0+(x1-x0)*.8,y+90,36,MU,1);L('3',x1-10,y+90,36,MU,1);
+  const kk=eback(prog(t,16,16.8)),k2=eback(prog(t,17.6,18.4));
+  [[kk,RD,'< 1','EL SISTEMA PERDIÓ DINERO',270],[k2,GN,'> 1','EL SISTEMA GANÓ',810]].forEach(([k,c,h,s,x])=>{if(k<=.02)return;ctx.save();ctx.translate(x,1010);ctx.scale(k,k);panel(-250,-170,500,340,c);L(h,0,-60,110,c,1,'center',460);L(s,0,60,30,WH,1,'center',460);ctx.restore()});
+  L('neto de comisiones y slippage',540,1260,34,MU,eout(prog(t,19,19.8)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LOS SEMÁFOROS');
+  [[22,RD,0,'< 1','PIERDE'],[23.6,AM,1,'1 – 1,5','GANA CON POCO MARGEN'],[25,GN,2,'1,5 – 2','PROMETEDOR CON MUESTRA GRANDE'],[26.6,PU,-1,'> 3','SOSPECHA DE SOBREOPTIMIZACIÓN']].forEach(([tt,c,on,r,s],i)=>{const k=eback(prog(t,tt,tt+.7));if(k<=.02)return;ctx.save();ctx.translate(540,370+i*250);ctx.scale(k,k);panel(-460,-105,920,210,c);ctx.beginPath();ctx.arc(-360,0,56,0,7);ctx.fillStyle=c;ctx.shadowColor=c;ctx.shadowBlur=30;ctx.fill();ctx.shadowBlur=0;if(on==-1)L('!',-360,6,70,DK);L(r,-120,-40,70,c,1,'center',380);L(s,100,50,30,WH,1,'center',640);ctx.restore()});ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'UNA SOLA OPERACIÓN',PU);
+  const base=900,sc=1.2;const T1=[10,10,-8,10,-8,10,-8,-8,10];
+  const xs=[];T1.forEach((v,i)=>{const k=eout(prog(t,29+i*.2,29.6+i*.2));const x=110+i*88,h=Math.abs(v)*sc*7*k;ctx.fillStyle=v>0?GN:RD;ctx.fillRect(x,v>0?base-h:base,64,h)});
+  const kb=eback(prog(t,30.8,31.6));if(kb>.02){ctx.fillStyle=PU;const h=Math.min(420,200*sc*2)*kb;ctx.fillRect(110+9*88,base-h,64,h);L('+200',110+9*88+32,base-h-30,40,PU,1)}
+  line(90,base,990,base,MU,4);L('(datos ilustrativos)',540,base+60,30,MU,1);
+  const k=eback(prog(t,32.2,33));if(k>.02){ctx.save();ctx.translate(540,1130);ctx.scale(k,k);panel(-440,-70,880,140,PU);L('CON ELLA: 7,8',0,-8,56,PU,1,'center',820);L('SIN ELLA: 1,6',0,48,40,GN,1,'center',820);ctx.restore()}
+  L('y no mide el drawdown: buen factor, meses en pérdida',540,1300,34,WH,eout(prog(t,33.6,34.4)),'center',960);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'SIN PÉRDIDAS, SIN FACTOR');
+  ctx.save();ctx.translate(300,820);light(0,0,64,0);ctx.restore();
+  L('GANANCIA',700,640,44,GN,eout(prog(t,36,36.6)),'center',520);line(500,700,900,700,WH,8);L('0',700,790,100,RD,eout(prog(t,36.6,37.2)),'center',520);
+  const k=eback(prog(t,37.6,38.4));if(k>.02){ctx.save();ctx.translate(700,980);ctx.scale(k,k);RR(-200,-55,400,110,18);ctx.fillStyle=RD;ctx.fill();L('NO SE PUEDE',0,12,46,WH,1,'center',380);ctx.restore()}
+  L('señal de muestra pequeña',540,1180,52,YL,eout(prog(t,39.4,40.2)),'center',900);L('exige una muestra grande de operaciones',540,1260,34,MU,eout(prog(t,40.6,41.4)),'center',960);ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'PARA TU ROBOT');
+  [['Profit factor + drawdown',GN],['+ número de operaciones',AM]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;panel(60,290+i*140,960,110,c);L(s,110,345+i*140,44,WH,1,'left',880);ctx.restore()});
+  robot(300,620,780,eout(prog(t,46.4,47.2)));
+  L('Fuentes: LuxAlgo y TradeStation',60,1340,30,YL,eout(prog(t,48,48.6)),'left',960);
+  L('Contenido educativo,',60,1385,34,YL,eout(prog(t,48.4,49)),'left');L('no es asesoría financiera',60,1435,34,YL,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  L('PROFIT FACTOR',540,200,92,YL,1,'center',900);
+  ctx.save();ctx.translate(250,820);light(0,0,80,1);ctx.restore();
+  L('> 3',700,820,300,PU,1,'center',560);
+  ctx.save();ctx.translate(540,1250);ctx.rotate(-.03);RR(-440,-75,880,150,22);ctx.fillStyle=RD;ctx.fill();L('¿ALERTA DE SOBREOPTIMIZACIÓN?',0,16,44,WH,1,'center',840);ctx.restore();
+  coverBtn('VER POR QUÉ →',YL,DK)}
+</script></body></html>
