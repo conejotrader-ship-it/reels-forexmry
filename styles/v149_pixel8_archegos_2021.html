@@ -1,0 +1,84 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:'Press Start 2P';font-weight:400;src:url(node_modules/@fontsource/press-start-2p/files/press-start-2p-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 32 (3.er uso): pixel-art 2D de 8 bits — tema: Archegos, 26 mar 2021, margin calls y swaps de retorno total (60 s).
+const SPEC={name:'Archegos',hook:'26 MAR 2021: ARCHEGOS Y LOS MARGIN CALLS',dur:60,cta:56,bpm:122,prog:[[45,'m'],[41,'M'],[48,'m'],[43,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.4,'ding'],[13.6,'wipe'],[15.0,'tick'],[17.0,'alert'],[20.6,'wipe'],[22.0,'tick'],[24.0,'tick'],[26.0,'hit'],[28.4,'wipe'],[30.0,'hit'],[32.0,'hit'],[34.0,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'hit'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[47.8,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'26 de marzo de 2021: Archegos no cubrió sus margin calls y los bancos empezaron a liquidar sus acciones.','Veintiséis de marzo de dos mil veintiuno: Archegos no cubrió sus margin calls y los bancos empezaron a liquidar sus acciones.'],
+ [6.4,13.4,'Casi todas sus posiciones eran swaps de retorno total: los bancos tenían las acciones y nadie veía el tamaño total.'],
+ [13.6,20.4,'Con mucho apalancamiento, una caída de las acciones disparó margin calls de varios bancos a la vez.'],
+ [20.6,28.2,'Cada banco corrió a vender primero. Las acciones de ViacomCBS cayeron ≈ 27 %.','Cada banco corrió a vender primero. Las acciones de ViacomCBS cayeron unos veintisiete por ciento.'],
+ [28.4,35.0,'Credit Suisse perdió ≈ US$ 5.500 millones, Nomura ≈ 2.850 y Morgan Stanley ≈ 911 millones.','Credit Suisse perdió unos cinco mil quinientos millones de dólares, Nomura unos dos mil ochocientos cincuenta y Morgan Stanley unos novecientos once millones.'],
+ [35.2,43.4,'Goldman Sachs limitó sus pérdidas vendiendo rápido. En 2024, Bill Hwang fue condenado a 18 años de prisión.','Goldman Sachs limitó sus pérdidas vendiendo rápido. En dos mil veinticuatro, Bill Hwang fue condenado a dieciocho años de prisión.'],
+ [43.6,49.6,'Para tu robot: el apalancamiento amplifica las pérdidas y el margen cierra posiciones. Fuente: Wikipedia. Educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#1a1c2c',ACC='#ffcd75',FAM='"Press Start 2P"',FW=400,NOACC=true,RED='#b13e53',GRN='#38b764',BLU='#41a6f6',PUR='#5d275d',GRY='#94b0c2',TXT='#f4f4f4',YEL='#ffcd75';
+window.FONTS=['400 30px "Press Start 2P"'];
+const STY={subFont:'800 42px Inter',subBg:'rgba(26,28,44,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function P(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),w,h)}
+function L(s,x,y,sz,col=TXT,a=1,al='center',maxW=980){s=_s(s);const n=[...s].length;if(n*sz>maxW)sz=Math.floor(maxW/n);T(s,x,y,{font:`400 ${sz}px "Press Start 2P"`,fill:col,a,align:al})}
+function bg(t){ctx.fillStyle=DK;ctx.fillRect(0,0,W,H);ctx.save();ctx.globalAlpha=.1;for(let x=0;x<W;x+=40)P(x,0,2,H,'#fff');for(let y=0;y<H;y+=40)P(0,y,W,2,'#fff');ctx.restore();P(0,0,W,12,YEL)}
+function head(t,t0,s,col=YEL){L(s,540,175,36,col,eout(prog(t,t0,t0+.5)))}
+function box(x,y,w,h,fill,bord,u=8){P(x+u,y,w-2*u,h,fill);P(x,y+u,w,h-2*u,fill);P(x+u,y-u/2,w-2*u,u/2,bord);P(x+u,y+h,w-2*u,u/2,bord);P(x-u/2,y+u,u/2,h-2*u,bord);P(x+w,y+u,u/2,h-2*u,bord)}
+function bank(cx,y,s,col){ // edificio pixel: techo triangular + columnas
+  const u=12*s;P(cx-6*u,y+3*u,12*u,u,col);for(let i=0;i<4;i++)P(cx-5*u+i*3*u,y+4*u,u*1.5,5*u,'#f4f4f4');P(cx-6*u,y+9*u,12*u,u,col);
+  for(let r=0;r<3;r++)P(cx-(5-r*2)*u,y+(2-r)*u,(10-r*4)*u,u,col)}
+function man(cx,y,s,col=BLU){const u=10*s;P(cx-u,y,2*u,2*u,'#ffcd9a');P(cx-1.5*u,y-u,3*u,u,'#333');P(cx-1.5*u,y+2*u,3*u,3*u,col);P(cx-1.5*u,y+5*u,u,2*u,'#222');P(cx+.5*u,y+5*u,u,2*u,'#222')}
+function stackb(x,y,n,col,u=26,cols=4){for(let i=0;i<n;i++){const r=Math.floor(i/cols),c=i%cols;P(x+c*(u+4),y-r*(u+4),u,u,col)}}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;L('ARCHEGOS',540,230,64,YEL,eout(prog(t,.2,.8)),'center',900);
+  const sh=t>3.0?Math.sin(t*40)*6:0;ctx.save();ctx.translate(sh,0);
+  [[250,'CS'],[430,'NOMURA'],[650,'GS'],[830,'MS']].forEach(([x,n],i)=>{const k=eback(prog(t,.4+i*.25,1.1+i*.25));if(k<=.02)return;ctx.save();ctx.translate(x,760);ctx.scale(k,k);bank(0,-170,1.1,i%2?BLU:GRY);ctx.restore();L(n,x,760,22,TXT,k)});ctx.restore();
+  L('26 MAR 2021',540,1010,70,TXT,eout(prog(t,1.4,2)),'center',940);
+  const blink=Math.floor(t*4)%2==0;const k=eback(prog(t,3.0,3.8));if(k>.02){ctx.save();ctx.translate(540,1200);ctx.scale(k,k);box(-400,-70,800,140,blink?RED:'#7a2a3a',TXT);L('MARGIN CALL',0,12,56,TXT,1,'center',740);ctx.restore()}ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'SWAPS DE RETORNO TOTAL');
+  const k1=eback(prog(t,7.2,8)),k2=eback(prog(t,8.8,9.6)),k3=eback(prog(t,10.4,11.2));
+  [[k1,270,'ARCHEGOS',BLU],[k2,540,'BANCO',GRY],[k3,810,'ACCIONES',GRN]].forEach(([k,x,s,c])=>{if(k<=.02)return;ctx.save();ctx.translate(x,560);ctx.scale(k,k);box(-120,-120,240,240,'#262a44',c);if(s=='ARCHEGOS')man(0,-50,3);else if(s=='BANCO')bank(0,-80,.6,c);else{stackb(-50,40,6,GRN,26,3)}ctx.restore();L(s,x,740,20,c,k,'center',250)});
+  const ar=(x1,x2,y,p,c,s)=>{if(p<=0)return;const x=lerp(x1,x2,p);P(x1,y,x-x1,12,c);if(p>=1){P(x2-8,y-12,12,36,c)}L(s,(x1+x2)/2,y-44,18,c,p,'center',240)};
+  ar(400,440,560,0,YEL,'');
+  const a1=eout(prog(t,9.2,10)),a2=eout(prog(t,10.8,11.6));ar(395,415,420,a1,YEL,'');
+  L('swap  ➜',405,865,22,YEL,a1,'center',260);L('posee',675,865,22,YEL,a2,'center',260);
+  const k=eback(prog(t,11.4,12.2));if(k>.02){ctx.save();ctx.translate(540,1130);ctx.scale(k,k);box(-440,-90,880,180,'#262a44',YEL);L('LOS BANCOS TIENEN',0,-24,32,TXT,1,'center',820);L('LAS ACCIONES',0,26,32,YEL,1,'center',820);L('NADIE VE EL TOTAL',0,70,24,GRY,1,'center',820);ctx.restore()}ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL APALANCAMIENTO',RED);
+  const k=eout(prog(t,14.2,15));const n=Math.round(lerp(2,28,eio(prog(t,15,18))));
+  P(300,1060,480,24,GRY);stackb(310,1020,4,GRN,60,4);L('CAPITAL',540,1130,26,GRY,k);
+  const sh=t>18.4?Math.sin(t*50)*10:0;stackb(310+sh,1020-64,Math.max(n,4)-4,RED,60,4);
+  L('POSICIONES',820,520,24,RED,eout(prog(t,16,16.6)),'center',300);
+  const kk=eback(prog(t,18.6,19.4));if(kk>.02){ctx.save();ctx.translate(540,1250);ctx.scale(kk,kk);box(-420,-50,840,100,RED,TXT);L('CAE EL PRECIO ➜ MARGIN CALL',0,10,28,TXT,1,'center',800);ctx.restore()}ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'TODOS A VENDER',YEL);
+  ['CS','NOMURA','GS','MS'].forEach((n,i)=>{const p=eio(prog(t,22+i*.25,25+i*.25));const x=lerp(150,780,p),y=380+i*120;P(x,y,60,60,i%2?BLU:GRY);P(x+10,y+16,10,10,DK);P(x+36,y+16,10,10,DK);L(n,100,y+34,18,TXT,1,'left',160);P(860,y-6,150,72,RED);L('VENDER',935,y+34,16,TXT,1,'center',140)});
+  const kv=eback(prog(t,25,25.8));L('VIACOMCBS',540,1000,34,GRY,eout(prog(t,25,25.6)));
+  const p=eio(prog(t,25.6,27.2));const base=1160,h=Math.round(lerp(1,.73,p)*20)*10;P(380,base-200,320,200,'#2e3350');P(380,base-h,320,h,GRN);L(p>.98?'-27 %':'-'+Math.round(27*p)+' %',540,1250,64,RED,eout(prog(t,25.8,26.4)),'center',700);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'PÉRDIDAS (US$ M, APROX.)',RED);
+  [['CREDIT SUISSE',5500,RED,29.4],['NOMURA',2850,'#d77643',30.8],['MORGAN STANLEY',911,YEL,32.2]].forEach(([n,v,c,t0],i)=>{const g=eio(prog(t,t0,t0+1.2));const y=330+i*300;L(n,100,y,26,TXT,eout(prog(t,t0-.3,t0+.2)),'left',700);const w=(v/5500)*860*g;P(100,y+40,w,100,c);P(100,y+40,w,12,'#ffffff44');{const nn=Math.round(v*g).toLocaleString('es-CO').replace(/,/g,'.');if(w>420)L(nn,100+w-16,y+95,34,TXT,eout(prog(t,t0,t0+.5)),'right',400);else L(nn,100+Math.max(w,60)+16,y+95,34,TXT,eout(prog(t,t0,t0+.5)),'left',400)}});
+  L('Goldman Sachs: limitó pérdidas vendiendo rápido',540,1260,22,GRY,eout(prog(t,33.6,34.4)),'center',960);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'EL FINAL DEL CASO',YEL);
+  const k=eback(prog(t,36.2,37));if(k>.02){ctx.save();ctx.translate(540,520);ctx.scale(k,k);box(-420,-130,840,260,'#262a44',BLU);man(-250,-60,4,BLU);L('BILL HWANG',120,-50,28,TXT,1,'center',520);L('fundador de Archegos',120,10,20,GRY,1,'center',520);ctx.restore()}
+  const k2=eback(prog(t,38.6,39.4));if(k2>.02){ctx.save();ctx.translate(540,900);ctx.scale(k2,k2);box(-420,-110,840,220,RED,TXT);L('NOV 2024',0,-50,34,TXT,1,'center',780);L('CONDENA: 18 AÑOS',0,20,40,TXT,1,'center',780);L('fraude y crimen organizado',0,72,20,TXT,1,'center',780);ctx.restore()}
+  L('de prisión federal (EE. UU.)',540,1130,26,GRY,eout(prog(t,40.4,41.2)),'center',960);ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'PARA TU ROBOT',GRN);
+  [['APALANCAMIENTO = PERDIDAS x',RED],['EL MARGEN CIERRA SOLO',YEL]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;box(60,290+i*140,960,100,'#262a44',c);L(s,110,342+i*140,26,TXT,1,'left',880);ctx.restore()});
+  robot(300,620,780,eout(prog(t,46.4,47.2)));
+  L('Fuente: Wikipedia (Archegos)',60,1340,22,YEL,eout(prog(t,48,48.6)),'left',960);
+  L('Contenido educativo,',60,1385,24,YEL,eout(prog(t,48.4,49)),'left',960);L('no es asesoria financiera',60,1435,24,YEL,eout(prog(t,48.4,49)),'left',960);ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(3);
+  L('ARCHEGOS',540,220,86,YEL,1,'center',900);
+  [[250,GRY],[430,BLU],[650,GRY],[830,BLU]].forEach(([x,c])=>bank(x,330,.9,c));
+  L('US$',540,760,60,GRY,1);L('5.500 M',540,900,120,RED,1,'center',960);
+  L('PERDIÓ CREDIT SUISSE',540,1030,34,TXT,1,'center',940);
+  box(140,1130,800,140,RED,TXT);L('MARGIN CALL',540,1210,56,TXT,1,'center',740);
+  coverBtn('VER EL COLAPSO →',YEL,DK)}
+</script></body></html>
