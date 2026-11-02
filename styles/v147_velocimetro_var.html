@@ -1,0 +1,85 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 30 (3.er uso): velocímetro de riesgo — tema: VaR 95 %, qué dice y qué no (60 s).
+const SPEC={name:'VaR',hook:'VaR 95 %: LO QUE NO TE DICE',dur:60,cta:56,bpm:100,prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.4,'ding'],[13.6,'wipe'],[15.0,'tick'],[17.0,'hit'],[20.6,'wipe'],[22.0,'tick'],[24.0,'tick'],[26.0,'alert'],[28.4,'wipe'],[30.0,'alert'],[32.4,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[47.8,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'El VaR del 95 % dice cuánto puedes perder en un día, salvo en el 5 % de los peores casos.','El VaR del noventa y cinco por ciento dice cuánto puedes perder en un día, salvo en el cinco por ciento de los peores casos.'],
+ [6.4,13.4,'Nació tras el crac de 1987. En 1994, J. P. Morgan publicó su metodología, el RiskMetrics.','Nació tras el crac de mil novecientos ochenta y siete. En mil novecientos noventa y cuatro, J. P. Morgan publicó su metodología, el RiskMetrics.'],
+ [13.6,20.4,'Ejemplo ilustrativo: un VaR diario del 95 % de $1.000 es un 5 % de probabilidad de perder $1.000 o más.','Ejemplo ilustrativo: un VaR diario del noventa y cinco por ciento de mil dólares es un cinco por ciento de probabilidad de perder mil dólares o más.'],
+ [20.6,28.2,'Pero no dice cuánto pierdes si lo superas: pueden ser $1.200 o $20.000. Las colas gruesas lo esconden.','Pero no dice cuánto pierdes si lo superas: pueden ser mil doscientos dólares o veinte mil. Las colas gruesas lo esconden.'],
+ [28.4,35.0,'Tras 2008 se le criticó por dar falsa seguridad a bancos y reguladores. Taleb lo llamó charlatanería.','Tras dos mil ocho se le criticó por dar falsa seguridad a bancos y reguladores. Taleb lo llamó charlatanería.'],
+ [35.2,43.4,'Basilea lo sustituyó por el expected shortfall: el promedio de las pérdidas más allá del umbral.'],
+ [43.6,49.6,'Para tu robot: fija pérdida máxima por día y simula días extremos. Fuente: Wikipedia. Contenido educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#0a1230',ACC='#4de1ff',FAM='Inter';
+const BG='#0a1230',PN='#111c44',GN='#2ee59d',AM='#ffb84d',RD='#ff4d5e',CY='#4de1ff',WH='#ffffff',MU='#8c9ad1';
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,18,48,.96)',subStroke:CY,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:CY,ctaAccent:CY,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=WH,a=1,al='center',maxW=960){s=_s(s);ctx.save();while(sz>20){ctx.font=`900 ${sz}px Inter`;if(ctx.measureText(s).width<=maxW)break;sz-=2}ctx.restore();T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+window.FONTS=['900 40px Inter'];
+function bg(t){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,700,60,540,700,950);g.addColorStop(0,'#1b2c6b');g.addColorStop(1,'#0a123000');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.fillStyle=CY;ctx.fillRect(0,0,W,10)}
+function head(t,t0,s,col=CY){L(s,540,175,54,col,eout(prog(t,t0,t0+.5)))}
+function panel(x,y,w,h,col){ctx.save();ctx.fillStyle=PN;RR(x,y,w,h,22);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();ctx.restore()}
+// velocímetro semicircular: v 0..1
+function gauge(cx,cy,R,v,alpha=1){ctx.save();ctx.globalAlpha*=alpha;const a0=Math.PI,a1=Math.PI*2;
+  [[0,.6,GN],[.6,.85,AM],[.85,1,RD]].forEach(([u,w,c])=>{ctx.strokeStyle=c;ctx.lineWidth=70;ctx.lineCap='butt';ctx.beginPath();ctx.arc(cx,cy,R,lerp(a0,a1,u),lerp(a0,a1,w));ctx.stroke()});
+  for(let i=0;i<=10;i++){const a=lerp(a0,a1,i/10);line(cx+Math.cos(a)*(R-50),cy+Math.sin(a)*(R-50),cx+Math.cos(a)*(R-76),cy+Math.sin(a)*(R-76),WH,5)}
+  const a=lerp(a0,a1,clamp(v));ctx.strokeStyle=WH;ctx.lineWidth=14;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*(R-30),cy+Math.sin(a)*(R-30));ctx.stroke();ctx.fillStyle=CY;ctx.beginPath();ctx.arc(cx,cy,30,0,7);ctx.fill();ctx.restore()}
+function bell(x0,x1,yb,hm,shade,cut){ // campana con cola sombreada a la izquierda de 'cut' (0..1)
+  const f=u=>Math.exp(-Math.pow((u-.5)/.17,2)/2);ctx.save();
+  ctx.beginPath();ctx.moveTo(x0,yb);for(let i=0;i<=100;i++){const u=i/100;ctx.lineTo(lerp(x0,x1,u),yb-hm*f(u))}ctx.lineTo(x1,yb);ctx.closePath();ctx.fillStyle='rgba(77,225,255,.25)';ctx.fill();ctx.strokeStyle=CY;ctx.lineWidth=6;ctx.stroke();
+  if(shade){ctx.beginPath();ctx.moveTo(x0,yb);for(let i=0;i<=100;i++){const u=i/100*cut;ctx.lineTo(lerp(x0,x1,u),yb-hm*f(u))}ctx.lineTo(lerp(x0,x1,cut),yb);ctx.closePath();ctx.fillStyle=RD;ctx.fill()}
+  line(x0-20,yb,x1+20,yb,MU,4);ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;L('GESTIÓN DE RIESGO',540,200,48,MU,eout(prog(t,.2,.8)));
+  const v=lerp(0,.6,eio(prog(t,.4,2.6)));gauge(540,880,380,v,eback(prog(t,.3,1.1)));
+  L('VaR 95 %',540,1000,150,WH,eout(prog(t,1,1.6)),'center',940);
+  const k=eback(prog(t,3.0,3.8));ctx.save();ctx.translate(540,1200);ctx.rotate(-.03);ctx.scale(Math.max(k,.001),Math.max(k,.001));RR(-440,-65,880,130,24);ctx.fillStyle=RD;ctx.fill();L('LO QUE NO TE DICE',0,14,76,WH,1,'center',820);ctx.restore();ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'SU ORIGEN');
+  const k1=eback(prog(t,7.4,8.2)),k2=eback(prog(t,9.8,10.6));
+  [[k1,RD,'1987','CRAC BURSÁTIL','nace el concepto de VaR',470],[k2,CY,'1994','J. P. MORGAN','publica RiskMetrics (informe 4:15)',860]].forEach(([k,c,y,h,s,yy])=>{if(k<=.02)return;ctx.save();ctx.translate(540,yy);ctx.scale(k,k);panel(-440,-170,880,340,c);L(y,-220,-30,130,c,1,'center',340);L(h,170,-60,48,WH,1,'center',500);L(s,170,10,30,MU,1,'center',500);ctx.restore()});
+  L('Dennis Weatherstone pidió un informe de riesgo en una página',540,1170,32,MU,eout(prog(t,11.6,12.4)),'center',960);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'CÓMO SE LEE (ILUSTRATIVO)');
+  const k=eout(prog(t,14.2,15));ctx.save();ctx.globalAlpha*=k;bell(120,960,1000,520,t>16.4,.28);ctx.restore();
+  if(t>16.4){const kk=eback(prog(t,16.4,17.2));L('5 %',lerp(120,960,.14),1080,64*Math.max(kk,.01),RD,1)}
+  const x=lerp(120,960,.28);line(x,420,x,1010,AM,6,[14,10]);L('VaR',x,400,44,AM,eout(prog(t,15.4,16)));
+  const k2=eback(prog(t,17.8,18.6));if(k2>.02){ctx.save();ctx.translate(540,1230);ctx.scale(k2,k2);RR(-440,-60,880,120,20);ctx.fillStyle=PN;ctx.fill();ctx.strokeStyle=AM;ctx.lineWidth=5;ctx.stroke();L('5 % de probabilidad de perder $1.000 o más',0,10,38,WH,1,'center',840);ctx.restore()}
+  L('1 día · datos ilustrativos',540,1340,30,MU,eout(prog(t,19,19.8)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LA COLA QUE NO VE',RD);
+  bell(120,960,1000,420,true,.28);const x=lerp(120,960,.28);line(x,500,x,1010,AM,6,[14,10]);L('VaR',x,470,40,AM,1);
+  const k=eout(prog(t,21.6,22.6));ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=RD;ctx.lineWidth=7;ctx.setLineDash([10,8]);ctx.beginPath();ctx.moveTo(x,960);ctx.bezierCurveTo(x-60,990,x-90,1000,120,1000);ctx.stroke();ctx.restore();
+  [[23,'−$1.200?',560,GN],[24.6,'−$20.000?',720,RD]].forEach(([tt,s,y,c])=>{const kk=eback(prog(t,tt,tt+.8));if(kk<=.02)return;ctx.save();ctx.translate(310,y+200);ctx.scale(kk,kk);RR(-210,-50,420,100,18);ctx.fillStyle=PN;ctx.fill();ctx.strokeStyle=c;ctx.lineWidth=5;ctx.stroke();L(s,0,12,56,c,1,'center',380);ctx.restore()});
+  L('¿cuánto más allá del VaR?',540,1230,56,WH,eout(prog(t,25.8,26.6)));L('colas gruesas: pérdidas extremas más frecuentes de lo supuesto',540,1310,30,MU,eout(prog(t,26.6,27.4)),'center',960);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'2008: FALSA SEGURIDAD',RD);
+  gauge(540,720,330,lerp(.2,1.0,eio(prog(t,29,31.2))),1);
+  L('"SEGURO"',540,800,70,GN,eout(prog(t,29.2,29.8))*(1-prog(t,31,31.6)),'center',700);
+  [[32,'J. Nocera, NYT (2009)','el VaR dio falsa seguridad a banqueros y reguladores',CY],[33.4,'N. Taleb','"charlatanería": supone una distribución bien definida',AM]].forEach(([tt,h,s,c],i)=>{const k=eout(prog(t,tt,tt+.6));if(k<=.02)return;ctx.save();ctx.globalAlpha=a*k;ctx.translate(0,lerp(30,0,k));panel(60,960+i*200,960,170,c);L(h,110,1015+i*200,40,c,1,'left',860);L(s,110,1075+i*200,28,WH,1,'left',860);ctx.restore()});ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'EL SUSTITUTO: EXPECTED SHORTFALL',GN);
+  bell(120,960,1000,420,true,.28);const x=lerp(120,960,.28);line(x,500,x,1010,AM,6,[14,10]);L('VaR',x,470,40,AM,1);
+  const k=eout(prog(t,37.4,38.4));ctx.save();ctx.globalAlpha*=k;const xe=lerp(120,960,.17);line(xe,560,xe,1010,GN,8);L('ES',xe,530,44,GN,1);ctx.restore();
+  L('ES = promedio de las pérdidas en la cola',540,1190,44,WH,eout(prog(t,39,39.8)),'center',900);
+  L('el marco de Basilea lo usa para el capital de mercado',540,1260,30,MU,eout(prog(t,40.4,41.2)),'center',960);
+  L('el VaR sigue usándose para el backtesting',540,1315,30,MU,eout(prog(t,41.4,42.2)),'center',960);ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'PARA TU ROBOT',AM);
+  [['Fija una pérdida máxima por día',GN],['Simula días extremos',AM]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;panel(60,290+i*140,960,110,c);L(s,110,345+i*140,40,WH,1,'left',880);ctx.restore()});
+  robot(300,620,780,eout(prog(t,46.4,47.2)));
+  L('Fuente: Wikipedia (Value at risk)',60,1340,30,CY,eout(prog(t,48,48.6)),'left',960);
+  L('Contenido educativo,',60,1385,34,CY,eout(prog(t,48.4,49)),'left');L('no es asesoría financiera',60,1435,34,CY,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  L('EL VaR NO VE EL',540,200,92,CY,1,'center',900);bell(150,930,780,380,true,.2);
+  L('5 %',540,1130,320,RD,1,'center',700);
+  L('DE LOS PEORES DÍAS',540,1330,60,WH,1,'center',900);
+  coverBtn('VER EL ERROR →',CY,BG)}
+</script></body></html>
