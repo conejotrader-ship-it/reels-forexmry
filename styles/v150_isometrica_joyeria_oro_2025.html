@@ -1,0 +1,75 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 33 (3.er uso): ciudad isométrica de barras — tema: demanda de joyería de oro 2025 por país, WGC (60 s).
+const SPEC={name:'JoyeriaOro2025',hook:'JOYERÍA DE ORO 2025: 1.542 TONELADAS',dur:60,cta:56,bpm:108,prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.4,'ding'],[13.6,'wipe'],[15.0,'ding'],[16.4,'ding'],[17.8,'ding'],[19.0,'ding'],[20.6,'wipe'],[22.0,'tick'],[24.0,'tick'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.4,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[47.8,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'En 2025 el mundo compró 1.542 toneladas de oro en joyería, un 18 % menos que en 2024.','En dos mil veinticinco el mundo compró mil quinientas cuarenta y dos toneladas de oro en joyería, un dieciocho por ciento menos que en dos mil veinticuatro.'],
+ [6.4,13.4,'India lideró con 430,5 toneladas y China siguió con 360,1: juntas, ≈ 51 % del total mundial.','India lideró con cuatrocientas treinta coma cinco toneladas y China siguió con trescientas sesenta coma uno: juntas, unos cincuenta y uno por ciento del total mundial.'],
+ [13.6,20.4,'Oriente Medio sumó 153,1 y Estados Unidos 117,3. El resto del mundo, ≈ 481 toneladas.','Oriente Medio sumó ciento cincuenta y tres coma uno y Estados Unidos ciento diecisiete coma tres. El resto del mundo, unas cuatrocientas ochenta y una toneladas.'],
+ [20.6,28.2,'La demanda cayó 24 % en India y 25 % en China, por el fuerte aumento del precio del oro.','La demanda cayó veinticuatro por ciento en India y veinticinco por ciento en China, por el fuerte aumento del precio del oro.'],
+ [28.4,35.0,'Pero en valor, la joyería alcanzó un récord de US$ 172.000 millones, un 18 % más.','Pero en valor, la joyería alcanzó un récord de ciento setenta y dos mil millones de dólares, un dieciocho por ciento más.'],
+ [35.2,43.4,'Menos gramos, más dólares: cuando sube el precio, se compra menos oro, pero se gasta más.'],
+ [43.6,49.6,'Para tu robot: la demanda es contexto, no una señal de entrada. Fuente: World Gold Council. Educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#102a33',ACC='#ff7a59',FAM='Inter';
+const BG='#f4ecd9',INK='#102a33',TL='#1f9d8f',TLD='#157a6f',TLL='#4fc3b5',CR='#ff7a59',CRD='#d85a3b',CRL='#ffa088',GD='#f2b632',GDD='#c8921a',GDL='#ffd36b',MU='#6b7b80',PN='#fffaf0';
+const STY={subFont:'800 42px Inter',subBg:'rgba(16,42,51,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=INK,a=1,al='center',maxW=960){s=_s(s);ctx.save();while(sz>20){ctx.font=`900 ${sz}px Inter`;if(ctx.measureText(s).width<=maxW)break;sz-=2}ctx.restore();T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+window.FONTS=['900 40px Inter'];
+function bg(t){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);ctx.strokeStyle='rgba(16,42,51,.07)';ctx.lineWidth=2;for(let i=-20;i<40;i++){ctx.beginPath();ctx.moveTo(i*100,0);ctx.lineTo(i*100+1100,1100*.5);ctx.stroke();ctx.beginPath();ctx.moveTo(i*100,0);ctx.lineTo(i*100-1100,1100*.5);ctx.stroke()}ctx.fillStyle=CR;ctx.fillRect(0,0,W,10)}
+function head(t,t0,s,col=INK){L(s,540,175,54,col,eout(prog(t,t0,t0+.5)))}
+function panel(x,y,w,h,col){ctx.save();ctx.fillStyle=PN;RR(x,y,w,h,22);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();ctx.restore()}
+function iso(cx,cy,w,h,c,cd,cl){const d=w/2;const P2=(pts,col)=>{ctx.beginPath();pts.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.fillStyle=col;ctx.fill()};
+  P2([[cx-w,cy-h],[cx,cy-h+d],[cx,cy+d],[cx-w,cy]],cd);P2([[cx+w,cy-h],[cx,cy-h+d],[cx,cy+d],[cx+w,cy]],c);P2([[cx,cy-h-d],[cx+w,cy-h],[cx,cy-h+d],[cx-w,cy-h]],cl)}
+function tw(cx,cy,w,h,kind){const m={t:[TL,TLD,TLL],c:[CR,CRD,CRL],g:[GD,GDD,GDL]}[kind];if(h>1)iso(cx,cy,w,h,m[0],m[1],m[2])}
+function floor(cx,cy,w,col='rgba(16,42,51,.12)'){const d=w/2;ctx.beginPath();ctx.moveTo(cx,cy-d);ctx.lineTo(cx+w,cy);ctx.lineTo(cx,cy+d);ctx.lineTo(cx-w,cy);ctx.closePath();ctx.fillStyle=col;ctx.fill()}
+const SC=.95; // px por tonelada para 5 torres
+function h0(t,a){ctx.save();ctx.globalAlpha=a;L('WORLD GOLD COUNCIL · DEMANDA DE JOYERÍA',540,200,36,MU,eout(prog(t,.2,.8)),'center',980);
+  const g=eio(prog(t,.4,2.8));[[330,1020,300,'t',1],[540,1100,420,'g',1.5],[750,1020,230,'c',.8]].forEach(([x,y,h,k,s],i)=>{const kk=eback(prog(t,.3+i*.2,1.3+i*.2));floor(x,y,110);tw(x,y,100,h*g*Math.max(kk,0),k)});
+  const v=Math.round(lerp(0,1542,eio(prog(t,1,3))));L(v.toLocaleString('es-CO').replace(/,/g,'.'),540,520,170,INK,eout(prog(t,1,1.6)),'center',940);L('TONELADAS',540,630,56,CRD,eout(prog(t,1.4,2)));
+  const k=eback(prog(t,3.0,3.8));ctx.save();ctx.translate(540,1330);ctx.rotate(-.03);ctx.scale(Math.max(k,.001),Math.max(k,.001));RR(-440,-60,880,120,22);ctx.fillStyle=CR;ctx.fill();L('JOYERÍA 2025: −18 %',0,14,64,'#fff',1,'center',820);ctx.restore();ctx.restore()}
+const BR=[['INDIA',430.5,'t'],['CHINA',360.1,'c'],['ORIENTE MEDIO',153.1,'g'],['EE. UU.',117.3,'t'],['RESTO ≈',481.3,'c']];
+function city(t,t0,list,cyb=1060,xs){list.forEach((i,j)=>{const [n,v,k]=BR[i];const g=eio(prog(t,t0+j*.9,t0+j*.9+1.2));const x=xs[j];floor(x,cyb,80);tw(x,cyb,70,v*SC*.85*g,k);L(n,x,cyb+90,26,INK,eout(prog(t,t0+j*.9,t0+j*.9+.6)),'center',200);L((v*g).toFixed(1).replace('.',','),x,cyb-v*SC*.85*g-70,40,INK,eout(prog(t,t0+j*.9+.2,t0+j*.9+.8)),'center',220)})}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'LOS DOS GRANDES');city(t,7.2,[0,1],1080,[330,750]);
+  const k=eback(prog(t,11,11.8));if(k>.02){ctx.save();ctx.translate(540,1330);ctx.scale(k,k);RR(-420,-55,840,110,22);ctx.fillStyle=CR;ctx.fill();L('INDIA + CHINA ≈ 51 % (cálculo propio)',0,12,40,'#fff',1,'center',800);ctx.restore()}ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL RANKING DE 2025');city(t,14.2,[0,1,2,3,4],1100,[140,330,540,750,940]);
+  L('toneladas · resto = total − países (cálculo propio)',540,1300,30,MU,eout(prog(t,19,19.8)),'center',960);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'EL PRECIO ESPANTÓ AL COMPRADOR');
+  const D=[['INDIA',563.4,430.5,'t',300,'−24 %'],['CHINA',479.1,360.1,'c',780,'−25 %']];const base=1080;
+  D.forEach(([n,v0,v1,k,x,pc],i)=>{const g=eio(prog(t,22+i*.6,25+i*.6));floor(x,base,80);iso(x,base,70,v0*SC*.8,'rgba(16,42,51,.10)','rgba(16,42,51,.08)','rgba(16,42,51,.14)');const h=lerp(v0,v1,g)*SC*.8;tw(x,base,70,h,k);L(n,x,base+90,34,INK,1);
+    const kk=eback(prog(t,25+i*.8,25.8+i*.8));if(kk>.02){ctx.save();ctx.translate(x,base-v0*SC*.8-80);ctx.scale(kk,kk);RR(-110,-40,220,80,16);ctx.fillStyle=CRD;ctx.fill();L(pc,0,10,48,'#fff',1,'center',200);ctx.restore()}});
+  L('2024 (sombra) vs 2025',540,1290,34,MU,eout(prog(t,26.4,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'PERO EN DÓLARES…');
+  const base=1080;const g0=eio(prog(t,29.2,31.2)),g1=eio(prog(t,31.2,33.2));
+  floor(300,base,90);tw(300,base,80,lerp(560,460,g0),'t');L('VOLUMEN',300,base+90,36,INK,1);L('−18 %',300,base-lerp(560,460,g0)-90,64,TLD,eout(prog(t,31,31.8)));
+  floor(780,base,90);tw(780,base,80,lerp(380,560,g1),'g');L('VALOR',780,base+90,36,INK,1);L('+18 %',780,base-lerp(380,560,g1)-90,64,GDD,eout(prog(t,33,33.8)));
+  const k=eback(prog(t,33.4,34.2));if(k>.02){ctx.save();ctx.translate(540,1300);ctx.scale(k,k);RR(-420,-55,840,110,22);ctx.fillStyle=GD;ctx.fill();L('RÉCORD: US$ 172.000 M',0,12,52,INK,1,'center',800);ctx.restore()}ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'MENOS GRAMOS, MÁS DÓLARES');
+  [[36.2,'PRECIO DEL ORO','▲',CR],[38.4,'GRAMOS COMPRADOS','▼',TL],[40.6,'DÓLARES GASTADOS','▲',GD]].forEach(([tt,s,ar,c],i)=>{const k=eback(prog(t,tt,tt+.8));if(k<=.02)return;ctx.save();ctx.translate(540,420+i*280);ctx.scale(k,k);panel(-440,-110,880,220,c);L(ar,-340,10,110,c,1,'center',160);L(s,60,10,48,INK,1,'center',640);ctx.restore()});
+  L('cuando sube el precio, se compra menos oro pero se gasta más',540,1290,32,MU,eout(prog(t,41.4,42.2)),'center',960);ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'PARA TU ROBOT',CRD);
+  [['La demanda física es contexto',TL],['No es una señal de entrada',CR]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;panel(60,290+i*140,960,110,c);L(s,110,345+i*140,44,INK,1,'left',880);ctx.restore()});
+  robot(300,620,780,eout(prog(t,46.4,47.2)));
+  L('Fuente: World Gold Council, Gold Demand Trends 2025',60,1340,30,CRD,eout(prog(t,48,48.6)),'left',960);
+  L('Contenido educativo,',60,1385,34,CRD,eout(prog(t,48.4,49)),'left');L('no es asesoría financiera',60,1435,34,CRD,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  L('INDIA + CHINA COMPRAN',540,210,70,INK,1,'center',940);
+  [[330,1060,330,'t'],[750,1060,280,'c']].forEach(([x,y,h,k])=>{floor(x,y,110);tw(x,y,100,h,k)});
+  L('≈ 51 %',540,500,300,CR,1,'center',940);
+  L('DE LA JOYERÍA DE ORO · 2025',540,1180,48,INK,1,'center',940);
+  coverBtn('VER EL RANKING →',CR,'#fff')}
+</script></body></html>
