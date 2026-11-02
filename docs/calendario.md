@@ -294,3 +294,7 @@ Estilos por antigüedad (3.er uso): 20 a 26. Todos con Robot, cierre de seguir/n
 - Lun 2 nov 3:00 (séptimo reel del día 1 nov) — Jim Simons y Medallion (persona; estilo 25 documental, `v143_documental_medallion_simons.html`, escena 210, id 412618331, carátula "66 % AL AÑO, BRUTO"). Fuente: Wikipedia (Jim Simons) citando a Zuckerman 2019 (1988–2018: 66,1 % bruto, 39,1 % neto; > US$ 100.000 M en ganancias; fondo cerrado a externos).
 - Fin del 1 nov: escenas usadas hasta 210. Estilos 1–26 llevan 3 usos; el siguiente por antigüedad es 27 (3.er uso). Reserva restante: Operación Goldfinger, London Gold Pool (detalle), regla de las 3 velas del Nikkei, ranking de mayores mineras (faltan cifras en onzas verificadas).
 
+
+## Producción automática del lunes 2 nov (7 reels; horarios Bogotá 6:00, 9:30, 13:00, 16:30, 20:00, 23:30 y 3:00 del 3 nov; solo estaba ocupado el 3:00 del 2 nov, del día anterior: Medallion)
+Estilos por antigüedad (3.er uso): 27 a 33. Todos con Robot, cierre de seguir/notificaciones/Telegram/web, 60 s, carátula viral. Escenas 211–217. (La sesión corrió el 1 nov a las ≈ 20:50 hora Bogotá.)
+- Lun 2 nov 6:00 — Volmageddon, 5 feb 2018 (evento; estilo 27 reloj, `v144_reloj_volmageddon.html`, escena 211, carátula "+115,6 % EL VIX SE DUPLICÓ"). Fuentes: Zacks/Nasdaq (VIX +115,6 %, mayor alza diaria; XIV −92,6 %; liquidación anticipada, último día 20 feb) y Structured Retail Products (VIX cierre 37,32, +20,01 puntos; 17,3 = cálculo propio; compra estimada US$ 125–200 M al cierre).
