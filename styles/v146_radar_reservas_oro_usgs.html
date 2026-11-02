@@ -1,0 +1,86 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 29 (3.er uso): radar o sonar — tema: reservas de oro bajo tierra por país, USGS 2026 (60 s).
+const SPEC={name:'ReservasUSGS',hook:'66.000 TONELADAS DE ORO BAJO TIERRA',dur:60,cta:56,bpm:96,prog:[[45,'m'],[41,'m'],[43,'M'],[40,'m']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.4,'ding'],[13.6,'wipe'],[15.0,'ding'],[16.4,'ding'],[17.8,'ding'],[19.0,'ding'],[20.6,'wipe'],[22.0,'tick'],[24.0,'tick'],[26.0,'hit'],[28.4,'wipe'],[30.0,'tick'],[32.0,'hit'],[35.2,'wipe'],[37.0,'tick'],[39.0,'tick'],[41.0,'hit'],[43.6,'wipe'],[45.0,'ding'],[46.4,'ding'],[47.8,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'El mundo tiene ≈ 66.000 toneladas de reservas de oro bajo tierra, según el USGS.','El mundo tiene unas sesenta y seis mil toneladas de reservas de oro bajo tierra, según el USGS.'],
+ [6.4,13.4,'Rusia lidera con 12.000 toneladas: cerca de una quinta parte del total mundial.','Rusia lidera con doce mil toneladas: cerca de una quinta parte del total mundial.'],
+ [13.6,20.4,'Le siguen Sudáfrica con 5.000, Indonesia con 3.600, y Canadá y China con 3.200 cada una.','Le siguen Sudáfrica con cinco mil, Indonesia con tres mil seiscientas, y Canadá y China con tres mil doscientas cada una.'],
+ [20.6,28.2,'Reservas es lo que se puede extraer con rentabilidad hoy. Cambia con el precio del oro y la tecnología.'],
+ [28.4,35.0,'Australia figura con 3.000, pero con el criterio JORC serían 4.500. Otro criterio, otra cifra.','Australia figura con tres mil, pero con el criterio JORC serían cuatro mil quinientas. Otro criterio, otra cifra.'],
+ [35.2,43.4,'La producción mundial de 2025 fue ≈ 3.300 toneladas: a ese ritmo, ≈ 20 años de reservas, sin nuevos hallazgos.','La producción mundial de dos mil veinticinco fue de unas tres mil trescientas toneladas: a ese ritmo, unos veinte años de reservas, sin nuevos hallazgos.'],
+ [43.6,49.6,'Para tu robot: el precio del oro responde a la demanda, las tasas y el dólar. Fuente: USGS. Contenido educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DK='#03150c',ACC='#3dff8f',FAM='Inter';
+const BG='#03150c',GR='#3dff8f',DG='#14452b',AM='#ffd24a',RD='#ff5a5a',WH='#e8fff1',MU='#6fae8a',PN='#062a19';
+const STY={subFont:'800 42px Inter',subBg:'rgba(3,21,12,.96)',subStroke:GR,subFill:'#e8fff1',ctaBg:DK,ctaSub:'#e8fff1',ctaGlow:GR,ctaAccent:GR,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+</script><script src="kit2.js"></script><script>
+function L(s,x,y,sz,col=WH,a=1,al='center',maxW=960){s=_s(s);ctx.save();while(sz>20){ctx.font=`900 ${sz}px Inter`;if(ctx.measureText(s).width<=maxW)break;sz-=2}ctx.restore();T(s,x,y,{font:`900 ${sz}px Inter`,fill:col,a,align:al})}
+window.FONTS=['900 40px Inter'];
+function bg(t){ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);ctx.fillStyle='rgba(61,255,143,.035)';for(let y=0;y<H;y+=6)ctx.fillRect(0,y,W,2);ctx.fillStyle=GR;ctx.fillRect(0,0,W,10)}
+function head(t,t0,s,col=GR){L(s,540,175,54,col,eout(prog(t,t0,t0+.5)))}
+function panel(x,y,w,h,col){ctx.save();ctx.fillStyle=PN;RR(x,y,w,h,22);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();ctx.restore()}
+const CX=540,CY=720,RR0=420;
+function radar(t,alpha=1){ctx.save();ctx.globalAlpha*=alpha;ctx.fillStyle='#04200f';ctx.beginPath();ctx.arc(CX,CY,RR0+20,0,7);ctx.fill();
+  ctx.strokeStyle=DG;ctx.lineWidth=3;for(let i=1;i<=4;i++){ctx.beginPath();ctx.arc(CX,CY,RR0*i/4,0,7);ctx.stroke()}
+  for(let i=0;i<8;i++){const a=i*Math.PI/4;line(CX,CY,CX+Math.cos(a)*RR0,CY+Math.sin(a)*RR0,DG,2)}
+  ctx.strokeStyle=GR;ctx.lineWidth=8;ctx.beginPath();ctx.arc(CX,CY,RR0+20,0,7);ctx.stroke();
+  const sw=(t*1.3)%(Math.PI*2);for(let i=0;i<40;i++){const a=sw-i*.025;ctx.fillStyle=`rgba(61,255,143,${.28*(1-i/40)})`;ctx.beginPath();ctx.moveTo(CX,CY);ctx.arc(CX,CY,RR0,a-.025,a);ctx.closePath();ctx.fill()}
+  ctx.strokeStyle=GR;ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(CX,CY);ctx.lineTo(CX+Math.cos(sw)*RR0,CY+Math.sin(sw)*RR0);ctx.stroke();ctx.restore()}
+const BL=[['RUSIA',12000,-2.2,.55,RD],['SUDÁFRICA',5000,2.4,.5,AM],['INDONESIA',3600,.5,.75,GR],['CANADÁ',3200,-.9,.62,GR],['CHINA',3200,1.5,.4,GR]];
+function blip(b,k,showLbl=true){if(k<=.02)return;const [n,v,an,rd,c]=b;const x=CX+Math.cos(an)*RR0*rd,y=CY+Math.sin(an)*RR0*rd;const r=Math.sqrt(v)*1.05*k;
+  ctx.save();ctx.fillStyle=c+'55';ctx.beginPath();ctx.arc(x,y,r*1.5,0,7);ctx.fill();ctx.fillStyle=c;ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();ctx.restore();
+  if(showLbl){L(n,x,y-r-34,32,WH,k,'center',260);L(v.toLocaleString('es-CO').replace(/,/g,'.')+' t',x,y+r+34,34,c,k,'center',260)}}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;L('USGS · MINERAL COMMODITY SUMMARIES 2026',540,200,34,MU,eout(prog(t,.2,.8)),'center',980);
+  radar(t,eback(prog(t,.3,1.1)));
+  const v=Math.round(lerp(0,66000,eio(prog(t,1,3.2))));L(v.toLocaleString('es-CO').replace(/,/g,'.'),540,1235,170,GR,eout(prog(t,1,1.6)),'center',940);
+  const k2=eback(prog(t,3.0,3.8));ctx.save();ctx.translate(540,1360);ctx.scale(Math.max(k2,.001),Math.max(k2,.001));RR(-420,-55,840,110,22);ctx.fillStyle=AM;ctx.fill();L('TONELADAS DE RESERVAS',0,12,54,BG,1,'center',800);ctx.restore();ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL BLIP MÁS GRANDE');radar(t);
+  blip(BL[0],eback(prog(t,7.6,9)));
+  const k=eback(prog(t,10.2,11));if(k>.02){ctx.save();ctx.translate(540,1330);ctx.scale(k,k);panel(-400,-80,800,160,RD);L('RUSIA: 12.000 t',0,-12,70,RD,1,'center',760);L('≈ 18 % del total (cálculo propio)',0,44,32,WH,1,'center',760);ctx.restore()}ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LOS SIGUIENTES');radar(t);
+  BL.forEach((b,i)=>blip(b,i==0?1:eback(prog(t,14.4+i*1.2,15.4+i*1.2))));
+  [['2.º SUDÁFRICA','5.000 t',AM],['3.º INDONESIA','3.600 t',GR],['4.º CANADÁ / CHINA','3.200 t c/u',GR]].forEach(([s,v,c],i)=>{const k=eout(prog(t,16+i*1.2,16.8+i*1.2));if(k<=.02)return;ctx.save();ctx.globalAlpha=a*k;ctx.translate(0,lerp(30,0,k));L(s,260,1225+i*66,36,c,1,'left',520);L(v,820,1225+i*66,36,WH,1,'right',360);ctx.restore()});ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'¿QUÉ SON LAS RESERVAS?');
+  const R1=400,R2=lerp(180,320,eio(prog(t,24,26.4)));
+  ctx.fillStyle=DG;ctx.beginPath();ctx.arc(540,760,R1,0,7);ctx.fill();ctx.strokeStyle=MU;ctx.lineWidth=4;ctx.setLineDash([14,12]);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle=GR;ctx.beginPath();ctx.arc(540,760,R2,0,7);ctx.fill();
+  L('RECURSOS',540,420,40,WHE(),eout(prog(t,21.4,22)));L('RESERVAS',540,760,60,BG,eout(prog(t,22,22.8)),'center',520);L('extraíbles con rentabilidad hoy',540,830,32,BG,eout(prog(t,22.6,23.4)),'center',520);
+  const k=eback(prog(t,24.4,25.2));if(k>.02){ctx.save();ctx.translate(540,1260);ctx.scale(k,k);RR(-420,-55,840,110,22);ctx.fillStyle=AM;ctx.fill();L('PRECIO ↑  TECNOLOGÍA ↑  →  RESERVAS ↑',0,12,38,BG,1,'center',800);ctx.restore()}
+  L('el área verde crece o se achica',540,1380,32,MU,eout(prog(t,26.4,27.2)));ctx.restore()}
+function WHE(){return MU}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EL CASO DE AUSTRALIA');
+  const base=1150,Hm=520;const g0=eio(prog(t,29.4,30.8)),g1=eio(prog(t,31.2,32.8));
+  ctx.fillStyle=GR;RR(210,base-Hm*3000/4500*g0,230,Hm*3000/4500*g0,14);ctx.fill();ctx.fillStyle=AM;RR(640,base-Hm*g1,230,Hm*g1,14);ctx.fill();line(130,base,950,base,MU,4);
+  L('3.000 t',325,base-Hm*3000/4500*g0-46,60,GR,eout(prog(t,29.8,30.4)));L('USGS',325,base+54,38,MU,1);
+  L('4.500 t',755,base-Hm*g1-46,60,AM,eout(prog(t,31.8,32.4)));L('CRITERIO JORC',755,base+54,34,MU,1);
+  L('distintos criterios, distintas cifras',540,1300,40,WH,eout(prog(t,33.2,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'¿PARA CUÁNTOS AÑOS?');
+  const k1=eback(prog(t,36,36.8)),k2=eback(prog(t,37.6,38.4));
+  [[k1,'66.000 t','reservas',GR,420],[k2,'3.300 t','producción 2025 (est.)',AM,760]].forEach(([k,v,s,c,y])=>{if(k<=.02)return;ctx.save();ctx.translate(540,y);ctx.scale(k,k);panel(-420,-130,840,260,c);L(v,0,-20,110,c,1,'center',780);L(s,0,80,38,WH,1,'center',780);ctx.restore()});
+  L('÷',540,600,90,WH,eout(prog(t,37,37.8)));
+  const k3=eback(prog(t,40.2,41));if(k3>.02){ctx.save();ctx.translate(540,1130);ctx.scale(k3,k3);RR(-420,-90,840,180,24);ctx.fillStyle=GR;ctx.fill();L('≈ 20 AÑOS',0,10,120,BG,1,'center',780);ctx.restore()}
+  L('cálculo propio · sin nuevos hallazgos ni cambios de precio',540,1300,30,MU,eout(prog(t,41.4,42.2)),'center',960);ctx.restore()}
+function b6(t,a){ctx.save();ctx.globalAlpha=a;head(t,43.8,'PARA TU ROBOT',AM);
+  [['Precio del oro = demanda, tasas y dólar',GR],['Fuente: USGS (Mineral Commodity Summaries 2026)',AM]].forEach(([s,c],i)=>{const k=eout(prog(t,44.6+i*1.1,45.3+i*1.1));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;panel(60,290+i*140,960,110,c);L(s,110,345+i*140,36,WH,1,'left',880);ctx.restore()});
+  robot(300,620,780,eout(prog(t,46.4,47.2)));
+  L('Contenido educativo,',60,1380,34,GR,eout(prog(t,48.4,49)),'left');L('no es asesoría financiera',60,1430,34,GR,eout(prog(t,48.4,49)),'left');ctx.restore()}
+function draw(t){bg(t);
+  let a=fade(t,0,6.0);if(t<.3)a=1;if(a>0)h0(t,a);
+  a=fade(t,6.4,13.4);if(a>0)b1(t,a);
+  a=fade(t,13.6,20.4);if(a>0)b2(t,a);
+  a=fade(t,20.6,28.2);if(a>0)b3(t,a);
+  a=fade(t,28.4,35.0);if(a>0)b4(t,a);
+  a=fade(t,35.2,43.4);if(a>0)b5(t,a);
+  a=fade(t,43.6,49.6);if(a>0)b6(t,a);
+  a=fade(t,49.8,55.9);if(a>0)outro(t,a)}
+function cover(){bg(2);
+  L('ORO BAJO TIERRA',540,200,96,AM,1,'center',900);radar(1.2);BL.forEach(b=>blip(b,1,false));
+  L('66.000 t',540,1270,210,GR,1,'center',960);
+  L('RUSIA GUARDA 12.000 t',540,1390,50,WH,1,'center',900);
+  coverBtn('VER EL RANKING →',GR,BG)}
+</script></body></html>
