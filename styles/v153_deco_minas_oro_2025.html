@@ -1,0 +1,65 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 36 (3.er uso): art déco dorado — tema: las 5 mayores minas de oro de 2025 (60 s).
+const SPEC={name:'MinasOro2025',hook:'LAS 5 MAYORES MINAS DE ORO SUMARON ≈ 7,5 MILLONES DE ONZAS EN 2025',dur:60,cta:56,bpm:100,mus:'soft',prog:[[38,'m'],[43,'M'],[41,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'ding'],[17.0,'ding'],[20.6,'wipe'],[22.0,'ding'],[24.0,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'hit'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Las cinco mayores minas de oro del mundo sumaron ≈ 7,5 millones de onzas en 2025.','Las cinco mayores minas de oro del mundo sumaron unos siete coma cinco millones de onzas en dos mil veinticinco.'],
+ [6.4,13.4,'Primera, Nevada Gold Mines, en EE. UU.: 2,6 millones de onzas, de Barrick y Newmont.','Primera, Nevada Gold Mines, en Estados Unidos: dos coma seis millones de onzas, de Barrick y Newmont.'],
+ [13.6,20.4,'Segunda, Muruntau, en Uzbekistán, con 1,7 millones. Tercera, Olimpiada, en Rusia, con 1,4.','Segunda, Muruntau, en Uzbekistán, con uno coma siete millones. Tercera, Olimpiada, en Rusia, con uno coma cuatro.'],
+ [20.6,28.2,'Cuarta, Kazzinc, en Kazajistán, con 947.000 onzas. Quinta, Grasberg, en Indonesia, con 937.000.','Cuarta, Kazzinc, en Kazajistán, con novecientas cuarenta y siete mil onzas. Quinta, Grasberg, en Indonesia, con novecientas treinta y siete mil.'],
+ [28.4,35.0,'Juntas: ≈ 235 toneladas, cerca del 7 % de la producción mundial (≈ 3.300 t, USGS).','Juntas: unas doscientas treinta y cinco toneladas, cerca del siete por ciento de la producción mundial.'],
+ [35.2,43.4,'Abrir una mina suele tomar años: la oferta de oro reacciona lento cuando cambia el precio.'],
+ [43.6,49.6,'Para tu robot: la oferta minera es contexto, no señal de entrada. Fuentes: Mining.com y USGS. Educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const BK='#0a0f1f',GO='#e8c872',GD='#b8923a',RS='#e0907a',IV='#f4ecd8',TE='#3fbfa8',MU2='#9aa3bd',DK='#0a0f1f',ACC='#e8c872',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,15,31,.96)',subStroke:GO,subFill:IV,ctaBg:DK,ctaSub:'#fff',ctaGlow:GO,ctaAccent:GO,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:IV,mu:MU2,acc:GO,pn:'#121a33',c:[GO,RS,TE,IV]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#121a33';RR(x,y,w,h,6);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();ctx.lineWidth=2;ctx.strokeStyle=col;RR(x+10,y+10,w-20,h-20,3);ctx.stroke();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=BK;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle='rgba(232,200,114,.10)';ctx.lineWidth=3;
+  for(let k=0;k<2;k++){const cx=k?W:0;for(let i=1;i<=9;i++){ctx.beginPath();ctx.arc(cx,0,i*150,0,Math.PI);ctx.stroke()}}
+  for(let i=-6;i<8;i++){ctx.beginPath();ctx.moveTo(540,1250);ctx.lineTo(540+i*260,0);ctx.stroke()}ctx.restore();
+  ctx.fillStyle=GO;ctx.fillRect(0,0,W,10);ctx.fillRect(0,H-10,W,10);ctx.fillRect(30,30,4,H-60);ctx.fillRect(W-34,30,4,H-60)};
+function tower(cx,by,w,h,col=GO){if(h<2)return;const g=ctx.createLinearGradient(cx-w/2,0,cx+w/2,0);g.addColorStop(0,GD);g.addColorStop(.5,col);g.addColorStop(1,GD);ctx.save();ctx.fillStyle=g;
+  ctx.fillRect(cx-w/2,by-h*.55,w,h*.55);if(h>40){ctx.fillRect(cx-w*.36,by-h*.82,w*.72,h*.28);ctx.fillRect(cx-w*.2,by-h*.97,w*.4,h*.16);ctx.fillRect(cx-3,by-h,6,h*.05)}
+  ctx.strokeStyle='rgba(10,15,31,.45)';ctx.lineWidth=3;for(let i=1;i<4;i++){const x=cx-w/2+i*w/4;ctx.beginPath();ctx.moveTo(x,by);ctx.lineTo(x,by-h*.55);ctx.stroke()}ctx.restore()}
+function plinth(cx,by,w){ctx.fillStyle=GD;ctx.fillRect(cx-w/2-10,by,w+20,14)}
+const M=[['NEVADA GOLD MINES','EE. UU.',2595,'2.595'],['MURUNTAU','UZBEKISTÁN',1708,'1.708'],['OLIMPIADA','RUSIA',1357,'1.357'],['KAZZINC','KAZAJISTÁN',947,'947'],['GRASBERG','INDONESIA',937,'937']];
+const KS=.17;
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('2025 · LAS 5 MAYORES MINAS DE ORO',540,240,40,GO,eout(prog(t,.2,.8)));
+  const v=lerp(0,7.5,eio(prog(t,.8,3.2)));Lb(v.toFixed(1).replace('.',','),540,470,230,IV,eout(prog(t,.6,1.2)));Lb('MILLONES DE ONZAS',540,620,56,GO,eout(prog(t,1.4,2)));
+  M.forEach(([n,p,k],i)=>{const g=eout(prog(t,1+i*.35,2.6+i*.35));const x=170+i*185;plinth(x,1230,130);tower(x,1230,130,k*KS*.95*g)});
+  Lb('(sumadas: ≈ 235 toneladas, cálculo propio)',540,1340,32,MU2,eout(prog(t,3.6,4.3)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'N.º 1 · NEVADA GOLD MINES',GO);
+  const g=eout(prog(t,7.2,9));plinth(300,1100,230);tower(300,1100,230,2595*KS*.62*g);
+  bigNum(t,8.6,720,520,'2,6',210,IV);Lb('millones de onzas',720,660,44,GO,eout(prog(t,9.4,10)));
+  // reparto de propiedad
+  const k=eout(prog(t,10.2,11.4));ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=GO;ctx.fillRect(480,800,480*.615*k,56);ctx.fillStyle=RS;ctx.fillRect(480+480*.615*k,800,480*.385*k,56);ctx.restore();
+  Lb('Barrick 61,5 %',600,900,34,GO,k);Lb('Newmont 38,5 %',870,900,34,RS,k);Lb('(propiedad)',720,950,28,MU2,k);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'N.º 2 Y N.º 3',RS);
+  [[1,270,'1,7',14.4],[2,810,'1,4',16.2]].forEach(([i,x,v,ts])=>{const [n,p,k]=M[i];const g=eout(prog(t,ts,ts+1.6));plinth(x,1050,210);tower(x,1050,210,k*KS*1.25*g);
+    Lb(n,x,1120,40,IV,eout(prog(t,ts,ts+.6)));Lb(p,x,1170,32,GO,eout(prog(t,ts+.2,ts+.8)));Lb(v+' M',x,1050-k*KS*1.25*g-50,64,IV,eout(prog(t,ts+1,ts+1.6)))});
+  Lb('millones de onzas (cifras 2025)',540,1300,32,MU2,eout(prog(t,18.4,19)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'N.º 4 Y N.º 5',TE);
+  [[3,270,22.0],[4,810,24.0]].forEach(([i,x,ts])=>{const [n,p,k,tx]=M[i];const g=eout(prog(t,ts,ts+1.6));plinth(x,1050,210);tower(x,1050,210,k*KS*1.25*g,TE);
+    Lb(n,x,1120,40,IV,eout(prog(t,ts,ts+.6)));Lb(p,x,1170,32,TE,eout(prog(t,ts+.2,ts+.8)));Lb(tx+' koz',x,1050-k*KS*1.25*g-50,56,IV,eout(prog(t,ts+1,ts+1.6)))});
+  Lb('koz = miles de onzas',540,1300,32,MU2,eout(prog(t,26,26.6)));Lb('(Kazzinc es un complejo; Grasberg, de Freeport)',540,1350,28,MU2,eout(prog(t,26.4,27.1)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'LAS CINCO JUNTAS',GO);
+  const cols=[GO,RS,TE,IV,GD];let y=1130;const tot=7544;M.forEach(([n,p,k],i)=>{const g=eout(prog(t,29.2+i*.5,30+i*.5));const h=k/tot*620*g;ctx.fillStyle=cols[i];ctx.fillRect(150,y-h,260,h);y-=h});
+  bigNum(t,31.8,720,520,'≈ 235 t',150,IV);
+  card(t,32.4,700,150,GO,'≈ 7 % de la producción mundial','USGS 2025e ≈ 3.300 t (cálculo propio)',36);
+  Lb('1 onza troy = 31,1 g',720,980,34,MU2,eout(prog(t,33.6,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LA OFERTA ES LENTA',RS);
+  [['Abrir una mina toma años',GO,36.4],['La oferta reacciona lento',RS,38.4],['El precio manda poco en el corto plazo',TE,40.4]].forEach(([s,c,ts],i)=>{pop(t,ts,540,420+i*270,()=>{ST.panel(-440,-100,880,200,c);Lb(String(i+1),-350,6,100,c);Lb(s,60,6,s.length>28?36:44,IV,1,'center',700)})});
+  Lb('contexto de oferta, no señal',540,1260,36,MU2,eout(prog(t,41.6,42.3)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'La oferta minera es contexto','No es una señal de entrada',GO,RS);ctx.save();ctx.globalAlpha=a;Lb('Fuentes: Mining.com y USGS',60,1360,30,GO,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('LA MINA N.º 1 DEL MUNDO',540,230,56,GO,1);
+  plinth(300,1150,230);tower(300,1150,230,400);plinth(780,1150,170);tower(780,1150,170,260,TE);
+  Lb('2,6 M',540,470,300,IV,1,'center');Lb('DE ONZAS EN UN AÑO',540,640,56,GO,1);Lb('NEVADA · 2025',540,1260,50,IV,1);coverBtn('VER EL TOP 5 →',GO,BK)}
+</script></body></html>
