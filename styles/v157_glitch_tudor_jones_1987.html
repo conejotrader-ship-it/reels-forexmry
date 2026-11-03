@@ -1,0 +1,60 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 40 (3.er uso): glitch cyberpunk — cian y naranja rojizo — tema: Paul Tudor Jones y el crac de 1987 (60 s).
+const SPEC={name:'TudorJones1987',hook:'PAUL TUDOR JONES Y 1987: SU FONDO GANÓ ENTRE ≈ 126 % Y 200 %',dur:60,cta:56,bpm:112,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[3.6,'alert'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[24.0,'ding'],[28.4,'wipe'],[30.0,'alert'],[32.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Paul Tudor Jones, 1987: su fondo ganó entre ≈ 126 % y 200 %.','Paul Tudor Jones, mil novecientos ochenta y siete: su fondo ganó entre ciento veintiséis y doscientos por ciento.'],
+ [6.4,13.4,'Fundó Tudor Investment Corporation en 1980. Antes del crac de 1987 tomó posiciones cortas en bolsa.','Fundó Tudor Investment Corporation en mil novecientos ochenta. Antes del crac de mil novecientos ochenta y siete tomó posiciones cortas en bolsa.'],
+ [13.6,20.4,'El lunes 19 de octubre el Dow cayó ≈ 22 %. Sus posiciones cortas ganaron ≈ 62 % en octubre.','El lunes diecinueve de octubre el Dow cayó cerca de veintidós por ciento. Sus posiciones cortas ganaron cerca de sesenta y dos por ciento en octubre.'],
+ [20.6,28.2,'Para todo 1987, las fuentes difieren: 125,9 % neto de comisiones según una, ≈ 200 % según otra.','Para todo mil novecientos ochenta y siete, las fuentes difieren: ciento veinticinco coma nueve por ciento neto de comisiones según una, cerca de doscientos según otra.'],
+ [28.4,35.0,'Apostar contra la bolsa exige posiciones cortas, que también pueden perder mucho si el mercado sube.'],
+ [35.2,43.4,'Un año extraordinario en un evento extremo no es una promesa: no se repite por decreto.'],
+ [43.6,49.6,'Para tu robot: la historia inspira, pero no garantiza. Fuente: Wikipedia. Educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const GB='#07090e',CY='#00e5ff',OR='#ff5a2a',YL='#ffd23f',WH='#f4f7ff',MU5='#8aa0b8',DK='#07090e',ACC='#00e5ff',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(7,9,14,.96)',subStroke:CY,subFill:WH,ctaBg:DK,ctaSub:'#fff',ctaGlow:CY,ctaAccent:CY,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:WH,mu:MU5,acc:CY,pn:'#0e131c',c:[CY,OR,YL,WH]});
+let GLT=0; // intensidad de glitch del instante actual
+const BURST=[3.0,6.4,13.6,20.6,28.4,35.2,43.6,49.8];
+function gInt(t){let g=0;for(const b of BURST){const d=t-b;if(d>=0&&d<.3)g=Math.max(g,1-d/.3)}const r=Math.floor(t*30);if((r*7919%97)<2)g=Math.max(g,.35);return g}
+const _Lb=Lb;
+Lb=function(s,x,y,sz,col,a=1,al='center',w){if(GLT>.05&&sz>=44){const o=GLT*10;_Lb(s,x-o,y,sz,CY,a*.7,al,w);_Lb(s,x+o,y,sz,OR,a*.7,al,w)}_Lb(s,x,y,sz,col,a,al,w)};
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#0e131c';ctx.fillRect(x,y,w,h);ctx.lineWidth=4;ctx.strokeStyle=col;ctx.strokeRect(x,y,w,h);ctx.globalAlpha=.5;ctx.strokeStyle=col===CY?OR:CY;ctx.strokeRect(x+6,y+6,w,h);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=GB;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle='rgba(0,229,255,.07)';ctx.lineWidth=2;for(let x=0;x<W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.save();ctx.globalAlpha=.08;ctx.fillStyle='#fff';for(let y=0;y<H;y+=4)ctx.fillRect(0,y,W,1);ctx.restore();
+  const r=rng(Math.floor(t*12)+3);ctx.save();ctx.globalAlpha=.14;for(let i=0;i<6;i++){ctx.fillStyle=i%2?CY:OR;ctx.fillRect(0,r()*H,W,2+r()*6)}ctx.restore();ctx.fillStyle=OR;ctx.fillRect(0,0,W,10)};
+function tear(t){if(GLT<.05)return;const r=rng(Math.floor(t*30)+11);const n=4+Math.floor(GLT*6);for(let i=0;i<n;i++){const y=Math.floor(r()*1500),h=20+Math.floor(r()*70),dx=Math.round((r()-.5)*160*GLT);try{ctx.drawImage(cv,0,y,W,h,dx,y,W,h)}catch(e){}}}
+const EQ=[[0,.12],[.12,.16],[.24,.2],[.36,.26],[.48,.3],[.58,.34],[.68,.4],[.78,.46],[.86,.5],[.9,.62],[.95,.88],[1,1]];
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('PAUL TUDOR JONES',540,250,50,CY,eout(prog(t,.2,.8)));
+  axes(80,330,920,540,CY,'ILUSTRATIVO');lineChart(t,.6,3.2,EQ,80,330,920,540,OR,12,24);
+  const k=eback(prog(t,3.2,4.0));if(k>.02){ctx.save();ctx.translate(540,1130);ctx.scale(k,k);Lb('1987',0,-130,200,WH);Lb('≈ +126 % A +200 %',0,30,64,YL,1,'center',940);Lb('según la fuente',0,100,34,MU5);ctx.restore()}ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'ANTES DEL CRAC',OR);
+  card(t,7.4,300,150,CY,'1980 · Tudor Investment Corporation','',38);
+  pop(t,9.4,540,640,()=>{ST.panel(-440,-110,880,220,OR);Lb('▼',-340,6,110,OR);Lb('POSICIONES CORTAS',90,-30,46,WH,1,'center',620);Lb('apostó a que la bolsa caería',90,44,32,MU5,1,'center',620)});
+  Lb('bolsa de EE. UU., otoño de 1987',540,930,36,MU5,eout(prog(t,11.2,11.9)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LUNES 19 DE OCTUBRE DE 1987',CY);
+  const v1=lerp(0,22,eio(prog(t,14.6,17))),v2=lerp(0,62,eio(prog(t,16.4,19)));
+  pop(t,14.4,300,620,()=>{ST.panel(-230,-230,460,460,OR);Lb('DOW JONES',0,-150,40,WH);Lb('−'+Math.round(v1)+' %',0,0,120,OR,1,'center',420);Lb('en el día',0,130,36,MU5)});
+  pop(t,16.2,780,620,()=>{ST.panel(-230,-230,460,460,CY);Lb('SUS CORTOS',0,-150,40,WH);Lb('+'+Math.round(v2)+' %',0,0,120,CY,1,'center',420);Lb('en octubre',0,130,36,MU5)});
+  Lb('cifras aproximadas (Wikipedia)',540,980,32,MU5,eout(prog(t,19,19.7)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'TODO 1987: DOS CIFRAS',YL);
+  barsH(t,22.0,[['Paul Tudor Jones (Wikipedia)',.63,CY,'125,9 % neto'],['Tudor Investment Corp. (Wikipedia)',1,OR,'≈ 200 %']],70,320,800,260,34);
+  pop(t,26.0,540,1000,()=>{ST.panel(-430,-70,860,140,YL);Lb('LAS FUENTES DIFIEREN',0,6,52,YL,1,'center',800)});ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'ARMA DE DOS FILOS',OR);
+  [['CORTO: GANAS SI BAJA',CY,'▼',29.6],['SI SUBE, LA PÉRDIDA CRECE',OR,'▲',31.6],['POR ESO MANDA EL RIESGO',YL,'!',33.4]].forEach(([s,c,ic,ts],i)=>{pop(t,ts,540,430+i*270,()=>{ST.panel(-440,-100,880,200,c);ctx.fillStyle=c;ctx.beginPath();ctx.arc(-340,0,60,0,7);ctx.fill();_Lb(ic,-340,4,70,GB);Lb(s,60,4,s.length>24?38:44,WH,1,'center',640)})});ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'EL DOCUMENTAL Y LA LECCIÓN',CY);
+  card(t,36.2,300,170,CY,'«Trader» · PBS · nov. 1987','documental sobre Jones',40);
+  pop(t,38.6,540,700,()=>{ST.panel(-440,-130,880,260,OR);Lb('UN AÑO EXTRAORDINARIO',0,-50,50,WH,1,'center',800);Lb('NO ES UNA PROMESA',0,30,60,OR,1,'center',800)});
+  Lb('un evento extremo no se repite por decreto',540,1000,34,MU5,eout(prog(t,41,41.7)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'La historia inspira, no garantiza','Riesgo controlado en cada operación',CY,OR);ctx.save();ctx.globalAlpha=a;Lb('Fuente: Wikipedia (Paul Tudor Jones; Tudor Investment Corporation)',60,1360,28,CY,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){GLT=gInt(t);drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]]);tear(t);GLT=0}
+function cover(){GLT=.25;ST.bg(3);Lb('PAUL TUDOR JONES',540,240,56,CY,1);
+  Lb('1987',540,560,330,WH,1,'center',980);Lb('VIO VENIR EL CRAC',540,790,76,OR,1,'center',980);
+  const pts=EQ.map(([u,v])=>[u,v]);axes(80,880,920,380,CY);lineChart(99,0,1,pts,80,880,920,380,OR,14,24);coverBtn('VER LO QUE HIZO →',CY,GB);GLT=0}
+</script></body></html>
