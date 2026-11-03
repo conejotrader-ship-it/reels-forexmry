@@ -1,0 +1,63 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:VT;src:url(node_modules/@fontsource/vt323/files/vt323-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 38 (3.er uso): monitor CRT — fósforo blanco-azulado P4 — tema: factor de recuperación de un robot (60 s).
+const SPEC={name:'FactorRecuperacion',hook:'FACTOR DE RECUPERACIÓN = GANANCIA NETA ÷ DRAWDOWN MÁXIMO',dur:60,cta:56,bpm:98,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'tick'],[10.0,'ding'],[13.6,'wipe'],[15.0,'ding'],[17.0,'ding'],[20.6,'wipe'],[22.0,'ding'],[24.0,'alert'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Factor de recuperación: la ganancia neta de un robot dividida entre su peor drawdown.'],
+ [6.4,13.4,'El informe del probador de MetaTrader lo define como la ganancia dividida por el drawdown máximo.'],
+ [13.6,20.4,'Un robot ganó US$ 6.000 con un drawdown máximo de US$ 2.000: factor 3. Valores ilustrativos.','Un robot ganó seis mil dólares con un drawdown máximo de dos mil dólares: factor tres. Valores ilustrativos.'],
+ [20.6,28.2,'Otro ganó lo mismo con un drawdown de US$ 6.000: factor 1. La misma ganancia, con el triple de riesgo.','Otro ganó lo mismo con un drawdown de seis mil dólares: factor uno. La misma ganancia, con el triple de riesgo.'],
+ [28.4,35.0,'Refleja el riesgo asumido para ganar. Factor 3: ≈ US$ 0,33 de caída por dólar ganado.','Refleja el riesgo asumido para ganar. Con factor tres, unos treinta y tres centavos de caída por dólar ganado.'],
+ [35.2,43.4,'Ojo: depende de un solo dato, el peor drawdown. Un periodo corto o pocas operaciones pueden inflarlo.'],
+ [43.6,49.6,'Para tu robot: míralo junto al profit factor y al drawdown. Fuente: MetaTrader 5. Educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const PH='#cfe8ff',DIM='#5f7a99',MG='#ff4fd8',GN='#6dffb0',RD='#ff5a5a',YL='#ffe066',DK='#05070d',ACC='#cfe8ff',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(5,7,13,.96)',subStroke:PH,subFill:PH,ctaBg:DK,ctaSub:'#fff',ctaGlow:MG,ctaAccent:MG,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','40px VT'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'VT, "Courier New", monospace',w:400,sc:1.45,txt:PH,mu:DIM,acc:PH,pn:'#0a1020',c:[MG,GN,RD,YL],mono:true});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#0a1020';RR(x,y,w,h,10);ctx.fill();ctx.lineWidth=4;ctx.strokeStyle=col;ctx.stroke();ctx.fillStyle=col;ctx.globalAlpha=.9;ctx.fillRect(x+10,y+10,10,10);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=DK;ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,900,200,540,900,1200);g.addColorStop(0,'rgba(120,170,255,.10)');g.addColorStop(1,'rgba(0,0,0,.55)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.16;ctx.fillStyle='#000';for(let y=0;y<H;y+=4)ctx.fillRect(0,y,W,2);ctx.restore();
+  ctx.save();ctx.lineWidth=24;ctx.strokeStyle='#1a2236';RR(12,12,W-24,H-24,60);ctx.stroke();ctx.lineWidth=3;ctx.strokeStyle=DIM;RR(26,26,W-52,H-52,48);ctx.stroke();ctx.restore();
+  const f=.5+.5*Math.sin(t*37);ctx.fillStyle='rgba(207,232,255,'+(.015*f)+')';ctx.fillRect(0,0,W,H)};
+function typ(t,t0,s,x,y,sz,col,cps=22,al='left'){const n=Math.floor(Math.max(0,t-t0)*cps);if(n<=0)return;const sh=s.slice(0,n);Lb(sh+((t-t0)*cps<s.length&&Math.floor(t*4)%2?'█':''),x,y,sz,col,1,al)}
+const EQ=[[0,.1],[.1,.25],[.2,.4],[.3,.62],[.4,.8],[.5,.55],[.6,.42],[.7,.6],[.8,.82],[.9,.9],[1,1]];
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('> ROBOT.REPORT  ·  VALORES ILUSTRATIVOS',70,250,34,DIM,eout(prog(t,.2,.8)),'left');
+  typ(t,.5,'GANANCIA NETA   US$ 6.000',70,420,46,GN,26);typ(t,1.5,'DRAWDOWN MÁX.   US$ 2.000',70,520,46,RD,26);
+  const k=eout(prog(t,2.4,2.9));if(k>.02){line(70,590,1010,590,PH,3);}
+  const kk=eback(prog(t,3.2,4.0));if(kk>.02){ctx.save();ctx.translate(540,860);ctx.scale(kk,kk);Lb('FACTOR DE',0,-210,56,PH);Lb('RECUPERACIÓN',0,-130,70,PH);Lb('= 3,0',0,40,200,MG);ctx.restore()}
+  Lb('ganancia neta ÷ drawdown máximo',540,1200,40,YL,eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'> DEFINICIÓN',MG);
+  axes(90,300,900,520,PH);const hp=lineChart(t,7.0,9.4,EQ,90,300,900,520,GN,8);
+  const k=eout(prog(t,9.6,10.4));if(k>.02){ctx.save();ctx.globalAlpha*=k;const px=90+.4*900,py1=300+520-.8*520,py2=300+520-.42*520;line(px-60,py1,px+300,py1,YL,3,[10,8]);line(px+240,py2,px+300,py2,YL,3,[10,8]);
+    ctx.strokeStyle=RD;ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(px+270,py1);ctx.lineTo(px+270,py2);ctx.stroke();ctx.restore();Lb('DD',90+.6*900+170,(300+520-.6*520),56,RD,k,'left')}
+  typ(t,10.4,'FR = GANANCIA NETA',90,930,44,GN,24,'left');typ(t,11.4,'     ÷ DRAWDOWN MÁX.',90,1010,44,RD,24,'left');
+  Lb('definición del informe de MetaTrader 5',540,1150,30,DIM,eout(prog(t,12.2,12.9)));ctx.restore()}
+function pair(t,t0,x,prof,dd,col,title){const k=eout(prog(t,t0,t0+.9));Lb(title,x,300,44,col,k);
+  const bh=prof/6000*420*k,dh=dd/6000*420*k;ctx.save();ctx.fillStyle=GN;ctx.fillRect(x-170,800-bh,140,bh);ctx.fillStyle=RD;ctx.fillRect(x+30,800-dh,140,dh);ctx.restore();
+  Lb('GANA',x-100,850,30,GN,k);Lb('DD',x+100,850,30,RD,k);Lb('6.000',x-100,800-bh-34,34,GN,k);Lb(dd.toLocaleString('es-CO').replace(/,/g,'.'),x+100,800-dh-34,34,RD,k)}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'> ROBOT A',GN);pair(t,14.4,540,6000,2000,GN,'ROBOT A');
+  bigNum(t,17.4,540,1030,'FR = 3,0',130,MG);Lb('6.000 ÷ 2.000',540,1160,44,PH,eout(prog(t,18.4,19)));Lb('(ilustrativo)',540,1230,30,DIM,eout(prog(t,18.8,19.4)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'> ROBOT B',RD);
+  const k0=eout(prog(t,21.2,22));ctx.save();ctx.globalAlpha*=.35;ctx.restore();
+  pair(t,21.4,540,6000,6000,RD,'ROBOT B');
+  bigNum(t,24.6,540,1030,'FR = 1,0',130,RD);Lb('6.000 ÷ 6.000',540,1160,44,PH,eout(prog(t,25.6,26.2)));
+  pop(t,26.4,540,1260,()=>{ST.panel(-420,-48,840,96,YL);Lb('MISMA GANANCIA · TRIPLE DD',0,6,40,YL)});ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'> QUÉ MIDE',YL);
+  card(t,29.4,300,170,GN,'RIESGO ASUMIDO','por cada dólar ganado',48);
+  pop(t,31.0,540,640,()=>{ST.panel(-450,-110,900,220,MG);Lb('FR = 3  →  ≈ US$ 0,33',0,-30,52,MG,1,'center',860);Lb('de caída por cada US$ 1 ganado',0,48,36,PH,1,'center',860)});
+  pop(t,32.8,540,900,()=>{ST.panel(-450,-110,900,220,RD);Lb('FR = 1  →  US$ 1,00',0,-30,52,RD,1,'center',860);Lb('de caída por cada US$ 1 ganado',0,48,36,PH,1,'center',860)});
+  Lb('1 ÷ FR (cálculo propio)',540,1120,32,DIM,eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'> OJO',RD);
+  [['UN SOLO DATO: EL PEOR DD',RD,36.4],['PERIODO CORTO O POCAS OPERACIONES: SE INFLA',YL,38.6],['NO ES GARANTÍA A FUTURO',MG,40.8]].forEach(([s,c,ts],i)=>{pop(t,ts,540,420+i*270,()=>{ST.panel(-440,-100,880,200,c);Lb(String(i+1),-350,6,100,c);Lb(s,60,6,s.length>26?34:42,PH,1,'center',640)})});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Míralo junto al profit factor','y al drawdown máximo',MG,GN);ctx.save();ctx.globalAlpha=a;Lb('Fuente: MetaTrader 5 (informe de pruebas)',60,1360,30,MG,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('> FACTOR DE RECUPERACIÓN',540,240,50,PH,1);
+  Lb('3 vs 1',540,540,190,MG,1,'center',980);Lb('MISMA GANANCIA,',540,810,64,GN,1);Lb('TRIPLE RIESGO',540,900,76,RD,1);Lb('(valores ilustrativos)',540,1000,34,DIM,1);coverBtn('VER POR QUÉ →',MG,DK)}
+</script></body></html>
