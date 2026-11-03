@@ -1,0 +1,75 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 35 (3.er uso): acuarela con tinta — tema: Ichimoku Kinko Hyo (60 s).
+const SPEC={name:'Ichimoku',hook:'ICHIMOKU: 5 LÍNEAS Y UNA NUBE (9 · 26 · 52)',dur:60,cta:56,bpm:90,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'ding'],[13.6,'wipe'],[15.0,'ding'],[17.0,'ding'],[18.4,'ding'],[20.6,'wipe'],[22.0,'tick'],[24.0,'tick'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[33.6,'ding'],[35.2,'wipe'],[37.0,'ding'],[40.0,'hit'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Ichimoku: cinco líneas y una nube nacidas en Japón.'],
+ [6.4,13.4,'Lo desarrolló Goichi Hosoda en los años treinta y lo publicó a fines de los sesenta.'],
+ [13.6,20.4,'Tenkan usa 9 periodos, Kijun 26 y Senkou B 52: cada línea es el punto medio entre máximo y mínimo.','Tenkan usa nueve periodos, Kijun veintiséis y Senkou B cincuenta y dos: cada línea es el punto medio entre máximo y mínimo.'],
+ [20.6,28.2,'La nube, o kumo, es la zona entre Senkou A y B, proyectada 26 periodos hacia adelante.','La nube, o kumo, es la zona entre Senkou A y B, proyectada veintiséis periodos hacia adelante.'],
+ [28.4,35.0,'Lectura habitual: precio sobre la nube, sesgo alcista; bajo la nube, bajista; dentro, indecisión.'],
+ [35.2,43.4,'Chikou es el cierre de hoy dibujado 26 periodos atrás. Una nube gruesa es más difícil de atravesar.','Chikou es el cierre de hoy dibujado veintiséis periodos atrás. Una nube gruesa es más difícil de atravesar.'],
+ [43.6,49.6,'Para tu robot: reglas objetivas, pero sin garantías. Fuente: MQL5. Educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const PAPER='#eef4f0',INK='#23363d',CO='#e8553d',TQ='#119da4',VI='#7b4bb7',OC='#e0a21a',DK='#23363d',ACC='#e0a21a',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(238,244,240,.97)',subStroke:INK,subFill:INK,ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:INK,mu:'#58727a',acc:TQ,pn:'rgba(250,253,251,.94)',c:[CO,TQ,VI,OC]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(250,253,251,.95)';RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=INK;ctx.stroke();ctx.lineWidth=12;ctx.strokeStyle=col;ctx.globalAlpha=.3;RR(x+7,y+7,w,h,18);ctx.stroke();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=PAPER;ctx.fillRect(0,0,W,H);const r=rng(23);const cols=[TQ,CO,VI,OC,TQ,VI];
+  for(let i=0;i<16;i++){const x=r()*W,y=r()*H,R=170+r()*250,c=cols[i%6];const g=ctx.createRadialGradient(x+Math.cos(t*.35+i)*16,y,10,x,y,R);g.addColorStop(0,c+'40');g.addColorStop(.7,c+'1a');g.addColorStop(1,c+'00');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+  ctx.save();ctx.globalAlpha=.05;const q=rng(5);for(let i=0;i<500;i++){ctx.fillStyle=INK;ctx.fillRect(q()*W,q()*H,2,2)}ctx.restore();ctx.fillStyle=TQ;ctx.fillRect(0,0,W,10)};
+// ---- datos ilustrativos y cálculo real de Ichimoku ----
+const N=120,PO=[],PH=[],PL=[],PC=[];
+(function(){const r=rng(41);let p=100;const dr=i=>i<45?1.1:i<70?0:i<100?-1.3:.8;for(let i=0;i<N;i++){const o=p;p+=dr(i)+(r()-.5)*4.2;const hi=Math.max(o,p)+r()*2.2,lo=Math.min(o,p)-r()*2.2;PO.push(o);PC.push(p);PH.push(hi);PL.push(lo)}})();
+function mid(i,n){if(i<n-1)return null;let h=-1e9,l=1e9;for(let k=i-n+1;k<=i;k++){h=Math.max(h,PH[k]);l=Math.min(l,PL[k])}return (h+l)/2}
+const TEN=PC.map((_,i)=>mid(i,9)),KIJ=PC.map((_,i)=>mid(i,26)),SPB=PC.map((_,i)=>mid(i,52)),SPA=PC.map((_,i)=>TEN[i]!=null&&KIJ[i]!=null?(TEN[i]+KIJ[i])/2:null);
+let vmin=1e9,vmax=-1e9;PH.forEach(v=>vmax=Math.max(vmax,v));PL.forEach(v=>vmin=Math.min(vmin,v));vmin-=4;vmax+=4;
+// opts: n (barras visibles 0..N), ten, kij, cloud, chikou, candles
+function ichi(X,Y,Wd,Hh,o){const M=N+26,bw=Wd/M;const px=i=>X+(i+.5)*bw,py=v=>Y+Hh-(v-vmin)/(vmax-vmin)*Hh;const n=Math.floor(o.n);
+  ctx.save();ctx.strokeStyle='rgba(35,54,61,.35)';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(X,Y);ctx.lineTo(X,Y+Hh);ctx.lineTo(X+Wd,Y+Hh);ctx.stroke();ctx.restore();
+  if(o.cloud){for(let i=0;i<n;i++){const j=i+26;if(SPA[i]==null||SPB[i]==null||SPA[i+1]==null||SPB[i+1]==null||i+1>=n)continue;const up=SPA[i]>=SPB[i];
+    ctx.beginPath();ctx.moveTo(px(j),py(SPA[i]));ctx.lineTo(px(j+1),py(SPA[i+1]));ctx.lineTo(px(j+1),py(SPB[i+1]));ctx.lineTo(px(j),py(SPB[i]));ctx.closePath();ctx.fillStyle=up?'rgba(17,157,164,.38)':'rgba(232,85,61,.38)';ctx.fill()}}
+  const ln=(arr,col,lw,sh=0)=>{ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineJoin='round';ctx.beginPath();let st=false;for(let i=0;i<n;i++){if(arr[i]==null)continue;const x=px(i+sh);const y=py(arr[i]);if(!st){ctx.moveTo(x,y);st=true}else ctx.lineTo(x,y)}ctx.stroke();ctx.restore()};
+  if(o.cloud){ln(SPA,'rgba(17,157,164,.9)',3,26);ln(SPB,'rgba(232,85,61,.9)',3,26)}
+  if(o.chikou){ctx.save();ctx.strokeStyle=VI;ctx.lineWidth=5;ctx.setLineDash([10,8]);ctx.beginPath();let st=false;for(let i=26;i<n;i++){const x=px(i-26),y=py(PC[i]);if(!st){ctx.moveTo(x,y);st=true}else ctx.lineTo(x,y)}ctx.stroke();ctx.restore()}
+  // velas
+  for(let i=0;i<n;i++){const up=PC[i]>=PO[i];const c=up?TQ:CO;ctx.strokeStyle=c;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(px(i),py(PH[i]));ctx.lineTo(px(i),py(PL[i]));ctx.stroke();ctx.fillStyle=c;const y1=py(Math.max(PO[i],PC[i])),y2=py(Math.min(PO[i],PC[i]));ctx.fillRect(px(i)-bw*.32,y1,bw*.64,Math.max(2,y2-y1))}
+  if(o.ten)ln(TEN,OC,5);if(o.kij)ln(KIJ,VI,5)}
+const CH=[60,420,960,600];
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('ICHIMOKU KINKO HYO · DATOS ILUSTRATIVOS',540,260,34,TQ,eout(prog(t,.2,.8)));
+  ichi(...CH,{n:N*eio(prog(t,.6,3.6)),ten:1,kij:1,cloud:1});
+  const k=eback(prog(t,3.4,4.2));if(k>.02){ctx.save();ctx.translate(540,1250);ctx.scale(k,k);Lb('ICHIMOKU',0,-60,150,INK);Lb('5 LÍNEAS · 1 NUBE',0,70,56,TQ);ctx.restore()}ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'SU CREADOR',VI);
+  pop(t,7.2,540,520,()=>{ctx.fillStyle=VI;ctx.beginPath();ctx.arc(0,0,150,0,7);ctx.fill();Lb('GOICHI',0,-30,58,'#fff');Lb('HOSODA',0,36,58,'#fff')});
+  card(t,9.0,780,150,OC,'Años 30: lo desarrolla','(también "Ichimoku Sanjin")',42);
+  card(t,11.0,970,150,TQ,'Fines de los 60: lo publica','y se difunde por Japón',42);
+  Lb('ichimoku = "un vistazo"',540,1220,38,'#58727a',eout(prog(t,12.2,12.9)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LAS LÍNEAS',OC);
+  ichi(60,260,960,360,{n:N,ten:eout(prog(t,14.2,15))>.5,kij:eout(prog(t,16,16.8))>.5,cloud:0});
+  [['9','TENKAN',OC,15.0],['26','KIJUN',VI,16.8],['52','SENKOU B',CO,18.4]].forEach(([n,s,c,ts],i)=>{pop(t,ts,200+i*340,820,()=>{ctx.fillStyle=c;ctx.beginPath();ctx.arc(0,0,125,0,7);ctx.fill();Lb(n,0,-8,120,'#fff');});pop(t,ts+.2,200+i*340,1010,()=>Lb(s,0,0,40,INK))});
+  Lb('punto medio entre el máximo y el mínimo del periodo',540,1150,34,'#58727a',eout(prog(t,19,19.7)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LA NUBE (KUMO)',TQ);
+  const r=eio(prog(t,21.2,25));ichi(60,260,960,640,{n:N*Math.max(r,.001),ten:1,kij:1,cloud:1});
+  card(t,24.2,960,130,TQ,'Zona entre Senkou A y Senkou B','',40);
+  Lb('proyectada 26 periodos hacia adelante',540,1170,40,CO,eout(prog(t,26,26.7)));Lb('nube verde azulada: A sobre B · coral: A bajo B',540,1240,30,'#58727a',eout(prog(t,26.6,27.3)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'CÓMO SE LEE',VI);
+  const D=[['PRECIO SOBRE LA NUBE','sesgo alcista',TQ,'▲',29.6],['PRECIO BAJO LA NUBE','sesgo bajista',CO,'▼',31.4],['PRECIO DENTRO DE LA NUBE','indecisión',OC,'■',33.2]];
+  D.forEach(([s,sub,c,ic,ts],i)=>{pop(t,ts,540,420+i*300,()=>{ST.panel(-450,-120,900,240,c);ctx.fillStyle=c;ctx.beginPath();ctx.arc(-340,0,70,0,7);ctx.fill();Lb(ic,-340,4,70,'#fff');Lb(s,70,-35,s.length>22?40:46,INK,1,'center',720);Lb(sub,70,45,50,c)})});
+  Lb('lectura habitual · no es una garantía',540,1360,32,'#58727a',eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'DOS DETALLES',CO);
+  card(t,36.0,290,190,VI,'CHIKOU SPAN','cierre de hoy, 26 periodos atrás',46);
+  // mini nube fina vs gruesa
+  const dr=(y0,th,col,tt,lab)=>{const k=eout(prog(t,tt,tt+.9));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(100,y0-th/2*k);for(let i=0;i<=8;i++)ctx.lineTo(100+i*110,y0-th/2*k+Math.sin(i*.9)*18);for(let i=8;i>=0;i--)ctx.lineTo(100+i*110,y0+th/2*k+Math.sin(i*.9)*18);ctx.closePath();ctx.fill();ctx.restore();Lb(lab,540,y0+th/2+60,40,INK,k)};
+  dr(700,50,'rgba(17,157,164,.55)',38.0,'nube fina: se atraviesa con más facilidad');dr(1030,200,'rgba(232,85,61,.55)',40.0,'nube gruesa: más soporte o resistencia');ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Reglas objetivas para el robot','Ninguna señal es garantía',TQ,CO);ctx.save();ctx.globalAlpha=a;Lb('Fuente: MQL5 y documentación de Ichimoku',60,1360,30,CO,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('ICHIMOKU · LA NUBE JAPONESA',540,230,50,TQ,1);
+  ichi(40,300,1000,520,{n:N,ten:1,kij:1,cloud:1});
+  Lb('9 · 26 · 52',540,1030,190,INK,1,'center');Lb('LOS 3 NÚMEROS DE LA NUBE',540,1180,56,CO,1);coverBtn('VER CÓMO SE LEE →',OC,DK)}
+</script></body></html>
