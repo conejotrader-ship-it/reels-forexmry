@@ -1,0 +1,64 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 39 (3.er uso): holograma futurista — violeta y lima — tema: cuentas netting vs hedging en MetaTrader 5 (60 s).
+const SPEC={name:'NettingHedging',hook:'MT5 TIENE DOS TIPOS DE CUENTA: NETTING Y HEDGING (HEDGING DESDE 2016)',dur:60,cta:56,bpm:110,mus:'soft',prog:[[38,'m'],[43,'M'],[41,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'ding'],[17.0,'ding'],[20.6,'wipe'],[22.0,'tick'],[24.0,'tick'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[34.0,'hit'],[35.2,'wipe'],[37.0,'hit'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'MetaTrader 5 tiene dos tipos de cuenta: netting y hedging.'],
+ [6.4,13.4,'Al principio solo existía netting. El 22 de abril de 2016 llegó el sistema hedging.','Al principio solo existía netting. El veintidós de abril de dos mil dieciséis llegó el sistema hedging.'],
+ [13.6,20.4,'En netting hay una sola posición por símbolo: dos compras seguidas forman una posición de mayor volumen.'],
+ [20.6,28.2,'Una operación contraria reduce esa posición, la cierra o la invierte, según el volumen.'],
+ [28.4,35.0,'En hedging puedes tener varias posiciones en el mismo símbolo, incluso contrarias: cada orden abre una nueva.'],
+ [35.2,43.4,'Hedging añade «cerrar por contraria»: cierra dos posiciones opuestas entre sí y ahorra un spread.'],
+ [43.6,49.6,'Para tu robot: confirma el tipo de cuenta, porque cambia cómo se manejan las posiciones. Educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const HB='#0b0620',VI='#b388ff',MG='#ff4fd8',LM='#b6ff5a',WH='#f2ecff',MU4='#9a8fc9',DK='#0b0620',ACC='#b388ff',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(11,6,32,.96)',subStroke:VI,subFill:WH,ctaBg:DK,ctaSub:'#fff',ctaGlow:VI,ctaAccent:VI,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:WH,mu:MU4,acc:VI,pn:'rgba(179,136,255,.12)',c:[VI,MG,LM,WH]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(179,136,255,.13)';RR(x,y,w,h,14);ctx.fill();ctx.shadowColor=col;ctx.shadowBlur=18;ctx.lineWidth=3;ctx.strokeStyle=col;ctx.stroke();ctx.shadowBlur=0;ctx.fillStyle=col;ctx.fillRect(x+16,y,60,4);ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0b0620');g.addColorStop(1,'#1b0a40');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(179,136,255,.22)';ctx.lineWidth=2;const hz=1180;for(let i=-12;i<=12;i++){ctx.beginPath();ctx.moveTo(540+i*40,hz);ctx.lineTo(540+i*260,H);ctx.stroke()}
+  for(let k=0;k<9;k++){const y=hz+Math.pow((k+((t*.6)%1))/9,2)*(H-hz);ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.save();ctx.globalAlpha=.07;ctx.fillStyle='#fff';for(let y=0;y<H;y+=5)ctx.fillRect(0,y,W,1);ctx.restore();ctx.fillStyle=VI;ctx.fillRect(0,0,W,10)};
+function slab(cx,cy,w,h,col,label,al=1){ctx.save();ctx.globalAlpha*=al;ctx.fillStyle=col+'33';RR(cx-w/2,cy-h/2,w,h,12);ctx.fill();ctx.shadowColor=col;ctx.shadowBlur=16;ctx.lineWidth=4;ctx.strokeStyle=col;ctx.stroke();ctx.shadowBlur=0;ctx.restore();if(label)Lb(label,cx,cy+2,Math.min(40,h*.5),col,al)}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('METATRADER 5 · TIPOS DE CUENTA',540,250,38,VI,eout(prog(t,.2,.8)));
+  const k1=eback(prog(t,.8,1.6)),k2=eback(prog(t,1.6,2.4));
+  ctx.save();ctx.translate(290,640);ctx.scale(Math.max(k1,.001),Math.max(k1,.001));ST.panel(-230,-260,460,520,VI);Lb('NETTING',0,-150,66,VI);slab(0,20,300,110,LM,'1 POSICIÓN');Lb('por símbolo',0,150,38,WH);ctx.restore();
+  ctx.save();ctx.translate(790,640);ctx.scale(Math.max(k2,.001),Math.max(k2,.001));ST.panel(-230,-260,460,520,MG);Lb('HEDGING',0,-150,66,MG);slab(0,-20,300,70,LM,'');slab(0,60,300,70,MG,'');slab(0,140,300,70,LM,'');Lb('VARIAS',0,210,38,WH);ctx.restore();
+  const k=eback(prog(t,3.4,4.2));if(k>.02){ctx.save();ctx.translate(540,1130);ctx.scale(k,k);Lb('HEDGING DESDE ABR. 2016',0,0,56,WH,1,'center',900);ctx.restore()}ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'UN POCO DE HISTORIA',MG);
+  pop(t,7.2,300,560,()=>{ST.panel(-240,-170,480,340,VI);Lb('ANTES',0,-90,44,MU4);Lb('NETTING',0,0,72,VI);Lb('el único sistema',0,90,34,WH)});
+  pop(t,9.0,780,560,()=>{ST.panel(-240,-170,480,340,MG);Lb('22 ABR 2016',0,-90,44,MG);Lb('HEDGING',0,0,72,MG);Lb('build 1325',0,90,34,WH)});
+  const x1=eout(prog(t,10.6,11.6));ctx.save();ctx.globalAlpha*=x1;ctx.strokeStyle=VI;ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(300,800);ctx.lineTo(300+480*x1,800);ctx.stroke();ctx.restore();
+  Lb('el tipo de cuenta lo fija tu bróker',540,900,40,WH,eout(prog(t,11.6,12.3)));Lb('y se ve en el encabezado de la plataforma',540,960,32,MU4,eout(prog(t,12.2,12.9)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'NETTING: UNA SOLA POSICIÓN',VI);
+  ST.panel(120,260,840,780,VI);Lb('EURUSD',540,330,44,MU4,eout(prog(t,14,14.6)));
+  const c1=eback(prog(t,14.8,15.6)),c2=eback(prog(t,16.8,17.6));
+  slab(540,900,420,110*Math.max(c1,0),LM,'COMPRA 1 LOTE');slab(540,775,420,110*Math.max(c2,0),LM,'COMPRA 1 LOTE');
+  const k=eout(prog(t,18,18.8));if(k>.02){ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=WH;ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(790,720);ctx.lineTo(820,720);ctx.lineTo(820,955);ctx.lineTo(790,955);ctx.stroke();ctx.restore()}
+  Lb('1 posición',540,520,56,WH,eout(prog(t,18.2,18.9)));Lb('= 2 lotes',540,600,64,LM,eout(prog(t,18.4,19.1)));
+  Lb('mismo sentido: aumenta el volumen',540,1120,36,MU4,eout(prog(t,19,19.7)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'ENTRA UNA OPERACIÓN CONTRARIA',MG);
+  const D=[['MENOR VOLUMEN','la posición se REDUCE',LM,22.0],['IGUAL VOLUMEN','la posición se CIERRA',VI,24.0],['MAYOR VOLUMEN','la posición se INVIERTE',MG,26.0]];
+  D.forEach(([s,sub,c,ts],i)=>{pop(t,ts,540,420+i*300,()=>{ST.panel(-450,-120,900,240,c);Lb(s,-190,-30,48,WH,1,'center',500);Lb(sub,-190,50,38,c,1,'center',500);const w=150-i*70;ctx.save();ctx.fillStyle=c+'33';ctx.strokeStyle=c;ctx.lineWidth=4;RR(260-w/2*(i==2?-1:1)*(i==2?0:1)-(i==2?60:w/2),-45,i==1?10:(i==0?70:130),90,10);ctx.fill();ctx.stroke();ctx.restore()})});
+  Lb('según el volumen de la operación contraria',540,1340,32,MU4,eout(prog(t,27,27.7)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'HEDGING: VARIAS POSICIONES',LM);
+  ST.panel(120,260,840,820,LM);Lb('EURUSD',540,330,44,MU4,eout(prog(t,28.8,29.4)));
+  [[LM,'#1 COMPRA 1 LOTE',29.6,500],[MG,'#2 VENTA 1 LOTE',31.2,640],[LM,'#3 COMPRA 0,5 LOTE',32.8,780]].forEach(([c,s,ts,y])=>{const k=eback(prog(t,ts,ts+.7));slab(540,y,640,100*Math.max(k,0),c,s)});
+  Lb('3 posiciones abiertas',540,950,56,WH,eout(prog(t,33.8,34.4)),'center',800);Lb('en el mismo símbolo',540,1020,36,MU4,eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'«CERRAR POR CONTRARIA»',VI);
+  const m=eio(prog(t,37.4,39));slab(540-lerp(260,0,m),600,300,110,LM,'COMPRA');slab(540+lerp(260,0,m),600,300,110,MG,'VENTA');
+  const k=eback(prog(t,39,39.8));if(k>.02){ctx.save();ctx.translate(540,600);ctx.scale(k,k);ctx.fillStyle=WH;ctx.beginPath();ctx.arc(0,0,90,0,7);ctx.fill();Lb('CERRADAS',0,0,30,HB,1,'center',150);ctx.restore()}
+  card(t,36.0,260,110,VI,'Disponible en cuentas hedging','',36);
+  pop(t,40.4,540,960,()=>{ST.panel(-420,-90,840,180,LM);Lb('Cierra dos posiciones opuestas',0,-30,42,WH);Lb('y ahorra un spread',0,40,56,LM)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Confirma tu tipo de cuenta','El robot maneja las posiciones',VI,LM);ctx.save();ctx.globalAlpha=a;Lb('Fuente: MetaQuotes (MetaTrader 5, build 1325)',60,1360,30,VI,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('¿TU CUENTA MT5 ES…?',540,240,56,VI,1);
+  Lb('NETTING',540,520,170,LM,1,'center',980);slab(540,680,420,90,LM,'1 POSICIÓN');
+  Lb('HEDGING',540,900,170,MG,1,'center',980);slab(250,1060,300,64,LM,'');slab(540,1060,300,64,MG,'');slab(830,1060,300,64,LM,'');Lb('VARIAS',540,1160,48,WH,1);coverBtn('VER LA DIFERENCIA →',VI,HB)}
+</script></body></html>
