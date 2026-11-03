@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 37 (3.er uso): cinta de teletipo — tema: futuros GC, MGC y de 1 onza vs CFD XAUUSD (60 s).
+const SPEC={name:'GC_MGC_CFD',hook:'UN ORO, TRES TAMAÑOS: 100, 10 Y 1 ONZA POR CONTRATO',dur:60,cta:56,bpm:104,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[6.4,'wipe'],[8.0,'tick'],[10.0,'ding'],[13.6,'wipe'],[15.0,'tick'],[17.0,'ding'],[20.6,'wipe'],[22.0,'tick'],[24.0,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[34.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Una onza de oro, tres tamaños de contrato: 100, 10 o 1 onza.','Una onza de oro, tres tamaños de contrato: cien, diez o una onza.'],
+ [6.4,13.4,'El futuro GC de CME es de 100 onzas: si la onza se mueve US$ 1, el contrato cambia US$ 100.','El futuro GC de CME es de cien onzas: si la onza se mueve un dólar, el contrato cambia cien dólares.'],
+ [13.6,20.4,'El Micro Gold, MGC, es de 10 onzas: US$ 1 mueve US$ 10. El de 1 onza mueve US$ 1 por dólar.','El Micro Gold, MGC, es de diez onzas: un dólar mueve diez dólares. El de una onza mueve un dólar por cada dólar.'],
+ [20.6,28.2,'El CFD XAUUSD de tu bróker es otro producto: contrato por diferencia, con su propio lote, a menudo 100 onzas.','El CFD de XAUUSD de tu bróker es otro producto: contrato por diferencia, con su propio lote, a menudo cien onzas.'],
+ [28.4,35.0,'Con la onza a US$ 4.000 (ilustrativo): GC = US$ 400.000, MGC = US$ 40.000, 1 onza = US$ 4.000.','Con la onza a cuatro mil dólares, ilustrativo: GC, cuatrocientos mil dólares; MGC, cuarenta mil; una onza, cuatro mil.'],
+ [35.2,43.4,'Los futuros tienen vencimiento y cámara de compensación; el CFD lo emite tu bróker y no es un futuro.'],
+ [43.6,49.6,'Para tu robot: revisa tamaño de contrato, valor del tick y costos. Fuente: CME Group. Educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const DESK='#171c19',TAPE='#f1e7c3',INK2='#2a2a26',RED='#e0513f',BLU='#5aa0e6',GRN='#4cc38a',ORG='#f0a030',BAR1='#e8c04a',BAR2='#b8892a',MU3='#a8b0a0',DK='#171c19',ACC='#f0a030',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(241,231,195,.97)',subStroke:RED,subFill:INK2,ctaBg:DK,ctaSub:'#fff',ctaGlow:ORG,ctaAccent:ORG,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:TAPE,mu:MU3,acc:ORG,pn:'#252b27',c:[ORG,BLU,GRN,RED]});
+function perf(x,y,w,col){ctx.save();ctx.fillStyle=col;for(let i=0;i<w/28;i++){ctx.beginPath();ctx.arc(x+14+i*28,y,5,0,7);ctx.fill()}ctx.restore()}
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#262c28';ctx.fillRect(x,y,w,h);ctx.lineWidth=4;ctx.strokeStyle=TAPE;ctx.setLineDash([22,10]);ctx.strokeRect(x+6,y+6,w-12,h-12);ctx.setLineDash([]);ctx.fillStyle=col;ctx.fillRect(x,y,14,h);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=DESK;ctx.fillRect(0,0,W,H);ctx.save();ctx.globalAlpha=.06;ctx.fillStyle='#fff';for(let y=0;y<H;y+=6)ctx.fillRect(0,y,W,2);ctx.restore();ctx.fillStyle=ORG;ctx.fillRect(0,0,W,10)};
+function tapeBand(t,y,h,txt,col=INK2,sp=120,a=1){ctx.save();ctx.globalAlpha*=a;ctx.fillStyle=TAPE;ctx.fillRect(0,y,W,h);perf(0,y+10,W,'rgba(23,28,25,.5)');perf(0,y+h-10,W,'rgba(23,28,25,.5)');
+  ctx.font='900 '+Math.round(h*.46)+'px Inter';const tw=ctx.measureText(txt+'     ').width;const off=-(t*sp)%tw;ctx.fillStyle=col;ctx.textBaseline='middle';ctx.textAlign='left';for(let k=-1;k<3;k++)ctx.fillText(txt,off+k*tw,y+h/2+2);ctx.restore()}
+function gbar(cx,by,s){// lingote: lado s
+  if(s<2)return;const g=ctx.createLinearGradient(cx-s/2,by-s,cx+s/2,by);g.addColorStop(0,'#fff0a8');g.addColorStop(.5,BAR1);g.addColorStop(1,BAR2);ctx.save();ctx.fillStyle=g;RR(cx-s/2,by-s,s,s,Math.max(3,s*.08));ctx.fill();ctx.lineWidth=Math.max(2,s*.02);ctx.strokeStyle='rgba(0,0,0,.35)';ctx.stroke();ctx.restore()}
+const SZ={GC:300,MGC:95,OZ:30};
+function hook(t,a){ctx.save();ctx.globalAlpha=a;tapeBand(t,250,90,'GC 100 OZ ▪ MGC 10 OZ ▪ 1OZ 1 OZ ▪ ',INK2,160,eout(prog(t,.2,.8)));
+  Lb('CONTRATOS DE ORO',540,420,52,ORG,eout(prog(t,.4,1)));
+  [['100',SZ.GC,300,RED],['10',SZ.MGC,660,BLU],['1',SZ.OZ,860,GRN]].forEach(([n,s,x,c],i)=>{const g=eback(prog(t,1+i*.7,2+i*.7));gbar(x,1000,s*Math.max(g,0));Lb(n,x,1060,100-i*14,c,eout(prog(t,1.4+i*.7,2+i*.7)));Lb('ONZAS',x,1130,30,TAPE,eout(prog(t,1.6+i*.7,2.2+i*.7)))});
+  const k=eback(prog(t,3.4,4.2));if(k>.02){ctx.save();ctx.translate(540,1260);ctx.scale(k,k);Lb('UN ORO · TRES TAMAÑOS',0,0,60,TAPE);ctx.restore()}ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'FUTURO GC · CME',RED);
+  gbar(300,860,300*eback(prog(t,7,8)));Lb('GC',300,930,70,RED,eout(prog(t,7.2,7.8)));Lb('100 oz',300,1000,48,TAPE,eout(prog(t,7.4,8)));
+  pop(t,8.4,730,420,()=>{ST.panel(-290,-90,580,180,RED);Lb('US$ 1 en la onza',0,-26,40,TAPE);Lb('= US$ 100',0,40,64,RED)});
+  pop(t,10.2,730,680,()=>{ST.panel(-290,-90,580,180,ORG);Lb('tick mínimo 0,10',0,-26,40,TAPE);Lb('= US$ 10',0,40,64,ORG)});
+  Lb('contrato por onza · cotiza en dólares',540,1180,34,MU3,eout(prog(t,11.6,12.3)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'MÁS PEQUEÑOS',BLU);
+  gbar(250,740,SZ.MGC*1.9*eback(prog(t,14.2,15.2)));Lb('MGC',250,800,60,BLU,eout(prog(t,14.6,15.2)));Lb('10 oz',250,860,40,TAPE,eout(prog(t,14.8,15.4)));
+  gbar(250,1120,SZ.OZ*1.9*eback(prog(t,17.2,18)));Lb('1OZ',250,1180,60,GRN,eout(prog(t,17.4,18)));Lb('1 oz',250,1240,40,TAPE,eout(prog(t,17.6,18.2)));
+  pop(t,15.4,700,540,()=>{ST.panel(-300,-80,600,160,BLU);Lb('US$ 1 = US$ 10',0,-22,50,TAPE);Lb('tick 0,10 = US$ 1',0,40,36,BLU)});
+  pop(t,18.4,700,880,()=>{ST.panel(-300,-80,600,160,GRN);Lb('US$ 1 = US$ 1',0,-22,50,TAPE);Lb('tick 0,25 = US$ 0,25',0,40,34,GRN)});ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'EL CFD DE TU BRÓKER',ORG);
+  pop(t,21.6,540,430,()=>{ST.panel(-440,-120,880,240,ORG);Lb('XAUUSD (CFD)',0,-40,76,TAPE);Lb('contrato por diferencia',0,50,46,ORG)});
+  card(t,23.6,640,130,BLU,'Lote según tu bróker','',42);card(t,25.0,800,130,GRN,'A menudo 100 onzas por lote','',40);card(t,26.4,960,130,RED,'No es un futuro de CME','',42);
+  Lb('revisa la especificación en tu plataforma',540,1180,32,MU3,eout(prog(t,27,27.7)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'CON LA ONZA A US$ 4.000',GRN);
+  Lb('precio ilustrativo',540,250,30,MU3,eout(prog(t,29,29.6)));
+  [['GC · 100 oz','US$ 400.000',RED,29.8],['MGC · 10 oz','US$ 40.000',BLU,31.6],['1OZ · 1 oz','US$ 4.000',GRN,33.4]].forEach(([n,v,c,ts],i)=>{pop(t,ts,540,420+i*300,()=>{ST.panel(-450,-110,900,220,c);Lb(n,-230,-24,46,TAPE);Lb('valor nocional',-230,36,30,MU3);Lb(v,200,4,v.length>10?58:66,c,1,'center',460)})});
+  Lb('valor del contrato = onzas × precio',540,1320,34,MU3,eout(prog(t,34,34.7)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'FUTURO vs CFD',RED);
+  tapeBand(t,260,70,'FUTURO ▪ CFD ▪ FUTURO ▪ CFD ▪ ',INK2,120,eout(prog(t,35.6,36.2)));
+  [['FUTURO',RED,['Tiene vencimiento','Cámara de compensación','Bolsa: CME']],['CFD',BLU,['Lo emite tu bróker','Sin vencimiento estándar','Lote del bróker']]].forEach(([n,c,L2],i)=>{const x=290+i*500;pop(t,36.6+i*1.2,x,760,()=>{ST.panel(-230,-380,460,760,c);Lb(n,0,-300,64,c);L2.forEach((s,j)=>Lb(s,0,-120+j*150,s.length>20?32:36,TAPE,1,'center',420))})});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Mira el tamaño del contrato','Valor del tick y costos',ORG,BLU);ctx.save();ctx.globalAlpha=a;Lb('Fuente: CME Group (especificaciones de contrato)',60,1360,30,ORG,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);tapeBand(0,240,100,'GC ▪ MGC ▪ 1OZ ▪ XAUUSD ▪ ',INK2,0);
+  gbar(300,1180,300);gbar(660,1180,95);gbar(860,1180,30);
+  Lb('100 · 10 · 1',540,520,170,TAPE,1,'center');Lb('ONZAS POR CONTRATO DE ORO',540,660,46,ORG,1,'center');Lb('¿CUÁL ES EL TUYO?',540,1300,60,TAPE,1);coverBtn('VER LA DIFERENCIA →',ORG,DK)}
+</script></body></html>
