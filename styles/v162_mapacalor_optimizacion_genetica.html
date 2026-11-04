@@ -1,0 +1,69 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 47 (3.er uso): mapa de calor animado — tema: optimización genética en MetaTrader 5 (60 s). Paleta carbón con escala magma.
+const SPEC={name:'OptimizacionGenetica',hook:'OPTIMIZACIÓN GENÉTICA EN MT5: DE AÑOS DE CÁLCULO A HORAS',dur:60,cta:56,bpm:116,mus:'soft',prog:[[42,'m'],[38,'M'],[45,'m'],[40,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[3.6,'ding'],[6.4,'wipe'],[8.0,'ding'],[10.0,'ding'],[12.0,'ding'],[13.6,'wipe'],[15.0,'ding'],[16.0,'ding'],[17.0,'ding'],[18.0,'ding'],[20.6,'wipe'],[22.0,'hit'],[24.0,'ding'],[26.0,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'down'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Optimización genética en MT5: de años de cálculo a solo horas.','Optimización genética en eme te cinco: de años de cálculo a solo horas.'],
+ [6.4,13.4,'La optimización completa prueba todas las combinaciones. Es la más precisa, pero la más lenta.','La optimización completa prueba todas las combinaciones. Es la más precisa, pero la más lenta.'],
+ [13.6,20.4,'La genética imita la evolución: elige combinaciones al azar, conserva las mejores, las cruza y las muta.','La genética imita la evolución: elige combinaciones al azar, conserva las mejores, las cruza y las muta.'],
+ [20.6,28.2,'Según el manual de MetaTrader 5, un cálculo de años puede hacerse en horas, con una calidad casi igual.','Según el manual de MetaTrader cinco, un cálculo de años puede hacerse en horas, con una calidad casi igual.'],
+ [28.4,35.0,'Pero es una aproximación: no garantiza haber probado todas las combinaciones.','Pero es una aproximación: no garantiza haber probado todas las combinaciones.'],
+ [35.2,43.4,'Ojo: el pico más alto puede ser pura suerte del pasado. Mejor una meseta estable y pruebas fuera de muestra.','Ojo: el pico más alto puede ser pura suerte del pasado. Mejor una meseta estable y pruebas fuera de muestra.'],
+ [43.6,49.6,'Para tu robot: pocos parámetros y validación. Fuente: MetaTrader 5. Educativo.','Para tu robot: pocos parámetros y validación. Fuente: MetaTrader cinco. Contenido educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const CB0='#14100f',CB1='#1f1816',YL='#ffd23f',OR='#ff7a1a',MG='#ff3d8b',VI='#8a4bff',TQ='#35e0c8',WH='#fff4ea',DK='#14100f',ACC='#ff7a1a',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(20,16,15,.96)',subStroke:OR,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:WH,mu:'#b9a79b',acc:OR,pn:'#241c1a',c:[OR,TQ,MG,YL]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(255,255,255,.06)';RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,18);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,CB1);g.addColorStop(1,CB0);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.05;ctx.fillStyle=OR;const r=rng(31);for(let i=0;i<30;i++){const s=20+r()*60;ctx.fillRect(r()*W,r()*H*.85,s,s)}ctx.restore();
+  ctx.fillStyle=OR;ctx.fillRect(0,0,W,10)};
+// mapa de calor ilustrativo: 12 × 12 combinaciones de dos parámetros
+const NX=12,NY=12,GX=90,GY=330,CS=75;
+const SC=[];for(let j=0;j<NY;j++){SC[j]=[];for(let i=0;i<NX;i++){const rn=rng(i*37+j*91+5)();const spike=.95*Math.exp(-((i-3)**2+(j-9)**2)/(2*.8*.8));const plat=.66*Math.exp(-((i-8)**2+(j-4)**2)/(2*2.6*2.6));SC[j][i]=clamp(Math.max(spike,plat)+.10*rn+.04)}}
+function heat(v){const st=[[0,[24,16,32]],[.25,[84,25,110]],[.5,[200,50,100]],[.75,[255,122,26]],[1,[255,226,90]]];let k=0;while(k<3&&v>st[k+1][0])k++;const [a,A]=st[k],[b,B]=st[k+1];const u=clamp((v-a)/(b-a));return `rgb(${Math.round(lerp(A[0],B[0],u))},${Math.round(lerp(A[1],B[1],u))},${Math.round(lerp(A[2],B[2],u))})`}
+function cell(i,j,al,mark){ctx.save();ctx.globalAlpha*=al;ctx.fillStyle=heat(SC[j][i]);RR(GX+i*CS+3,GY+j*CS+3,CS-6,CS-6,10);ctx.fill();if(mark){ctx.strokeStyle='#fff';ctx.lineWidth=5;RR(GX+i*CS+2,GY+j*CS+2,CS-4,CS-4,10);ctx.stroke()}ctx.restore()}
+function grid(fn){for(let j=0;j<NY;j++)for(let i=0;i<NX;i++){const [al,mk]=fn(i,j);if(al>.01)cell(i,j,al,mk)}}
+function ghost(){ctx.save();ctx.globalAlpha=.5;for(let j=0;j<NY;j++)for(let i=0;i<NX;i++){ctx.fillStyle='rgba(255,255,255,.06)';RR(GX+i*CS+3,GY+j*CS+3,CS-6,CS-6,10);ctx.fill()}ctx.restore();
+  Lb('parámetro A →',GX+NX*CS/2,GY+NY*CS+44,30,'#b9a79b');ctx.save();ctx.translate(GX-30,GY+NY*CS/2);ctx.rotate(-Math.PI/2);Lb('parámetro B →',0,0,30,'#b9a79b');ctx.restore()}
+// generaciones del algoritmo genético (ilustrativo)
+const GEN=[];(function(){const r=rng(11);const seen=[];let pool=[];for(let g=0;g<5;g++){const gen=[];for(let k=0;k<18;k++){let i,j;if(g==0||k<4){i=Math.floor(r()*NX);j=Math.floor(r()*NY)}else{const p=pool[Math.floor(r()*Math.min(5,pool.length))],q=pool[Math.floor(r()*Math.min(5,pool.length))];i=clamp(Math.round(p[0]+(r()-.5)*3),0,NX-1);j=clamp(Math.round(q[1]+(r()-.5)*3),0,NY-1)}gen.push([i,j])}
+  GEN.push(gen);pool=pool.concat(gen).sort((a,b)=>SC[b[1]][b[0]]-SC[a[1]][a[0]]).slice(0,8)}})();
+function tested(g){const s=new Set();for(let k=0;k<=g;k++)GEN[k].forEach(([i,j])=>s.add(i+','+j));return s}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('OPTIMIZACIÓN GENÉTICA · MT5',540,235,46,OR,eout(prog(t,.2,.8)));
+  ghost();grid((i,j)=>[eout(prog(t,.6+(i+j)*.09,1.2+(i+j)*.09)),false]);
+  bigNum(t,3.4,540,1360,'AÑOS → HORAS',96,YL);Lb('(mapa ilustrativo de combinaciones)',540,1395,26,'#b9a79b',eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'OPTIMIZACIÓN COMPLETA',OR);ghost();
+  const T0=7.2,T1=12.2,n=Math.floor(eio(prog(t,T0,T1))*NX*NY);grid((i,j)=>[(j*NX+i)<n?1:0,(j*NX+i)==n-1]);
+  Lb('combinaciones probadas: '+n+' de '+(NX*NY),540,1335,40,WH,eout(prog(t,7,7.6)));Lb('la más precisa · la más lenta',540,1390,36,OR,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'ALGORITMO GENÉTICO',TQ);ghost();
+  const g=Math.min(4,Math.floor((t-14.2)/1.0));const hist=g>=0?tested(g):new Set();
+  grid((i,j)=>{const k=i+','+j;if(!hist.has(k))return [0,false];const cur=g>=0&&GEN[g].some(([a,b])=>a==i&&b==j);return [cur?eout(prog(t,14.2+g*1.0,14.5+g*1.0)):.55,cur]});
+  const ng=g>=0?hist.size:0;Lb('generación '+Math.max(0,g+1)+' · '+ng+' de '+(NX*NY)+' probadas',540,1335,38,WH,eout(prog(t,14,14.6)));
+  Lb('azar → selección → cruce → mutación',540,1390,36,TQ,eout(prog(t,17.5,18.1)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'SEGÚN EL MANUAL DE MT5',YL);
+  card(t,21.4,300,190,OR,'Completa: años','prueba todo, la más precisa',44);
+  card(t,23.4,540,190,TQ,'Genética: horas','calidad casi igual, mucho más rápida',44);
+  pop(t,25.6,540,900,()=>{ctx.fillStyle=YL;RR(-340,-70,680,140,70);ctx.fill();Lb('MISMA IDEA, MENOS TIEMPO',0,0,40,DK)});
+  Lb('Fuente: MetaTrader 5 · tipos de optimización',540,1060,28,'#b9a79b',eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'ES UNA APROXIMACIÓN',MG);ghost();
+  const h=tested(4);grid((i,j)=>[h.has(i+','+j)?eout(prog(t,29+((i+j)%6)*.15,29.6+((i+j)%6)*.15)):.18,false]);
+  Lb('probadas: '+h.size+' de '+(NX*NY)+' (ilustrativo)',540,1335,38,WH,eout(prog(t,30,30.6)));
+  Lb('las celdas apagadas quedan sin probar',540,1390,36,MG,eout(prog(t,31.6,32.2)));
+  ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'¿PICO O MESETA?',YL);ghost();grid((i,j)=>[1,false]);
+  const k1=eout(prog(t,36.4,37.2)),k2=eout(prog(t,39.4,40.2));
+  ctx.save();ctx.globalAlpha*=k1;ctx.strokeStyle='#fff';ctx.lineWidth=8;ctx.beginPath();ctx.arc(GX+3.5*CS,GY+9.5*CS,60,0,7);ctx.stroke();ctx.restore();Lb('PICO AISLADO',GX+3.5*CS+110,GY+9.5*CS+95,34,WH,k1,'left');
+  ctx.save();ctx.globalAlpha*=k2;ctx.strokeStyle=TQ;ctx.lineWidth=8;ctx.beginPath();ctx.arc(GX+8.5*CS,GY+4.5*CS,175,0,7);ctx.stroke();ctx.restore();Lb('MESETA ESTABLE',GX+8.5*CS,GY+4.5*CS+215,34,TQ,k2);
+  Lb('el pico más alto puede ser suerte del pasado',540,1335,36,WH,eout(prog(t,37.6,38.2)));Lb('valida fuera de muestra (walk-forward)',540,1390,36,TQ,eout(prog(t,41,41.6)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Pocos parámetros y validación','Prefiere mesetas, no picos',OR,TQ);ctx.save();ctx.globalAlpha=a;Lb('Fuente: MetaTrader 5 (tipos de optimización)',60,1360,28,OR,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('OPTIMIZACIÓN GENÉTICA',540,230,54,OR,1);Lb('AÑOS',540,420,200,YL,1);Lb('→ HORAS',540,590,150,WH,1);
+  ctx.save();ctx.translate(135,472);ctx.scale(.75,.75);grid((i,j)=>[1,false]);ctx.restore();Lb('MT5 · MAPA ILUSTRATIVO',540,1418,26,'#b9a79b',1);coverBtn('VER CÓMO FUNCIONA →',OR,DK)}
+</script></body></html>
