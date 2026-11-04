@@ -1,0 +1,55 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 45 (3.er uso): libro o enciclopedia que pasa páginas — tema: las 5 mayores mineras de oro, primer semestre de 2025 (60 s). Paleta azul marino, perla y oro.
+const SPEC={name:'MinerasOro2025',hook:'NEWMONT: ≈ 3,38 MILLONES DE ONZAS EN SEIS MESES',dur:60,cta:56,bpm:104,mus:'soft',prog:[[38,'M'],[43,'m'],[41,'M'],[36,'m']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[3.6,'ding'],[6.4,'wipe'],[8.0,'ding'],[10.0,'ding'],[13.6,'wipe'],[15.0,'ding'],[17.0,'ding'],[20.6,'wipe'],[22.0,'hit'],[24.0,'ding'],[26.0,'ding'],[28.4,'wipe'],[30.0,'ding'],[32.0,'down'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Mayores mineras de oro: Newmont produjo ≈ 3,38 millones de onzas en el primer semestre de 2025.','Mayores mineras de oro: Newmont produjo cerca de tres coma treinta y ocho millones de onzas en el primer semestre de dos mil veinticinco.'],
+ [6.4,13.4,'Segundo lugar: Agnico Eagle, con ≈ 1,74 millones. Tercero: Barrick, con ≈ 1,56 millones.','Segundo lugar: Agnico Eagle, con cerca de uno coma setenta y cuatro millones. Tercero: Barrick, con cerca de uno coma cincuenta y seis millones.'],
+ [13.6,20.4,'Cuarto: Navoi Mining, de Uzbekistán, con ≈ 1,54 millones. Quinto: AngloGold Ashanti, con ≈ 1,52.','Cuarto: Navoi Mining, de Uzbekistán, con cerca de uno coma cincuenta y cuatro millones. Quinto: AngloGold Ashanti, con cerca de uno coma cincuenta y dos.'],
+ [20.6,28.2,'Newmont produjo casi el doble que la segunda. Entre el tercer y el quinto puesto hay solo ≈ 31 mil onzas.','Newmont produjo casi el doble que la segunda. Entre el tercer y el quinto puesto hay solo cerca de treinta y una mil onzas.'],
+ [28.4,35.0,'Frente al primer semestre de 2024: Barrick ≈ −17 % y AngloGold ≈ +22 %.','Frente al primer semestre de dos mil veinticuatro: Barrick, cerca de menos diecisiete por ciento, y AngloGold, cerca de más veintidós por ciento.'],
+ [35.2,43.4,'Producir más oro no equivale a ganar más: influyen costos, deuda y operaciones.','Producir más oro no equivale a ganar más: influyen costos, deuda y operaciones.'],
+ [43.6,49.6,'Para tu robot: el oro se opera por su precio. Fuente: Mining.com. Educativo.','Para tu robot: el oro se opera por su precio. Fuente: Mining punto com. Contenido educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const NV='#0d1b3a',NV2='#16294f',PG='#e9eef5',INK='#14213d',GL='#b8860b',RD='#b3262e',TL='#1f7a8c',GR='#2f7d4f',DK='#0d1b3a',ACC='#e0b040',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(13,27,58,.96)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:INK,mu:'#52607d',acc:RD,pn:'#fff',c:[RD,TL,GL,GR]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#fff';RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,18);ctx.stroke();ctx.restore()};
+const FLIPS=[6.2,13.4,20.4,28.2,35.0,43.4];
+ST.bg=t=>{const g0=ctx.createLinearGradient(0,0,0,H);g0.addColorStop(0,NV2);g0.addColorStop(1,NV);ctx.fillStyle=g0;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=PG;RR(34,50,1012,1700,14);ctx.fill();
+  ctx.save();ctx.strokeStyle='rgba(20,33,61,.07)';ctx.lineWidth=2;for(let y=130;y<1700;y+=64){ctx.beginPath();ctx.moveTo(70,y);ctx.lineTo(1010,y);ctx.stroke()}ctx.restore();
+  ctx.fillStyle=RD;ctx.fillRect(900,50,34,120);ctx.beginPath();ctx.moveTo(900,170);ctx.lineTo(917,140);ctx.lineTo(934,170);ctx.fill();
+  for(const f of FLIPS){const p=prog(t,f-.15,f+.65);if(p>0&&p<1){const x=lerp(1046,34,eio(p));const g=ctx.createLinearGradient(x,0,x+160,0);g.addColorStop(0,'rgba(20,33,61,.4)');g.addColorStop(1,'rgba(20,33,61,0)');ctx.fillStyle=g;ctx.fillRect(x,50,160,1700);ctx.fillStyle='#fff';ctx.fillRect(x-4,50,8,1700)}}
+  ctx.fillStyle=ACC;ctx.fillRect(0,0,W,10)};
+const MN=[['1 · Newmont',1,RD,'3,38 M'],['2 · Agnico Eagle',.514,TL,'1,74 M'],['3 · Barrick',.46,GL,'1,56 M'],['4 · Navoi Mining',.455,GR,'1,54 M'],['5 · AngloGold Ashanti',.45,'#6a3d9a','1,52 M']];
+function rows(t,t0,a,b,y0,instant){barsH(t,instant?-10:t0,MN.slice(a,b),70,y0,620,150,40)}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('CAPÍTULO 1 · LAS MAYORES MINERAS',540,235,40,GL,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,520,'3,38 M',250,RD);Lb('DE ONZAS · NEWMONT',540,740,60,INK,eout(prog(t,1.8,2.4)));
+  Lb('primer semestre de 2025',540,830,46,GL,eout(prog(t,3,3.6)));Lb('N.º 1 del mundo entre las mineras',540,930,38,'#52607d',eout(prog(t,4.2,4.8)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL PODIO',RD);rows(t,7.0,0,3,300);Lb('millones de onzas · 1.er semestre 2025',540,800,32,'#52607d',eout(prog(t,10,10.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'PUESTOS 4 Y 5',RD);rows(t,0,0,3,300,true);barsH(t,14.6,MN.slice(3,5),70,750,620,150,40);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'CASI EL DOBLE',RD);
+  barsH(t,21.0,MN.slice(0,2),70,300,620,150,40);
+  pop(t,23.6,540,720,()=>{ST.panel(-420,-90,840,180,RD);Lb('N.º 1 ≈ 1,9 × EL N.º 2',0,0,52,INK)});
+  card(t,25.4,860,200,TL,'Puestos 3 a 5: ≈ 31 mil onzas','de diferencia entre Barrick y AngloGold',38);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'VS. 1.ER SEMESTRE DE 2024',RD);
+  pop(t,29.4,300,600,()=>{ST.panel(-230,-200,460,400,RD);Lb('BARRICK',0,-120,40,INK);Lb('≈ −17 %',0,-10,100,RD);Lb('de 1,87 M a 1,56 M',0,110,32,'#52607d')});
+  pop(t,31.4,780,600,()=>{ST.panel(-230,-200,460,400,GR);Lb('ANGLOGOLD',0,-120,40,INK);Lb('≈ +22 %',0,-10,100,GR);Lb('producción de onzas',0,110,32,'#52607d')});
+  Lb('producción, no rentabilidad ni precio de la acción',540,960,36,INK,eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'PRODUCIR ≠ GANAR',RD);
+  card(t,36.4,300,170,RD,'Costos de extracción','el margen depende del costo por onza',40);
+  card(t,38.2,520,170,TL,'Deuda y operaciones','minas, países y permisos distintos',40);
+  card(t,40.0,740,170,GL,'El precio del oro','es lo que sigue tu robot',42);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=RD;RR(-330,-60,660,120,60);ctx.fill();Lb('OPERA EL PRECIO',0,0,48,'#fff')});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'El oro se opera por su precio','Cifras: 1.er semestre de 2025',RD,TL);ctx.save();ctx.globalAlpha=a;Lb('Fuente: Mining.com (Top 10 gold mining companies of 2025)',60,1360,26,GL,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('MAYORES MINERAS DE ORO',540,260,60,GL,1);Lb('3,38 M',540,600,250,RD,1);Lb('DE ONZAS EN 6 MESES',540,850,64,INK,1);Lb('N.º 1 · NEWMONT',540,1000,74,TL,1);
+  barsH(99,-10,MN.slice(0,3),70,1075,620,120,34);coverBtn('VER EL RANKING →',RD,'#fff')}
+</script></body></html>
