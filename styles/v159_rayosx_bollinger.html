@@ -1,0 +1,78 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 41 (3.er uso): escáner de rayos X sobre el gráfico — tema: Bandas de Bollinger (60 s). Paleta negro, verde ácido y ámbar.
+const SPEC={name:'Bollinger',hook:'BANDAS DE BOLLINGER: MEDIA DE 20 PERIODOS Y 2 DESVIACIONES',dur:60,cta:56,bpm:112,mus:'soft',prog:[[45,'m'],[41,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[3.6,'ding'],[6.4,'wipe'],[8.0,'ding'],[10.0,'ding'],[12.0,'ding'],[13.6,'wipe'],[15.0,'down'],[17.0,'rise',2],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Bandas de Bollinger: una media de 20 periodos y dos desviaciones estándar.','Bandas de Bollinger: una media de veinte periodos y dos desviaciones estándar.'],
+ [6.4,13.4,'Las creó John Bollinger a principios de los años ochenta. La media marca la tendencia y las bandas, la volatilidad.','Las creó John Bollinger a principios de los años ochenta. La media marca la tendencia y las bandas, la volatilidad.'],
+ [13.6,20.4,'Si la volatilidad sube, las bandas se abren. Si baja, se estrechan: es el llamado squeeze.','Si la volatilidad sube, las bandas se abren. Si baja, se estrechan: es el llamado esquís.'],
+ [20.6,28.2,'Tocar la banda superior no obliga a vender: en tendencias fuertes el precio puede caminar pegado a la banda.','Tocar la banda superior no obliga a vender: en tendencias fuertes el precio puede caminar pegado a la banda.'],
+ [28.4,35.0,'Con dos desviaciones, ≈ 95 % de los datos caería dentro si fueran normales. Los precios no lo son exactamente.','Con dos desviaciones, cerca de noventa y cinco por ciento de los datos caería dentro si fueran normales. Los precios no lo son exactamente.'],
+ [35.2,43.4,'Úsalas con contexto: un squeeze avisa de cambio de volatilidad, no de la dirección.','Úsalas con contexto: un squeeze avisa de cambio de volatilidad, no de la dirección.'],
+ [43.6,49.6,'Para tu robot: prueba los parámetros fuera de muestra. Fuente: Britannica. Educativo.','Para tu robot: prueba los parámetros fuera de muestra. Fuente: Britannica. Contenido educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const XB='#04130f',XG='#3dffb0',XA='#ffb020',XR='#ff4d6d',XW='#e6fff5',DK='#04130f',ACC='#3dffb0',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(4,19,15,.96)',subStroke:XG,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:'#fff',mu:'#8fd9bd',acc:XG,pn:'#0a2a22',c:[XG,XA,XR,XW]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(61,255,176,.07)';RR(x,y,w,h,22);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,22);ctx.stroke();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=XB;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(61,255,176,.07)';ctx.lineWidth=2;for(let x=0;x<=W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<=H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  const by=((t*260)%2200)-140;const sg=ctx.createLinearGradient(0,by-120,0,by+120);sg.addColorStop(0,'rgba(61,255,176,0)');sg.addColorStop(.5,'rgba(61,255,176,.14)');sg.addColorStop(1,'rgba(61,255,176,0)');ctx.fillStyle=sg;ctx.fillRect(0,by-120,W,240);
+  ctx.fillStyle=XG;ctx.fillRect(0,0,W,8)};
+// serie ilustrativa: calma, ruptura, caminata sobre la banda, retroceso
+const N=100,PR=[],SM=[],UP=[],LO=[];
+(function(){const r=rng(77);let p=50;for(let i=0;i<N;i++){let d,s;if(i<48){d=0;s=.28}else if(i<62){d=1.1;s=.9}else if(i<86){d=.55;s=.25}else{d=-1.1;s=.8}
+  p+=d+(r()-.5)*2*s;PR.push(p)}
+  for(let i=0;i<N;i++){if(i<19){SM.push(null);UP.push(null);LO.push(null);continue}let m=0;for(let j=i-19;j<=i;j++)m+=PR[j];m/=20;let v=0;for(let j=i-19;j<=i;j++)v+=(PR[j]-m)**2;v=Math.sqrt(v/20);SM.push(m);UP.push(m+2*v);LO.push(m-2*v)}})();
+const MINV=Math.min(...PR,...LO.filter(x=>x!=null))-2,MAXV=Math.max(...PR,...UP.filter(x=>x!=null))+2;
+const CB={x:70,y:330,w:940,h:640};
+function cx(i){return CB.x+i/(N-1)*CB.w}function cy(v){return CB.y+CB.h-(v-MINV)/(MAXV-MINV)*CB.h}
+// modo: 1=precio, 2=+media, 4=+bandas
+function boll(t,t0,t1,mode,i0=0,i1=N-1){const r=eio(prog(t,t0,t1));if(r<=0)return;const n=Math.floor(i0+(i1-i0)*r);
+  axes(CB.x,CB.y,CB.w,CB.h,XG);
+  if(mode&4){ctx.save();ctx.fillStyle='rgba(61,255,176,.13)';ctx.beginPath();let st=Math.max(19,i0);ctx.moveTo(cx(st),cy(UP[st]));for(let i=st;i<=n;i++)ctx.lineTo(cx(i),cy(UP[i]));for(let i=n;i>=st;i--)ctx.lineTo(cx(i),cy(LO[i]));ctx.closePath();ctx.fill();
+    for(const A of [UP,LO]){ctx.strokeStyle=XG;ctx.lineWidth=5;ctx.beginPath();for(let i=st;i<=n;i++){i==st?ctx.moveTo(cx(i),cy(A[i])):ctx.lineTo(cx(i),cy(A[i]))}ctx.stroke()}ctx.restore()}
+  if(mode&2){ctx.save();ctx.strokeStyle=XA;ctx.lineWidth=5;ctx.setLineDash([14,9]);ctx.beginPath();let st=Math.max(19,i0);for(let i=st;i<=n;i++){i==st?ctx.moveTo(cx(i),cy(SM[i])):ctx.lineTo(cx(i),cy(SM[i]))}ctx.stroke();ctx.restore()}
+  ctx.save();ctx.strokeStyle='#fff';ctx.lineWidth=5;ctx.lineJoin='round';ctx.beginPath();for(let i=i0;i<=n;i++){i==i0?ctx.moveTo(cx(i),cy(PR[i])):ctx.lineTo(cx(i),cy(PR[i]))}ctx.stroke();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx(n),cy(PR[n]),9,0,7);ctx.fill();ctx.restore();
+  Lb('(precios ilustrativos)',CB.x+CB.w,CB.y+CB.h+40,26,ST.mu,1,'right')}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('BANDAS DE BOLLINGER',540,235,56,XG,eout(prog(t,.2,.8)));
+  boll(t,.6,3.6,7);
+  bigNum(t,3.4,330,1130,'20',230,XA);Lb('periodos',330,1250,40,'#fff',eout(prog(t,4.2,4.8)));
+  bigNum(t,3.9,760,1130,'± 2σ',200,XG);Lb('desviaciones',760,1250,40,'#fff',eout(prog(t,4.6,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'LA RECETA',XG);
+  card(t,7.2,300,160,XA,'Media móvil simple de 20','la línea central: la tendencia',40);
+  card(t,9.2,500,160,XG,'Banda superior','media + 2 desviaciones estándar',40);
+  card(t,11.0,700,160,XG,'Banda inferior','media − 2 desviaciones estándar',40);
+  Lb('John Bollinger · principios de los años 80',540,990,38,XW,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LA VOLATILIDAD RESPIRA',XG);
+  boll(t,14.2,18.6,7,0,70);
+  const k=eout(prog(t,16.6,17.2));if(k>.02){ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=XA;ctx.lineWidth=5;ctx.setLineDash([10,8]);RR(cx(28),CB.y+170,cx(46)-cx(28),400,20);ctx.stroke();ctx.restore();Lb('SQUEEZE',(cx(28)+cx(46))/2,CB.y+120,44,XA,k)}
+  const k2=eout(prog(t,18.4,19));Lb('bandas estrechas = poca volatilidad',540,1060,40,XW,k2);Lb('bandas abiertas = mucha volatilidad',540,1130,40,XG,eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'TOCAR LA BANDA NO ES VENDER',XA);
+  boll(t,21.2,25.4,7,40,99);
+  const k=eout(prog(t,25.6,26.2));Lb('el precio camina pegado a la banda',540,1060,44,XG,k);
+  pop(t,26.6,540,1200,()=>{ctx.fillStyle=XA;RR(-360,-55,720,110,55);ctx.fill();Lb('EN TENDENCIA, NO HAY TECHO FIJO',0,0,36,XB)});ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'¿Y EL 95 %?',XG);
+  const bx=90,bw=900,by=330,bh=520;ctx.save();ctx.globalAlpha*=eout(prog(t,29,29.8));
+  const f=u=>Math.exp(-(u*u)/2);ctx.fillStyle='rgba(61,255,176,.25)';ctx.beginPath();ctx.moveTo(bx+bw*(.5-2/8),by+bh);for(let u=-2;u<=2.001;u+=.05)ctx.lineTo(bx+bw*(.5+u/8),by+bh-f(u)*bh);ctx.lineTo(bx+bw*(.5+2/8),by+bh);ctx.closePath();ctx.fill();
+  ctx.strokeStyle=XG;ctx.lineWidth=6;ctx.beginPath();for(let u=-4;u<=4.001;u+=.05){const X=bx+bw*(.5+u/8),Y=by+bh-f(u)*bh;u==-4?ctx.moveTo(X,Y):ctx.lineTo(X,Y)}ctx.stroke();
+  for(const u of [-2,2]){line(bx+bw*(.5+u/8),by,bx+bw*(.5+u/8),by+bh,XA,4,[10,8])}ctx.restore();
+  Lb('−2σ',bx+bw*.25,by+bh+44,36,XA,eout(prog(t,30.2,30.8)));Lb('+2σ',bx+bw*.75,by+bh+44,36,XA,eout(prog(t,30.2,30.8)));
+  pop(t,31.0,540,640,()=>Lb('≈ 95 %',0,0,150,XG));
+  Lb('solo si los datos fueran una normal perfecta',540,1010,38,XW,eout(prog(t,32.4,33)));Lb('los precios no lo son exactamente',540,1070,38,XA,eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'CÓMO USARLAS',XG);
+  card(t,36.4,300,170,XG,'Con contexto','tendencia, soportes y niveles',42);
+  card(t,38.2,520,170,XA,'Squeeze = aviso','cambia la volatilidad, no la dirección',40);
+  card(t,40.0,740,170,XR,'Con stop siempre','ningún indicador garantiza nada',40);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=XG;RR(-330,-60,660,120,60);ctx.fill();Lb('CONTEXTO + RIESGO',0,0,48,XB)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Prueba los parámetros fuera de muestra','Ningún indicador garantiza resultados',XG,XA);ctx.save();ctx.globalAlpha=a;Lb('Fuente: Britannica (Bollinger Bands)',60,1360,28,XG,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('BANDAS DE BOLLINGER',540,230,54,XG,1);Lb('20 · 2',540,540,330,XA,1);Lb('LA RECETA DEL INDICADOR',540,780,64,'#fff',1);
+  CB.y=860;CB.h=520;boll(99,0,.01,7);CB.y=330;CB.h=640;coverBtn('VER CÓMO SE LEE →',XG,XB)}
+</script></body></html>

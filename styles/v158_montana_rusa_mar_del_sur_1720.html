@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 43 (3.er uso): montaña rusa (el gráfico como riel con carrito) — tema: Burbuja del Mar del Sur 1720 (60 s). Paleta verde botella y oro.
+const SPEC={name:'MarDelSur1720',hook:'1720: UNA ACCIÓN LLEGÓ A ≈ 1.000 LIBRAS Y LUEGO VALÍA ≈ 150',dur:60,cta:56,bpm:108,mus:'soft',prog:[[41,'m'],[36,'M'],[38,'m'],[43,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[3.6,'down'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'ding'],[17.0,'rise',2],[20.6,'wipe'],[22.0,'down'],[24.0,'alert'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'down'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'1720: una acción del Mar del Sur llegó a ≈ 1.000 libras. Meses después valía ≈ 150.','Mil setecientos veinte: una acción del Mar del Sur llegó a cerca de mil libras. Meses después valía cerca de ciento cincuenta.'],
+ [6.4,13.4,'La South Sea Company nació en 1711 con un monopolio comercial en las Américas.','La compañía del Mar del Sur nació en mil setecientos once, con un monopolio comercial en las Américas.'],
+ [13.6,20.4,'En 1720 ofreció asumir deuda pública a cambio de acciones, y el precio se disparó hasta ≈ 1.000 libras en agosto.','En mil setecientos veinte ofreció asumir deuda pública a cambio de acciones, y el precio se disparó hasta cerca de mil libras en agosto.'],
+ [20.6,28.2,'En septiembre estalló la burbuja. En diciembre la acción rondaba entre 124 y 150 libras: más de 80 % menos.','En septiembre estalló la burbuja. En diciembre la acción rondaba entre ciento veinticuatro y ciento cincuenta libras: más de ochenta por ciento menos.'],
+ [28.4,35.0,'Isaac Newton vendió con ganancia, volvió a entrar cerca del máximo y, según relatos, perdió ≈ 20.000 libras.','Isaac Newton vendió con ganancia, volvió a entrar cerca del máximo y, según relatos, perdió cerca de veinte mil libras.'],
+ [35.2,43.4,'Lección: el precio puede separarse mucho del valor, y entrar tarde por miedo a perderse el movimiento sale caro.','Lección: el precio puede separarse mucho del valor, y entrar tarde por miedo a perderse el movimiento sale caro.'],
+ [43.6,49.6,'Para tu robot: reglas fijas y stop, no euforia. Fuentes: Historic UK y Princeton. Educativo.','Para tu robot: reglas fijas y stop, no euforia. Fuentes: Historic UK y Princeton. Contenido educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const SK1='#0b2b2a',SK2='#124a42',GD='#ffcc4d',CR='#ff6b57',MN='#7fe3c4',DK='#0b2b2a',ACC='#ffcc4d',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(11,43,42,.96)',subStroke:GD,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:'#fff',mu:'#9fd6c8',acc:GD,pn:'#15473f',c:[GD,CR,MN,'#fff']});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(255,255,255,.08)';RR(x,y,w,h,22);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,22);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,SK2);g.addColorStop(.6,SK1);g.addColorStop(1,'#071a1a');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.fillStyle=GD;const r=rng(21);for(let i=0;i<40;i++){ctx.globalAlpha=.15+.2*Math.sin(t*1.6+i);ctx.fillRect(r()*W,r()*H*.8,3,3)}ctx.restore();
+  ctx.fillStyle=GD;ctx.fillRect(0,0,W,10)};
+const GP=[[0,.1],[.18,.14],[.36,.28],[.52,.52],[.64,.9],[.7,1],[.78,.55],[.88,.2],[.95,.14],[1,.12]];
+function coaster(t,a,b,x,y,w,h,col,lw=10){const P=pathPts(GP,x,y,w,h);const r=eio(prog(t,a,b));if(r<=0)return;
+  ctx.save();for(let i=0;i<P.length;i++){if(i/(P.length-1)>r)break;line(P[i][0],P[i][1],P[i][0],y+h+40,'rgba(255,255,255,.16)',4)}ctx.restore();
+  const hd=lineChart(t,a,b,GP,x,y,w,h,col,lw,14);if(!hd)return;
+  ctx.save();ctx.translate(hd[0],hd[1]-26);ctx.fillStyle=CR;RR(-30,-22,60,34,10);ctx.fill();ctx.fillStyle='#222';ctx.beginPath();ctx.arc(-16,16,9,0,7);ctx.arc(16,16,9,0,7);ctx.fill();ctx.restore()}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('MAR DEL SUR · 1720',540,235,56,GD,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,520,'≈ £1.000',230,GD);Lb('UNA SOLA ACCIÓN',540,740,60,'#fff',eout(prog(t,1.6,2.2)));
+  coaster(t,2.2,4.8,90,860,900,320,GD,12);
+  Lb('luego: ≈ £150',720,1290,64,CR,eout(prog(t,4.6,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'UNA COMPAÑÍA CON PRIVILEGIOS',GD);
+  card(t,7.2,300,170,GD,'1711 · South Sea Company','creada por ley del Parlamento británico',40);
+  card(t,9.2,520,170,MN,'1713 · monopolio comercial','en las Américas (Mar del Sur)',40);
+  card(t,11.0,740,170,CR,'Su negocio real era financiero','asumir deuda del Estado',40);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'1720: EL CANJE Y EL ASCENSO',GD);
+  coaster(t,14.2,19.4,90,330,900,560,GD,12);
+  Lb('deuda → acciones',260,420,40,MN,eout(prog(t,14.6,15.2)));
+  Lb('agosto: ≈ £1.000',730,265,50,GD,eout(prog(t,17.8,18.4)));
+  Lb('(trayecto ilustrativo, precios aproximados)',540,1000,26,'#9fd6c8',eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'SEPTIEMBRE: ESTALLA',CR);
+  pop(t,21.4,300,560,()=>{ST.panel(-230,-200,460,400,GD);Lb('MÁXIMO',0,-120,38,'#fff');Lb('≈ £1.000',0,-30,76,GD);Lb('agosto 1720',0,70,32,'#9fd6c8')});
+  pop(t,23.4,780,560,()=>{ST.panel(-230,-200,460,400,CR);Lb('DICIEMBRE',0,-120,38,'#fff');Lb('£124–150',0,-30,70,CR);Lb('según la fuente',0,70,32,'#9fd6c8')});
+  const v=lerp(0,80,eio(prog(t,24.6,27)));Lb('−'+Math.round(v)+' %+',540,950,150,CR,eout(prog(t,24.4,25)));Lb('más de 80 % menos',540,1080,42,'#fff',eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EL CASO DE ISAAC NEWTON',GD);
+  card(t,29.4,300,170,MN,'1.º Vendió con ganancia','y vio cómo seguía subiendo',40);
+  card(t,31.2,520,170,GD,'2.º Volvió a entrar','cerca del máximo',44);
+  card(t,33.0,740,170,CR,'Pérdida reportada ≈ £20.000','las estimaciones varían',42);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LA LECCIÓN',GD);
+  card(t,36.4,300,170,GD,'Precio ≠ valor','una burbuja se separa de los fundamentos',38);
+  card(t,38.2,520,170,CR,'FOMO','miedo a perderse el movimiento',44);
+  card(t,40.0,740,170,MN,'Salir también es una regla','define el stop antes de entrar',40);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=GD;RR(-330,-60,660,120,60);ctx.fill();Lb('REGLAS, NO EUFORIA',0,0,42,DK)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Reglas fijas y stop, no euforia','Las burbujas también existen hoy',GD,MN);ctx.save();ctx.globalAlpha=a;Lb('Fuentes: Historic UK; Universidad de Princeton',60,1360,28,GD,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('MAR DEL SUR · 1720',540,230,60,GD,1);Lb('£1.000',540,560,240,GD,1);Lb('Y LUEGO ≈ £150',540,800,84,'#fff',1);
+  coaster(99,0,.01,90,900,900,420,GD,14);coverBtn('VER LA BURBUJA →',GD,DK)}
+</script></body></html>
