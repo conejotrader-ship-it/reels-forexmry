@@ -1,0 +1,63 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 42 (3.er uso): dominó en cadena — tema: regla FIFO de la NFA (EE. UU.) y los robots (60 s). Paleta pizarra azulada, fichas marfil y cobre.
+const SPEC={name:'FIFO_NFA',hook:'FIFO EN EE. UU.: SE CIERRA PRIMERO LA OPERACIÓN MÁS ANTIGUA',dur:60,cta:56,bpm:108,mus:'soft',prog:[[43,'m'],[39,'M'],[41,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[2.0,'hit'],[2.4,'hit'],[2.8,'hit'],[3.2,'hit'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'ding'],[13.6,'wipe'],[15.0,'ding'],[17.0,'ding'],[20.6,'wipe'],[22.0,'ding'],[24.5,'alert'],[28.4,'wipe'],[30.0,'ding'],[32.0,'down'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'En EE. UU., la regla FIFO obliga a cerrar primero la operación más antigua.','En Estados Unidos, la regla fifo obliga a cerrar primero la operación más antigua.'],
+ [6.4,13.4,'FIFO significa primero en entrar, primero en salir. Es la regla 2-43(b) de la NFA para los brókeres de EE. UU.','Fifo significa primero en entrar, primero en salir. Es la regla dos, cuarenta y tres, be, de la ene efe a, para los brókeres de Estados Unidos.'],
+ [13.6,20.4,'Si compras 100.000 unidades de EUR/USD y luego otras 100.000, debes cerrar primero la primera.','Si compras cien mil unidades de euro dólar y luego otras cien mil, debes cerrar primero la primera.'],
+ [20.6,28.2,'Tampoco puedes tener una compra y una venta del mismo par en la misma cuenta: el hedging.','Tampoco puedes tener una compra y una venta del mismo par en la misma cuenta: la cobertura.'],
+ [28.4,35.0,'Para un robot importa: una orden contraria puede rechazarse o cerrar la posición más antigua.','Para un robot importa: una orden contraria puede rechazarse o cerrar la posición más antigua.'],
+ [35.2,43.4,'Si tu robot promedia o cubre, revisa las reglas de tu bróker y país, y pruébalo en demo.','Si tu robot promedia o cubre, revisa las reglas de tu bróker y país, y pruébalo en demo.'],
+ [43.6,49.6,'Para tu robot: conoce la regla de tu bróker. Fuente: OANDA. Educativo.','Para tu robot: conoce la regla de tu bróker. Fuente: Oanda. Contenido educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const SL='#1a2533',SL2='#26364a',IV='#f4ecd8',CU='#c9772e',TQ='#3ad0c2',CO='#ff6b57',YL='#ffd23f',INK='#1a2533',DK='#1a2533',ACC='#c9772e',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(26,37,51,.96)',subStroke:CU,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:'#fff',mu:'#a9b8cc',acc:CU,pn:'#26364a',c:[CU,TQ,CO,YL]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(255,255,255,.07)';RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,18);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,SL2);g.addColorStop(1,SL);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(201,119,46,.10)';ctx.lineWidth=2;for(let i=-4;i<30;i++){ctx.beginPath();ctx.moveTo(i*80,0);ctx.lineTo(i*80+600,H);ctx.stroke()}ctx.restore();
+  ctx.fillStyle=CU;ctx.fillRect(0,0,W,10)};
+// ficha de dominó: centro (cx,cy), tamaño w×h, rotación alrededor de la esquina inferior derecha
+function dom(cx,cy,w,h,ang,col,l1,l2,al=1){ctx.save();ctx.globalAlpha*=al;ctx.translate(cx+w/2,cy+h/2);ctx.rotate(ang);ctx.translate(-w/2,-h/2);
+  ctx.fillStyle=IV;RR(0,0,w,h,16);ctx.fill();ctx.lineWidth=7;ctx.strokeStyle=col;RR(0,0,w,h,16);ctx.stroke();line(14,h/2,w-14,h/2,col,4);
+  if(l1)Lb(l1,w/2,h*.27,Math.round(w*(w>200?.15:.34)),col==IV?INK:col,1,'center');if(l2)Lb(l2,w/2,h*.75,Math.round(w*.085),INK,1,'center');ctx.restore()}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('REGLA FIFO · NFA',540,235,56,CU,eout(prog(t,.2,.8)));
+  Lb('PRIMERO EN ENTRAR,',540,400,60,'#fff',eout(prog(t,.6,1.2)));Lb('PRIMERO EN SALIR',540,480,60,TQ,eout(prog(t,.9,1.5)));
+  const cols=[TQ,CU,CO,YL,'#9b7bff'];for(let i=0;i<5;i++){const k=eback(prog(t,.8+i*.15,1.4+i*.15));if(k<=.02)continue;const ang=eio(prog(t,2.0+i*.4,2.6+i*.4))*(Math.PI/2.3);dom(150+i*195-75,640,150,300,ang,cols[i],String(i+1),'',k)}
+  Lb('la más antigua',150,1000,32,TQ,eout(prog(t,3.4,4)));Lb('la más nueva',930,1000,32,'#9b7bff',eout(prog(t,3.6,4.2)));
+  Lb('Estados Unidos · brókeres de forex',540,1130,40,'#fff',eout(prog(t,4.2,4.8)));Lb('(esquema ilustrativo)',540,1200,28,'#a9b8cc',eout(prog(t,4.8,5.4)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'FIFO: FIRST IN, FIRST OUT',CU);
+  bigNum(t,7.0,540,480,'FIFO',300,YL);
+  card(t,8.8,700,190,CU,'Regla 2-43(b) de la NFA','Estados Unidos · National Futures Association',36);
+  card(t,10.8,930,190,TQ,'Se cierra primero la más antigua','por cada par de divisas',42);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL EJEMPLO',CU);
+  const k1=eback(prog(t,14.2,14.9)),k2=eback(prog(t,15.8,16.5));
+  dom(120,330,360,420,0,TQ,'COMPRA 1','100.000 EUR/USD',k1);dom(600,330,360,420,0,CU,'COMPRA 2','100.000 EUR/USD',k2);
+  Lb('SE CIERRA 1.º',300,820,50,TQ,eout(prog(t,17.4,18)));Lb('LUEGO 2.º',780,820,50,CU,eout(prog(t,18.4,19)));
+  Lb('(unidades de ejemplo)',540,960,28,'#a9b8cc',eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'SIN COBERTURA (HEDGING)',CO);
+  const k1=eback(prog(t,21.4,22.1)),k2=eback(prog(t,22.6,23.3));
+  dom(120,330,360,420,0,TQ,'COMPRA','EUR/USD',k1);dom(600,330,360,420,0,CO,'VENTA','EUR/USD',k2);
+  const k=eback(prog(t,24.4,25.1));if(k>.02){ctx.save();ctx.translate(540,540);ctx.scale(k,k);ctx.fillStyle=YL;ctx.beginPath();ctx.arc(0,0,80,0,7);ctx.fill();Lb('✕',0,6,110,INK);ctx.restore()}
+  Lb('misma cuenta · mismo instrumento',540,860,40,'#fff',eout(prog(t,25.4,26)));Lb('no permitido en EE. UU.',540,940,50,CO,eout(prog(t,26.4,27)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'¿Y MI ROBOT?',CU);
+  card(t,29.4,300,170,CO,'Orden contraria rechazada','puede aparecer «Order Rejected»',40);
+  card(t,31.2,520,170,CU,'O cierra la más antigua','antes de lo que querías',42);
+  card(t,33.0,740,170,TQ,'Entradas del mismo tamaño','también deben cerrarse en orden',38);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'QUÉ REVISAR',CU);
+  card(t,36.4,300,170,TQ,'Reglas de tu bróker y país','la NFA es de EE. UU.',42);
+  card(t,38.2,520,170,CU,'Cómo cierra tu robot','promedios, coberturas y parciales',40);
+  card(t,40.0,740,170,YL,'Prueba en demo','antes de usar dinero real',42);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=CU;RR(-330,-60,660,120,60);ctx.fill();Lb('CONOCE LA REGLA',0,0,48,INK)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Conoce la regla de tu bróker','Prueba en demo primero',CU,TQ);ctx.save();ctx.globalAlpha=a;Lb('Fuente: OANDA (NFA FIFO rule and expert advisors)',60,1360,28,CU,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('PRIMERO EN ENTRAR,',540,250,64,'#fff',1);Lb('PRIMERO EN SALIR',540,335,64,TQ,1);Lb('FIFO',540,640,330,YL,1);Lb('LA REGLA DE EE. UU.',540,860,70,CU,1);
+  const cols=[TQ,CU,CO,YL,'#9b7bff'];for(let i=0;i<5;i++)dom(150+i*195-75,980,150,300,i<2?0:(i-1)*.0+0,cols[i],String(i+1),'');coverBtn('VER LA REGLA →',CU,INK)}
+</script></body></html>
