@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 44 (3.er uso): tablero de ajedrez y estrategia — tema: Stanley Druckenmiller (60 s). Paleta azul marino, crema y oro con menta.
+const SPEC={name:'Druckenmiller',hook:'DRUCKENMILLER: ≈ 30 AÑOS SIN UN SOLO AÑO DE PÉRDIDAS, SEGÚN LA PRENSA',dur:60,cta:56,bpm:104,mus:'soft',prog:[[38,'M'],[43,'m'],[41,'M'],[45,'m']],
+ ev:[[0.3,'rise',2.4],[2.0,'ding'],[2.5,'ding'],[3.0,'ding'],[3.5,'ding'],[4.0,'hit'],[6.4,'wipe'],[8.0,'hit'],[10.0,'ding'],[13.6,'wipe'],[15.0,'ding'],[17.0,'down'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'alert'],[32.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Stanley Druckenmiller: cerca de 30 años al frente de Duquesne Capital, sin un solo año de pérdidas, según la prensa.','Stanley Druckenmiller: cerca de treinta años al frente de Duquesne Capital, sin un solo año de pérdidas, según la prensa.'],
+ [6.4,13.4,'Su fondo rindió cerca de 30 % anual en promedio durante unos 30 años, según Institutional Investor.','Su fondo rindió cerca de treinta por ciento anual en promedio durante unos treinta años, según Institutional Investor.'],
+ [13.6,20.4,'En agosto de 2010 anunció el cierre del fondo, después de unos 30 años de operación.','En agosto de dos mil diez anunció el cierre del fondo, después de unos treinta años de operación.'],
+ [20.6,28.2,'Aprendió de George Soros a apostar fuerte cuando tiene mucha confianza en una idea.','Aprendió de George Soros a apostar fuerte cuando tiene mucha confianza en una idea.'],
+ [28.4,35.0,'Pero apostar fuerte exige límites: sin control del riesgo, una mala racha puede borrar años de resultados.','Pero apostar fuerte exige límites: sin control del riesgo, una mala racha puede borrar años de resultados.'],
+ [35.2,43.4,'Un historial así es excepcional y no se garantiza. Las cifras son reportadas por la prensa.','Un historial así es excepcional y no se garantiza. Las cifras son reportadas por la prensa.'],
+ [43.6,49.6,'Para tu robot: la constancia viene del control del riesgo. Fuente: Institutional Investor. Educativo.','Para tu robot: la constancia viene del control del riesgo. Fuente: Institutional Investor. Contenido educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const NV='#101a2e',NV2='#182744',CRM='#f1e6c8',GD='#f2c14e',MT='#4cc9a4',RD='#e5484d',MU='#9db4d6',DK='#101a2e',ACC='#f2c14e',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(16,26,46,.96)',subStroke:GD,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:'#fff',mu:MU,acc:GD,pn:'#1d2f52',c:[GD,MT,RD,CRM]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(241,230,200,.08)';RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,18);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,NV2);g.addColorStop(1,NV);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.fillStyle=CRM;ctx.globalAlpha=.05;for(let j=0;j<17;j++)for(let i=0;i<9;i++)if((i+j)%2==0)ctx.fillRect(i*120,j*120,120,120);ctx.restore();ctx.fillStyle=GD;ctx.fillRect(0,0,W,10)};
+function king(cx,cy,s,col){ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(-60,100);ctx.lineTo(-45,30);ctx.quadraticCurveTo(-70,-20,-25,-45);ctx.lineTo(25,-45);ctx.quadraticCurveTo(70,-20,45,30);ctx.lineTo(60,100);ctx.closePath();ctx.fill();
+  ctx.fillRect(-8,-110,16,60);ctx.fillRect(-28,-92,56,16);ctx.beginPath();ctx.ellipse(0,106,72,14,0,0,7);ctx.fill();ctx.restore()}
+function pawn(cx,cy,s,col){ctx.save();ctx.translate(cx,cy);ctx.scale(s,s);ctx.fillStyle=col;ctx.beginPath();ctx.arc(0,-55,26,0,7);ctx.fill();ctx.beginPath();ctx.moveTo(-18,-35);ctx.lineTo(18,-35);ctx.lineTo(30,60);ctx.lineTo(-30,60);ctx.closePath();ctx.fill();ctx.beginPath();ctx.ellipse(0,64,44,12,0,0,7);ctx.fill();ctx.restore()}
+// 30 años: cuadrículas de 6 × 5
+function years(t,t0,per,x,y,w,h,col){const cw=w/6,ch=h/5;let n=0;for(let k=0;k<30;k++){const i=k%6,j=Math.floor(k/6);const kk=eout(prog(t,t0+k*per,t0+k*per+.35));if(kk<=.01)continue;n++;ctx.save();ctx.globalAlpha*=kk;ctx.translate(x+i*cw+cw/2,y+j*ch+ch/2);ctx.scale(.6+.4*kk,.6+.4*kk);ctx.fillStyle=col;RR(-cw/2+5,-ch/2+5,cw-10,ch-10,12);ctx.fill();ctx.restore()}return n}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('STANLEY DRUCKENMILLER',540,235,50,GD,eout(prog(t,.2,.8)));
+  const n=years(t,1.6,.09,90,330,900,520,MT);
+  bigNum(t,.8,540,1010,'≈ 30 AÑOS',150,CRM);Lb('SIN UN AÑO EN PÉRDIDAS',540,1140,56,MT,eout(prog(t,4.2,4.8)));
+  Lb('según la prensa · cuadrícula ilustrativa',540,1230,28,MU,eout(prog(t,4.8,5.4)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'DUQUESNE CAPITAL',GD);
+  bigNum(t,7.0,540,520,'≈ 30 %',300,GD);Lb('anual en promedio',540,730,56,CRM,eout(prog(t,8.2,8.8)));
+  card(t,9.6,840,170,MT,'≈ 30 años de operación','«muchos, muchos años», según la entrevista',36);
+  Lb('fuente: Institutional Investor · cifras aproximadas',540,1110,28,MU,eout(prog(t,11.6,12.2)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL CIERRE',GD);
+  const k=eio(prog(t,14.2,17));const x0=110,x1=970,y=560;line(x0,y,x0+(x1-x0)*k,y,CRM,10);
+  Lb('inicio',x0,y-70,36,MU,eout(prog(t,14.4,15)),'center');Lb('≈ 30 años',540,y-70,48,GD,eout(prog(t,15.4,16)));
+  const k2=eback(prog(t,17,17.8));if(k2>.02){ctx.save();ctx.translate(x1,y);ctx.scale(k2,k2);ctx.fillStyle=RD;ctx.beginPath();ctx.arc(0,0,34,0,7);ctx.fill();ctx.restore()}
+  Lb('agosto de 2010',x1-20,y+100,52,RD,eout(prog(t,17.6,18.2)),'right');Lb('anuncia el cierre del fondo',540,y+190,44,CRM,eout(prog(t,18.4,19)));
+  Lb('(línea de tiempo ilustrativa)',540,y+290,26,MU,eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LA LECCIÓN DE SOROS',GD);
+  const k=eback(prog(t,21.4,22.1));if(k>.02){ctx.save();ctx.translate(540,520);ctx.scale(k,k);king(0,0,1.4,GD);ctx.restore()}
+  card(t,23.6,830,190,GD,'George Soros · su mentor','«apuesta fuerte cuando estés seguro»',38);
+  Lb('idea atribuida, no una recomendación',540,1080,30,MU,eout(prog(t,26,26.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'APUESTA FUERTE ≠ SIN LÍMITES',RD);
+  barsH(t,29.4,[['Convicción alta',.92,GD,'posición grande'],['Sin stop ni límite',.92,RD,'riesgo sin tope'],['Con riesgo definido',.35,MT,'pérdida acotada']],70,330,740,170,36);
+  Lb('(ilustrativo)',540,900,28,MU,eout(prog(t,32,32.6)));
+  pop(t,32.8,540,1050,()=>{ctx.fillStyle=RD;RR(-340,-60,680,120,60);ctx.fill();Lb('PRIMERO EL RIESGO',0,0,48,'#fff')});ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'CÓMO LEER ESTE HISTORIAL',GD);
+  card(t,36.4,300,170,GD,'Cifras de prensa','no verificadas aquí; aproximadas',40);
+  card(t,38.2,520,170,MT,'Un caso excepcional','no un resultado típico',42);
+  card(t,40.0,740,170,RD,'Pasado ≠ futuro','sin garantías de rendimiento',42);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=GD;RR(-330,-60,660,120,60);ctx.fill();Lb('SIN PROMESAS',0,0,52,DK)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Constancia = control del riesgo','No es apostar fuerte porque sí',GD,MT);ctx.save();ctx.globalAlpha=a;Lb('Fuente: Institutional Investor (Druckenmiller hangs it up)',60,1360,26,GD,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('DRUCKENMILLER',540,230,60,GD,1);Lb('≈ 30 AÑOS',540,470,170,CRM,1);Lb('SIN UN AÑO EN PÉRDIDAS',540,650,56,MT,1);
+  years(99,-10,0,90,740,900,600,MT);Lb('según la prensa',540,1395,26,MU,1);coverBtn('VER SU HISTORIA →',GD,DK)}
+</script></body></html>
