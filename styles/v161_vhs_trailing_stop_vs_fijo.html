@@ -1,0 +1,75 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 46 (3.er uso): televisión retro VHS — tema: stop fijo vs trailing stop (60 s). Paleta grafito, ámbar y turquesa (videocámara REC).
+const SPEC={name:'TrailingVsFijo',hook:'STOP FIJO VS TRAILING STOP: DOS FORMAS DE PROTEGER UNA OPERACIÓN',dur:60,cta:56,bpm:100,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'hit'],[3.6,'ding'],[6.4,'wipe'],[8.0,'ding'],[10.0,'down'],[13.6,'wipe'],[15.0,'ding'],[17.0,'rise',2],[20.6,'wipe'],[22.0,'ding'],[24.0,'ding'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'down'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,'Stop fijo contra trailing stop: dos formas de proteger una operación.','Stop fijo contra trailing stop: dos formas de proteger una operación.'],
+ [6.4,13.4,'El stop fijo se queda donde lo pones. Si el precio sube, tu protección sigue en el mismo lugar.','El stop fijo se queda donde lo pones. Si el precio sube, tu protección sigue en el mismo lugar.'],
+ [13.6,20.4,'El trailing stop sigue al precio solo a tu favor. Si el precio retrocede, se queda quieto.','El trailing stop sigue al precio solo a tu favor. Si el precio retrocede, se queda quieto.'],
+ [20.6,28.2,'Ejemplo ilustrativo: entras en 4.000 con stop a 20 dólares. Si el precio sube a 4.060, el trailing queda en 4.040.','Ejemplo ilustrativo: entras en cuatro mil con stop a veinte dólares. Si el precio sube a cuatro mil sesenta, el trailing queda en cuatro mil cuarenta.'],
+ [28.4,35.0,'Ventaja: asegura ganancias. Riesgo: en un mercado con mucho ruido puede saltar antes de tiempo.','Ventaja: asegura ganancias. Riesgo: en un mercado con mucho ruido puede saltar antes de tiempo.'],
+ [35.2,43.4,'Ninguno garantiza resultados. Su eficacia depende de la volatilidad y de la distancia elegida.','Ninguno garantiza resultados. Su eficacia depende de la volatilidad y de la distancia elegida.'],
+ [43.6,49.6,'Para tu robot: prueba ambos en el probador y compara el drawdown. Fuente: MQL5. Educativo.','Para tu robot: prueba ambos en el probador y compara el drawdown. Fuente: eme cu ele cinco. Contenido educativo.'],
+ [49.8,55.9,'Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com','Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com.'],
+ [56.2,59.8,'Securus Apex. Link en bio.']]};
+const TB='#0f1316',TB2='#1c242b',AM='#ffb000',RD='#ff4d3d',TQ='#2dd4bf',WH='#f3f1e8',DK='#0f1316',ACC='#ffb000',FAM='Inter';
+const STY={subFont:'800 42px Inter',subBg:'rgba(15,19,22,.96)',subStroke:AM,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:WH,mu:'#9aa7b0',acc:AM,pn:'#1c242b',c:[AM,TQ,RD,WH]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(255,255,255,.06)';RR(x,y,w,h,8);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.shadowColor=col;ctx.shadowBlur=12;RR(x,y,w,h,8);ctx.stroke();ctx.restore()};
+let TNOW=0;
+ST.bg=t=>{TNOW=t;const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,TB2);g.addColorStop(1,TB);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const r=rng(Math.floor(t*12)+5);ctx.save();for(let i=0;i<36;i++){ctx.globalAlpha=.05+r()*.07;ctx.fillStyle='#fff';ctx.fillRect(r()*W,r()*H,40+r()*120,2)}ctx.restore();
+  const by=H-((t*240)%(H+300));ctx.save();ctx.globalAlpha=.09;ctx.fillStyle='#fff';ctx.fillRect(0,by,W,60);ctx.restore();
+  ctx.fillStyle=AM;ctx.fillRect(0,0,W,10);
+  const blink=Math.floor(t*1.6)%2==0;if(blink){ctx.fillStyle=RD;ctx.beginPath();ctx.arc(76,72,14,0,7);ctx.fill()}Lb('REC',108,72,34,WH,.9,'left');
+  const f=Math.floor(t*30),ss=Math.floor(t),tc='00:'+String(Math.floor(ss/60)).padStart(2,'0')+':'+String(ss%60).padStart(2,'0')+':'+String(f%30).padStart(2,'0');Lb(tc,1020,72,30,'#9aa7b0',.9,'right')};
+function scan(){ctx.save();ctx.globalAlpha=.10;ctx.fillStyle='#000';for(let y=0;y<H;y+=6)ctx.fillRect(0,y,W,2);ctx.restore()}
+function vhs(s,x,y,sz,col,a=1){Lb(s,x-5,y,sz,RD,a*.7);Lb(s,x+5,y,sz,TQ,a*.7);Lb(s,x,y,sz,col,a)}
+// trayectorias ilustrativas (v: 0..1) · 1 unidad = 100 dólares; entrada 0,30 = 4.000; distancia del stop 0,20 = 20 dólares
+function mk(keys,seed){const r=rng(seed),p=[];for(let i=0;i<=79;i++){let k=0;while(k<keys.length-2&&i>keys[k+1][0])k++;const [a,va]=keys[k],[b,vb]=keys[k+1];p.push(lerp(va,vb,clamp((i-a)/(b-a)))+(r()-.5)*.018)}return p}
+const PA=mk([[0,.30],[10,.38],[25,.66],[40,.90],[52,.78],[60,.60],[70,.30],[79,.07]],5);
+const PB=mk([[0,.30],[10,.40],[25,.70],[35,.80],[42,.58],[50,.70],[65,1.0],[79,1.05]],9);
+const D=.20,E0=.30;
+function trail(P){const ts=[],ex=[];let m=E0-D,x=-1;for(let i=0;i<P.length;i++){if(x<0){m=Math.max(m,P[i]-D);if(P[i]<=m&&i>0)x=i}ts.push(m)}return {ts,x}}
+function stopChart(t,t0,t1,P,x,y,w,h,mode,lw=7){const r=eio(prog(t,t0,t1));if(r<=0)return;const n=Math.floor(r*79),X=i=>x+i/79*w,Y=v=>y+h-v*h;
+  axes(x,y,w,h,'#9aa7b0');
+  line(x,Y(E0),x+w,Y(E0),'#9aa7b0',3,[10,8]);Lb('entrada',x+8,Y(E0)-22,26,'#9aa7b0',1,'left');
+  const tr=trail(P);const ex=tr.x;
+  if(mode&1){ctx.save();ctx.strokeStyle=RD;ctx.lineWidth=5;ctx.setLineDash([14,9]);ctx.beginPath();ctx.moveTo(x,Y(E0-D));ctx.lineTo(X(n),Y(E0-D));ctx.stroke();ctx.restore();Lb('STOP FIJO',x+w,Y(E0-D)+34,28,RD,1,'right')}
+  if(mode&2){ctx.save();ctx.strokeStyle=TQ;ctx.lineWidth=7;ctx.beginPath();const last=ex>=0?Math.min(n,ex):n;for(let i=0;i<=last;i++){i==0?ctx.moveTo(X(i),Y(tr.ts[i])):ctx.lineTo(X(i),Y(tr.ts[i]))}ctx.stroke();ctx.restore()}
+  ctx.save();ctx.strokeStyle=WH;ctx.lineWidth=lw;ctx.lineJoin='round';ctx.beginPath();for(let i=0;i<=n;i++){i==0?ctx.moveTo(X(i),Y(P[i])):ctx.lineTo(X(i),Y(P[i]))}ctx.stroke();ctx.fillStyle=WH;ctx.beginPath();ctx.arc(X(n),Y(P[n]),lw+3,0,7);ctx.fill();ctx.restore();
+  if((mode&2)&&ex>=0&&n>=ex){const k=eout(prog(t,t0+(ex/79)*(t1-t0),t0+(ex/79)*(t1-t0)+.5));ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=TQ;ctx.beginPath();ctx.arc(X(ex),Y(P[ex]),20,0,7);ctx.fill();ctx.restore();Lb('SALE',X(ex),Y(P[ex])-48,36,TQ,k)}
+  return ex}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('STOP FIJO',300,235,56,RD,eout(prog(t,.2,.8)));Lb('VS',540,235,40,WH,eout(prog(t,.4,1)));Lb('TRAILING',790,235,56,TQ,eout(prog(t,.6,1.2)));
+  stopChart(t,.8,3.8,PA,70,330,940,620,3);
+  const k=eback(prog(t,3.6,4.4));if(k>.02){ctx.save();ctx.translate(540,1130);ctx.scale(k,k);vhs('¿CUÁL USAR?',0,0,120,AM);ctx.restore()}
+  Lb('(trayectoria ilustrativa)',540,1260,28,'#9aa7b0',eout(prog(t,4.6,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'STOP FIJO',RD);stopChart(t,7.0,11,PA,70,330,940,620,1);
+  Lb('no se mueve',540,1090,64,RD,eout(prog(t,11.6,12.2)));Lb('el riesgo inicial queda igual',540,1170,38,WH,eout(prog(t,12.2,12.8)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'TRAILING STOP',TQ);stopChart(t,14.2,19,PA,70,330,940,620,2);
+  Lb('sigue al precio solo a tu favor',540,1090,50,TQ,eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'EJEMPLO ILUSTRATIVO (ORO)',AM);
+  card(t,21.4,300,150,WH,'Entrada: 4.000 · stop a 20 $','stop inicial en 3.980',40);
+  card(t,23.0,490,150,AM,'El precio sube a 4.060','el trailing sube a 4.040',40);
+  card(t,24.6,680,150,TQ,'Si retrocede 20 $','sale en 4.040: ≈ +40 $ por onza',40);
+  card(t,26.2,870,150,RD,'Un stop fijo seguiría en 3.980','sin mover nada',40);
+  Lb('(números ilustrativos, sin costos)',540,1100,28,'#9aa7b0',eout(prog(t,27,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'AYUDA... Y ESTORBA',AM);
+  Lb('CUANDO AYUDA',290,290,38,TQ,eout(prog(t,28.8,29.4)));Lb('CUANDO ESTORBA',790,290,38,RD,eout(prog(t,28.8,29.4)));
+  stopChart(t,29.2,32.4,PA,40,340,480,420,2,5);stopChart(t,29.6,33.2,PB,560,340,480,420,3,5);
+  Lb('asegura lo ganado',290,850,36,WH,eout(prog(t,32.6,33.2)));Lb('sale antes de una subida',790,850,36,WH,eout(prog(t,33.4,34)));Lb('(esquemas ilustrativos)',540,960,26,'#9aa7b0',eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LO QUE IMPORTA',AM);
+  card(t,36.4,300,170,TQ,'Distancia = volatilidad','muy corto: ruido; muy largo: poco efecto',38);
+  card(t,38.2,520,170,AM,'No arregla una mala estrategia','tampoco garantiza breakeven',40);
+  card(t,40.0,740,170,RD,'Pruébalo con datos','compara ambos y mide el drawdown',40);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=AM;RR(-330,-60,660,120,60);ctx.fill();Lb('PRUEBA, NO ASUMAS',0,0,48,DK)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Prueba ambos en el probador','Compara el drawdown',AM,TQ);ctx.save();ctx.globalAlpha=a;Lb('Fuente: MQL5 (Trailing stop in trading)',60,1360,28,AM,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]]);scan()}
+function cover(){ST.bg(3);Lb('STOP FIJO',300,250,64,RD,1);Lb('VS',540,250,40,WH,1);Lb('TRAILING',790,250,64,TQ,1);vhs('¿CUÁL?',540,560,210,AM);Lb('PROTEGER UNA GANANCIA',540,800,60,WH,1);
+  stopChart(99,0,.01,PA,70,900,940,440,3);scan();coverBtn('VER LA DIFERENCIA →',AM,DK)}
+</script></body></html>
