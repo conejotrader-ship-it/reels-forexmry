@@ -1,0 +1,55 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 48 (3.er uso): burbujas flotantes — tema: corralito argentino 2001 (60 s). Paleta burdeos con crema, rosa y celeste.
+const SPEC={"name": "Corralito 2001", "hook": "ARGENTINA 2001: 250 POR SEMANA", "dur": 60, "cta": 56, "bpm": 100, "mus": "soft", "prog": [[40, "m"], [36, "M"], [43, "m"], [38, "M"]],"ev":[[0.3,'rise',2.4],[2.0,'ding'],[2.5,'ding'],[3.0,'ding'],[3.5,'ding'],[4.0,'hit'],[6.4,'wipe'],[8.0,'hit'],[10.0,'ding'],[13.6,'wipe'],[15.0,'ding'],[17.0,'down'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'alert'],[32.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],"subs":[[0.2, 6.0, "1 de diciembre de 2001: Argentina limita los retiros bancarios a 250 por semana. Nace el corralito.", "El primero de diciembre de dos mil uno, Argentina limita los retiros bancarios a doscientos cincuenta por semana. Nace el corralito."], [6.4, 13.4, "Se anunció como medida temporal de unos 90 días y rigió desde el lunes 3 de diciembre.", "Se anunció como medida temporal de unos noventa días y rigió desde el lunes tres de diciembre."], [13.6, 20.4, "Ese mes cayó el gobierno de De la Rúa. Según la prensa, hubo cinco presidentes en un mes.", "Ese mes cayó el gobierno de De la Rúa. Según la prensa, hubo cinco presidentes en un mes."], [20.6, 28.2, "El 6 de enero de 2002 terminó la convertibilidad: un peso ya no valía un dólar.", "El seis de enero de dos mil dos terminó la convertibilidad: un peso ya no valía un dólar."], [28.4, 35.0, "Los 90 días fueron casi un año: la liberación de depósitos se anunció el 2 de diciembre de 2002.", "Los noventa días fueron casi un año: la liberación de depósitos se anunció el dos de diciembre de dos mil dos."], [35.2, 43.4, "Lección: tu dinero depende de quien lo custodia. Conoce las reglas y la solvencia de tu bróker.", "Lección: tu dinero depende de quien lo custodia. Conoce las reglas y la solvencia de tu bróker."], [43.6, 49.6, "Fuentes: Dolarhoy y El Cronista; cifras aproximadas. Contenido educativo, no es asesoría financiera.", "Fuentes: Dolarhoy y El Cronista; cifras aproximadas. Contenido educativo, no es asesoría financiera."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const BG1='#2a0f1e',BG2='#12060e',CRM='#f6e9d2',GD='#ffc83d',RS='#ff7a90',CY='#6fd6ff',MU='#d9aab8',RD='#ff4d5e',MT='#5fe3b0',DK='#12060e',ACC='#ffc83d';
+const STY={subFont:'800 42px Inter',subBg:'rgba(18,6,14,.94)',subStroke:GD,subFill:'#fff',ctaBg:BG2,ctaSub:'#fff',ctaGlow:RS,ctaAccent:GD,ctaBtnText:BG2,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+const BUB=(()=>{const r=rng(48);return Array.from({length:30},()=>({x:r()*W,y:r()*H,s:30+r()*110,v:20+r()*50,p:r()*6,c:[CRM,RS,CY][Math.floor(r()*3)]}))})();
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,BG1);g.addColorStop(1,BG2);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  BUB.forEach(b=>{const y=((b.y-b.v*t)%(H+300)+H+300)%(H+300)-150,x=b.x+Math.sin(t*.7+b.p)*40;ctx.save();ctx.globalAlpha=.13;ctx.fillStyle=b.c;ctx.beginPath();ctx.arc(x,y,b.s*(1+.06*Math.sin(t*2+b.p)),0,7);ctx.fill();ctx.globalAlpha=.3;ctx.strokeStyle=b.c;ctx.lineWidth=3;ctx.stroke();ctx.restore()});
+  ctx.fillStyle=GD;ctx.fillRect(0,0,W,10)};
+Object.assign(ST,{txt:'#fff',mu:MU,acc:GD,pn:'#3a1830',c:[GD,CY,RS,CRM]});
+function bubble(cx,cy,r,col,txt,sz,tc){ctx.save();ctx.fillStyle=col;ctx.globalAlpha*=.92;ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.fill();ctx.globalAlpha=.35;ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx-r*.35,cy-r*.35,r*.22,0,7);ctx.fill();ctx.restore();if(txt)Lb(txt,cx,cy+4,sz,tc||BG2)}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('ARGENTINA · 1 DIC 2001',540,235,50,GD,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,560,'250',400,CRM);Lb('POR SEMANA',540,820,110,GD,eout(prog(t,2.2,2.9)));
+  Lb('límite de retiro en efectivo: el corralito',540,950,40,CY,eout(prog(t,3.4,4.0)));
+  [0,1,2,3].forEach(i=>pop(t,4.2+i*.25,200+i*230,1150,()=>bubble(0,0,70,[RS,CY,GD,CRM][i],'',1)));
+  Lb('(burbujas ilustrativas)',540,1290,26,MU,eout(prog(t,5,5.5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'MEDIDA "TEMPORAL"',GD);
+  bigNum(t,7.0,540,520,'≈ 90 DÍAS',170,GD);Lb('lo anunciado por el ministro Cavallo',540,700,40,CRM,eout(prog(t,8.2,8.8)));
+  card(t,9.2,800,150,CY,'Rigió desde el lunes 3 dic 2001','el anuncio fue el sábado 1 dic',40);
+  card(t,10.8,990,150,RS,'Retiro semanal máximo: 250','pesos, según El Cronista',40);
+  Lb('fuentes: Dolarhoy · El Cronista',540,1200,28,MU,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'DICIEMBRE DE 2001',RS);
+  [1,2,3,4,5].forEach(i=>pop(t,14.4+i*.5,110+(i-1)*215,520,()=>bubble(0,0,88,[RS,GD,CY,CRM,RD][i-1],String(i),90)));
+  Lb('cinco presidentes en un mes',540,730,54,CRM,eout(prog(t,17.4,18)));Lb('según la prensa (Dolarhoy)',540,800,32,MU,eout(prog(t,17.8,18.4)));
+  card(t,18.2,900,150,RD,'Cae el gobierno de De la Rúa','tras protestas en plena crisis',40);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'6 DE ENERO DE 2002',GD);
+  pop(t,21.3,270,560,()=>bubble(0,0,170,GD,'1 PESO',58));
+  const brk=eio(prog(t,24.2,25.2));pop(t,21.6,810,560,()=>bubble(0,0,170,CY,'1 USD',58));
+  Lb(brk<.5?'=':'≠',540,560,120,brk<.5?CRM:RD,eout(prog(t,22.4,23)));
+  Lb('fin de la convertibilidad',540,840,56,CRM,eout(prog(t,25.2,25.8)));Lb('el "uno a uno" rigió casi 11 años',540,920,38,CY,eout(prog(t,25.8,26.4)));
+  Lb('fuente: Dolarhoy',540,1010,28,MU,eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'DE 90 DÍAS A CASI UN AÑO',RS);
+  const x0=110,x1=970,y=600;line(x0,y,x1,y,'rgba(255,255,255,.25)',10);
+  const k=eio(prog(t,29.2,33));line(x0,y,lerp(x0,x1,k),y,RS,10);
+  const k2=eout(prog(t,29.6,30.4));line(x0,y,x0+(x1-x0)*.25,y,GD,22);
+  Lb('1 dic 2001',x0,y-70,34,CRM,eout(prog(t,29.2,29.8)),'left');Lb('2 dic 2002',x1,y-70,34,CRM,eout(prog(t,32,32.6)),'right');
+  Lb('≈ 90 días previstos',x0+60,y+90,36,GD,k2,'left');Lb('casi 12 meses reales',x1,y+170,44,RS,eout(prog(t,32.6,33.2)),'right');
+  Lb('(línea de tiempo ilustrativa)',540,y+290,26,MU,eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LA LECCIÓN',GD);
+  card(t,36.2,300,170,GD,'Tu dinero depende de su custodio','quien lo guarda y sus reglas',40);
+  card(t,38.0,520,170,CY,'Conoce a tu bróker','regulación y solvencia',42);
+  card(t,39.8,740,170,RS,'Pasado ≠ futuro','sin garantías de rendimiento',42);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=GD;RR(-330,-60,660,120,60);ctx.fill();Lb('CONOCE TU BRÓKER',0,0,48,BG2)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'El riesgo de custodia existe','Conoce las reglas de tu bróker',GD,CY);ctx.save();ctx.globalAlpha=a;Lb('Fuentes: Dolarhoy · El Cronista (cifras aproximadas)',60,1360,26,GD,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('ARGENTINA · 2001',540,230,60,GD,1);Lb('250',540,560,420,CRM,1);Lb('POR SEMANA',540,850,120,GD,1);
+  Lb('el día que se congelaron los ahorros',540,1010,50,CY,1);[0,1,2,3,4].forEach(i=>bubble(150+i*195,1180,60,[RS,CY,GD,CRM,RS][i],'',1));coverBtn('VER QUÉ PASÓ →',GD,BG2)}
+</script></body></html>
