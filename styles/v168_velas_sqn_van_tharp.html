@@ -1,0 +1,45 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 1 (4.º uso): velas animadas — tema: SQN de Van Tharp (60 s). Paleta azul marino con velas ámbar y violeta.
+const SPEC={"name": "SQN Van Tharp", "hook": "SQN: UN NÚMERO PARA JUZGAR UN ROBOT", "dur": 60, "cta": 56, "bpm": 104, "mus": "soft", "prog": [[40, "m"], [36, "M"], [43, "m"], [38, "M"]],"ev":[[0.3,'rise',2.4],[2.0,'ding'],[2.5,'ding'],[3.0,'ding'],[3.5,'ding'],[4.0,'hit'],[6.4,'wipe'],[8.0,'hit'],[10.0,'ding'],[13.6,'wipe'],[15.0,'ding'],[17.0,'down'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'alert'],[32.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],"subs":[[0.2, 6.0, "El SQN, de Van Tharp, resume en una cifra qué tan bueno es un sistema, medido en múltiplos de riesgo R.", "El SQN, de Van Tharp, resume en una cifra qué tan bueno es un sistema, medido en múltiplos de riesgo R."], [6.4, 13.4, "Un R es tu riesgo inicial: ganar el doble es +2R, tocar el stop es −1R y cerrar en equilibrio es 0R.", "Un R es tu riesgo inicial: ganar el doble es más dos R, tocar el stop es menos una R y cerrar en equilibrio es cero R."], [13.6, 20.4, "La fórmula: raíz de N por la media de R, entre la desviación estándar de R. N es el número de operaciones.", "La fórmula: raíz de N por la media de R, entre la desviación estándar de R. N es el número de operaciones."], [20.6, 28.2, "Ejemplo: 100 operaciones, media de 0,5 R y desviación de 1,2 R dan un SQN de unos 4,2.", "Ejemplo: cien operaciones, media de cero coma cinco R y desviación de uno coma dos R dan un SQN de unos cuatro coma dos."], [28.4, 35.0, "Referencia: de 1,6 a 1,9 bajo el promedio; de 2 a 2,4 promedio; de 2,5 a 2,9 bueno; de 3 a 5 excelente.", "Referencia: de uno coma seis a uno coma nueve, bajo el promedio; de dos a dos coma cuatro, promedio; de dos coma cinco a dos coma nueve, bueno; de tres a cinco, excelente."], [35.2, 43.4, "Por encima de 7 se sospecha sobreajuste o pocos datos. Con menos de 30 operaciones, casi no significa nada.", "Por encima de siete se sospecha sobreajuste o pocos datos. Con menos de treinta operaciones, casi no significa nada."], [43.6, 49.6, "Fuentes: LuxAlgo, TradesViz y NexusFi; los rangos varían. Contenido educativo, no es asesoría financiera.", "Fuentes: LuxAlgo, TradesViz y NexusFi; los rangos varían. Contenido educativo, no es asesoría financiera."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const NV='#0a1a33',NV2='#123060',AM='#ffb703',VI='#b79cff',CO='#ff6b6b',CY='#4cc9f0',CR='#f1f5ff',MU='#9db4d6',DK='#0a1a33',ACC='#ffb703';
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,26,51,.95)',subStroke:AM,subFill:'#fff',ctaBg:NV,ctaSub:'#fff',ctaGlow:AM,ctaAccent:AM,ctaBtnText:NV,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+const CND=(()=>{const r=rng(1);return Array.from({length:14},(_,i)=>({x:40+i*72,b:600+r()*500,h:80+r()*220,w:36,p:r()*6,up:r()>.45}))})();
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,NV2);g.addColorStop(1,NV);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  CND.forEach(c=>{const k=.55+.45*Math.sin(t*.8+c.p),h=c.h*k,y=c.b+Math.sin(t*.5+c.p)*30,col=c.up?AM:VI;ctx.save();ctx.globalAlpha=.16;ctx.fillStyle=col;ctx.strokeStyle=col;ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(c.x,y-h*.8);ctx.lineTo(c.x,y+h*.8);ctx.stroke();ctx.fillRect(c.x-c.w/2,y-h/2,c.w,h);ctx.restore()});
+  ctx.fillStyle=AM;ctx.fillRect(0,0,W,10)};
+Object.assign(ST,{txt:'#fff',mu:MU,acc:AM,pn:'#15305c',c:[AM,CY,VI,CO]});
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('VAN THARP',540,235,50,AM,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,520,'SQN',400,CR);Lb('System Quality Number',540,770,50,CY,eout(prog(t,2.2,2.8)));
+  Lb('un número para juzgar un sistema',540,860,40,CR,eout(prog(t,3.2,3.8)));
+  [0,1,2,3,4].forEach(i=>pop(t,4.0+i*.2,200+i*170,1100,()=>{ctx.fillStyle=i%2?VI:AM;ctx.fillRect(-26,-(60+i*20),52,(60+i*20)*2);}));
+  Lb('(velas ilustrativas)',540,1260,26,MU,eout(prog(t,5,5.5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'R = TU RIESGO INICIAL',AM);
+  barsV(t,7.2,[['ganas el doble',.8,AM,'+2R'],['equilibrio',.05,MU,'0R'],['toca el stop',.4,CO,'−1R']],100,330,880,480,50,60);
+  Lb('distancia entre entrada y stop',540,960,36,CR,eout(prog(t,10.8,11.4)));Lb('fuente: NexusFi',540,1030,28,MU,eout(prog(t,11.6,12.2)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LA FÓRMULA',AM);
+  pop(t,14.2,540,500,()=>{panel(-460,-210,920,420,AM);Lb('SQN =',0,-110,80,AM);Lb('√N × media(R)',0,0,64,CR);Lb('÷ desviación(R)',0,100,64,CR)});
+  card(t,16.6,800,150,CY,'N = número de operaciones','R = resultado en múltiplos de riesgo',36);
+  Lb('fuentes: LuxAlgo · TradesViz · NexusFi',540,1020,28,MU,eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'UN EJEMPLO ILUSTRATIVO',AM);
+  card(t,21.4,290,120,CY,'N = 100 operaciones','',44);card(t,22.6,430,120,VI,'media = 0,5 R','',44);card(t,23.8,570,120,CO,'desviación = 1,2 R','',44);
+  bigNum(t,25.2,540,860,'≈ 4,2',250,AM);Lb('SQN (ejemplo de TradesViz)',540,1020,36,CR,eout(prog(t,26.4,27)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'TABLA DE REFERENCIA',AM);
+  barsH(t,29.2,[['1,6 – 1,9',.3,CO,'bajo el promedio'],['2,0 – 2,4',.5,VI,'promedio'],['2,5 – 2,9',.65,CY,'bueno'],['3,0 – 5,0',.85,AM,'excelente']],70,300,640,150,40);
+  Lb('los rangos varían según la fuente',540,950,32,MU,eout(prog(t,32.6,33.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'CÓMO LEERLO',AM);
+  card(t,36.2,300,170,CO,'Por encima de 7: sospecha','sobreajuste o pocos datos',42);
+  card(t,38.0,520,170,VI,'Menos de 30 operaciones','casi sin significado estadístico',40);
+  card(t,39.8,740,170,CY,'Pasado ≠ futuro','sin garantías de rendimiento',42);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=AM;RR(-330,-60,660,120,60);ctx.fill();Lb('MIDE EN R, NO EN $',0,0,48,NV)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Un SQN alto no es garantía','Necesita muchas operaciones y datos limpios',AM,CY);ctx.save();ctx.globalAlpha=a;Lb('Fuentes: LuxAlgo · TradesViz · NexusFi',60,1360,26,AM,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('VAN THARP',540,230,64,AM,1);Lb('SQN',540,520,400,CR,1);Lb('UN NÚMERO PARA',540,790,84,CY,1);Lb('JUZGAR UN ROBOT',540,890,84,CY,1);
+  [0,1,2,3,4,5].forEach(i=>{ctx.fillStyle=i%2?VI:AM;ctx.fillRect(150+i*150,1130-(50+i*22),50,(50+i*22)*2)});coverBtn('VER CÓMO SE CALCULA →',AM,NV)}
+</script></body></html>

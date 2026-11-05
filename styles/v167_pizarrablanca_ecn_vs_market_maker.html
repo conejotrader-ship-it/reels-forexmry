@@ -1,0 +1,56 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 50 (3.er uso): pizarra blanca con marcador — tema: ECN vs market maker (60 s). Paleta pizarra blanca con marcadores azul, rojo, verde y naranja.
+const SPEC={"name": "ECN vs Market Maker", "hook": "ECN VS MARKET MAKER: ¿CONTRA QUIÉN OPERAS?", "dur": 60, "cta": 56, "bpm": 100, "mus": "soft", "prog": [[36, "M"], [43, "m"], [41, "M"], [45, "m"]],"ev":[[0.3,'rise',2.4],[2.0,'ding'],[2.5,'ding'],[3.0,'ding'],[3.5,'ding'],[4.0,'hit'],[6.4,'wipe'],[8.0,'hit'],[10.0,'ding'],[13.6,'wipe'],[15.0,'ding'],[17.0,'down'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'alert'],[32.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],"subs":[[0.2, 6.0, "Market maker o ECN: ¿contra quién operas? Son dos modelos de ejecución con costos distintos.", "Market maker o ECN: ¿contra quién operas? Son dos modelos de ejecución con costos distintos."], [6.4, 13.4, "Con un market maker operas con el propio bróker: tus órdenes se ejecutan ahí, con spread fijo y sin comisión.", "Con un market maker operas con el propio bróker: tus órdenes se ejecutan ahí, con spread fijo y sin comisión."], [13.6, 20.4, "Con un ECN, las órdenes van a una red de proveedores de liquidez: spread variable y estrecho, más una comisión fija.", "Con un ECN, las órdenes van a una red de proveedores de liquidez: spread variable y estrecho, más una comisión fija."], [20.6, 28.2, "El conflicto de interés: un market maker puede tomar el otro lado de tu posición. Un ECN no opera contra sus clientes.", "El conflicto de interés: un market maker puede tomar el otro lado de tu posición. Un ECN no opera contra sus clientes."], [28.4, 35.0, "Pero el ECN tiene costos: la comisión y sin fills garantizados. Y algunos brókers dicen ser STP y actúan como market maker.", "Pero el ECN tiene costos: la comisión y sin fills garantizados. Y algunos brókers dicen ser STP y actúan como market maker."], [35.2, 43.4, "Para un robot importa el costo total: spread más comisión, la velocidad y las reglas de ejecución. Pruébalo en demo.", "Para un robot importa el costo total: spread más comisión, la velocidad y las reglas de ejecución. Pruébalo en demo."], [43.6, 49.6, "Fuentes: BrokerChooser y Finance Magnates. Contenido educativo, no es asesoría financiera.", "Fuentes: BrokerChooser y Finance Magnates. Contenido educativo, no es asesoría financiera."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const INK='#1b2a41',BL='#1f6feb',RD='#e5383b',GR='#1f9d55',OR='#f08c00',MU='#5b6b7d',DK='#1b2a41',ACC='#ffd23f',BD='#f7f8f4';
+const STY={subFont:'800 42px Inter',subBg:'rgba(27,42,65,.95)',subStroke:OR,subFill:'#fff',ctaBg:INK,ctaSub:'#fff',ctaGlow:OR,ctaAccent:ACC,ctaBtnText:INK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+Object.assign(ST,{txt:INK,mu:MU,acc:BL,pn:'#ffffff',c:[BL,GR,RD,OR]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#fff';ctx.shadowColor='rgba(0,0,0,.12)';ctx.shadowBlur=14;RR(x,y,w,h,16);ctx.fill();ctx.shadowBlur=0;ctx.lineWidth=7;ctx.strokeStyle=col;ctx.lineCap='round';RR(x+2,y-1,w,h+2,16);ctx.stroke();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=BD;ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,900,300,540,900,1300);g.addColorStop(0,'rgba(255,255,255,0)');g.addColorStop(1,'rgba(120,130,140,.18)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(60,80,110,.06)';ctx.lineWidth=2;for(let i=0;i<W;i+=90){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i,H);ctx.stroke()}ctx.restore();
+  ctx.lineWidth=22;ctx.strokeStyle='#c9ced4';ctx.strokeRect(11,11,W-22,H-22);ctx.fillStyle=OR;ctx.fillRect(0,0,W,10)};
+function mbox(cx,cy,w,h,col,txt,sz){ctx.save();ctx.strokeStyle=col;ctx.lineWidth=9;ctx.lineJoin='round';ctx.beginPath();ctx.moveTo(cx-w/2+4,cy-h/2);ctx.lineTo(cx+w/2,cy-h/2+5);ctx.lineTo(cx+w/2-5,cy+h/2);ctx.lineTo(cx-w/2,cy+h/2-4);ctx.closePath();ctx.stroke();ctx.restore();if(txt)Lb(txt,cx,cy+3,sz||44,col)}
+function arrow(x1,y1,x2,y2,col,k=1){ctx.save();ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=9;ctx.lineCap='round';const xe=lerp(x1,x2,k),ye=lerp(y1,y2,k);ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(xe,ye);ctx.stroke();if(k>.95){const a=Math.atan2(y2-y1,x2-x1);ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-34*Math.cos(a-.5),y2-34*Math.sin(a-.5));ctx.lineTo(x2-34*Math.cos(a+.5),y2-34*Math.sin(a+.5));ctx.fill()}ctx.restore()}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('EJECUCIÓN DE ÓRDENES',540,235,50,BL,eout(prog(t,.2,.8)));
+  pop(t,.8,250,560,()=>mbox(0,0,380,230,RD,'MARKET MAKER',36));pop(t,1.3,830,560,()=>mbox(0,0,380,230,GR,'ECN',80));
+  Lb('VS',540,560,64,OR,eout(prog(t,1.8,2.3)));
+  Lb('¿CONTRA QUIÉN',540,860,96,INK,eout(prog(t,2.6,3.2)));Lb('OPERAS?',540,980,150,RD,eout(prog(t,3.2,3.9)));
+  Lb('dos modelos de ejecución de un bróker',540,1130,38,MU,eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'MARKET MAKER (DEALING DESK)',RD);
+  pop(t,7.0,200,470,()=>{ctx.strokeStyle=INK;ctx.lineWidth=9;ctx.beginPath();ctx.arc(0,-30,34,0,7);ctx.stroke();ctx.beginPath();ctx.moveTo(0,4);ctx.lineTo(0,80);ctx.moveTo(-45,30);ctx.lineTo(45,30);ctx.stroke();Lb('TÚ',0,125,38,INK)});
+  arrow(300,470,640,470,RD,eio(prog(t,7.8,8.8)));pop(t,8.8,810,470,()=>mbox(0,0,380,220,RD,'BRÓKER',54));
+  card(t,10.0,690,150,RD,'Spread fijo, lo fija el bróker','«fixed spreads, determined by the broker»',38);
+  card(t,11.4,880,150,BL,'Sin comisión','según BrokerChooser',42);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'ECN',GR);
+  pop(t,14.2,200,470,()=>{ctx.strokeStyle=INK;ctx.lineWidth=9;ctx.beginPath();ctx.arc(0,-30,34,0,7);ctx.stroke();ctx.beginPath();ctx.moveTo(0,4);ctx.lineTo(0,80);ctx.moveTo(-45,30);ctx.lineTo(45,30);ctx.stroke();Lb('TÚ',0,125,38,INK)});
+  arrow(300,470,520,470,GR,eio(prog(t,14.8,15.8)));
+  [0,1,2,3].forEach(i=>pop(t,15.8+i*.25,680+(i%2)*190,380+Math.floor(i/2)*180,()=>mbox(0,0,170,110,GR,'LP'+(i+1),36)));
+  Lb('red de proveedores de liquidez (ilustrativo)',620,690,28,MU,eout(prog(t,17,17.6)));
+  card(t,17.6,770,150,GR,'Spread variable y estrecho','«floating spreads, determined by the market»',36);
+  card(t,19.0,960,150,BL,'Comisión fija','por operación',42);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'EL CONFLICTO DE INTERÉS',OR);
+  pop(t,21.4,540,430,()=>{mbox(0,0,860,200,RD,'',1);Lb('Market maker: puede tomar',0,-35,44,RD);Lb('el otro lado de tu posición',0,30,44,RD)});
+  arrow(540,560,540,680,OR,eio(prog(t,23.6,24.4)));
+  pop(t,24.4,540,820,()=>{mbox(0,0,860,200,GR,'',1);Lb('ECN: el bróker no opera',0,-35,44,GR);Lb('contra sus clientes',0,30,44,GR)});
+  Lb('fuente: BrokerChooser',540,1010,28,MU,eout(prog(t,26.4,27)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'PERO EL ECN TAMBIÉN TIENE COSTOS',OR);
+  card(t,29.4,300,160,BL,'Comisión por operación','«there is a commission involved»',40);
+  card(t,31.0,500,160,RD,'Sin fills garantizados','«no guaranteed fills»',42);
+  card(t,32.6,700,160,OR,'Ojo con el "STP"','algunos dicen ser STP y actúan como market maker',34);
+  Lb('(Finance Magnates, 2009: puede estar desactualizado)',540,950,26,MU,eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LO QUE IMPORTA PARA UN ROBOT',BL);
+  card(t,36.4,300,170,BL,'Costo total','spread + comisión',44);
+  card(t,38.2,520,170,GR,'Velocidad y reglas de ejecución','slippage, requotes, fills',38);
+  card(t,40.0,740,170,OR,'Pruébalo en cuenta demo','antes de usar dinero real',40);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=BL;RR(-330,-60,660,120,60);ctx.fill();Lb('COMPARA EL COSTO TOTAL',0,0,36,'#fff')});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Conoce cómo ejecuta tu bróker','Mide el costo total, no solo el spread',BL,GR);ctx.save();ctx.globalAlpha=a;Lb('Fuentes: BrokerChooser · Finance Magnates',60,1360,26,BL,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('ECN vs MARKET MAKER',540,230,64,BL,1);mbox(250,470,380,200,RD,'MM',90);mbox(830,470,380,200,GR,'ECN',90);Lb('VS',540,470,56,OR,1);
+  Lb('¿CONTRA',540,800,170,INK,1);Lb('QUIÉN OPERAS?',540,980,110,RD,1);Lb('tu bróker puede ser tu contraparte',540,1130,40,MU,1);coverBtn('VER LA DIFERENCIA →',BL,'#fff')}
+</script></body></html>
