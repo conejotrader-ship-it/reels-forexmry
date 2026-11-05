@@ -1,0 +1,47 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 3 (4.º uso): neón synthwave — tema: Edward Thorp y Princeton Newport Partners (60 s). Paleta noche azul con sol amarillo-magenta, lima y cian.
+const SPEC={"name": "Ed Thorp", "hook": "EDWARD THORP: DEL BLACKJACK AL MERCADO", "dur": 60, "cta": 56, "bpm": 112, "mus": "soft", "prog": [[40, "m"], [36, "M"], [43, "m"], [38, "M"]],"ev":[[0.3,'rise',2.4],[2.0,'ding'],[2.5,'ding'],[3.0,'ding'],[3.5,'ding'],[4.0,'hit'],[6.4,'wipe'],[8.0,'hit'],[10.0,'ding'],[13.6,'wipe'],[15.0,'ding'],[17.0,'down'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'alert'],[32.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],"subs":[[0.2, 6.0, "Edward Thorp pasó del blackjack al mercado. Su libro Beat the Dealer, de 1962, se basó en el criterio de Kelly.", "Edward Thorp pasó del blackjack al mercado. Su libro Beat the Dealer, de mil novecientos sesenta y dos, se basó en el criterio de Kelly."], [6.4, 13.4, "De 1969 a 1989 dirigió Princeton Newport Partners, un fondo de arbitraje que usaba programas de computadora.", "De mil novecientos sesenta y nueve a mil novecientos ochenta y nueve dirigió Princeton Newport Partners, un fondo de arbitraje que usaba programas de computadora."], [13.6, 20.4, "Según MoneyWeek, mil dólares de 1969 habrían llegado a 13.920 a fines de 1988, frente a 6.450 del S&P 500.", "Según MoneyWeek, mil dólares de mil novecientos sesenta y nueve habrían llegado a trece mil novecientos veinte a fines de mil novecientos ochenta y ocho, frente a seis mil cuatrocientos cincuenta del S&P quinientos."], [20.6, 28.2, "MoneyWeek dice que nunca tuvo un año con pérdidas. Otra fuente habla de 20 % anual: las cifras difieren.", "MoneyWeek dice que nunca tuvo un año con pérdidas. Otra fuente habla de veinte por ciento anual: las cifras difieren."], [28.4, 35.0, "Según Wikipedia, una investigación federal ligada al círculo de Milken llevó a liquidar el fondo. Thorp fue liberado de culpa.", "Según Wikipedia, una investigación federal ligada al círculo de Milken llevó a liquidar el fondo. Thorp fue liberado de culpa."], [35.2, 43.4, "Para tu robot: el tamaño de la posición importa tanto como la señal. Kelly sirve de guía, pero exige estimar bien tu ventaja.", "Para tu robot: el tamaño de la posición importa tanto como la señal. Kelly sirve de guía, pero exige estimar bien tu ventaja."], [43.6, 49.6, "Fuentes: Wikipedia y MoneyWeek; cifras de prensa que difieren. Contenido educativo, no es asesoría financiera.", "Fuentes: Wikipedia y MoneyWeek; cifras de prensa que difieren. Contenido educativo, no es asesoría financiera."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const NV='#050b1f',NV2='#140a3a',LM='#39ff88',MG='#ff3df2',CY='#27e0ff',YL='#ffe14d',CR='#f2f4ff',MU='#9aa6d9',DK='#050b1f',ACC='#39ff88';
+const STY={subFont:'800 42px Inter',subBg:'rgba(5,11,31,.95)',subStroke:MG,subFill:'#fff',ctaBg:NV,ctaSub:'#fff',ctaGlow:MG,ctaAccent:LM,ctaBtnText:NV,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+Object.assign(ST,{txt:'#fff',mu:MU,acc:LM,pn:'#1a1250',c:[LM,MG,CY,YL]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(26,18,80,.88)';RR(x,y,w,h,18);ctx.fill();ctx.shadowColor=col;ctx.shadowBlur=18;ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,18);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,NV);g.addColorStop(.55,NV2);g.addColorStop(1,'#2a0a4a');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const hy=1250;ctx.save();ctx.beginPath();ctx.arc(540,hy-60,300,Math.PI,0);const sg=ctx.createLinearGradient(0,hy-360,0,hy);sg.addColorStop(0,YL);sg.addColorStop(1,MG);ctx.fillStyle=sg;ctx.globalAlpha=.55;ctx.fill();ctx.restore();
+  ctx.save();ctx.strokeStyle=CY;ctx.lineWidth=2;ctx.globalAlpha=.35;for(let i=-10;i<=10;i++){ctx.beginPath();ctx.moveTo(540+i*40,hy);ctx.lineTo(540+i*360,H);ctx.stroke()}
+  for(let k=0;k<12;k++){const p=((k+(t*.5)%1)/12),y=hy+Math.pow(p,2.2)*(H-hy);ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.fillStyle=MG;ctx.fillRect(0,0,W,10)};
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('EDWARD O. THORP',540,235,50,LM,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,520,'1962',360,CR);Lb('Beat the Dealer',540,760,64,MG,eout(prog(t,2.2,2.8)));
+  Lb('del blackjack al mercado',540,860,44,CY,eout(prog(t,3.2,3.8)));Lb('basado en el criterio de Kelly',540,930,36,CR,eout(prog(t,4.2,4.8)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'PRINCETON NEWPORT PARTNERS',LM);
+  bigNum(t,7.0,540,500,'1969 – 1989',150,CR);
+  const x0=110,x1=970,y=700,k=eio(prog(t,8.4,11));line(x0,y,x1,y,'rgba(255,255,255,.2)',12);line(x0,y,lerp(x0,x1,k),y,LM,12);
+  Lb('1969',x0,y-60,38,CR,eout(prog(t,8.4,9)),'left');Lb('1989',x1,y-60,38,CR,eout(prog(t,10.6,11.2)),'right');
+  card(t,11.6,860,150,CY,'Arbitraje con programas de computadora','según MoneyWeek',36);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'NOV. 1969 – FIN DE 1988',LM);
+  barsV(t,14.6,[['el fondo',.93,LM,'$13.920'],['S&P 500',.43,MG,'$6.450']],160,320,760,520,120,56);
+  Lb('de $1.000 invertidos (≈ 15,1 % vs 10,2 % anual)',540,950,34,CR,eout(prog(t,18,18.6)));Lb('fuente: MoneyWeek · cifras reportadas',540,1010,28,MU,eout(prog(t,18.6,19.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LAS CIFRAS DIFIEREN',YL);
+  card(t,21.6,300,170,LM,'«Nunca un año con pérdidas»','según MoneyWeek, incluso en 1974',40);
+  card(t,23.6,520,170,CY,'≈ 15,1 % anual (MoneyWeek)','vs ≈ 20 % tras comisiones (Wikipedia)',38);
+  card(t,25.6,740,170,MG,'Medidas distintas','años vs trimestres: no verificado aquí',38);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EL FINAL DEL FONDO',MG);
+  card(t,29.4,300,170,MG,'Investigación federal','ligada al círculo de Michael Milken',40);
+  card(t,31.2,520,170,CY,'El fondo se liquidó','según Wikipedia, 1989',42);
+  card(t,33.0,740,170,LM,'Thorp fue liberado de culpa','según Wikipedia',40);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LA LECCIÓN PARA TU ROBOT',LM);
+  card(t,36.2,300,170,LM,'Tamaño de posición = señal','importan igual',44);
+  card(t,38.0,520,170,CY,'Kelly es una guía','exige estimar bien tu ventaja',42);
+  card(t,39.8,740,170,MG,'Pasado ≠ futuro','sin garantías de rendimiento',42);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=LM;RR(-330,-60,660,120,60);ctx.fill();Lb('RIESGO PRIMERO',0,0,52,NV)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Un buen historial no es garantía','Mide el tamaño de tu riesgo',LM,CY);ctx.save();ctx.globalAlpha=a;Lb('Fuentes: Wikipedia · MoneyWeek (cifras de prensa)',60,1360,26,LM,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('ED THORP · 1969 – 1988',540,230,56,LM,1);Lb('$1.000',540,470,200,CR,1);Lb('→ $13.920',540,680,150,LM,1);Lb('frente a $6.450 del S&P 500',540,840,48,MG,1);Lb('según MoneyWeek',540,920,34,MU,1);coverBtn('VER SU HISTORIA →',LM,NV)}
+</script></body></html>

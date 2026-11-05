@@ -1,0 +1,50 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 2 (4.º uso): infografía de tarjetas — tema: entrega física del futuro de oro GC (60 s). Paleta lavanda con morado, rosa, turquesa y amarillo.
+const SPEC={"name": "Entrega física GC", "hook": "FUTURO DE ORO GC: 100 ONZAS Y ENTREGA FÍSICA", "dur": 60, "cta": 56, "bpm": 100, "mus": "soft", "prog": [[38, "M"], [43, "m"], [41, "M"], [45, "m"]],"ev":[[0.3,'rise',2.4],[2.0,'ding'],[2.5,'ding'],[3.0,'ding'],[3.5,'ding'],[4.0,'hit'],[6.4,'wipe'],[8.0,'hit'],[10.0,'ding'],[13.6,'wipe'],[15.0,'ding'],[17.0,'down'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'alert'],[32.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],"subs":[[0.2, 6.0, "Un futuro de oro GC de COMEX es de 100 onzas troy y, si lo mantienes hasta el final, puede acabar en entrega física.", "Un futuro de oro GC de COMEX es de cien onzas troy y, si lo mantienes hasta el final, puede acabar en entrega física."], [6.4, 13.4, "La entrega sigue tres pasos: día de intención, día de aviso y factura, y día de entrega.", "La entrega sigue tres pasos: día de intención, día de aviso y factura, y día de entrega."], [13.6, 20.4, "El vendedor presenta warrants. El comprador recibe un warrant electrónico en Deliveries Plus y paga la factura.", "El vendedor presenta warrants. El comprador recibe un warrant electrónico en Deliveries Plus y paga la factura."], [20.6, 28.2, "La entrega no ocurre directamente entre las cuentas: se hace entre miembros de la cámara de compensación.", "La entrega no ocurre directamente entre las cuentas: se hace entre miembros de la cámara de compensación."], [28.4, 35.0, "La barra: de 100 onzas, o tres de 1 kilo, con pureza mínima de 995 milésimas.", "La barra: de cien onzas, o tres de un kilo, con pureza mínima de novecientas noventa y cinco milésimas."], [35.2, 43.4, "Muchos traders cierran o pasan su posición al siguiente vencimiento antes de la entrega. Revisa el calendario de CME.", "Muchos traders cierran o pasan su posición al siguiente vencimiento antes de la entrega. Revisa el calendario de CME."], [43.6, 49.6, "Fuente: CME Group, entrega física de metales preciosos, 2025. Contenido educativo, no es asesoría financiera.", "Fuente: CME Group, entrega física de metales preciosos, dos mil veinticinco. Contenido educativo, no es asesoría financiera."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const LV='#efeaff',IN='#1d1840',PU='#6c4cf1',PK='#ff4f8b',TQ='#00a99d',YL='#ffb800',MU='#5d5a86',DK='#1d1840',ACC='#ffb800';
+const STY={subFont:'800 42px Inter',subBg:'rgba(29,24,64,.95)',subStroke:YL,subFill:'#fff',ctaBg:IN,ctaSub:'#fff',ctaGlow:YL,ctaAccent:YL,ctaBtnText:IN,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+Object.assign(ST,{txt:IN,mu:MU,acc:PU,pn:'#ffffff',c:[PU,PK,TQ,YL]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#fff';ctx.shadowColor='rgba(60,40,140,.18)';ctx.shadowBlur=18;RR(x,y,w,h,26);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle=col;RR(x,y,16,h,8);ctx.fill();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=LV;ctx.fillRect(0,0,W,H);[[90,300,260,PU],[1000,820,300,PK],[160,1250,220,TQ],[930,1500,200,YL]].forEach(([x,y,r,c],i)=>{ctx.save();ctx.globalAlpha=.12;ctx.fillStyle=c;ctx.beginPath();ctx.arc(x+Math.sin(t*.4+i)*30,y+Math.cos(t*.35+i)*30,r,0,7);ctx.fill();ctx.restore()});ctx.fillStyle=PU;ctx.fillRect(0,0,W,10)};
+function bar(cx,cy,w,h,lab){ctx.save();ctx.translate(cx,cy);const g=ctx.createLinearGradient(0,-h/2,0,h/2);g.addColorStop(0,'#ffe27a');g.addColorStop(1,'#e0a400');ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(-w/2+40,-h/2);ctx.lineTo(w/2-40,-h/2);ctx.lineTo(w/2,h/2);ctx.lineTo(-w/2,h/2);ctx.closePath();ctx.fill();ctx.strokeStyle='#a97800';ctx.lineWidth=6;ctx.stroke();ctx.restore();if(lab)Lb(lab,cx,cy,Math.min(70,h*.4),'#6b4a00')}
+function step(t,t0,n,y,col,l1,l2){pop(t,t0,130,y,()=>{ctx.fillStyle=col;ctx.beginPath();ctx.arc(0,0,60,0,7);ctx.fill();Lb(String(n),0,3,70,'#fff')});slide(t,t0+.2,()=>{panel(230,y-70,780,140,col);Lb(l1,270,y-18,40,IN,1,'left');Lb(l2,270,y+34,30,col,1,'left')})}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('FUTUROS DE ORO · COMEX',540,235,50,PU,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,520,'100 OZ',230,IN);Lb('un contrato GC = 100 onzas troy',540,740,40,PK,eout(prog(t,2.2,2.8)));
+  pop(t,3.0,540,1010,()=>bar(0,0,560,230,'GC'));Lb('(barra ilustrativa)',540,1190,26,MU,eout(prog(t,4.6,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'LA ENTREGA EN 3 PASOS',PU);
+  step(t,7.2,1,420,PU,'Día de intención de entrega','el vendedor avisa que entregará');
+  step(t,9.2,2,640,PK,'Día de aviso y factura','facturas a la mañana siguiente');
+  step(t,11.2,3,860,TQ,'Día de entrega','cualquier día hábil del mes');
+  Lb('fuente: CME Group (enero 2025)',540,1060,28,MU,eout(prog(t,12.4,13)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'WARRANTS Y FACTURA',PU);
+  pop(t,14.2,200,520,()=>{panel(-150,-90,300,180,PU);Lb('VENDEDOR',0,0,32,IN)});
+  pop(t,15.4,880,520,()=>{panel(-150,-90,300,180,PK);Lb('COMPRADOR',0,0,32,IN)});
+  const k=eio(prog(t,16.4,18.2));ctx.save();ctx.strokeStyle=YL;ctx.lineWidth=10;ctx.setLineDash([22,14]);ctx.beginPath();ctx.moveTo(360,520);ctx.lineTo(lerp(360,720,k),520);ctx.stroke();ctx.restore();
+  Lb('warrant',540,470,38,PU,eout(prog(t,16.6,17.2)));Lb('factura',540,590,38,PK,eout(prog(t,18.2,18.8)));
+  card(t,19.0,720,150,TQ,'Warrant electrónico en Deliveries Plus','el comprador lo recibe y paga',34);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'NO ES ENTRE CUENTAS',PU);
+  pop(t,21.4,200,480,()=>{panel(-130,-80,260,160,PU);Lb('TU CUENTA',0,0,30,IN)});pop(t,21.9,880,480,()=>{panel(-130,-80,260,160,PK);Lb('OTRA CUENTA',0,0,28,IN)});
+  const x=eout(prog(t,22.8,23.4));if(x>.02){ctx.save();ctx.globalAlpha*=x;ctx.strokeStyle='#e5383b';ctx.lineWidth=14;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(500,440);ctx.lineTo(580,520);ctx.moveTo(580,440);ctx.lineTo(500,520);ctx.stroke();ctx.restore()}
+  Lb('sin entrega directa',540,600,40,'#e5383b',eout(prog(t,23.2,23.8)));
+  card(t,24.4,720,170,YL,'Entre miembros de la cámara','«NOT directly between account holders»',34);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'LA BARRA',PU);
+  pop(t,29.0,540,520,()=>bar(0,0,620,300,'100 oz'));
+  card(t,30.6,760,150,PU,'1 barra de 100 oz o 3 de 1 kg','1 contrato = 1 × 100 oz',38);
+  card(t,32.2,950,150,TQ,'Pureza mínima: 995','milésimas (fineness)',42);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'QUÉ HACER',PU);
+  card(t,36.4,300,170,PU,'Cierra o pasa tu posición','al siguiente vencimiento antes de la entrega',36);
+  card(t,38.2,520,170,PK,'Revisa el calendario de CME','fechas exactas de cada contrato',38);
+  card(t,40.0,740,170,TQ,'Cada bróker tiene sus reglas','pregunta antes de operar futuros',38);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=PU;RR(-330,-60,660,120,60);ctx.fill();Lb('SABER ANTES DE OPERAR',0,0,40,'#fff')});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Un futuro puede terminar en oro','Conoce las fechas y las reglas',PU,TQ);ctx.save();ctx.globalAlpha=a;Lb('Fuente: CME Group (physical delivery process, 2025)',60,1360,26,PU,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('FUTURO DE ORO · COMEX',540,230,60,PU,1);Lb('100 OZ',540,500,230,IN,1);Lb('¿Y SI NO CIERRAS?',540,760,84,PK,1);
+  bar(540,1050,620,260,'');Lb('GC',540,1050,100,'#6b4a00',1);coverBtn('VER EL PROCESO →',PU,'#fff')}
+</script></body></html>

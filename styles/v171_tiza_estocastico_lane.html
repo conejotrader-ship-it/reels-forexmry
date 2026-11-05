@@ -1,0 +1,50 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 4 (4.º uso): pizarra con tiza — tema: oscilador estocástico de George Lane (60 s). Paleta pizarra grafito con tiza amarilla, rosa, azul y verde.
+const SPEC={"name": "Estocástico", "hook": "OSCILADOR ESTOCÁSTICO: %K Y %D", "dur": 60, "cta": 56, "bpm": 106, "mus": "soft", "prog": [[41, "M"], [38, "m"], [43, "M"], [45, "m"]],"ev":[[0.3,'rise',2.4],[2.0,'ding'],[2.5,'ding'],[3.0,'ding'],[3.5,'ding'],[4.0,'hit'],[6.4,'wipe'],[8.0,'hit'],[10.0,'ding'],[13.6,'wipe'],[15.0,'ding'],[17.0,'down'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'alert'],[32.0,'ding'],[35.2,'wipe'],[37.0,'ding'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],"subs":[[0.2, 6.0, "El oscilador estocástico lo desarrolló George Lane a finales de los años 50. Compara el cierre con el rango reciente.", "El oscilador estocástico lo desarrolló George Lane a finales de los años cincuenta. Compara el cierre con el rango reciente."], [6.4, 13.4, "La línea %K mide dónde cerró el precio dentro del rango entre el mínimo y el máximo de los últimos N períodos.", "La línea porcentaje K mide dónde cerró el precio dentro del rango entre el mínimo y el máximo de los últimos N períodos."], [13.6, 20.4, "N suele ser 5, 9 o 14. Si el precio cierra cerca del máximo, %K es alto; cerca del mínimo, es bajo.", "N suele ser cinco, nueve o catorce. Si el precio cierra cerca del máximo, K es alto; cerca del mínimo, es bajo."], [20.6, 28.2, "%D es la media simple de 3 períodos de %K: la línea más lenta, que suaviza la señal.", "D es la media simple de tres períodos de K: la línea más lenta, que suaviza la señal."], [28.4, 35.0, "La idea, según Wikipedia: los precios tienden a cerrar cerca de los extremos del rango justo antes de un giro.", "La idea, según Wikipedia: los precios tienden a cerrar cerca de los extremos del rango justo antes de un giro."], [35.2, 43.4, "Como todo oscilador, puede dar señales tempranas en tendencias fuertes. Úsalo con contexto y control de riesgo.", "Como todo oscilador, puede dar señales tempranas en tendencias fuertes. Úsalo con contexto y control de riesgo."], [43.6, 49.6, "Fuente: Wikipedia, Stochastic oscillator. Gráficos ilustrativos. Educativo, no es asesoría financiera.", "Fuente: Wikipedia, Stochastic oscillator. Gráficos ilustrativos. Educativo, no es asesoría financiera."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const BK='#1f2a2b',BK2='#141c1d',CH='#f4f1e8',YC='#ffd166',PC='#ff8fab',BC='#8ecae6',GC='#95d5b2',MU='#a9b8b3',DK='#141c1d',ACC='#ffd166';
+const STY={subFont:'800 42px Inter',subBg:'rgba(20,28,29,.95)',subStroke:YC,subFill:'#fff',ctaBg:BK2,ctaSub:'#fff',ctaGlow:YC,ctaAccent:YC,ctaBtnText:BK2,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+Object.assign(ST,{txt:CH,mu:MU,acc:YC,pn:'#2a3839',c:[YC,PC,BC,GC]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(244,241,232,.07)';RR(x,y,w,h,14);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.setLineDash([26,6,10,6]);RR(x,y,w,h,14);ctx.stroke();ctx.restore()};
+const SM=(()=>{const r=rng(4);return Array.from({length:40},()=>({x:r()*W,y:r()*H,w:60+r()*220,a:r()*.06}))})();
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,BK);g.addColorStop(1,BK2);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.fillStyle=CH;SM.forEach(s=>{ctx.globalAlpha=s.a;ctx.fillRect(s.x,s.y,s.w,10)});ctx.restore();
+  ctx.lineWidth=26;ctx.strokeStyle='#7a5a3a';ctx.strokeRect(13,13,W-26,H-26);ctx.fillStyle=YC;ctx.fillRect(0,0,W,10)};
+function rng2(t,t0,x,y,w,h,hi,lo,cl){const k=eout(prog(t,t0,t0+.8));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;line(x,y,x,y+h,CH,6);line(x-34,y,x+34,y,CH,6);line(x-34,y+h,x+34,y+h,CH,6);
+  const cy=y+h*(1-cl);ctx.fillStyle=YC;ctx.beginPath();ctx.arc(x,cy,22,0,7);ctx.fill();ctx.restore();Lb('máx. N',x+60,y,30,PC,k,'left');Lb('mín. N',x+60,y+h,30,BC,k,'left');Lb('cierre',x+40,cy,30,YC,k,'left')}
+const KP=[[0,.55],[.1,.8],[.2,.95],[.3,.7],[.4,.4],[.5,.15],[.6,.3],[.7,.6],[.8,.85],[.9,.7],[1,.5]],DP=[[0,.5],[.1,.6],[.2,.8],[.3,.8],[.4,.6],[.5,.35],[.6,.25],[.7,.4],[.8,.65],[.9,.7],[1,.62]];
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('GEORGE LANE · AÑOS 50',540,235,50,YC,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,520,'%K · %D',190,CH);Lb('el oscilador estocástico',540,740,56,PC,eout(prog(t,2.2,2.8)));
+  lineChart(t,3.0,5.0,KP,150,860,780,300,YC,9);lineChart(t,3.4,5.4,DP,150,860,780,300,PC,9);Lb('(ilustrativo)',540,1230,26,MU,eout(prog(t,5,5.5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'¿QUÉ MIDE %K?',YC);
+  rng2(t,7.0,170,300,0,420,1,0,.85);
+  pop(t,9.0,730,420,()=>{panel(-290,-120,580,240,BC);Lb('%K =',-230,-50,50,YC,1,'left');Lb('(cierre − mín.)',-230,20,40,CH,1,'left');Lb('÷ (máx. − mín.)',-230,76,40,CH,1,'left')});
+  Lb('posición del cierre dentro del rango',540,860,36,CH,eout(prog(t,10.6,11.2)));Lb('fuente: Wikipedia',540,930,28,MU,eout(prog(t,11.4,12)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'N: EL PERÍODO',YC);
+  [5,9,14].forEach((n,i)=>pop(t,14.2+i*.5,210+i*330,430,()=>{ctx.fillStyle=[PC,BC,GC][i];ctx.beginPath();ctx.arc(0,0,110,0,7);ctx.fill();Lb(String(n),0,4,100,BK2)}));
+  Lb('valores típicos',540,600,38,MU,eout(prog(t,16,16.6)));
+  card(t,16.8,700,150,GC,'Cierra cerca del máximo','%K alto',44);card(t,18.4,880,150,PC,'Cierra cerca del mínimo','%K bajo',44);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'%D: LA LÍNEA LENTA',YC);
+  lineChart(t,21.4,24.4,KP,110,300,860,400,YC,9);lineChart(t,22.2,25.2,DP,110,300,860,400,PC,9);
+  Lb('%K (rápida)',140,260,32,YC,eout(prog(t,22,22.6)),'left');Lb('%D (suavizada)',940,260,32,PC,eout(prog(t,23,23.6)),'right');
+  card(t,25.6,780,150,BC,'%D = media simple de 3 períodos de %K','suaviza la señal',34);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'LA IDEA DETRÁS',YC);
+  pop(t,29.2,540,480,()=>{panel(-440,-170,880,340,YC);Lb('«Prices tend to close near',0,-70,46,CH);Lb('the extremes of the recent range',0,-10,46,CH);Lb('just before turning points»',0,50,46,CH)});
+  Lb('Wikipedia · es una hipótesis, no una regla',540,780,34,MU,eout(prog(t,31.6,32.2)));
+  card(t,32.4,880,150,PC,'Compara el cierre con su rango','no con el precio solo',38);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'CÓMO USARLO',YC);
+  card(t,36.2,300,170,PC,'Puede dar señales tempranas','sobre todo en tendencias fuertes',40);
+  card(t,38.0,520,170,BC,'Úsalo con contexto','tendencia, niveles, volatilidad',40);
+  card(t,39.8,740,170,GC,'Pasado ≠ futuro','sin garantías de rendimiento',42);
+  pop(t,41.4,540,1100,()=>{ctx.fillStyle=YC;RR(-330,-60,660,120,60);ctx.fill();Lb('CONTEXTO + RIESGO',0,0,48,BK2)});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Estocástico: mide posición en el rango','No es una orden de compra o venta',YC,BC);ctx.save();ctx.globalAlpha=a;Lb('Fuente: Wikipedia (Stochastic oscillator)',60,1360,26,YC,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('GEORGE LANE · AÑOS 50',540,230,56,YC,1);Lb('%K · %D',540,500,180,CH,1);Lb('¿CERCA DEL EXTREMO?',540,740,70,PC,1);
+  lineChart(99,-10,0,KP,150,830,780,320,YC,9);lineChart(99,-10,0,DP,150,830,780,320,PC,9);coverBtn('VER CÓMO FUNCIONA →',YC,BK2)}
+</script></body></html>
