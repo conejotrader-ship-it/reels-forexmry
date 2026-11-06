@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 10 (4.º uso): tablero de barras a escala — tema: 5 pares de divisas más negociados, BIS 2025 (60 s). Paleta azul marino con barras esmeralda, oro, azul, coral y violeta.
+const SPEC={"name": "Pares más negociados", "hook": "LOS CINCO PARES MÁS NEGOCIADOS", "dur": 60, "cta": 56, "bpm": 108, "mus": "soft", "prog": [[40, "m"], [45, "M"], [43, "m"], [38, "M"]], "ev": [[0.3, "rise", 2.4], [2.0, "ding"], [2.5, "ding"], [3.0, "ding"], [3.5, "ding"], [4.0, "hit"], [6.4, "wipe"], [8.0, "hit"], [10.0, "ding"], [13.6, "wipe"], [15.0, "ding"], [17.0, "down"], [20.6, "wipe"], [22.0, "ding"], [24.0, "hit"], [28.4, "wipe"], [30.0, "alert"], [32.0, "ding"], [35.2, "wipe"], [37.0, "ding"], [39.0, "ding"], [41.0, "ding"], [43.6, "wipe"], [45.2, "ding"], [49.8, "wipe"], [51.0, "ding"], [52.2, "ding"], [53.4, "ding"], [54.6, "ding"], [56.2, "cta"]], "subs": [[0.2, 6.0, "Los 5 pares de divisas más negociados del mundo, según el BIS en 2025.", "Los cinco pares de divisas más negociados del mundo, según el BIS en dos mil veinticinco."], [6.4, 13.4, "Quinto: dólar y dólar canadiense, 5,3 % del volumen.", "Quinto: dólar y dólar canadiense, cinco coma tres por ciento del volumen."], [13.6, 20.4, "Cuarto: libra esterlina contra dólar, 7,6 %. El famoso cable.", "Cuarto: libra esterlina contra dólar, siete coma seis por ciento. El famoso cable."], [20.6, 28.2, "Tercero: dólar contra yuan chino, 8,1 %, por delante de la libra.", "Tercero: dólar contra yuan chino, ocho coma uno por ciento, por delante de la libra."], [28.4, 35.0, "Segundo: dólar contra yen japonés, 14,3 % del total.", "Segundo: dólar contra yen japonés, catorce coma tres por ciento del total."], [35.2, 43.4, "Primero: euro contra dólar, 21,2 %. Más de una quinta parte del mercado.", "Primero: euro contra dólar, veintiuno coma dos por ciento. Más de una quinta parte del mercado."], [43.6, 49.6, "Fuente: BIS vía Compare Forex Brokers. Cifras aproximadas. Educativo, no es asesoría financiera.", "Fuente: BIS vía Compare Forex Brokers. Cifras aproximadas. Educativo, no es asesoría financiera."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const NV1='#071530',NV2='#0d2347',TX='#f4f8ff',MU3='#9fb4d6',EM='#2ee59d',GD='#ffc857',SK='#58a6ff',CO='#ff6b6b',DK='#071530',ACC=EM;
+const STY={subFont:'800 42px Inter',subBg:'rgba(7,21,48,.96)',subStroke:EM,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:EM,ctaAccent:EM,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:TX,mu:MU3,acc:EM,pn:'#102a52',c:[EM,GD,SK,CO]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(88,166,255,.10)';RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,18);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,NV1);g.addColorStop(1,NV2);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.save();for(let i=0;i<=5;i++){const x=300+i*120;line(x,250,x,1240,'rgba(159,180,214,.14)',2)}ctx.restore();ctx.fillStyle=EM;ctx.fillRect(0,0,W,10)};
+const PR=[['EUR/USD',21.2,EM],['USD/JPY',14.3,GD],['USD/CNY',8.1,SK],['GBP/USD',7.6,CO],['USD/CAD',5.3,'#b794f6']];
+function board(t,t0,fromRank,dt=0){ // muestra rangos 5..fromRank; el actual se anima
+  ctx.save();ctx.globalAlpha*=1;for(let i=0;i<=5;i++){Lb(String(i*5)+' %',300+i*120,1262,26,MU3,1)}
+  for(let r=5;r>=fromRank;r--){const [nm,v,col]=PR[r-1];const cur=(r==fromRank);const k=cur?eout(prog(t,t0,t0+1.2)):1;if(k<=.01)continue;const y=330+(r-1)*200;
+    ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=col;ctx.beginPath();ctx.arc(150,y+60,46,0,7);ctx.fill();Lb(String(r),150,y+62,56,DK);
+    Lb(nm,300,y+4,44,TX,1,'left');const bw=v/25*600*k;ctx.fillStyle=col;RR(300,y+30,Math.max(30,bw),64,14);ctx.fill();Lb(String(v).replace('.',',')+' %',300+Math.max(30,bw)+18,y+64,50,TX,1,'left');ctx.restore()}
+  ctx.restore()}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('BIS · ABRIL DE 2025',540,235,48,EM,eout(prog(t,.2,.8)));
+  Lb('LOS 5 PARES',540,470,130,TX,eout(prog(t,.8,1.5)));Lb('MÁS NEGOCIADOS',540,610,84,EM,eout(prog(t,1.4,2.1)));
+  Lb('% del volumen diario total del forex',540,740,40,MU3,eout(prog(t,2.6,3.2)));
+  ['EUR/USD','USD/JPY','USD/CNY','GBP/USD','USD/CAD'].forEach((s,i)=>pop(t,3.2+i*.35,540,900+i*105,()=>{ctx.fillStyle=PR[i][2];RR(-250,-40,500,80,40);ctx.fill();Lb(s,0,2,44,DK)}));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EN CUENTA REGRESIVA',EM);Lb('% del volumen diario total · abril 2025',540,240,30,MU3,eout(prog(t,6.8,7.4)));board(t,7,5);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EN CUENTA REGRESIVA',EM);Lb('% del volumen diario total · abril 2025',540,240,30,MU3,1);board(t,14.2,4);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'EN CUENTA REGRESIVA',EM);Lb('% del volumen diario total · abril 2025',540,240,30,MU3,1);board(t,21.2,3);
+  Lb('el yuan supera a la libra',540,1330,34,SK,eout(prog(t,24,24.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EN CUENTA REGRESIVA',EM);Lb('% del volumen diario total · abril 2025',540,240,30,MU3,1);board(t,29,2);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'EL Nº 1',EM);Lb('% del volumen diario total · abril 2025',540,240,30,MU3,1);board(t,35.8,1);
+  card(t,38.8,1300,120,GD,'Más de 1/5 del mercado en un par','los 5 juntos ≈ 56,5 % (cálculo propio)',38);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'EUR/USD: ≈ 21,2 % del volumen','Cifras aproximadas del BIS',EM,GD);ctx.save();ctx.globalAlpha=a;Lb('Fuente: BIS (Triennial Survey 2025) vía Compare Forex Brokers y Capital.com',60,1360,24,SK,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('BIS · ABRIL DE 2025',540,230,50,EM,1);Lb('21,2 %',540,520,300,TX,1);Lb('DEL FOREX EN UN PAR',540,790,70,EM,1);
+  ctx.save();PR.forEach(([n,v,c],i)=>{const y=930+i*92;ctx.fillStyle=c;RR(150,y,v/25*780,64,14);ctx.fill();Lb(String(i+1),110,y+34,40,TX)});ctx.restore();coverBtn('VER EL RANKING →',EM,DK)}
+</script></body></html>

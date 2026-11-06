@@ -1,0 +1,52 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 9 (4.º uso): billete — tema: Ed Seykota (60 s). Billete antiguo sepia con guilloche verde y dorado, sellos rojos. Cifra atribuida a Market Wizards, no verificada.
+const SPEC={"name": "Ed Seykota", "hook": "ED SEYKOTA: CINCO MIL A QUINCE MILLONES", "dur": 60, "cta": 56, "bpm": 100, "mus": "soft", "prog": [[43, "m"], [40, "M"], [45, "m"], [38, "M"]], "ev": [[0.3, "rise", 2.4], [2.0, "ding"], [2.5, "ding"], [3.0, "ding"], [3.5, "ding"], [4.0, "hit"], [6.4, "wipe"], [8.0, "hit"], [10.0, "ding"], [13.6, "wipe"], [15.0, "ding"], [17.0, "down"], [20.6, "wipe"], [22.0, "ding"], [24.0, "hit"], [28.4, "wipe"], [30.0, "alert"], [32.0, "ding"], [35.2, "wipe"], [37.0, "ding"], [39.0, "ding"], [41.0, "ding"], [43.6, "wipe"], [45.2, "ding"], [49.8, "wipe"], [51.0, "ding"], [52.2, "ding"], [53.4, "ding"], [54.6, "ding"], [56.2, "cta"]], "subs": [[0.2, 6.0, "Ed Seykota: 5.000 dólares convertidos en 15 millones, según Market Wizards. Dato no auditado.", "Ed Seykota: cinco mil dólares convertidos en quince millones, según Market Wizards. Dato no auditado."], [6.4, 13.4, "Escribió programas en tarjetas perforadas para probar ideas de seguimiento de tendencia, como las de Donchian.", "Escribió programas en tarjetas perforadas para probar ideas de seguimiento de tendencia, como las de Donchian."], [13.6, 20.4, "Según Covel, creó el primer sistema computarizado comercial para dinero de clientes en futuros.", "Según Covel, creó el primer sistema computarizado comercial para dinero de clientes en futuros."], [20.6, 28.2, "La cifra viene de Market Wizards, de Jack Schwager: una cuenta de cliente, en 12 años. No está verificada.", "La cifra viene de Market Wizards, de Jack Schwager: una cuenta de cliente, en doce años. No está verificada de forma independiente."], [28.4, 35.0, "Una frase suya: «Ganes o pierdas, todos obtienen lo que quieren del mercado».", "Una frase suya: ganes o pierdas, todos obtienen lo que quieren del mercado."], [35.2, 43.4, "Y otra: arriesga solo lo que puedas perder, y arriesga lo bastante para que una ganancia importe.", "Y otra: arriesga solo lo que puedas perder, y arriesga lo bastante para que una ganancia importe."], [43.6, 49.6, "Fuente: Covel. Dato de prensa, no verificado. Educativo, no es asesoría financiera.", "Fuente: Covel. Dato de prensa, no verificado. Educativo, no es asesoría financiera."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const PAP='#efe3c2',PAP2='#e3d2a4',BRN='#3b2a1a',MU4='#7a6648',GRN='#2f6b4f',GLD='#b8892d',RED='#a4262c',BR2='#6b4423',DK='#2a1c10',ACC=GLD;
+const STY={subFont:'800 42px Inter',subBg:'rgba(42,28,16,.96)',subStroke:GLD,subFill:'#fff7e0',ctaBg:DK,ctaSub:'#fff7e0',ctaGlow:GLD,ctaAccent:GLD,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:BRN,mu:MU4,acc:RED,pn:'#f7efd6',c:[GRN,GLD,RED,BR2]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(59,42,26,.25)';RR(x+8,y+8,w,h,14);ctx.fill();ctx.fillStyle='#f7efd6';RR(x,y,w,h,14);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=BR2;ctx.stroke();ctx.lineWidth=2;ctx.strokeStyle=col;RR(x+10,y+10,w-20,h-20,8);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,PAP);g.addColorStop(1,PAP2);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.lineWidth=2;for(let k=0;k<26;k++){ctx.strokeStyle=k%2?'rgba(47,107,79,.16)':'rgba(184,137,45,.18)';ctx.beginPath();for(let x=0;x<=W;x+=12){const y=70+k*74+Math.sin(x/90+k*.7+t*.4)*26+Math.sin(x/37+k)*8;x?ctx.lineTo(x,y):ctx.moveTo(x,y)}ctx.stroke()}ctx.restore();
+  ctx.save();ctx.strokeStyle=BR2;ctx.lineWidth=10;ctx.strokeRect(22,22,W-44,H-44);ctx.lineWidth=3;ctx.strokeRect(44,44,W-88,H-88);ctx.restore()};
+function bill(x,y,w,h,den,col,sc=1){ctx.save();ctx.translate(x,y);ctx.fillStyle='rgba(59,42,26,.28)';RR(10,10,w,h,10);ctx.fill();ctx.fillStyle='#f4ecd0';RR(0,0,w,h,10);ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=col;ctx.stroke();ctx.lineWidth=2;RR(14,14,w-28,h-28,6);ctx.stroke();
+  ctx.save();ctx.strokeStyle=col;ctx.globalAlpha=.35;ctx.lineWidth=2;for(let i=0;i<14;i++){ctx.beginPath();ctx.ellipse(w/2,h/2,40+i*10,26+i*7,0,0,7);ctx.stroke()}ctx.restore();
+  Lb(den,w/2,h/2,Math.round(h*.38*sc),col);Lb('$',40,38,34,col,1,'left');Lb('$',w-40,h-38,34,col,1,'right');ctx.restore()}
+function punch(x,y,w,h,t0,t){const k=eout(prog(t,t0,t0+.8));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ctx.fillStyle='#f4e8c4';ctx.strokeStyle=BR2;ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(x+40,y);ctx.lineTo(x+w,y);ctx.lineTo(x+w,y+h);ctx.lineTo(x,y+h);ctx.lineTo(x,y+40);ctx.closePath();ctx.fill();ctx.stroke();
+  const R=rng(5);ctx.fillStyle=BRN;for(let c=0;c<20;c++)for(let r=0;r<6;r++){if(R()<.35)ctx.fillRect(x+30+c*(w-60)/20,y+40+r*(h-80)/6,(w-60)/20*.55,(h-80)/6*.5)}ctx.restore()}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('ED SEYKOTA · SEGÚN MARKET WIZARDS',540,235,42,RED,eout(prog(t,.2,.8)));
+  const k=eback(prog(t,.8,1.6));if(k>.02){ctx.save();ctx.translate(300,560);ctx.rotate(-.08);ctx.scale(k,k);ctx.translate(-190,-100);bill(0,0,380,200,'5.000',GRN);ctx.restore()}
+  Lb('→',540,760,110,GLD,eout(prog(t,2,2.6)));
+  const k2=eback(prog(t,2.6,3.4));if(k2>.02){ctx.save();ctx.translate(540,990);ctx.rotate(.03);ctx.scale(k2,k2);ctx.translate(-380,-150);bill(0,0,760,300,'15.000.000',BR2,.5);ctx.restore()}
+  Lb('12 años · una cuenta de cliente',540,1210,44,BRN,eout(prog(t,4,4.6)));Lb('dato de prensa, no auditado',540,1280,38,RED,eout(prog(t,4.6,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'TARJETAS PERFORADAS',RED);
+  punch(130,270,820,380,7,t);Lb('programas para probar ideas',540,720,46,BRN,eout(prog(t,8.6,9.2)));Lb('de seguimiento de tendencia',540,780,46,GRN,eout(prog(t,9.2,9.8)));
+  card(t,10.4,900,170,GLD,'Ideas de Richard Donchian','probadas con computador',42);Lb('fuente: Covel · trendfollowing.com',540,1130,28,MU4,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'UN PIONERO',RED);
+  card(t,14.2,280,220,GRN,'«Primer sistema computarizado','comercial para dinero de clientes»',40);
+  Lb('en futuros · según Covel',540,590,40,BRN,eout(prog(t,16.4,17)));
+  pop(t,17.4,540,800,()=>{ctx.fillStyle=GLD;ctx.beginPath();ctx.arc(0,0,130,0,7);ctx.fill();ctx.lineWidth=6;ctx.strokeStyle=BR2;ctx.stroke();Lb('1.º',0,0,110,DK)});
+  Lb('afirmación de la fuente',540,1020,34,MU4,eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LA CIFRA',RED);
+  pop(t,21.2,540,500,()=>{ctx.fillStyle=BR2;RR(-240,-210,480,420,12);ctx.fill();ctx.fillStyle='#f4ecd0';RR(-210,-180,420,360,8);ctx.fill();Lb('MARKET',0,-90,70,BR2);Lb('WIZARDS',0,-20,70,BR2);Lb('Jack Schwager',0,80,40,BRN)});
+  Lb('$5.000 → $15.000.000 en 12 años',540,830,46,BRN,eout(prog(t,23.8,24.4)));
+  pop(t,25.4,540,980,()=>{ctx.save();ctx.rotate(-.05);ctx.lineWidth=8;ctx.strokeStyle=RED;RR(-330,-70,660,140,14);ctx.stroke();Lb('NO VERIFICADO',0,0,70,RED);ctx.restore()});
+  Lb('una cuenta de cliente · sin auditoría independiente',540,1130,32,MU4,eout(prog(t,26.4,27)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'SUS FRASES',RED);
+  pop(t,29,540,560,()=>{panel(-440,-230,880,460,GRN);Lb('«Ganes o pierdas,',0,-110,58,BRN);Lb('todos obtienen lo que',0,-30,58,BRN);Lb('quieren del mercado»',0,50,58,BRN);Lb('— Ed Seykota (traducción libre)',0,150,30,MU4)});
+  Lb('«Para evitar pérdidas por vaivén,',540,900,40,BRN,eout(prog(t,32,32.6)));Lb('deja de operar» (whipsaw)',540,960,40,RED,eout(prog(t,32.6,33.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'GESTIÓN DEL RIESGO',RED);
+  card(t,36,280,200,RED,'«Arriesga solo lo que puedas perder»','Seykota (traducción libre)',42);
+  card(t,38.4,540,200,GRN,'«…y arriesga lo bastante','para que una ganancia importe»',42);
+  card(t,41,800,180,GLD,'Pasado ≠ futuro','sin garantías de rendimiento',44);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Anécdota: no verificada','Tu riesgo es lo que controlas',RED,GRN);ctx.save();ctx.globalAlpha=a;Lb('Fuente: Covel (trendfollowing.com) · dato de prensa',60,1360,26,GRN,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('ED SEYKOTA · 12 AÑOS',540,230,52,RED,1);
+  ctx.save();ctx.translate(540,520);ctx.rotate(-.05);bill(-260,-130,520,260,'5.000',GRN);ctx.restore();Lb('↓',540,760,90,GLD,1);
+  Lb('$15 MILLONES',540,900,120,BR2,1);ctx.save();ctx.translate(540,1100);ctx.rotate(-.04);ctx.lineWidth=8;ctx.strokeStyle=RED;RR(-400,-60,800,120,14);ctx.stroke();Lb('DATO NO AUDITADO',0,0,66,RED);ctx.restore();coverBtn('VER LA HISTORIA →',BR2,'#fff7e0')}
+</script></body></html>
