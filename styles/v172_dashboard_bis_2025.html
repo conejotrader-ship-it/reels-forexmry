@@ -1,0 +1,52 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 7 (4.º uso): dashboard claro con indicadores — tema: encuesta trienal del BIS 2025 (60 s). Paleta clara con teal, naranja e índigo.
+const SPEC={"name": "BIS 2025", "hook": "NUEVE COMA SEIS BILLONES AL DÍA", "dur": 60, "cta": 56, "bpm": 108, "mus": "soft", "prog": [[45, "m"], [41, "M"], [43, "M"], [38, "m"]], "ev": [[0.3, "rise", 2.4], [2.0, "ding"], [2.5, "ding"], [3.0, "ding"], [3.5, "ding"], [4.0, "hit"], [6.4, "wipe"], [8.0, "hit"], [10.0, "ding"], [13.6, "wipe"], [15.0, "ding"], [17.0, "down"], [20.6, "wipe"], [22.0, "ding"], [24.0, "hit"], [28.4, "wipe"], [30.0, "alert"], [32.0, "ding"], [35.2, "wipe"], [37.0, "ding"], [39.0, "ding"], [41.0, "ding"], [43.6, "wipe"], [45.2, "ding"], [49.8, "wipe"], [51.0, "ding"], [52.2, "ding"], [53.4, "ding"], [54.6, "ding"], [56.2, "cta"]], "subs": [[0.2, 6.0, "9,6 billones de dólares por día: así de grande es el forex, según el BIS.", "Nueve coma seis billones de dólares por día: así de grande es el forex, según el BIS."], [6.4, 13.4, "La encuesta trienal del BIS midió abril de 2025: 28 % más que en 2022.", "La encuesta trienal del BIS midió abril de dos mil veinticinco: veintiocho por ciento más que en dos mil veintidós."], [13.6, 20.4, "El dólar estuvo en un lado del 89 % de todas las operaciones de divisas.", "El dólar estuvo en un lado del ochenta y nueve por ciento de todas las operaciones de divisas."], [20.6, 28.2, "Los swaps de divisas movieron ≈ 4 billones por día, cerca del 31 % del total.", "Los swaps de divisas movieron unos cuatro billones por día, cerca del treinta y uno por ciento del total."], [28.4, 35.0, "El mercado al contado creció 42 % y los contratos a plazo, 60 %.", "El mercado al contado creció cuarenta y dos por ciento y los contratos a plazo, sesenta por ciento."], [35.2, 43.4, "Un mercado así de profundo no garantiza ganancias: cada operación tiene riesgo, spread y deslizamiento.", "Un mercado así de profundo no garantiza ganancias: cada operación tiene riesgo, spread y deslizamiento."], [43.6, 49.6, "Fuente: BIS, encuesta trienal 2025. Cifras preliminares. Educativo, no es asesoría financiera.", "Fuente: BIS, dos mil veinticinco. Cifras preliminares. Educativo, no es asesoría financiera."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const BG1='#eaf0f6',BG2='#d9e3ee',INK='#14233a',MU='#5b6b82',TEAL='#0e9f8e',ORG='#ff7a2f',IND='#4a63e7',RED='#e5484d',DK='#14233a',ACC=ORG;
+const STY={subFont:'800 42px Inter',subBg:'rgba(20,35,58,.95)',subStroke:ORG,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ORG,ctaAccent:ORG,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:INK,mu:MU,acc:ORG,pn:'#fff',c:[TEAL,ORG,IND,RED]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.shadowColor='rgba(20,35,58,.22)';ctx.shadowBlur=24;ctx.shadowOffsetY=8;ctx.fillStyle='#fff';RR(x,y,w,h,22);ctx.fill();ctx.restore();ctx.fillStyle=col;ctx.save();RR(x,y,14,h,7);ctx.fill();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,BG1);g.addColorStop(1,BG2);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(20,35,58,.06)';ctx.lineWidth=2;for(let x=0;x<=W;x+=90)line(x,0,x,H,'rgba(20,35,58,.06)',2);for(let y=0;y<=H;y+=90)line(0,y,W,y,'rgba(20,35,58,.06)',2);ctx.restore();
+  ctx.fillStyle=DK;ctx.fillRect(0,0,W,86);[RED,ORG,TEAL].forEach((c,i)=>{ctx.fillStyle=c;ctx.beginPath();ctx.arc(50+i*44,43,12,0,7);ctx.fill()});Lb('PANEL · FOREX GLOBAL',W-50,43,28,'#9fb0c8',1,'right')};
+function donut(t,t0,cx,cy,r,frac,col){const k=eout(prog(t,t0,t0+1.4));ctx.save();ctx.lineWidth=60;ctx.lineCap='round';ctx.strokeStyle='rgba(20,35,58,.12)';ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.stroke();
+  ctx.strokeStyle=col;ctx.beginPath();ctx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+Math.PI*2*frac*k);ctx.stroke();ctx.restore();return k}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('BIS · ABRIL DE 2025',540,235,50,ORG,eout(prog(t,.2,.8)));
+  pop(t,.8,540,610,()=>{panel(-440,-250,880,410,TEAL);Lb('9,6',20,-60,300,INK);});
+  Lb('billones de dólares al día',540,810,60,INK,eout(prog(t,2.2,2.8)));
+  Lb('el mercado de divisas',540,900,50,TEAL,eout(prog(t,3.0,3.6)));
+  Lb('cifra preliminar · el BIS la revisó después a ≈ 9,5',540,1010,30,MU,eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'LA ENCUESTA TRIENAL',ORG);
+  panel(60,260,960,860,IND);Lb('volumen diario · índice (2022 = 100)',540,320,38,INK,eout(prog(t,7,7.6)));
+  barsV(t,7.4,[['2022',.62,'#9fb0c8','100'],['2025',.80,TEAL,'128']],200,420,680,560,120,76);
+  pop(t,10.4,820,520,()=>{ctx.fillStyle=ORG;RR(-130,-60,260,120,60);ctx.fill();Lb('+28 %',0,0,64,'#fff')});
+  Lb('fuente: BIS · comunicado del 30 sep 2025',540,1180,30,MU,eout(prog(t,11.4,12)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL DÓLAR, EN TODAS PARTES',ORG);
+  panel(60,260,960,900,TEAL);const k=donut(t,14.2,540,640,230,.89,TEAL);Lb(String(Math.round(89*k))+' %',540,640,150,INK,1);
+  Lb('de las operaciones tuvo',540,960,44,INK,eout(prog(t,16,16.6)));Lb('al USD en uno de sus lados',540,1020,44,TEAL,eout(prog(t,16.4,17)));
+  Lb('fuente: BIS',540,1100,28,MU,eout(prog(t,18,18.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'SWAPS DE DIVISAS',ORG);
+  panel(60,260,960,420,IND);Lb('≈ 4 billones al día',100,360,70,INK,eout(prog(t,21.4,22)),'left');Lb('+5 % frente a 2022',100,460,46,IND,eout(prog(t,22.2,22.8)),'left');
+  Lb('cuota del total',100,570,36,MU,eout(prog(t,23,23.6)),'left');
+  const w=eout(prog(t,23.2,25));ctx.fillStyle='rgba(20,35,58,.12)';RR(100,610,860,36,18);ctx.fill();ctx.fillStyle=IND;RR(100,610,860*.31*w,36,18);ctx.fill();Lb('31 %',100+860*.31*w+24,628,40,INK,w,'left');
+  card(t,25.6,740,170,TEAL,'Instrumento más usado','permiten financiar o cubrir posiciones',38);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'AL CONTADO Y A PLAZO',ORG);
+  panel(60,260,960,860,ORG);Lb('crecimiento frente a 2022',540,320,38,INK,eout(prog(t,29,29.6)));
+  barsV(t,29.4,[['spot (contado)',.6,TEAL,'+42 %'],['forwards (plazo)',.86,ORG,'+60 %']],200,420,680,560,120,64);
+  Lb('forwards: ≈ 19 % del total',540,1070,40,INK,eout(prog(t,32.6,33.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LO QUE NO DICE EL VOLUMEN',ORG);
+  card(t,36.2,300,190,TEAL,'Liquidez profunda','no es garantía de ganancia',44);
+  card(t,38.4,540,190,ORG,'Cada operación cuesta','spread y puede tener deslizamiento',42);
+  card(t,40.4,780,190,IND,'Primero el riesgo','después el rendimiento',44);
+  pop(t,41.8,540,1110,()=>{ctx.fillStyle=DK;RR(-330,-60,660,120,60);ctx.fill();Lb('SIN PROMESAS',0,0,52,'#fff')});ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Forex: ≈ 9,6 billones al día','Tamaño no es ganancia segura',TEAL,ORG);ctx.save();ctx.globalAlpha=a;Lb('Fuente: BIS, encuesta trienal 2025 (cifras preliminares)',60,1360,26,IND,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('BIS · ABRIL DE 2025',540,230,56,ORG,1);
+  panel(80,300,920,760,TEAL);Lb('9,6',560,570,420,INK,1);Lb('BILLONES AL DÍA',540,860,92,TEAL,1);Lb('en un solo mercado',540,980,50,INK,1);
+  Lb('¿QUIÉN LO MUEVE?',540,1230,84,ORG,1);coverBtn('VER LOS DATOS →',ORG,'#fff')}
+</script></body></html>
