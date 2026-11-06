@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 6 (4.º uso): cómic pop-art — tema: MACD de Gerald Appel (60 s). Paleta crema con tramado magenta, bordes negros, amarillo, rojo y azul.
+const SPEC={"name": "MACD", "hook": "MACD: DOCE, VEINTISÉIS Y NUEVE", "dur": 60, "cta": 56, "bpm": 112, "mus": "soft", "prog": [[40, "M"], [45, "m"], [38, "M"], [43, "m"]], "ev": [[0.3, "rise", 2.4], [2.0, "ding"], [2.5, "ding"], [3.0, "ding"], [3.5, "ding"], [4.0, "hit"], [6.4, "wipe"], [8.0, "hit"], [10.0, "ding"], [13.6, "wipe"], [15.0, "ding"], [17.0, "down"], [20.6, "wipe"], [22.0, "ding"], [24.0, "hit"], [28.4, "wipe"], [30.0, "alert"], [32.0, "ding"], [35.2, "wipe"], [37.0, "ding"], [39.0, "ding"], [41.0, "ding"], [43.6, "wipe"], [45.2, "ding"], [49.8, "wipe"], [51.0, "ding"], [52.2, "ding"], [53.4, "ding"], [54.6, "ding"], [56.2, "cta"]], "subs": [[0.2, 6.0, "MACD: 12, 26 y 9. Tres números del análisis técnico de Gerald Appel.", "MACD: doce, veintiséis y nueve. Tres números del análisis técnico de Gerald Appel."], [6.4, 13.4, "Lo desarrolló a finales de los años 70: convergencia y divergencia de medias móviles.", "Lo desarrolló a finales de los años setenta: convergencia y divergencia de medias móviles."], [13.6, 20.4, "La línea MACD es la media exponencial de 12 menos la de 26. Rápida menos lenta.", "La línea MACD es la media exponencial de doce menos la de veintiséis. Rápida menos lenta."], [20.6, 28.2, "La señal es una media exponencial de 9 períodos del MACD. El histograma oscila alrededor del cero.", "La señal es una media exponencial de nueve períodos del MACD. El histograma oscila alrededor del cero."], [28.4, 35.0, "Cuando el MACD cruza su señal, algunos lo leen como cambio de impulso.", "Cuando el MACD cruza su señal, algunos lo leen como cambio de impulso."], [35.2, 43.4, "Su desventaja: llega tarde, porque usa datos pasados. Y en rangos laterales da señales falsas.", "Su desventaja: llega tarde, porque usa datos pasados. Y en rangos laterales da señales falsas."], [43.6, 49.6, "Fuente: Britannica Money. Gráficos ilustrativos. Educativo, no es asesoría financiera.", "Fuente: Britannica Money. Gráficos ilustrativos. Educativo, no es asesoría financiera."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const INK='#111',CREAM='#fff1c9',RED='#ff3b3b',YEL='#ffd400',BLU='#1e78ff',MAG='#ff4fa3',DK='#111',ACC=YEL;
+const STY={subFont:'800 42px Inter',subBg:'#111',subStroke:YEL,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:YEL,ctaAccent:YEL,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:INK,mu:'#555',acc:RED,pn:'#fff',c:[RED,BLU,MAG,YEL]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle=INK;RR(x+12,y+12,w,h,12);ctx.fill();ctx.fillStyle='#fff';RR(x,y,w,h,12);ctx.fill();ctx.lineWidth=8;ctx.strokeStyle=INK;ctx.stroke();ctx.fillStyle=col;ctx.fillRect(x+4,y+4,w-8,16);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=CREAM;ctx.fillRect(0,0,W,H);ctx.save();ctx.fillStyle='rgba(255,79,163,.28)';for(let y=0;y<H;y+=44)for(let x=((y/44)%2)*22;x<W;x+=44){const r=3+7*(y/H);ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill()}ctx.restore();
+  ctx.fillStyle=INK;ctx.fillRect(0,0,W,16);ctx.fillRect(0,H-16,W,16)};
+function burst(cx,cy,r1,r2,n,col){ctx.save();ctx.fillStyle=INK;ctx.beginPath();for(let i=0;i<n*2;i++){const r=(i%2?r1:r2)+10,a=i*Math.PI/n;ctx.lineTo(cx+8+Math.cos(a)*r,cy+8+Math.sin(a)*r)}ctx.fill();
+  ctx.fillStyle=col;ctx.lineWidth=7;ctx.strokeStyle=INK;ctx.beginPath();for(let i=0;i<n*2;i++){const r=i%2?r1:r2,a=i*Math.PI/n;ctx.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r)}ctx.closePath();ctx.fill();ctx.stroke();ctx.restore()}
+function bubble(x,y,w,h,tx,ty){ctx.save();ctx.fillStyle=INK;RR(x+8,y+8,w,h,40);ctx.fill();ctx.fillStyle='#fff';ctx.lineWidth=7;ctx.strokeStyle=INK;RR(x,y,w,h,40);ctx.fill();ctx.stroke();
+  ctx.beginPath();ctx.moveTo(x+w*.25,y+h-4);ctx.lineTo(tx,ty);ctx.lineTo(x+w*.4,y+h-4);ctx.fillStyle='#fff';ctx.fill();ctx.stroke();ctx.beginPath();ctx.moveTo(x+w*.25+3,y+h-3);ctx.lineTo(x+w*.4-3,y+h-3);ctx.strokeStyle='#fff';ctx.lineWidth=10;ctx.stroke();ctx.restore()}
+const RR_=rng(11);const PX=[];(()=>{let v=100;for(let i=0;i<64;i++){v+=Math.sin(i/6)*1.7+(RR_()-.5)*1.9;PX.push(v)}})();
+function ema(a,n){const k=2/(n+1);const o=[a[0]];for(let i=1;i<a.length;i++)o.push(a[i]*k+o[i-1]*(1-k));return o}
+const E12=ema(PX,12),E26=ema(PX,26),MC=E12.map((v,i)=>v-E26[i]),SG=ema(MC,9),HS=MC.map((v,i)=>v-SG[i]);
+const nrm=(a,lo,hi)=>a.map((v,i)=>[i/(a.length-1),(v-lo)/(hi-lo)]);
+const pLo=Math.min(...PX)-1,pHi=Math.max(...PX)+1,mLo=Math.min(...MC,...SG)-.2,mHi=Math.max(...MC,...SG)+.2;
+let XI=-1;for(let i=30;i<MC.length;i++){if(MC[i-1]<SG[i-1]&&MC[i]>=SG[i]){XI=i;break}}if(XI<0)XI=40;
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('GERALD APPEL · AÑOS 70',540,235,50,RED,eout(prog(t,.2,.8)));
+  pop(t,.8,540,640,()=>{burst(0,0,300,380,14,YEL);Lb('12·26·9',0,-10,150,INK)});
+  Lb('el MACD',540,1140,100,BLU,eout(prog(t,2.4,3)));Lb('tres números, un indicador',540,1240,44,INK,eout(prog(t,3.4,4)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'¿QUÉ SIGNIFICA?',RED);
+  panel(60,260,960,300,BLU);Lb('Moving Average',100,350,56,INK,eout(prog(t,7,7.6)),'left');Lb('Convergence Divergence',100,430,56,INK,eout(prog(t,7.6,8.2)),'left');Lb('(convergencia y divergencia de medias móviles)',100,510,30,'#555',eout(prog(t,8.4,9),'left'),'left');
+  pop(t,9.4,540,800,()=>{burst(0,0,170,230,12,MAG);Lb('1970s',0,0,92,INK)});
+  Lb('desarrollado por Gerald Appel',540,1080,44,INK,eout(prog(t,10.4,11)));Lb('fuente: Britannica Money',540,1150,28,'#555',eout(prog(t,11.4,12)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'LÍNEA MACD = RÁPIDA − LENTA',RED);
+  panel(60,250,960,640,BLU);lineChart(t,14.2,15.6,nrm(PX,pLo,pHi),110,310,860,520,'#999',6);
+  lineChart(t,15.2,17.0,nrm(E12,pLo,pHi),110,310,860,520,RED,9);lineChart(t,15.8,17.6,nrm(E26,pLo,pHi),110,310,860,520,BLU,9);
+  Lb('EMA 12',140,300,34,RED,eout(prog(t,16,16.5)),'left');Lb('EMA 26',330,300,34,BLU,eout(prog(t,16.4,16.9)),'left');Lb('(ilustrativo)',960,300,28,'#555',eout(prog(t,16.6,17.1)),'right');
+  card(t,18,950,150,YEL,'MACD = EMA(12) − EMA(26)','rápida menos lenta',46);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'SEÑAL E HISTOGRAMA',RED);
+  panel(60,250,960,760,MAG);const k=eout(prog(t,21.2,23.2)),k2=eout(prog(t,22.2,24.2));
+  lineChart(t,21.2,23.2,nrm(MC,mLo,mHi),110,300,860,330,BLU,9);lineChart(t,22.2,24.2,nrm(SG,mLo,mHi),110,300,860,330,RED,9);
+  Lb('MACD',140,290,32,BLU,k,'left');Lb('señal (EMA 9)',300,290,32,RED,k2,'left');
+  const hz=840,n=HS.length,bw=860/n,mx=Math.max(...HS.map(Math.abs));line(110,hz,970,hz,INK,3);
+  const kk=eout(prog(t,24.4,26.4));for(let i=0;i<n*kk;i++){const h=HS[i]/mx*110;ctx.fillStyle=HS[i]>=0?'#19b36b':RED;ctx.fillRect(110+i*bw+1,h>=0?hz-h:hz,bw-2,Math.abs(h))}
+  Lb('histograma · oscila alrededor del cero',540,985,32,INK,eout(prog(t,25,25.6)));
+  card(t,26,1060,150,YEL,'Señal = EMA de 9 períodos del MACD','gráficos ilustrativos',38);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EL CRUCE',RED);
+  panel(60,250,960,740,BLU);lineChart(t,29,30.6,nrm(MC,mLo,mHi),110,300,860,520,BLU,9);lineChart(t,29,30.6,nrm(SG,mLo,mHi),110,300,860,520,RED,9);
+  const cx=110+XI/(MC.length-1)*860,cy=300+520-(((MC[XI]+SG[XI])/2-mLo)/(mHi-mLo))*520;
+  pop(t,31.2,cx,cy,()=>{burst(0,0,60,92,10,YEL);Lb('✕',0,0,60,INK)});
+  Lb('MACD cruza su señal',540,880,42,INK,eout(prog(t,32,32.6)));Lb('(ilustrativo)',540,940,28,'#555',eout(prog(t,32.6,33.2)));
+  card(t,33.2,1040,150,MAG,'Algunos lo leen como cambio de impulso','no es una orden de compra',38);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'SUS LÍMITES',RED);
+  card(t,36.2,280,200,RED,'1 · LLEGA TARDE','usa datos pasados (medias móviles)',46);
+  card(t,38.4,540,200,BLU,'2 · RANGOS LATERALES','muchas señales falsas · whipsaw',44);
+  panel(60,800,960,300,YEL);const z=[[0,.5],[.12,.85],[.24,.2],[.36,.8],[.48,.25],[.6,.75],[.72,.3],[.84,.7],[1,.5]];lineChart(t,40.4,42.4,z,120,830,840,240,INK,9);Lb('lateral (ilustrativo)',540,1075,28,'#555',eout(prog(t,41,41.6)));
+  ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'MACD: EMA12 − EMA26, señal EMA9','Con contexto y control de riesgo',RED,BLU);ctx.save();ctx.globalAlpha=a;Lb('Fuente: Britannica Money (MACD)',60,1360,26,BLU,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('GERALD APPEL · AÑOS 70',540,230,52,RED,1);burst(540,680,250,320,16,YEL);Lb('12·26·9',545,680,140,INK,1);
+  Lb('¿POR QUÉ',540,1090,100,INK,1);Lb('LLEGA TARDE?',540,1200,100,RED,1);coverBtn('VER CÓMO SE LEE →',INK,YEL)}
+</script></body></html>
