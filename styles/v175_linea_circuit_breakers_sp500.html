@@ -1,0 +1,56 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 8 (4.º uso): gráfico de línea con suelo — tema: circuit breakers del S&P 500 (60 s). Paleta vino oscuro con línea coral, niveles ámbar y turquesa.
+const SPEC={"name": "Circuit breakers", "hook": "SIETE, TRECE Y VEINTE POR CIENTO", "dur": 60, "cta": 56, "bpm": 104, "mus": "soft", "prog": [[46, "m"], [43, "M"], [41, "m"], [45, "M"]], "ev": [[0.3, "rise", 2.4], [2.0, "ding"], [2.5, "ding"], [3.0, "ding"], [3.5, "ding"], [4.0, "hit"], [6.4, "wipe"], [8.0, "hit"], [10.0, "ding"], [13.6, "wipe"], [15.0, "ding"], [17.0, "down"], [20.6, "wipe"], [22.0, "ding"], [24.0, "hit"], [28.4, "wipe"], [30.0, "alert"], [32.0, "ding"], [35.2, "wipe"], [37.0, "ding"], [39.0, "ding"], [41.0, "ding"], [43.6, "wipe"], [45.2, "ding"], [49.8, "wipe"], [51.0, "ding"], [52.2, "ding"], [53.4, "ding"], [54.6, "ding"], [56.2, "cta"]], "subs": [[0.2, 6.0, "7 %, 13 % y 20 %: las caídas del S&P 500 que frenan toda la bolsa.", "Siete, trece y veinte por ciento: las caídas del S&P 500 que frenan toda la bolsa."], [6.4, 13.4, "Son los circuit breakers de mercado. Se miden contra el cierre del día anterior del S&P 500.", "Son los circuit breakers de mercado. Se miden contra el cierre del día anterior del S&P 500."], [13.6, 20.4, "Nivel 1, 7 %: pausa de 15 minutos si ocurre antes de las 3:25 p. m.", "Nivel uno, siete por ciento: pausa de quince minutos si ocurre antes de las tres y veinticinco de la tarde."], [20.6, 28.2, "Nivel 2, 13 %: otra pausa de 15 minutos, también antes de las 3:25 p. m.", "Nivel dos, trece por ciento: otra pausa de quince minutos, también antes de las tres y veinticinco."], [28.4, 35.0, "Nivel 3, 20 %: se detiene el mercado por el resto de la sesión.", "Nivel tres, veinte por ciento: se detiene el mercado por el resto de la sesión."], [35.2, 43.4, "Si el nivel 1 o 2 ocurre desde las 3:25 p. m., no hay pausa. Los umbrales se recalculan cada día.", "Si el nivel uno o dos ocurre desde las tres y veinticinco, no hay pausa. Los umbrales se recalculan cada día."], [43.6, 49.6, "Fuente: Investor.gov. Educativo, no es asesoría financiera.", "Fuente: investor punto gov. Contenido educativo, no es asesoría financiera."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const BG1='#17090e',BG2='#2b101a',TX='#fff1e6',MU2='#c9a9a6',LN='#ff5d5d',AMB='#ffb703',TL='#2ec4b6',DK='#1b0c12',ACC=AMB;
+const STY={subFont:'800 42px Inter',subBg:'rgba(23,9,14,.96)',subStroke:AMB,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:AMB,ctaAccent:AMB,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:TX,mu:MU2,acc:AMB,pn:'#2b101a',c:[AMB,LN,TL,'#fff']});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(255,241,230,.07)';RR(x,y,w,h,22);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,22);ctx.stroke();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,BG1);g.addColorStop(1,BG2);ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle='rgba(255,241,230,.05)';ctx.lineWidth=2;for(let y=120;y<H;y+=110)line(0,y,W,y,'rgba(255,241,230,.05)',2);ctx.restore();ctx.fillStyle=AMB;ctx.fillRect(0,0,W,10)};
+const CX=110,CW=860,CY=300,CH=780,MAXP=22;
+const pY=p=>CY+(-p/MAXP)*CH;
+const PP=[[0,0],[.06,-.8],[.12,-.3],[.2,-2.2],[.28,-4.5],[.34,-7],[.5,-7],[.54,-8.5],[.6,-10.5],[.66,-13],[.8,-13],[.84,-15],[.9,-18],[.95,-20]];
+function pathAt(R){const n=PP.length-1,m=R*n,pts=[];for(let i=0;i<=n;i++){if(i<=m)pts.push(PP[i]);else{const f=m-(i-1);if(f>0&&i>0){pts.push([lerp(PP[i-1][0],PP[i][0],f),lerp(PP[i-1][1],PP[i][1],f)])}break}}return pts}
+function chart(t,Ra,Rb,ta,tb,floors){const R=lerp(Ra,Rb,eio(prog(t,ta,tb)));
+  ctx.save();ctx.fillStyle='rgba(255,241,230,.04)';ctx.fillRect(CX,CY-10,CW,CH+40);ctx.restore();
+  line(CX,pY(0),CX+CW,pY(0),MU2,3);Lb('cierre previo',CX+CW,pY(0)-24,28,MU2,1,'right');
+  [[7,'NIVEL 1 · −7 %'],[13,'NIVEL 2 · −13 %'],[20,'NIVEL 3 · −20 %']].forEach(([p,l],i)=>{if(i<floors){line(CX,pY(-p),CX+CW,pY(-p),AMB,4,[16,10]);Lb(l,CX+8,pY(-p)+30,30,AMB,1,'left')}});
+  const pts=pathAt(R);if(pts.length>1){const P=pts.map(([u,p])=>[CX+u*CW,pY(p)]);
+    const g=ctx.createLinearGradient(0,CY,0,CY+CH);g.addColorStop(0,'rgba(255,93,93,.05)');g.addColorStop(1,'rgba(255,93,93,.55)');ctx.save();ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(P[0][0],CY+CH);P.forEach(q=>ctx.lineTo(q[0],q[1]));ctx.lineTo(P[P.length-1][0],CY+CH);ctx.closePath();ctx.fill();ctx.restore();
+    ctx.save();ctx.lineWidth=10;ctx.strokeStyle=LN;ctx.lineJoin='round';ctx.shadowColor=LN;ctx.shadowBlur=16;ctx.beginPath();P.forEach((q,i)=>i?ctx.lineTo(q[0],q[1]):ctx.moveTo(q[0],q[1]));ctx.stroke();ctx.restore();
+    const e=P[P.length-1];ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(e[0],e[1],14,0,7);ctx.fill()}
+  Lb('(ilustrativo)',CX+CW,CY+CH+34,26,MU2,1,'right');Lb('tiempo →',CX,CY+CH+34,26,MU2,1,'left')}
+function chip(t,t0,x,y,txt,col){pop(t,t0,x,y,()=>{ctx.fillStyle=col;RR(-170,-38,340,76,38);ctx.fill();Lb(txt,0,0,34,DK)})}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('S&P 500 · BOLSA DE EE. UU.',540,235,48,AMB,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,480,'−7 %',330,LN);Lb('13 % · 20 %',540,720,100,TX,eout(prog(t,2.4,3)));Lb('las caídas que frenan al mercado',540,830,46,AMB,eout(prog(t,3.4,4)));
+  chart(t,0,.3,4.2,5.6,0);ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'CIRCUIT BREAKERS',AMB);
+  Lb('caída del S&P 500 en el día',540,250,34,MU2,eout(prog(t,7,7.6)));chart(t,0,0,7,8,0);
+  card(t,9,1120,130,AMB,'Se miden contra el cierre previo','del índice S&P 500',40);
+  card(t,11,1280,110,TL,'Tres niveles: 7 %, 13 % y 20 %',null,44);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'NIVEL 1 · −7 %',AMB);
+  chart(t,0,6/13,14.2,17,1);chip(t,17.6,640,830,'PAUSA 15 MIN',TL);
+  card(t,18.4,1120,150,TL,'Si ocurre antes de las 3:25 p. m.','se detiene todo el mercado 15 minutos',38);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'NIVEL 2 · −13 %',AMB);
+  chart(t,6/13,10/13,21.2,24.2,2);chip(t,24.6,700,1010,'PAUSA 15 MIN',TL);
+  card(t,25.4,1180,150,TL,'Otra pausa de 15 minutos','también antes de las 3:25 p. m.',40);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'NIVEL 3 · −20 %',AMB);
+  chart(t,10/13,1,29,31.6,3);chip(t,32,640,1190,'CIERRE DEL DÍA',LN);
+  card(t,32.8,1210,170,LN,'Se detiene el mercado','por el resto de la sesión',44);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LA REGLA DE LAS 3:25',AMB);
+  const k=eout(prog(t,36,37.4));panel(60,260,960,330,TL);
+  ctx.fillStyle='rgba(46,196,182,.55)';RR(110,380,700*k,90,12);ctx.fill();ctx.fillStyle='rgba(255,93,93,.55)';RR(810,380,150*k,90,12);ctx.fill();
+  Lb('antes de 3:25 p. m.',460,425,32,TX,k);Lb('desde',885,410,26,TX,k);Lb('3:25',885,445,34,TX,k);
+  Lb('Nivel 1 y 2: pausa',460,520,36,TL,eout(prog(t,37.4,38)));Lb('sin pausa',885,520,32,LN,eout(prog(t,38,38.6)));
+  card(t,39,660,170,AMB,'Nivel 3: se detiene a cualquier hora','del día de negociación',40);
+  card(t,41,880,170,TL,'Los umbrales en puntos se calculan','cada día con el cierre previo',38);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'7 %, 13 % y 20 % del S&P 500','Reglas: revísalas en la fuente oficial',AMB,TL);ctx.save();ctx.globalAlpha=a;Lb('Fuente: Investor.gov (Stock market circuit breakers)',60,1360,26,AMB,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('S&P 500 · NIVEL 1',540,230,52,AMB,1);Lb('−7 %',540,520,360,LN,1);Lb('LA BOLSA SE DETIENE',540,800,76,TX,1);
+  ctx.save();ctx.globalAlpha=.3;chart(99,0,1,-10,0,3);ctx.restore();coverBtn('VER LOS 3 NIVELES →',AMB,DK)}
+</script></body></html>
