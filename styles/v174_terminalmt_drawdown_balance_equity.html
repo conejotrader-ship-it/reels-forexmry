@@ -1,0 +1,57 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 5 (4.º uso): terminal tipo MetaTrader — tema: drawdown de balance vs equity en el informe de MT5 (60 s). Paleta clara estilo MT5: barra azul, gris Windows, blanco, naranja y azul.
+const SPEC={"name": "Drawdown balance vs equity", "hook": "BALANCE VS EQUITY EN METATRADER CINCO", "dur": 60, "cta": 56, "bpm": 110, "mus": "soft", "prog": [[41, "m"], [43, "M"], [45, "m"], [38, "M"]], "ev": [[0.3, "rise", 2.4], [2.0, "ding"], [2.5, "ding"], [3.0, "ding"], [3.5, "ding"], [4.0, "hit"], [6.4, "wipe"], [8.0, "hit"], [10.0, "ding"], [13.6, "wipe"], [15.0, "ding"], [17.0, "down"], [20.6, "wipe"], [22.0, "ding"], [24.0, "hit"], [28.4, "wipe"], [30.0, "alert"], [32.0, "ding"], [35.2, "wipe"], [37.0, "ding"], [39.0, "ding"], [41.0, "ding"], [43.6, "wipe"], [45.2, "ding"], [49.8, "wipe"], [51.0, "ding"], [52.2, "ding"], [53.4, "ding"], [54.6, "ding"], [56.2, "cta"]], "subs": [[0.2, 6.0, "En MetaTrader 5 hay drawdown de balance y de equity. ¿Cuál es más grande?", "En MetaTrader cinco hay drawdown de balance y de equity. ¿Cuál es más grande?"], [6.4, 13.4, "El de balance solo mira operaciones cerradas. El de equity incluye también las abiertas.", "El de balance solo mira operaciones cerradas. El de equity incluye también las abiertas."], [13.6, 20.4, "Absoluto: depósito inicial menos balance mínimo. Máximo: del pico local a la siguiente caída, en dinero.", "Absoluto: depósito inicial menos balance mínimo. Máximo: del pico local a la siguiente caída, en dinero."], [20.6, 28.2, "Relativo es la misma caída en porcentaje del pico local. El informe muestra el valor en dinero entre paréntesis.", "Relativo es la misma caída en porcentaje del pico local. El informe muestra el valor en dinero entre paréntesis."], [28.4, 35.0, "Ejemplo ilustrativo: pico de 12.000, el balance baja 1.200, un 10 %.", "Ejemplo ilustrativo: pico de doce mil, el balance baja mil doscientos, un diez por ciento."], [35.2, 43.4, "Pero el equity llegó a 9.700: caída de 2.300, ≈ 19 %. Mira ambos.", "Pero el equity llegó a nueve mil setecientos: caída de dos mil trescientos, cerca del diecinueve por ciento. Mira ambos."], [43.6, 49.6, "Fuente: ayuda de MetaTrader 5. Ejemplo ilustrativo. Educativo, no es asesoría financiera.", "Fuente: ayuda de MetaTrader cinco. Ejemplo ilustrativo. Educativo, no es asesoría financiera."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const WIN='#dcdcdc',TITLE='#1f4e8c',BAL='#1f6fd1',EQ='#e07b00',GRN='#1b9e3e',RED='#d32f2f',INK='#1d1d1d',MU='#555',DK='#14233f',ACC=EQ;
+const STY={subFont:'800 42px Inter',subBg:'rgba(20,35,63,.96)',subStroke:EQ,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:EQ,ctaAccent:EQ,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{txt:INK,mu:MU,acc:BAL,pn:'#fff',c:[BAL,EQ,GRN,RED]});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(0,0,0,.18)';ctx.fillRect(x+8,y+8,w,h);ctx.fillStyle='#fff';ctx.fillRect(x,y,w,h);ctx.lineWidth=3;ctx.strokeStyle='#8a8a8a';ctx.strokeRect(x,y,w,h);ctx.fillStyle=col;ctx.fillRect(x,y,w,12);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=WIN;ctx.fillRect(0,0,W,H);ctx.fillStyle=TITLE;ctx.fillRect(0,0,W,86);Lb('MetaTrader 5 · Probador de estrategias',34,43,32,'#fff',1,'left');
+  [0,1,2].forEach(i=>{ctx.fillStyle=['#e5e5e5','#e5e5e5','#e86a5f'][i];ctx.fillRect(W-170+i*52,22,40,40)});
+  ctx.fillStyle='#ececec';ctx.fillRect(0,86,W,56);ctx.strokeStyle='#aaa';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,142);ctx.lineTo(W,142);ctx.stroke();
+  for(let i=0;i<9;i++){ctx.fillStyle=i%3==0?'#2d7be0':(i%3==1?'#41a35a':'#e8a33a');ctx.fillRect(24+i*58,100,32,28)}};
+const BL=[10000,10000,10200,10200,10500,10500,10500,10800,11000,11000,11300,11300,11300,11600,11600,11800,11800,12000,12000,12000,12000,12000,12000,12000,12000,11700,11700,11400,11400,11100,11100,10900,10800,10800,10800,10800,10900,10900,11000,11000];
+const EQL=[10000,10080,10250,10150,10520,10400,10560,10850,11050,10980,11350,11250,11380,11650,11500,11850,11800,12000,11950,12000,11900,12000,11900,12000,11800,11300,11600,10900,11000,10500,10300,10100,9900,9700,9800,10200,10500,10600,10900,10900];
+const LO=9400,HI=12300;
+function chart(t,a,b,x,y,w,h,showB,showE){ctx.save();ctx.fillStyle='#fff';ctx.fillRect(x,y,w,h);ctx.strokeStyle='#d9d9d9';ctx.lineWidth=2;for(let i=0;i<=6;i++){ctx.beginPath();ctx.moveTo(x,y+h*i/6);ctx.lineTo(x+w,y+h*i/6);ctx.stroke()}ctx.strokeStyle='#8a8a8a';ctx.lineWidth=3;ctx.strokeRect(x,y,w,h);ctx.restore();
+  const yy=v=>y+h-(v-LO)/(HI-LO)*h;line(x,yy(10000),x+w,yy(10000),'#888',3,[10,8]);Lb('depósito 10.000',x+w-10,yy(10000)+26,26,MU,1,'right');
+  const r=eio(prog(t,a,b)),n=BL.length-1,lim=r*n;
+  const st=(arr,col,step,lw)=>{ctx.save();ctx.lineWidth=lw;ctx.strokeStyle=col;ctx.lineJoin='round';ctx.beginPath();let first=true,lx=0,ly=0;for(let i=0;i<=n&&i<=lim+1;i++){let u=Math.min(i,lim);const px=x+u/n*w;const v=arr[Math.min(i,n)];const py=yy(v);if(first){ctx.moveTo(px,py);first=false}else{if(step)ctx.lineTo(px,ly);ctx.lineTo(px,py)}lx=px;ly=py}ctx.stroke();ctx.restore()};
+  if(showB)st(BL,BAL,true,8);if(showE)st(EQL,EQ,false,7);return yy}
+function hook(t,a){ctx.save();ctx.globalAlpha=a;Lb('METATRADER 5 · INFORME DE PRUEBAS',540,235,40,BAL,eout(prog(t,.2,.8)));
+  pop(t,.8,540,520,()=>{panel(-440,-170,880,340,BAL);Lb('BALANCE',0,-70,120,BAL);Lb('vs',0,28,56,MU);Lb('EQUITY',0,110,100,EQ)});
+  Lb('¿cuál drawdown es más grande?',540,810,50,INK,eout(prog(t,2.6,3.2)));Lb('ejemplo ilustrativo',540,890,34,MU,eout(prog(t,4,4.6)));
+  chart(t,3.4,5.6,110,960,860,360,true,true);ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'BALANCE: OPERACIONES CERRADAS',BAL);
+  chart(t,7,10,110,260,860,520,true,false);Lb('balance (escalones)',140,300,34,BAL,eout(prog(t,7.4,8)),'left');
+  card(t,11,860,150,BAL,'Balance','solo cambia cuando cierras operaciones',38);
+  card(t,12,1040,150,EQ,'Equity','incluye también las operaciones abiertas',38);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'EL INFORME DE MT5',BAL);
+  card(t,14.2,260,200,BAL,'Drawdown Absolute','depósito inicial − balance mínimo',44);
+  card(t,16,520,200,EQ,'Drawdown Maximal','pico local − siguiente mínimo (en dinero)',40);
+  Lb('el % va entre paréntesis',540,780,34,MU,eout(prog(t,18.4,19)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'RELATIVE Y EQUITY',BAL);
+  card(t,21.2,260,200,GRN,'Drawdown Relative','la misma caída en % del pico local',42);
+  card(t,23.4,520,200,BAL,'Versión Balance','calculada sobre el balance',44);
+  card(t,25.4,780,200,EQ,'Versión Equity','calculada sobre el equity',44);
+  Lb('fuente: ayuda de MetaTrader 5',540,1060,30,MU,eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EJEMPLO: EL BALANCE',BAL);
+  const yy=chart(t,29,31,110,260,860,520,true,false);
+  const k=eout(prog(t,31.4,32.2));if(k>.02){ctx.save();ctx.globalAlpha*=k;line(110,yy(12000),970,yy(12000),GRN,4,[12,8]);line(110,yy(10800),970,yy(10800),RED,4,[12,8]);Lb('pico 12.000',130,yy(12000)-26,32,GRN,1,'left');Lb('mínimo 10.800',130,yy(10800)+34,32,RED,1,'left');ctx.restore()}
+  pop(t,32.8,540,960,()=>{panel(-420,-90,840,200,BAL);Lb('−1.200 (10 %)',0,-10,84,RED);Lb('drawdown máximo de balance',0,66,32,MU)});ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'PERO EL EQUITY...',EQ);
+  const yy=chart(t,35.8,37.8,110,260,860,520,true,true);
+  const k=eout(prog(t,38.2,39));if(k>.02){ctx.save();ctx.globalAlpha*=k;line(110,yy(9700),970,yy(9700),RED,4,[12,8]);Lb('mínimo 9.700',130,yy(9700)+34,32,RED,1,'left');ctx.restore()}
+  pop(t,39.4,540,930,()=>{panel(-420,-90,840,200,EQ);Lb('−2.300 (≈ 19 %)',0,-10,84,RED);Lb('drawdown máximo de equity',0,66,32,MU)});
+  barsH(t,41.2,[['balance',.52,BAL,'10 %'],['equity',1,EQ,'≈ 19 %']],110,1100,860,110,36);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Mira balance y equity','El % del pico es lo que duele',BAL,EQ);ctx.save();ctx.globalAlpha=a;Lb('Fuente: ayuda de MetaTrader 5 (informe de pruebas)',60,1360,26,BAL,eout(prog(t,48,48.6)),'left');Lb('Ejemplo ilustrativo, no es un resultado real',60,1400,26,MU,eout(prog(t,48,48.6)),'left');ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,hook],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(3);Lb('METATRADER 5 · ILUSTRATIVO',540,230,46,BAL,1);
+  Lb('10 % vs ≈ 19 %',540,520,112,INK,1);Lb('EL MISMO ROBOT',540,700,92,RED,1);
+  chart(99,-10,0,110,820,860,500,true,true);Lb('BALANCE',200,880,40,BAL,1,'left');Lb('EQUITY',200,930,40,EQ,1,'left');coverBtn('VER LA DIFERENCIA →',BAL,'#fff')}
+</script></body></html>
