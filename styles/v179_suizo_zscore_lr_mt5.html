@@ -1,0 +1,68 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 13 (4.º uso): tipografía suiza, retícula blanca con cobalto y naranja — tema: Z-Score y LR Correlation del informe de MT5 (60 s).
+const SPEC={name:"ZScoreLR",hook:"Z > 3: EL NÚMERO OCULTO DE TU BACKTEST EN MT5",dur:60,cta:56,bpm:104,mus:'soft',prog:[[45, 'M'], [43, 'M'], [40, 'm'], [47, 'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Dos números del informe de MetaTrader 5 que casi nadie mira: Z-Score y LR Correlation.","Dos números del informe de MetaTrader cinco que casi nadie mira: Z-Score y LR Correlation."],
+ [6.4,13.4,"El Z-Score estima si ganar o perder viene en rachas. Se mide en sigmas, respecto a una distribución normal.","El Z-Score estima si ganar o perder viene en rachas. Se mide en sigmas, respecto a una distribución normal."],
+ [13.6,20.4,"Según la ayuda de MT5: mayor que 3, tras una ganancia viene una pérdida. Menor que −3, otra ganancia.","Según la ayuda de MetaTrader cinco: mayor que tres, tras una ganancia viene una pérdida. Menor que menos tres, otra ganancia."],
+ [20.6,28.2,"LR Correlation compara tu curva de balance con una recta. Cerca de 1: pocos picos y valles. Cerca de 0: aspecto aleatorio.","LR Correlation compara tu curva de balance con una recta. Cerca de uno: pocos picos y valles. Cerca de cero: aspecto aleatorio."],
+ [28.4,35.0,"LR Standard Error mide cuánto se aleja el balance de esa recta. Solo compara sistemas con el mismo capital inicial.","LR Standard Error mide cuánto se aleja el balance de esa recta. Compara solo con el mismo capital inicial."],
+ [35.2,43.4,"Profit Factor es ganancia bruta entre pérdida bruta. Recovery Factor es la ganancia entre el drawdown máximo.","Profit Factor es ganancia bruta entre pérdida bruta. Recovery Factor es la ganancia entre el drawdown máximo."],
+ [43.6,49.6,"Para tu robot: busca curvas limpias, pero sin sobreoptimizar. Un solo número no basta. Educativo, sin garantías.","Para tu robot: busca curvas limpias, sin sobreoptimizar. Un número no basta. Contenido educativo, sin garantías."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#0a1030',ACC='#ff6a00',INK='#101820',CB='#1f4bff',OR='#ff6a00',PA='#f2f1ea',MU='#6b6f78';
+const STY={subFont:'800 42px Inter',subBg:'rgba(255,255,255,.97)',subStroke:CB,subFill:INK,ctaBg:DK,ctaSub:'#fff',ctaGlow:OR,ctaAccent:OR,ctaBtnText:'#fff',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:INK,mu:MU,acc:CB,c:[CB,INK,OR,MU],pn:'#fff'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#fff';ctx.fillRect(x,y,w,h);ctx.strokeStyle='#d8d6cc';ctx.lineWidth=2;ctx.strokeRect(x,y,w,h);ctx.fillStyle=col;ctx.fillRect(x,y,16,h);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=PA;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle='rgba(16,24,32,.07)';ctx.lineWidth=2;for(let x=90;x<=990;x+=180){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}ctx.restore();
+  ctx.fillStyle=CB;ctx.fillRect(60,28,40,40);Lb('MT5 · INFORME DE PRUEBAS',120,50,28,INK,1,'left');line(60,90,1020,90,INK,5)};
+const hd=(t,t0,s,col)=>Lb(s,540,235,60,col||CB,eout(prog(t,t0,t0+.5)));
+function seqRow(t,t0,y,pat,label){Lb(label,60,y-52,32,MU,eout(prog(t,t0,t0+.5)),'left');pat.forEach((c,i)=>{const k=eback(prog(t,t0+i*.12,t0+i*.12+.5));if(k<=.02)return;const x=60+i*80;ctx.save();ctx.translate(x+34,y);ctx.scale(k,k);ctx.fillStyle=c?CB:OR;ctx.fillRect(-34,-34,68,68);ctx.restore();Lb(c?'G':'P',x+34,y,34,'#fff',k)})}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('INFORME DE PRUEBAS · METATRADER 5',540,260,34,CB,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,520,'Z',420,CB);
+  Lb('SCORE',540,780,120,INK,eout(prog(t,1.6,2.2)));Lb('+ LR CORRELATION',540,890,64,OR,eout(prog(t,2.2,2.8)));
+  ctx.fillStyle=INK;ctx.fillRect(90,980,900,8);Lb('dos números que casi nadie mira',540,1090,48,MU,eout(prog(t,3.4,4)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'¿HAY RACHAS?');
+  Lb('G = ganancia · P = pérdida (ILUSTRATIVO)',540,320,34,MU,eout(prog(t,7,7.6)));
+  seqRow(t,7.6,470,[1,1,1,1,0,0,0,0,1,1,1,1],'con rachas');
+  seqRow(t,9.6,680,[1,0,1,0,1,1,0,1,0,0,1,0],'mezcladas');
+  bigNum(t,11.4,540,960,'σ',300,OR);Lb('sigmas: desviación frente a lo normal',540,1180,40,INK,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'LA REGLA DEL ±3');
+  const X=100,Wd=880,Y=520;ctx.save();ctx.fillStyle='#e6e4da';ctx.fillRect(X,Y,Wd,36);ctx.fillStyle=OR;ctx.globalAlpha*=.35;ctx.fillRect(X,Y,Wd*(1/6),36);ctx.fillStyle=CB;ctx.fillRect(X+Wd*(5/6),Y,Wd*(1/6),36);ctx.restore();
+  [-3,0,3].forEach((v,i)=>{const x=X+Wd*(i/2)*(1)*(i==1?1:1);});
+  [['−3',X+Wd/6],['0',X+Wd/2],['3',X+Wd*5/6]].forEach(([s,x],i)=>Lb(s,x,Y+110,64,INK,eout(prog(t,14.4+i*.3,15+i*.3))));
+  const kx=eio(prog(t,15.6,17.6));Lb('▼',lerp(X+Wd/2,X+Wd*5/6,kx),Y-30,60,CB,eout(prog(t,15.4,15.9)));
+  card(t,17.4,720,190,CB,'Z > 3: tras ganancia, pérdida','99,67 % según la ayuda de MT5',46);
+  card(t,19,950,190,OR,'Z < −3: tras ganancia, ganancia','mismo 99,67 % según la ayuda',46);ctx.restore()}
+function eq(t,a,b,x,y,w,h,col,noise,lw){const pts=[];const r=rng(7);for(let i=0;i<=24;i++){const u=i/24;pts.push([u,.1+.8*u+(noise?(r()-.5)*noise:0)])}return lineChart(t,a,b,pts,x,y,w,h,col,lw||9)}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'LR CORRELATION');
+  const X=100,Y=300,Wd=880,Hh=560;axes(X,Y,Wd,Hh,MU,'operaciones (ILUSTRATIVO)');
+  const k=eout(prog(t,21.4,22.4));if(k>.02){ctx.save();ctx.globalAlpha*=k;ctx.setLineDash([18,12]);line(X,Y+Hh-.1*Hh,X+Wd,Y+Hh-.9*Hh,OR,6,[18,12]);ctx.restore()}
+  eq(t,22,26,X,Y,Wd,Hh,CB,.22,9);
+  Lb('balance',X+10,Y+30,34,CB,eout(prog(t,22.4,23)),'left');Lb('recta de regresión',X+Wd,Y+Hh-40,34,OR,eout(prog(t,23,23.6)),'right');
+  card(t,25.4,950,150,CB,'Cerca de 1: curva casi recta',null,46);card(t,26.6,1130,150,OR,'Cerca de 0: aspecto aleatorio',null,46);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'LR STANDARD ERROR');
+  const X=100,Y=300,Wd=880,Hh=480;axes(X,Y,Wd,Hh,MU);
+  line(X,Y+Hh-.1*Hh,X+Wd,Y+Hh-.9*Hh,OR,5,[18,12]);
+  eq(t,29.2,32,X,Y,Wd,Hh,CB,.4,9);
+  const k=eout(prog(t,32.2,33));if(k>.02){ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=INK;ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(620,Y+Hh-.62*Hh);ctx.lineTo(620,Y+Hh-.42*Hh);ctx.stroke();ctx.restore();Lb('error',700,Y+Hh-.52*Hh,40,INK,k,'left')}
+  card(t,33.2,880,170,CB,'Más error = balance más irregular',null,44);
+  Lb('solo comparable con el mismo capital inicial',540,1110,34,MU,eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'EN EL MISMO INFORME');
+  slide(t,36,()=>{panel(60,300,960,330,CB);Lb('PROFIT FACTOR',100,370,64,INK,1,'left');Lb('ganancia bruta ÷ pérdida bruta',100,470,44,CB,1,'left');Lb('1 = ganancias y pérdidas iguales',100,550,38,MU,1,'left')});
+  slide(t,39,()=>{panel(60,700,960,330,OR);Lb('RECOVERY FACTOR',100,770,64,INK,1,'left');Lb('ganancia ÷ drawdown máximo',100,870,44,OR,1,'left');Lb('refleja el riesgo de la estrategia',100,950,38,MU,1,'left')});
+  Lb('definiciones de la ayuda de MetaTrader 5',540,1130,34,MU,eout(prog(t,41,41.6)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Curvas limpias, sin sobreoptimizar','Un solo número no basta',CB,OR)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('INFORME DE METATRADER 5',540,260,44,CB,1);
+  Lb('EL NÚMERO OCULTO',540,430,84,INK,1);Lb('DE TU BACKTEST',540,545,84,INK,1);
+  ctx.fillStyle=OR;ctx.fillRect(90,660,900,10);Lb('Z > 3',540,880,330,CB,1);
+  Lb('¿qué significa?',540,1090,76,OR,1);Lb('Z-Score · LR Correlation',540,1190,48,MU,1);coverBtn('VER QUÉ MIDE →',CB,'#fff')}
+</script></body></html>
