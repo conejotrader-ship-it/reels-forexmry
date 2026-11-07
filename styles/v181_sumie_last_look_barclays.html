@@ -1,0 +1,68 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 15 (4.º uso): tinta japonesa (sumi-e) invertida — papel índigo con pinceladas claras y sello naranja — tema: last look en FX y el caso Barclays 2015 (60 s).
+const SPEC={name:"LastLook",hook:"LAST LOOK: LA VENTANA QUE PUEDE RECHAZAR TU ORDEN",dur:60,cta:56,bpm:90,mus:'soft',prog:[[38,'m'],[43,'m'],[36,'M'],[41,'m']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'tick'],[13.6,'wipe'],[15.0,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Last look: una ventana de milisegundos en la que quien te cotiza puede aceptar o rechazar tu orden.","Last look: una ventana de milisegundos en la que quien te cotiza puede aceptar o rechazar tu orden."],
+ [6.4,13.4,"Código Global de FX, principio 17: quien usa last look debe ser transparente y dar divulgaciones adecuadas.","Código Global de FX, principio diecisiete: quien usa last look debe ser transparente y dar divulgaciones adecuadas."],
+ [13.6,20.4,"Tu orden llega al precio cotizado. El proveedor tiene una breve ventana para aceptarla o rechazarla.","Tu orden llega al precio cotizado. El proveedor tiene una breve ventana para aceptarla o rechazarla."],
+ [20.6,28.2,"El 18 de noviembre de 2015, el regulador de Nueva York multó a Barclays con US$ 150 millones adicionales.","El dieciocho de noviembre de dos mil quince, el regulador de Nueva York multó a Barclays con ciento cincuenta millones de dólares adicionales."],
+ [28.4,35.0,"Rechazaban órdenes que perderían dinero si el precio se movía en la espera: ≈ 7 % del volumen en una plataforma.","Rechazaban órdenes que perderían dinero si el precio se movía: cerca del siete por ciento del volumen en una plataforma."],
+ [35.2,43.4,"La ventana iba de milisegundos a cientos de milisegundos. A veces enviaban un rechazo genérico, sin explicar el motivo.","La ventana iba de milisegundos a cientos de milisegundos. A veces enviaban un rechazo genérico, sin explicar el motivo."],
+ [43.6,49.6,"Para tu robot: pregunta a tu bróker por su política de last look y revisa los rechazos. Educativo, sin garantías.","Para tu robot: pregunta a tu bróker por su last look y revisa los rechazos. Contenido educativo, sin garantías."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#0b1226',ACC='#ff6a3d',PAP='#101a33',INK='#f1ead8',SEL='#ff6a3d',GRI='#9aa5c4',GRN='#6bd1a3';
+const STY={subFont:'800 42px Inter',subBg:'rgba(11,18,38,.97)',subStroke:INK,subFill:INK,ctaBg:DK,ctaSub:'#f1ead8',ctaGlow:SEL,ctaAccent:'#ff6a3d',ctaBtnText:'#0b1226',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:INK,mu:GRI,acc:SEL,c:[SEL,INK,GRN,GRI],pn:'#18254a'});
+function brush(x1,y1,x2,y2,w,col,a=1){ctx.save();ctx.globalAlpha*=a;ctx.strokeStyle=col;ctx.lineCap='round';const r=rng(Math.floor(x1+y1+w));
+  for(let i=0;i<5;i++){ctx.lineWidth=w*(1-i*.17);ctx.globalAlpha=(a*(.55+.1*i));ctx.beginPath();ctx.moveTo(x1+(r()-.5)*8,y1+(r()-.5)*w*.2);ctx.lineTo(x2+(r()-.5)*8,y2+(r()-.5)*w*.2);ctx.stroke()}ctx.restore()}
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#18254a';ctx.fillRect(x,y,w,h);ctx.lineWidth=4;ctx.strokeStyle=INK;ctx.strokeRect(x,y,w,h);ctx.fillStyle=col;ctx.fillRect(x,y,14,h);ctx.restore()};
+function seal(x,y,s,txt){ctx.save();ctx.translate(x,y);ctx.rotate(-.08);ctx.fillStyle=SEL;RR(-s/2,-s/2,s,s,8);ctx.fill();ctx.restore();Lb(txt,x,y,s*.4,'#0b1226')}
+ST.bg=t=>{ctx.fillStyle=PAP;ctx.fillRect(0,0,W,H);ctx.save();ctx.globalAlpha=.08;ctx.fillStyle='#8fa0d8';const r=rng(31);for(let i=0;i<300;i++)ctx.fillRect(r()*W,r()*H,1+r()*4,1+r()*14);ctx.restore();
+  brush(60,70,420,76,10,INK,.9);Lb('FX · LAST LOOK',1020,76,26,GRI,1,'right')};
+const hd=(t,t0,s,col)=>{Lb(s,540,175,56,col||INK,eout(prog(t,t0,t0+.5)));brush(300,215,780,220,7,SEL,eout(prog(t,t0,t0+.7)))};
+function ring(t,t0,t1,cx,cy,r,frac,col,lw=44){const k=eio(prog(t,t0,t1));ctx.save();ctx.lineWidth=lw;ctx.strokeStyle='#223060';ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.stroke();ctx.strokeStyle=col;ctx.lineCap='butt';ctx.beginPath();ctx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+Math.PI*2*frac*k);ctx.stroke();ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('MERCADO DE DIVISAS · EL PROVEEDOR DECIDE',540,260,32,SEL,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,520,'LAST',330,INK);bigNum(t,1.4,540,820,'LOOK',330,SEL);
+  Lb('una ventana de milisegundos',540,1050,56,INK,eout(prog(t,2.4,3)));
+  ring(t,3,5.4,540,1290,120,.25,SEL,40);ctx.save();ctx.translate(540,1290);ctx.rotate(Math.PI*2*eio(prog(t,3,5.4)));line(0,0,0,-100,INK,8);ctx.restore();Lb('ms',540,1460,48,INK,eout(prog(t,3.4,4)));
+  seal(900,1290,110,'FX');ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'FX GLOBAL CODE');
+  bigNum(t,7.2,540,520,'17',420,SEL);Lb('PRINCIPIO',540,300,60,INK,eout(prog(t,7.4,8)));
+  slide(t,9.4,()=>{panel(60,800,960,300,INK);Lb('Quien usa last look debe ser',100,880,46,INK,1,'left');Lb('transparente y dar las',100,950,46,INK,1,'left');Lb('divulgaciones adecuadas',100,1020,46,SEL,1,'left')});
+  Lb('suplemento de julio de 2019 · GFXC',540,1220,30,GRI,eout(prog(t,11.4,12)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'CÓMO FUNCIONA');
+  slide(t,14.2,()=>{panel(60,290,960,170,INK);Lb('TU ORDEN',100,350,56,INK,1,'left');Lb('al precio cotizado',100,420,38,GRI,1,'left')});
+  brush(540,470,540,560,12,INK,eout(prog(t,15.2,15.8)));
+  slide(t,15.8,()=>{panel(60,570,960,230,SEL);Lb('VENTANA LAST LOOK',100,650,56,INK,1,'left');Lb('el proveedor decide en milisegundos',100,730,38,SEL,1,'left')});
+  brush(300,810,300,890,12,GRN,eout(prog(t,17.6,18.2)));brush(780,810,780,890,12,SEL,eout(prog(t,17.8,18.4)));
+  slide(t,18.2,()=>{panel(60,900,460,220,GRN);Lb('ACEPTA',290,980,56,INK);Lb('se ejecuta',290,1060,38,GRI)},-60);
+  slide(t,18.8,()=>{panel(560,900,460,220,SEL);Lb('RECHAZA',790,980,56,INK);Lb('no se ejecuta',790,1060,38,GRI)},60);
+  Lb('esquema general',540,1210,30,GRI,eout(prog(t,19.6,20.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'NYDFS · BARCLAYS',SEL);
+  Lb('18 DE NOVIEMBRE DE 2015',540,300,48,INK,eout(prog(t,21.4,22)));
+  bigNum(t,22,540,560,'US$ 150 M',150,SEL);Lb('multa adicional',540,730,56,INK,eout(prog(t,23.2,23.8)));
+  card(t,24.4,830,200,INK,'Total de multas de FX con el NYDFS','≈ US$ 635 millones',42);
+  Lb('fuente: comunicado del NYDFS · Finextra',540,1090,28,GRI,eout(prog(t,26.4,27)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'EL FILTRO ASIMÉTRICO',SEL);
+  card(t,29.2,290,220,SEL,'Si el precio se movía en contra','del banco durante la espera: rechazo',42);
+  ring(t,30.8,33,540,820,170,.07,SEL,70);bigNum(t,32.2,540,820,'≈ 7 %',150,INK);
+  Lb('del volumen en una plataforma',540,1080,46,INK,eout(prog(t,33,33.6)));Lb('hasta agosto de 2015',540,1150,38,GRI,eout(prog(t,33.6,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'LA VENTANA');
+  const k=eout(prog(t,36,38));ctx.save();ctx.fillStyle='#223060';ctx.fillRect(90,420,900,60);ctx.restore();brush(100,450,100+780*k,450,50,SEL);
+  Lb('milisegundos',200,560,44,INK,eout(prog(t,36.4,37)));Lb('cientos de ms',880,560,44,INK,eout(prog(t,37.4,38)));
+  card(t,38.6,680,230,INK,'Rechazo genérico sin explicación','"NACK" entre 2009 y 2014',42);
+  card(t,40.4,950,170,SEL,'Excusas técnicas a los clientes',null,42);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Pregunta por el last look','Revisa los rechazos',SEL,GRN)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('LAST LOOK · FX',540,250,50,GRI,1);
+  Lb('TU ORDEN',540,420,130,INK,1);Lb('PUEDE SER',540,560,130,INK,1);Lb('RECHAZADA',540,720,140,SEL,1);
+  brush(90,820,990,826,14,INK,1);Lb('US$ 150 M',540,1010,170,INK,1);
+  Lb('multa a Barclays · 2015',540,1190,56,SEL,1);Lb('NYDFS · 18 de noviembre de 2015',540,1270,38,GRI,1);coverBtn('VER CÓMO →',SEL,'#0b1226')}
+</script></body></html>
