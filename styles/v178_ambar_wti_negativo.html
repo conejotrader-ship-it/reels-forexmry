@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:VT;src:url(node_modules/@fontsource/vt323/files/vt323-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 11 (4.º uso): terminal de datos sobre negro azulado, cian y rosa — tema: WTI negativo el 20 abr 2020 (60 s).
+const SPEC={name:"WTI negativo",hook:"20 ABR 2020: EL WTI CERRÓ EN −US$ 37,63",dur:60,cta:56,bpm:92,mus:'soft',prog:[[38, 'm'], [41, 'm'], [43, 'M'], [36, 'm']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'hit'],[13.6,'wipe'],[15.0,'down'],[17.0,'hit'],[20.6,'wipe'],[22.0,'down'],[24.0,'down'],[26.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"El 20 abr 2020, el petróleo WTI cerró en −US$ 37,63 por barril. Un precio negativo.","El veinte de abril de dos mil veinte, el petróleo WTI cerró en menos treinta y siete dólares por barril. Un precio negativo."],
+ [6.4,13.4,"Era el contrato de mayo. Vencía al día siguiente, el 21 de abril, y exigía entrega física del crudo.","Era el contrato de mayo. Vencía al día siguiente, el veintiuno de abril, y exigía entrega física del crudo."],
+ [13.6,20.4,"Quien seguía largo debía vender o recibir barriles. Y el almacenamiento en Cushing estaba casi lleno.","Quien seguía largo debía vender o recibir barriles. Y el almacenamiento en Cushing estaba casi lleno."],
+ [20.6,28.2,"Con los confinamientos, la demanda se hundió. El viernes había solo ≈ 108.600 contratos abiertos, según CME vía Platts.","Con los confinamientos, la demanda se hundió. El viernes había solo unos ciento ocho mil contratos abiertos, según CME."],
+ [28.4,35.0,"Mínimo del día: −US$ 40,32. La caída fue de ≈ US$ 56, cálculo con cifras de prensa.","Mínimo del día: menos cuarenta dólares con treinta y dos centavos. La caída fue de unos cincuenta y seis dólares."],
+ [35.2,43.4,"Ese día, el contrato de junio cerró en US$ 20,43. Y el CME avisó el 8 de abril de un plan para precios negativos en opciones.","Ese día, el contrato de junio cerró en veinte dólares con cuarenta y tres. El CME avisó el ocho de abril de un plan para precios negativos en opciones."],
+ [43.6,49.6,"Para tu robot: cierra o rueda antes del vencimiento y revisa el riesgo de entrega física. Educativo, sin garantías.","Para tu robot: cierra o rueda antes del vencimiento y revisa el riesgo de entrega física. Contenido educativo, sin garantías."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#00070e',ACC='#00e5ff';
+const STY={subFont:'800 42px Inter',subBg:'rgba(0,7,14,.97)',subStroke:'#00e5ff',subFill:'#bff7ff',ctaBg:DK,ctaSub:'#bff7ff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['40px VT','900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+const CY='#00e5ff',CL='#bff7ff',CD='#0a7f93',HOT='#ff3b6b',WT='#e6fbff';
+Object.assign(ST,{fam:'VT',w:400,sc:1.32,mono:true,txt:CY,mu:CD,acc:CL,c:[CY,CL,WT,HOT],pn:'#001219'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#001219';ctx.fillRect(x,y,w,h);ctx.lineWidth=4;ctx.strokeStyle=col;ctx.strokeRect(x,y,w,h);ctx.lineWidth=1.5;ctx.strokeRect(x+8,y+8,w-16,h-16);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle='#00070e';ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,900,100,540,900,1100);g.addColorStop(0,'rgba(0,229,255,.10)');g.addColorStop(1,'rgba(0,229,255,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='rgba(0,0,0,.30)';for(let y=0;y<H;y+=6)ctx.fillRect(0,y,W,2);ctx.fillStyle=CY;ctx.fillRect(0,96,W,4);Lb('CL1 COMDTY  █',40,56,34,CD,1,'left')};
+function typed(t,t0,s,x,y,sz,col,al='left'){const n=Math.floor((t-t0)*28);if(n<=0)return;const o=s.slice(0,Math.min(s.length,n));Lb(o+((t-t0)*28<s.length&&Math.floor(t*4)%2?'█':''),x,y,sz,col,1,al)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;typed(t,.2,'> WTI · NYMEX · 20 ABR 2020',60,230,46,CL);
+  bigNum(t,1,540,560,'−37,63',250,HOT);
+  slide(t,2.2,()=>{panel(60,760,960,200,CL);Lb('US$ POR BARRIL',540,830,80,CL);Lb('precio NEGATIVO',540,915,60,HOT)});
+  typed(t,3.6,'> contrato de mayo (CL)',60,1100,42,CD);typed(t,4.6,'> cierre del lunes 20 de abril',60,1170,42,CD);ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL CONTRATO DE MAYO',CL);
+  slide(t,7.2,()=>{panel(60,280,960,320,CY);Lb('VENCÍA EL 21 ABR',100,350,76,CL,1,'left');Lb('un día después del cierre',100,450,52,CY,1,'left');Lb('del lunes 20',100,525,52,CY,1,'left')});
+  slide(t,10.2,()=>{panel(60,680,960,320,HOT);Lb('ENTREGA FÍSICA',100,750,76,CL,1,'left');Lb('barriles reales de crudo',100,850,52,HOT,1,'left');Lb('no solo una cifra en pantalla',100,925,48,HOT,1,'left')});
+  Lb('> sin cerrar a tiempo, hay que recibir el crudo',540,1120,36,CD,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'SIN DÓNDE GUARDARLO',CL);
+  const k=eio(prog(t,14.6,17.2));ctx.save();ctx.lineWidth=6;ctx.strokeStyle=CY;ctx.strokeRect(340,300,400,560);ctx.fillStyle=HOT;const hh=500*k;ctx.fillRect(350,850-hh,380,hh);ctx.restore();
+  Lb('CUSHING (OK)',540,930,60,CL,eout(prog(t,15,15.6)));Lb('almacenamiento casi lleno (esquema)',540,990,36,CD,eout(prog(t,15.6,16.2)));
+  card(t,17.4,1050,150,CY,'Largo al vencimiento:','vender o recibir barriles',50);
+  card(t,19,1230,130,HOT,'Entrega física = riesgo extra',null,46);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'POCA PROFUNDIDAD',CL);
+  bigNum(t,21.4,540,520,'108.593',200,CL);Lb('contratos abiertos del viernes',540,670,52,CY,eout(prog(t,22.4,23)));Lb('(CME vía S&P Global Platts)',540,735,40,CD,eout(prog(t,22.8,23.4)));
+  card(t,24.2,860,170,HOT,'Confinamientos 2020','demanda de petróleo hundida',52);
+  card(t,26,1070,170,CY,'Pocos compradores','para tantas posiciones largas',52);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'EL DÍA, EN NÚMEROS',CL);
+  const V=[18.3,17.5,19,16.5,14,10,4,-5,-20,-37.6],pts=V.map((v,i)=>[i/9,(v+45)/70]);const X=90,Y=300,Wd=900,Hh=620,zy=Y+Hh-(45/70)*Hh;
+  axes(X,Y,Wd,Hh,CD,'tiempo (ILUSTRATIVO)');hline(zy,CL,3,X,X+Wd);Lb('0',X-40,zy,36,CL,eout(prog(t,29,29.6)));
+  const hd=lineChart(t,29.4,33.4,pts,X,Y,Wd,Hh,HOT,9,16);
+  Lb('≈ 18,27 (cálculo)',X+10,Y+60,40,CY,eout(prog(t,29.6,30.2)),'left');
+  const k=eout(prog(t,33.4,34.2));if(k>.02){Lb('−37,63',700,Y+Hh+110,120,HOT,k);Lb('mín. del día: −40,32',700,Y+Hh+190,48,CL,k)}ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'MAYO VS JUNIO',CL);
+  slide(t,36,()=>{panel(60,280,460,300,HOT);Lb('MAYO',290,350,60,CL);Lb('−37,63',290,460,110,HOT);Lb('vencía el 21',290,545,36,CD)});
+  slide(t,37.4,()=>{panel(560,280,460,300,CY);Lb('JUNIO',790,350,60,CL);Lb('20,43',790,460,110,CY);Lb('cierre del día',790,545,36,CD)});
+  card(t,39.4,680,190,CL,'CME, 8 de abril de 2020','plan para precios negativos en opciones',46);
+  card(t,41,910,150,CY,'El problema: el vencimiento',null,46);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Cierra o rueda antes de vencer','Pruébalo primero en demo',CY,CL)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('> WTI · 20 ABR 2020',540,250,50,CL,1);Lb('EL DÍA QUE EL',540,370,96,WT,1);Lb('PETRÓLEO',540,555,150,CY,1);Lb('−37,63',540,810,265,HOT,1);
+  Lb('US$ POR BARRIL',540,1040,76,CL,1);Lb('precio negativo · contrato de mayo',540,1130,44,CD,1);
+  coverBtn('VER QUÉ PASÓ →',CY,'#00070e')}
+</script></body></html>
