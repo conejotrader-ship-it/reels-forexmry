@@ -1,0 +1,63 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 14 (4.º uso): lingotes dorados sobre bóveda burdeos — tema: GLD, IAU y GLDM, tres ETF de oro por activos (60 s).
+const SPEC={name:"ETFOro",hook:"GLD, IAU Y GLDM: TRES ETF DE ORO POR TAMAÑO",dur:60,cta:56,bpm:100,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'tick'],[13.6,'wipe'],[15.0,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Tres ETF de oro, tres tamaños: GLD, IAU y GLDM, comparados por activos bajo gestión.","Tres ETF de oro, tres tamaños: GLD, IAU y GLDM, comparados por activos bajo gestión."],
+ [6.4,13.4,"SPDR Gold Shares, GLD: ≈ US$ 131.000 millones en activos, al 30 de octubre de 2026.","SPDR Gold Shares, GLD: unos ciento treinta y un mil millones de dólares, al treinta de octubre de dos mil veintiséis."],
+ [13.6,20.4,"iShares Gold Trust, IAU: ≈ US$ 61.000 millones al 5 de noviembre. Menos de la mitad de GLD.","iShares Gold Trust, IAU: unos sesenta y un mil millones de dólares al cinco de noviembre. Menos de la mitad de GLD."],
+ [20.6,28.2,"SPDR Gold MiniShares, GLDM: ≈ US$ 31.000 millones al 5 de noviembre. Yahoo muestra unos 30.700 millones.","GLDM, SPDR Gold MiniShares: unos treinta y un mil millones de dólares al cinco de noviembre. Yahoo, unos treinta mil setecientos millones."],
+ [28.4,35.0,"GLD pesa ≈ 2,1 veces IAU y ≈ 4,2 veces GLDM. Cálculo propio; las fechas difieren.","GLD pesa unas dos veces y un décimo IAU, y unas cuatro veces y dos décimos GLDM. Cálculo propio; las fechas difieren."],
+ [35.2,43.4,"Todos los ETF de oro del mundo sumaban ≈ US$ 526.000 millones y 4.047 toneladas a fines de junio de 2026, según WGC.","Los ETF de oro del mundo sumaban unos quinientos veintiséis mil millones de dólares y cuatro mil cuarenta y siete toneladas en junio, según el WGC."],
+ [43.6,49.6,"Para tu robot: los ETF miden interés inversionista; tu robot opera el precio del XAUUSD. Educativo, sin garantías.","Para tu robot: los ETF miden el interés de los inversionistas; tu robot opera el precio del XAUUSD. Contenido educativo, sin garantías."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#1a0a10',ACC='#e8b923',GD='#e8b923',GD2='#b8860b',CR='#f6ecd8',RS='#ff7a8a',SV='#c9d4e0';
+const STY={subFont:'800 42px Inter',subBg:'rgba(26,10,16,.96)',subStroke:GD,subFill:CR,ctaBg:DK,ctaSub:CR,ctaGlow:GD,ctaAccent:GD,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:CR,mu:'#b9a6ad',acc:GD,c:[GD,RS,CR,SV],pn:'#2a1119'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();const g=ctx.createLinearGradient(0,y,0,y+h);g.addColorStop(0,'#331621');g.addColorStop(1,'#220e16');ctx.fillStyle=g;RR(x,y,w,h,18);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle=col;ctx.stroke();ctx.restore()};
+function ingot(x,y,w,h,col1,col2,a=1){ctx.save();ctx.globalAlpha*=a;const g=ctx.createLinearGradient(0,y,0,y+h);g.addColorStop(0,col1);g.addColorStop(1,col2);ctx.fillStyle=g;
+  const s=Math.min(w*.12,h*.5);ctx.beginPath();ctx.moveTo(x+s,y);ctx.lineTo(x+w-s,y);ctx.lineTo(x+w,y+h);ctx.lineTo(x,y+h);ctx.closePath();ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.28)';ctx.beginPath();ctx.moveTo(x+s*1.3,y+h*.12);ctx.lineTo(x+w-s*1.3,y+h*.12);ctx.lineTo(x+w-s*1.4,y+h*.3);ctx.lineTo(x+s*1.4,y+h*.3);ctx.closePath();ctx.fill();ctx.restore()}
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#26101a');g.addColorStop(1,'#0e060a');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.strokeStyle='rgba(232,185,35,.07)';ctx.lineWidth=2;for(let x=90;x<W;x+=180){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}ctx.restore();
+  ingot(20,1700,170,70,GD,GD2);ingot(200,1700,170,70,GD,GD2);ingot(110,1630,170,70,'#f4d35e',GD);ingot(890,1700,170,70,GD,GD2);ingot(710,1700,170,70,GD,GD2);ingot(800,1630,170,70,'#f4d35e',GD);
+  Lb('ETF DE ORO · GLD · IAU · GLDM',540,60,28,GD,.95)};
+const hd=(t,t0,s,col)=>Lb(s,540,175,58,col||GD,eout(prog(t,t0,t0+.5)));
+function bar(t,t0,x,y,full,v,col1,col2,h=120){const k=eout(prog(t,t0,t0+1.2));if(k<=.01)return;ingot(x,y,Math.max(40,full*v*k),h,col1,col2)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('3 ETF',540,330,260,GD,eout(prog(t,.2,.9)));Lb('DE ORO',540,520,170,CR,eout(prog(t,.6,1.3)));
+  [['GLD',GD,'#f4d35e',560,1],['IAU',CR,SV,760,.47],['GLDM',RS,'#b4485a',960,.24]].forEach(([n,c1,c2,y,v],i)=>{const k=eout(prog(t,1.6+i*.5,2.4+i*.5));if(k<=.02)return;ctx.save();ctx.globalAlpha*=k;ingot(80,y+250,900*v*k+40,110,c1==GD?GD:c1,c2);Lb(n,80+(900*v*k+40)/2,y+305,n=='GLDM'?44:64,'#1a0a10',1);ctx.restore()});
+  Lb('por activos bajo gestión',540,1320,44,ST.mu,eout(prog(t,4,4.6)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'SPDR GOLD SHARES · GLD');
+  bigNum(t,7.2,540,520,'≈ 131.000',165,GD);Lb('millones de dólares en activos',540,690,52,CR,eout(prog(t,8.4,9)));
+  bar(t,9,60,780,960,1,GD,'#f4d35e',180);Lb('GLD',540,870,80,'#1a0a10',eout(prog(t,10,10.6)));
+  Lb('al 30 de octubre de 2026',540,1040,44,ST.mu,eout(prog(t,11,11.6)));Lb('fuente: etfcentral (secundaria)',540,1110,32,ST.mu,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'ISHARES GOLD TRUST · IAU',CR);
+  bigNum(t,14.4,540,520,'≈ 61.000',175,CR);Lb('millones de dólares en activos',540,690,52,GD,eout(prog(t,15.6,16.2)));
+  ctx.save();ctx.globalAlpha*=.25;ingot(60,780,960,180,GD,GD2);ctx.restore();bar(t,16.2,60,780,960,.465,CR,SV,180);Lb('IAU',60+960*.465/2,870,80,'#1a0a10',eout(prog(t,17.4,18)));
+  Lb('< ½ de GLD',830,870,56,GD,eout(prog(t,18,18.6)));
+  Lb('al 5 de noviembre de 2026',540,1040,44,ST.mu,eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'SPDR GOLD MINISHARES · GLDM',RS);
+  bigNum(t,21.4,540,520,'≈ 31.000',175,RS);Lb('millones de dólares en activos',540,690,52,CR,eout(prog(t,22.6,23.2)));
+  ctx.save();ctx.globalAlpha*=.25;ingot(60,780,960,180,GD,GD2);ctx.restore();bar(t,23.4,60,780,960,.2375,RS,'#b4485a',180);Lb('GLDM',60+960*.2375/2,870,60,'#1a0a10',eout(prog(t,24.6,25.2)));
+  Lb('al 5 de noviembre de 2026',540,1040,44,ST.mu,eout(prog(t,25.6,26.2)));Lb('Yahoo: ≈ 30.700 millones (sin fecha clara)',540,1110,34,ST.mu,eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'EL TAMAÑO RELATIVO',GD);
+  [['GLD',1,GD,'#f4d35e','× 1'],['IAU',.465,CR,SV,'÷ 2,1'],['GLDM',.2375,RS,'#b4485a','÷ 4,2']].forEach(([n,v,c1,c2,r],i)=>{const y=330+i*250;Lb(n,60,y,52,CR,eout(prog(t,29+i*.7,29.6+i*.7)),'left');bar(t,29.3+i*.7,60,y+40,960,v,c1,c2,130);(i==0?Lb(r,540,y+105,64,'#1a0a10',eout(prog(t,30.4+i*.7,31+i*.7))):Lb(r,60+960*v+30,y+105,64,GD,eout(prog(t,30.4+i*.7,31+i*.7)),'left'))});
+  Lb('cálculo propio · las fechas de los datos difieren',540,1120,34,ST.mu,eout(prog(t,33,33.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'TODOS LOS ETF DE ORO',GD);
+  Lb('fines de junio de 2026',540,260,40,ST.mu,eout(prog(t,35.8,36.4)));
+  bigNum(t,36.4,540,520,'4.047 t',250,GD);Lb('toneladas de oro en ETF',540,690,52,CR,eout(prog(t,37.6,38.2)));
+  bigNum(t,38.6,540,900,'≈ US$ 526.000 M',105,CR);Lb('valor total mundial',540,1020,48,GD,eout(prog(t,39.6,40.2)));
+  Lb('fuente: WGC, vía Seeking Alpha (9 jul 2026)',540,1130,34,ST.mu,eout(prog(t,40.8,41.4)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'ETF = interés inversionista','Tu robot opera el precio',GD,RS)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('ETF DE ORO · NOV 2026',540,250,50,GD,1);
+  Lb('UNO PESA',540,420,150,CR,1);Lb('MÁS QUE',540,570,110,CR,1);Lb('LOS OTROS',540,700,150,RS,1);
+  ctx.fillStyle=GD;ctx.fillRect(90,800,900,8);Lb('≈ US$ 131.000 M',540,990,100,GD,1);Lb('GLD · IAU · GLDM',540,1120,66,CR,1);Lb('fuente secundaria · cifras aproximadas',540,1200,38,ST.mu,1);
+  coverBtn('VER EL RANKING →',GD,DK)}
+</script></body></html>
