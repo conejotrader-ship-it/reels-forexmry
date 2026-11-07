@@ -1,0 +1,60 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 17 (4.º uso): papercut — capas de papel lavanda, violeta, rosa y lima — tema: GameStop y el short squeeze de enero de 2021 (60 s).
+const SPEC={name:"GameStop",hook:"GAMESTOP, ENERO DE 2021: DE ≈ US$ 17 A US$ 483",dur:60,cta:56,bpm:112,mus:'soft',prog:[[41,'m'],[38,'M'],[43,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'tick'],[13.6,'wipe'],[15.0,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"GameStop, enero de 2021: de ≈ US$ 17 a un máximo de US$ 483 en el día.","GameStop, enero de dos mil veintiuno: de unos diecisiete dólares a un máximo de cuatrocientos ochenta y tres en el día."],
+ [6.4,13.4,"Empezó el mes en ≈ US$ 17,25, cifra aproximada. El 28 de enero tocó US$ 483 intradía.","Empezó el mes en unos diecisiete dólares con veinticinco, cifra aproximada. El veintiocho de enero tocó cuatrocientos ochenta y tres dólares en el día."],
+ [13.6,20.4,"El interés corto era ≈ 140 % de las acciones flotantes al 22 de enero: más cortos que acciones disponibles.","El interés corto era cerca de ciento cuarenta por ciento de las acciones flotantes al veintidós de enero: más cortos que acciones disponibles."],
+ [20.6,28.2,"Short squeeze: la acción sube, los vendedores en corto recompran para limitar pérdidas y empujan el precio más arriba.","Short squeeze: la acción sube, los vendedores en corto recompran para limitar pérdidas y empujan el precio más arriba."],
+ [28.4,35.0,"El 26 de enero subió ≈ 92,7 %. Hasta el 27 acumulaba ≈ 1.500 % en dos semanas.","El veintiséis de enero subió cerca de noventa y dos coma siete por ciento. Hasta el veintisiete acumulaba cerca de mil quinientos por ciento en dos semanas."],
+ [35.2,43.4,"El 28 de enero, Robinhood restringió las compras. Los saltos y el spread extremos son riesgo real para un robot.","El veintiocho de enero, Robinhood restringió las compras. Los saltos y el spread extremos son riesgo real para un robot."],
+ [43.6,49.6,"Para tu robot: define riesgo máximo y evita operar en picos de volatilidad. Educativo, sin garantías.","Para tu robot: define riesgo máximo y evita operar en picos de volatilidad. Contenido educativo, sin garantías."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#2b1b4a',ACC='#c6ff3d',CRM='#efe6ff',VI='#7b4bd1',PK='#ff4f8b',LM='#c6ff3d',NV='#2b1b4a';
+const STY={subFont:'800 42px Inter',subBg:'rgba(43,27,74,.97)',subStroke:LM,subFill:'#fff',ctaBg:NV,ctaSub:CRM,ctaGlow:LM,ctaAccent:LM,ctaBtnText:NV,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:NV,mu:'#6a5a8a',acc:PK,c:[PK,VI,NV,'#6a8a00'],pn:CRM});
+function paper(x,y,w,h,col,r=18){ctx.save();ctx.shadowColor='rgba(0,0,0,.35)';ctx.shadowBlur=18;ctx.shadowOffsetY=10;ctx.fillStyle=col;RR(x,y,w,h,r);ctx.fill();ctx.restore()}
+ST.panel=(x,y,w,h,col)=>{paper(x,y,w,h,'#fff');ctx.save();ctx.fillStyle=col;RR(x,y,16,h,8);ctx.fill();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=CRM;ctx.fillRect(0,0,W,H);
+  const lay=[[1500,VI,.0],[1640,PK,.8],[1760,LM,1.6],[1860,NV,2.4]];lay.forEach(([y0,col,ph])=>{ctx.save();ctx.shadowColor='rgba(0,0,0,.3)';ctx.shadowBlur=20;ctx.shadowOffsetY=-6;ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(0,H);for(let x=0;x<=W;x+=20)ctx.lineTo(x,y0+Math.sin(x/160+ph)*26);ctx.lineTo(W,H);ctx.closePath();ctx.fill();ctx.restore()});
+  paper(60,40,360,50,PK,12);Lb('GME · ENERO 2021',240,66,24,'#fff')};
+const hd=(t,t0,s,col)=>Lb(s,540,175,58,col||PK,eout(prog(t,t0,t0+.5)));
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('GAMESTOP · ENERO DE 2021',540,270,40,PK,eout(prog(t,.2,.8)));
+  pop(t,.7,540,640,()=>{paper(-440,-200,880,430,VI,24);Lb('US$ 483',0,-50,170,'#fff');Lb('máximo intradía · 28 ene',0,90,50,LM)});
+  Lb('DESDE ≈ US$ 17',540,1010,100,NV,eout(prog(t,2.4,3.0)));Lb('al inicio del mes · cifras aproximadas',540,1100,32,ST.mu,eout(prog(t,3.4,4)));
+  [0,1,2,3,4].forEach(i=>{const k=eback(prog(t,3.6+i*.2,4.4+i*.2));if(k<=.02)return;ctx.save();ctx.translate(180+i*180,1260);ctx.scale(k,k);paper(-60,-60,120,120,[LM,VI,PK,NV,LM][i]);ctx.restore()});ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'DEL INICIO AL MÁXIMO');
+  const X=200,Y=300,Hh=620;[['INICIO DE ENERO',17.25/483,VI,'≈ 17'],['28 ENERO · INTRADÍA',1,PK,'483']].forEach(([lab,v,col,tx],i)=>{const k=eout(prog(t,7.4+i*1.6,8.6+i*1.6));if(k<=.01)return;const bw=300,bx=X+i*(bw+80),bh=Math.max(14,Hh*v*k);paper(bx,Y+Hh-bh,bw,bh,col,12);Lb(tx,bx+bw/2,Y+Hh-bh-50,80,NV,k);Lb(lab,bx+bw/2,Y+Hh+50,28,ST.mu,k)});
+  Lb('×28',540,1090,230,NV,eout(prog(t,10.6,11.4)));Lb('cálculo propio · 483 ÷ 17,25',540,1230,34,ST.mu,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'INTERÉS CORTO');
+  const cx=540,cy=560,r=190;ctx.save();ctx.lineWidth=70;ctx.strokeStyle='#d9ccf2';ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.stroke();
+  const k=eio(prog(t,14.8,17.4));ctx.strokeStyle=VI;ctx.beginPath();ctx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+Math.PI*2*Math.min(1,1.4*k/1.4*1));ctx.stroke();
+  const ex=Math.max(0,k*1.4-1);if(ex>0){ctx.strokeStyle=PK;ctx.lineWidth=40;ctx.beginPath();ctx.arc(cx,cy,r+55,-Math.PI/2,-Math.PI/2+Math.PI*2*ex);ctx.stroke()}ctx.restore();
+  Lb('≈ 140 %',cx,cy,110,NV,eout(prog(t,16.6,17.2)));
+  card(t,17.8,880,170,PK,'del flotante · al 22 de enero',null,46);card(t,19,1070,170,VI,'Más cortos que acciones',null,46);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'SHORT SQUEEZE');
+  card(t,21.4,290,150,VI,'1 · La acción sube',null,52);
+  card(t,23.2,490,170,PK,'2 · Los cortos recompran','para limitar sus pérdidas',46);
+  card(t,25,720,150,LM,'3 · El precio sube aún más',null,46);
+  Lb('un círculo que se retroalimenta',540,960,44,ST.mu,eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'LA SEMANA DEL 25 AL 28');
+  bigNum(t,29.2,540,480,'+92,7 %',230,PK);Lb('el 26 de enero (≈)',540,650,48,NV,eout(prog(t,30.4,31)));
+  bigNum(t,31.6,540,900,'+1.500 %',210,VI);Lb('en dos semanas, hasta el 27 (≈)',540,1060,44,NV,eout(prog(t,33,33.6)));
+  Lb('fuente: Wikipedia (una sola fuente)',540,1200,30,ST.mu,eout(prog(t,34,34.6)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'28 DE ENERO');
+  pop(t,36,540,480,()=>{paper(-420,-170,840,340,PK,24);Lb('ROBINHOOD',0,-50,100,'#fff');Lb('restringe las compras',0,70,56,NV)});
+  card(t,38.4,760,170,VI,'Saltos de precio y spread extremos',null,40);
+  card(t,40.2,970,170,LM,'Riesgo real para un robot',null,48);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Define tu riesgo máximo','Evita picos de volatilidad',PK,VI)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('GAMESTOP · ENERO DE 2021',540,250,46,PK,1);
+  Lb('EN UN SOLO MES',540,410,100,NV,1);Lb('×28',540,700,420,PK,1);
+  Lb('de ≈ US$ 17 a US$ 483',540,980,66,NV,1);Lb('máximo intradía · cifras aproximadas',540,1060,38,ST.mu,1);coverBtn('VER QUÉ PASÓ →',NV,LM)}
+</script></body></html>

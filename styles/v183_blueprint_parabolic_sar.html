@@ -1,0 +1,73 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 16 (4.º uso): plano técnico sobre papel de dibujo blanco con tinta azul marino y anotaciones rojas — tema: Parabolic SAR de Wilder (60 s).
+const SPEC={name:"ParabolicSAR",hook:"PARABOLIC SAR: LOS PUNTOS QUE PERSIGUEN AL PRECIO",dur:60,cta:56,bpm:108,mus:'soft',prog:[[45,'M'],[40,'m'],[43,'M'],[38,'m']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'tick'],[13.6,'wipe'],[15.0,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Parabolic SAR de Wilder: puntos que persiguen al precio. Publicado en 1978.","Parabolic SAR de Wilder: puntos que persiguen al precio. Publicado en mil novecientos setenta y ocho."],
+ [6.4,13.4,"Apareció en New Concepts in Technical Trading Systems, de J. Welles Wilder, en junio de 1978. SAR: stop and reverse.","Apareció en New Concepts in Technical Trading Systems, de J. Welles Wilder, en junio de mil novecientos setenta y ocho. SAR: stop and reverse."],
+ [13.6,20.4,"Fórmula: SAR siguiente = SAR + AF × (EP − SAR). EP es el punto extremo de la tendencia.","Fórmula: SAR siguiente igual a SAR más AF por, EP menos SAR. EP es el punto extremo de la tendencia."],
+ [20.6,28.2,"El factor de aceleración AF empieza en 0,02, sube 0,02 con cada nuevo extremo y llega hasta 0,20.","El factor de aceleración AF empieza en cero coma cero dos, sube cero coma cero dos con cada nuevo extremo y llega hasta cero coma veinte."],
+ [28.4,35.0,"Si el precio alcanza el SAR, se invierte: el nuevo SAR es el último EP y AF vuelve a 0,02.","Si el precio alcanza el SAR, se invierte: el nuevo SAR es el último EP y AF vuelve a cero coma cero dos."],
+ [35.2,43.4,"Su límite: funciona bien solo en mercados con tendencia. En rangos laterales produce señales falsas seguidas.","Su límite: funciona bien solo en mercados con tendencia. En rangos laterales produce señales falsas seguidas."],
+ [43.6,49.6,"Para tu robot: combínalo con un filtro de tendencia y pruébalo en demo. Educativo, sin garantías.","Para tu robot: combínalo con un filtro de tendencia y pruébalo en demo. Contenido educativo, sin garantías."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#0f2747',ACC='#ffb347',PAP='#f5f8fc',INK='#14325a',RD='#d6362b',GR='#6b7f9c',BL='#2f7fd1';
+const STY={subFont:'800 42px Inter',subBg:'rgba(15,39,71,.97)',subStroke:'#bcd0ea',subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:INK,mu:GR,acc:RD,c:[RD,BL,INK,GR],pn:'#fff'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#fff';ctx.fillRect(x,y,w,h);ctx.lineWidth=3;ctx.strokeStyle=INK;ctx.strokeRect(x,y,w,h);ctx.fillStyle=col;ctx.fillRect(x,y,12,h);
+  ctx.strokeStyle=INK;ctx.lineWidth=2;[[x,y],[x+w,y],[x,y+h],[x+w,y+h]].forEach(([a,b])=>{ctx.beginPath();ctx.arc(a,b,7,0,7);ctx.fillStyle=PAP;ctx.fill();ctx.stroke()});ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=PAP;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle='rgba(47,127,209,.16)';ctx.lineWidth=1.5;for(let x=0;x<=W;x+=60){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<=H;y+=60){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+  ctx.strokeStyle='rgba(47,127,209,.3)';ctx.lineWidth=2.5;for(let x=0;x<=W;x+=300){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<=H;y+=300){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.strokeStyle=INK;ctx.lineWidth=4;ctx.strokeRect(30,30,W-60,H-60);Lb('PLANO Nº 7 · PARABOLIC SAR',60,62,26,INK,1,'left');Lb('ESCALA ILUSTRATIVA',1020,62,26,GR,1,'right')};
+const hd=(t,t0,s,col)=>Lb(s,540,175,56,col||INK,eout(prog(t,t0,t0+.5)));
+// precios ILUSTRATIVOS y SAR calculado con AF 0,02 / paso 0,02 / máx. 0,20
+function mkSeries(f,N){const r=rng(5);const H_=[],L_=[];for(let i=0;i<N;i++){const c=f(i)+(r()-.5)*2.4;H_.push(c+1.8+r()*1.6);L_.push(c-1.8-r()*1.6)}return [H_,L_]}
+function psar(h,l){const n=h.length,sar=[],up=[];let u=true,s=l[0],ep=h[0],af=.02;sar[0]=s;up[0]=true;
+  for(let i=1;i<n;i++){s=s+af*(ep-s);
+    if(u){s=Math.min(s,l[i-1],i>1?l[i-2]:l[i-1]);if(l[i]<s){u=false;s=ep;ep=l[i];af=.02}else if(h[i]>ep){ep=h[i];af=Math.min(af+.02,.2)}}
+    else{s=Math.max(s,h[i-1],i>1?h[i-2]:h[i-1]);if(h[i]>s){u=true;s=ep;ep=h[i];af=.02}else if(l[i]<ep){ep=l[i];af=Math.min(af+.02,.2)}}
+    sar[i]=s;up[i]=u}return [sar,up]}
+const SA=mkSeries(i=>i<20?100+i*1.6:132-(i-20)*1.9,38),RA=psar(SA[0],SA[1]);
+const SB=mkSeries(i=>110+7*Math.sin(i*.75),38),RB=psar(SB[0],SB[1]);
+function chart(t,t0,t1,S,R,x,y,w,h,extra){const N=S[0].length,all=S[0].concat(S[1]).concat(R[0]),mn=Math.min(...all),mx=Math.max(...all);
+  const px=i=>x+12+(w-24)*i/(N-1),py=v=>y+h-(v-mn)/(mx-mn)*h,k=eio(prog(t,t0,t1)),n=Math.floor(k*N);
+  ctx.save();ctx.strokeStyle=GR;ctx.lineWidth=3;ctx.globalAlpha*=.7;ctx.beginPath();ctx.moveTo(x,y+h);ctx.lineTo(x+w,y+h);ctx.moveTo(x,y);ctx.lineTo(x,y+h);ctx.stroke();ctx.restore();
+  for(let i=0;i<n;i++){ctx.save();ctx.strokeStyle=INK;ctx.lineWidth=7;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(px(i),py(S[0][i]));ctx.lineTo(px(i),py(S[1][i]));ctx.stroke();ctx.restore();
+    if(i>0){ctx.save();ctx.fillStyle=R[1][i]?BL:RD;ctx.beginPath();ctx.arc(px(i),py(R[0][i]),9,0,7);ctx.fill();ctx.restore()}}
+  if(extra)extra(px,py,n)}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('J. WELLES WILDER · 1978',540,260,36,RD,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,520,'SAR',380,INK);Lb('PARABOLIC',540,760,110,RD,eout(prog(t,1.8,2.4)));
+  chart(t,2.4,5.6,SA,RA,70,860,940,460);ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'EL LIBRO');
+  slide(t,7.2,()=>{panel(60,290,960,360,INK);Lb('NEW CONCEPTS IN',100,370,52,INK,1,'left');Lb('TECHNICAL TRADING',100,440,52,INK,1,'left');Lb('SYSTEMS',100,510,52,INK,1,'left');Lb('J. Welles Wilder Jr. · junio de 1978',100,590,36,RD,1,'left')});
+  bigNum(t,10,540,860,'1978',250,RD);
+  slide(t,11.4,()=>{panel(60,1020,960,170,BL);Lb('SAR = STOP AND REVERSE',100,1105,48,INK,1,'left')});ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'LA FÓRMULA');
+  slide(t,14.2,()=>{panel(60,290,960,300,INK);Lb('SAR siguiente =',100,370,60,INK,1,'left');Lb('SAR + AF × (EP − SAR)',100,470,68,RD,1,'left')});
+  slide(t,16.4,()=>{panel(60,680,960,170,BL);Lb('SAR: nivel actual del punto',100,765,44,INK,1,'left')});
+  slide(t,17.8,()=>{panel(60,900,960,170,RD);Lb('EP: punto extremo (máx. o mín.)',100,985,44,INK,1,'left')});
+  slide(t,19.2,()=>{panel(60,1120,960,170,INK);Lb('AF: factor de aceleración',100,1205,44,INK,1,'left')});ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'EL FACTOR AF');
+  const V=[.02,.04,.06,.08,.10,.12,.14,.16,.18,.20],X=90,Y=330,Wd=900,Hh=520,bw=70;
+  V.forEach((v,i)=>{const k=eout(prog(t,22+i*.45,22.8+i*.45));if(k<.01)return;const bh=Hh*v/.2*k;ctx.fillStyle=i==9?RD:BL;ctx.fillRect(X+i*(bw+16),Y+Hh-bh,bw,bh)});
+  Lb('0,02',X+bw/2,Y+Hh+40,34,INK,eout(prog(t,22.4,23)));Lb('0,20',X+9*(bw+16)+bw/2,Y+Hh+40,34,RD,eout(prog(t,26,26.6)));
+  card(t,24.6,980,170,BL,'Inicial 0,02 · paso 0,02',null,46);card(t,26.2,1180,170,RD,'Máximo: 0,20',null,52);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'LA INVERSIÓN');
+  chart(t,29,32.6,SA,RA,70,260,940,520,(px,py,n)=>{const i0=RA[1].findIndex((u,i)=>i>0&&!u);if(n>i0&&i0>0){const k=eout(prog(t,32.4,33));ctx.save();ctx.globalAlpha*=k;ctx.strokeStyle=RD;ctx.lineWidth=5;ctx.beginPath();ctx.arc(px(i0),py(RA[0][i0]),38,0,7);ctx.stroke();ctx.restore();Lb('stop and reverse',540,815,44,RD,k)}});
+  card(t,33.4,880,150,INK,'Nuevo SAR = último EP',null,46);card(t,34.2,1060,150,RD,'AF vuelve a 0,02',null,52);
+  Lb('SAR calculado sobre precios ILUSTRATIVOS',540,1260,30,GR,eout(prog(t,34.6,35)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'EN RANGO: SEÑALES FALSAS',RD);
+  chart(t,36,40,SB,RB,70,260,940,520);
+  card(t,40.4,880,150,RD,'Whipsaws: inversiones seguidas',null,44);card(t,41.4,1060,150,INK,'Funciona en tendencias',null,52);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Filtro de tendencia + demo','Una señal no basta',RD,BL)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('J. WELLES WILDER · 1978',540,250,46,RD,1);
+  Lb('PUNTOS QUE',540,410,110,INK,1);Lb('PERSIGUEN',540,540,120,INK,1);Lb('AL PRECIO',540,680,140,RD,1);
+  chart(99,0,1,SA,RA,70,780,940,380);Lb('0,02 – 0,20',540,1280,100,INK,1);Lb('Parabolic SAR',540,1370,48,GR,1);coverBtn('VER CÓMO FUNCIONA →',RD,'#fff')}
+</script></body></html>
