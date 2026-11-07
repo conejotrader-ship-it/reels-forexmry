@@ -32,7 +32,7 @@ function h0(t,a){ctx.save();ctx.globalAlpha=a;
   [0,1,2,3,4].forEach(i=>{const k=eback(prog(t,3.6+i*.2,4.4+i*.2));if(k<=.02)return;ctx.save();ctx.translate(180+i*180,1260);ctx.scale(k,k);paper(-60,-60,120,120,[LM,VI,PK,NV,LM][i]);ctx.restore()});ctx.restore()}
 function b1(t,a){ctx.save();ctx.globalAlpha=a;hd(t,6.6,'DEL INICIO AL MÁXIMO');
   const X=200,Y=300,Hh=620;[['INICIO DE ENERO',17.25/483,VI,'≈ 17'],['28 ENERO · INTRADÍA',1,PK,'483']].forEach(([lab,v,col,tx],i)=>{const k=eout(prog(t,7.4+i*1.6,8.6+i*1.6));if(k<=.01)return;const bw=300,bx=X+i*(bw+80),bh=Math.max(14,Hh*v*k);paper(bx,Y+Hh-bh,bw,bh,col,12);Lb(tx,bx+bw/2,Y+Hh-bh-50,80,NV,k);Lb(lab,bx+bw/2,Y+Hh+50,28,ST.mu,k)});
-  Lb('×28',540,1090,230,NV,eout(prog(t,10.6,11.4)));Lb('cálculo propio · 483 ÷ 17,25',540,1230,34,ST.mu,eout(prog(t,12,12.6)));ctx.restore()}
+  Lb('×28',540,1150,200,NV,eout(prog(t,10.6,11.4)));Lb('cálculo propio · 483 ÷ 17,25',540,1290,34,ST.mu,eout(prog(t,12,12.6)));ctx.restore()}
 function b2(t,a){ctx.save();ctx.globalAlpha=a;hd(t,13.8,'INTERÉS CORTO');
   const cx=540,cy=560,r=190;ctx.save();ctx.lineWidth=70;ctx.strokeStyle='#d9ccf2';ctx.beginPath();ctx.arc(cx,cy,r,0,7);ctx.stroke();
   const k=eio(prog(t,14.8,17.4));ctx.strokeStyle=VI;ctx.beginPath();ctx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+Math.PI*2*Math.min(1,1.4*k/1.4*1));ctx.stroke();
@@ -45,8 +45,8 @@ function b3(t,a){ctx.save();ctx.globalAlpha=a;hd(t,20.8,'SHORT SQUEEZE');
   card(t,25,720,150,LM,'3 · El precio sube aún más',null,46);
   Lb('un círculo que se retroalimenta',540,960,44,ST.mu,eout(prog(t,26.6,27.2)));ctx.restore()}
 function b4(t,a){ctx.save();ctx.globalAlpha=a;hd(t,28.6,'LA SEMANA DEL 25 AL 28');
-  bigNum(t,29.2,540,480,'+92,7 %',230,PK);Lb('el 26 de enero (≈)',540,650,48,NV,eout(prog(t,30.4,31)));
-  bigNum(t,31.6,540,900,'+1.500 %',210,VI);Lb('en dos semanas, hasta el 27 (≈)',540,1060,44,NV,eout(prog(t,33,33.6)));
+  bigNum(t,29.2,540,480,'+92,7 %',190,PK);Lb('el 26 de enero (≈)',540,650,48,NV,eout(prog(t,30.4,31)));
+  bigNum(t,31.6,540,900,'+1.500 %',170,VI);Lb('en dos semanas, hasta el 27 (≈)',540,1060,44,NV,eout(prog(t,33,33.6)));
   Lb('fuente: Wikipedia (una sola fuente)',540,1200,30,ST.mu,eout(prog(t,34,34.6)));ctx.restore()}
 function b5(t,a){ctx.save();ctx.globalAlpha=a;hd(t,35.4,'28 DE ENERO');
   pop(t,36,540,480,()=>{paper(-420,-170,840,340,PK,24);Lb('ROBINHOOD',0,-50,100,'#fff');Lb('restringe las compras',0,70,56,NV)});
