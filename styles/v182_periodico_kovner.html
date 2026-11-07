@@ -1,0 +1,64 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:PF;font-weight:900;src:url(node_modules/@fontsource/playfair-display/files/playfair-display-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 12 (4.º uso): periódico de época — papel salmón con tinta verde bosque y rojo burdeos — tema: Bruce Kovner, de taxista a Caxton Associates (60 s).
+const SPEC={name:"Kovner",hook:"DE TAXISTA A CAXTON: BRUCE KOVNER",dur:60,cta:56,bpm:94,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'tick'],[13.6,'wipe'],[15.0,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Bruce Kovner: de conducir un taxi a fundar Caxton Associates, en 1983.","Bruce Kovner: de conducir un taxi a fundar Caxton Associates, en mil novecientos ochenta y tres."],
+ [6.4,13.4,"Nació en Brooklyn en 1945. Trabajó en campañas políticas, escribió y fue taxista. Manejando conoció las materias primas.","Nació en Brooklyn en mil novecientos cuarenta y cinco. Trabajó en campañas políticas, escribió y fue taxista. Manejando conoció las materias primas."],
+ [13.6,20.4,"En 1977 hizo su primera operación: unos US$ 3.000 prestados con una tarjeta de crédito, en futuros de soja.","En mil novecientos setenta y siete, su primera operación: unos tres mil dólares prestados con tarjeta, en futuros de soja."],
+ [20.6,28.2,"La posición subió y luego cayó antes de que vendiera. Él cuenta que eso le enseñó a gestionar el riesgo.","La posición subió y luego cayó antes de que vendiera. Él cuenta que eso le enseñó a gestionar el riesgo."],
+ [28.4,35.0,"Fundó Caxton en 1983. En su máximo gestionó más de US$ 14.000 millones. Cifra sin auditar.","Fundó Caxton en mil novecientos ochenta y tres. En su máximo gestionó más de catorce mil millones de dólares, sin auditar."],
+ [35.2,43.4,"La prensa cita ≈ 28 % anual y 31 % neto en 2001: cifras no auditadas. En 2011 anunció su retiro como CEO.","La prensa cita cerca de veintiocho por ciento anual y treinta y uno por ciento neto en dos mil uno: cifras no auditadas. En dos mil once anunció su retiro como CEO."],
+ [43.6,49.6,"Para tu robot: la lección fue riesgo, no rendimiento. Define tu pérdida máxima. Educativo, sin garantías.","Para tu robot: la lección fue riesgo, no rendimiento. Define tu pérdida máxima. Contenido educativo."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#0d3b2e',ACC='#ff9f43';
+const STY={subFont:'800 42px Inter',subBg:'rgba(13,59,46,.97)',subStroke:'#f4dcc4',subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:'#ff9f43',ctaAccent:'#ff9f43',ctaBtnText:'#0d3b2e',ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px PF','900 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+const INK='#0d3b2e',RDN='#9c1c2c',NP='#f4dcc4',GR2='#7a6552',TL='#1d6f8a';
+Object.assign(ST,{fam:'PF',w:900,mono:true,txt:INK,mu:GR2,acc:RDN,c:[RDN,TL,INK,'#8a5a14'],pn:'#fbeee0'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#fbeee0';ctx.fillRect(x,y,w,h);ctx.lineWidth=4;ctx.strokeStyle=INK;ctx.strokeRect(x,y,w,h);ctx.fillStyle=col;ctx.fillRect(x,y,w,12);ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=NP;ctx.fillRect(0,0,W,H);ctx.save();ctx.globalAlpha=.06;ctx.fillStyle='#000';const r=rng(9);for(let i=0;i<260;i++)ctx.fillRect(r()*W,r()*H,2+r()*5,1+r()*2);ctx.restore();
+  ctx.fillStyle=INK;ctx.fillRect(40,28,W-80,5);ctx.fillRect(40,150,W-80,3);ctx.fillRect(40,158,W-80,1);
+  Lb('EL DIARIO DEL TRADER',540,92,56,INK);Lb('recreación editorial · no es un periódico real',540,128,22,GR2);
+  ctx.save();ctx.strokeStyle='rgba(13,59,46,.16)';ctx.lineWidth=2;[360,720].forEach(x=>{ctx.beginPath();ctx.moveTo(x,180);ctx.lineTo(x,1440);ctx.stroke()});ctx.restore()};
+function head(t,t0,s,col){Lb(s,540,212,46,col||ST.acc,eout(prog(t,t0,t0+.5)))}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('PERFIL · EDICIÓN ESPECIAL',540,215,32,RDN,eout(prog(t,.2,.7)));
+  bigNum(t,.8,540,420,'BRUCE',250,INK);bigNum(t,1.4,540,660,'KOVNER',230,RDN);
+  ctx.fillStyle=INK;ctx.fillRect(90,800,900,6);
+  Lb('DE TAXISTA',540,920,100,INK,eout(prog(t,2.4,3)));Lb('A CAXTON ASSOCIATES',540,1030,76,TL,eout(prog(t,3,3.6)));
+  Lb('1983',540,1230,190,RDN,eout(prog(t,4,4.6)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'1945 · BROOKLYN');
+  card(t,7.2,290,160,RDN,'Campañas políticas',null,50);card(t,8.8,490,160,TL,'Escritor',null,50);
+  card(t,10.4,690,200,INK,'Taxista: ahí conoció','las materias primas',50);
+  Lb('fuente: Wikipedia (cita a NYMag)',540,990,28,GR2,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'1977 · SU PRIMERA OPERACIÓN');
+  bigNum(t,14.4,540,540,'≈ 3.000',250,RDN);Lb('dólares prestados con tarjeta de crédito',540,720,40,INK,eout(prog(t,15.6,16.2)));
+  card(t,17,820,170,TL,'Futuros de soja',null,56);
+  Lb('fuente: Wikipedia (cita a Forbes)',540,1040,28,GR2,eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'LO QUE APRENDIÓ');
+  const X=90,Y=290,Wd=900,Hh=500;axes(X,Y,Wd,Hh,GR2,'(ILUSTRATIVO)');
+  const pts=[[0,.1],[.15,.25],[.3,.5],[.45,.78],[.55,.92],[.7,.6],[.85,.42],[1,.35]];
+  lineChart(t,21.4,25,pts,X,Y,Wd,Hh,RDN,10);
+  Lb('subió…',330,430,44,TL,eout(prog(t,22.6,23.2)));Lb('y cayó antes de vender',700,690,40,RDN,eout(prog(t,24.2,24.8)));
+  card(t,25.6,880,200,INK,'Según él, le enseñó la importancia','de gestionar el riesgo',44);
+  Lb('no hay cifras intermedias confirmadas: las fuentes difieren',540,1130,28,GR2,eout(prog(t,27,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'1983 · NACE CAXTON');
+  bigNum(t,29.2,540,520,'> 14.000 M',170,RDN);Lb('US$ en su máximo (sin auditar)',540,690,44,INK,eout(prog(t,30.4,31)));
+  card(t,31.6,800,150,TL,'Cerrado a nuevos inversores: 1992',null,44);
+  Lb('fuente: Wikipedia',540,1020,28,GR2,eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'CIFRAS DE PRENSA · NO AUDITADAS');
+  barsV(t,36,[['ANUAL DESDE EL INICIO',.9,RDN,'≈ 28 %'],['NETO EN 2001',1,TL,'31 %']],180,340,720,520,140,64);
+  Lb('fuente: Fortune (2003), citando informes',540,1010,28,GR2,eout(prog(t,38.8,39.4)));
+  card(t,40,1090,150,INK,'2011: anuncia su retiro como CEO',null,44);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Primero el riesgo, luego el rendimiento','Define tu pérdida máxima',RDN,TL)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('BRUCE KOVNER · 1977',540,260,44,RDN,1);
+  Lb('CON US$ 3.000',540,430,110,INK,1);Lb('PRESTADOS',540,580,150,RDN,1);
+  ctx.fillStyle=INK;ctx.fillRect(90,690,900,8);Lb('> 14.000 M',540,880,150,INK,1);
+  Lb('activos de Caxton en su máximo',540,1030,54,TL,1);Lb('cifra sin auditar',540,1100,40,GR2,1);coverBtn('VER SU HISTORIA →',RDN,'#fff')}
+</script></body></html>
