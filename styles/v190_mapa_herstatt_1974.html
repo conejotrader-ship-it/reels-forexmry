@@ -1,0 +1,77 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 23 (4.º uso): mapa mundial con rutas de flujo — atlas sepia de puntos con rutas rojas y azules — tema: Herstatt 1974 y el riesgo de liquidación en divisas (60 s).
+const SPEC={name:"Herstatt1974",hook:"26 DE JUNIO DE 1974: HERSTATT Y EL RIESGO DE LIQUIDACIÓN",dur:60,cta:56,bpm:98,mus:'soft',prog:[[38,'m'],[41,'M'],[36,'m'],[43,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'tick'],[13.6,'wipe'],[15.0,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"26 de junio de 1974: Alemania ordenó liquidar el Bankhaus Herstatt. Varios bancos no recibieron sus dólares.","Veintiséis de junio de mil novecientos setenta y cuatro: Alemania ordenó liquidar el Bankhaus Herstatt. Varios bancos no recibieron sus dólares."],
+ [6.4,13.4,"Fue por la tarde en Fráncfort. Wikipedia dice 16:30 y el BIS, 15:30: las fuentes difieren.","Fue por la tarde en Fráncfort. Wikipedia dice dieciséis treinta y el BIS, quince treinta: las fuentes difieren."],
+ [13.6,20.4,"Los bancos habían pagado marcos en Fráncfort por dólares a entregar en Nueva York. Su corresponsal suspendió los pagos.","Los bancos habían pagado marcos en Fráncfort por dólares a entregar en Nueva York. Su corresponsal suspendió los pagos."],
+ [20.6,28.2,"Eso es el riesgo Herstatt: pagas una moneda y no recibes la otra. Tenía pérdidas de 470 millones de marcos y capital de 44.","Eso es el riesgo Herstatt: pagas una moneda y no recibes la otra. Tenía pérdidas de cuatrocientos setenta millones de marcos y capital de cuarenta y cuatro."],
+ [28.4,35.0,"A fines de 1974 se creó el Comité de Basilea. En 2002 empezó CLS Bank, con pago contra pago.","A fines de mil novecientos setenta y cuatro se creó el Comité de Basilea. En dos mil dos empezó CLS Bank, con pago contra pago."],
+ [35.2,43.4,"Abril de 2025, según el BIS: > US$ 14 billones al día. ≈ 36 % con pago contra pago y ≈ 10 % sin mitigación.","Abril de dos mil veinticinco, según el BIS: más de catorce billones de dólares al día. Cerca de treinta y seis por ciento con pago contra pago y cerca de diez por ciento sin mitigación."],
+ [43.6,49.6,"Para tu robot: conoce a tu contraparte y define tu riesgo máximo. Educativo, sin garantías.","Para tu robot: conoce a tu contraparte y define tu riesgo máximo. Contenido educativo, sin garantías."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#2b1d0e',ACC='#e0a33a';
+const STY={subFont:'800 42px Inter',subBg:'rgba(43,29,14,.97)',subStroke:ACC,subFill:'#fff7e0',ctaBg:DK,ctaSub:'#f1e6c8',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+const CR='#f1e6c8',BR='#4a3416',LD='#7a5c2e',RDM='#c0392b',BLM='#1d4e89',OC='#d8c796';
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:BR,mu:'#7d6a47',acc:RDM,c:[RDM,BLM,'#2f7d4f','#a8741a'],pn:'#fbf3dc'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.shadowColor='rgba(74,52,22,.3)';ctx.shadowBlur=12;ctx.shadowOffsetY=6;ctx.fillStyle='#fbf3dc';RR(x,y,w,h,14);ctx.fill();ctx.restore();ctx.save();ctx.lineWidth=3;ctx.strokeStyle=BR;RR(x,y,w,h,14);ctx.stroke();ctx.fillStyle=col;RR(x,y,14,h,7);ctx.fill();ctx.restore()};
+const MX=40,MY=250,PX=2.857,PY=3.9;const P=(lon,lat)=>[MX+(lon+170)*PX,MY+(75-lat)*PY];
+const POLY=[[[-168,66],[-140,70],[-95,72],[-80,70],[-62,60],[-55,50],[-67,45],[-76,35],[-81,25],[-97,26],[-105,22],[-117,32],[-125,42],[-130,55]],
+ [[-97,26],[-87,21],[-83,10],[-78,8],[-90,14],[-105,22]],[[-78,8],[-60,10],[-50,0],[-35,-8],[-40,-22],[-58,-38],[-68,-55],[-75,-45],[-72,-18],[-81,-5]],
+ [[-10,36],[-9,43],[-5,48],[2,51],[8,55],[12,58],[25,70],[40,68],[40,50],[30,45],[25,36],[10,38]],
+ [[-17,21],[-10,35],[10,37],[32,31],[43,12],[51,12],[40,-15],[33,-28],[18,-35],[12,-18],[9,4],[-8,4],[-17,14]],
+ [[40,68],[70,75],[110,77],[150,70],[170,65],[140,45],[122,30],[110,20],[105,8],[100,15],[78,8],[72,20],[58,24],[50,30],[36,36],[40,50]],
+ [[114,-22],[130,-12],[145,-15],[153,-28],[145,-38],[130,-32],[115,-34]]];
+function inside(px,py){return POLY.some(pg=>{let c=false;for(let i=0,j=pg.length-1;i<pg.length;j=i++){const [xi,yi]=pg[i],[xj,yj]=pg[j];if(((yi>py)!=(yj>py))&&(px<(xj-xi)*(py-yi)/(yj-yi)+xi))c=!c}return c})}
+const DOTS=[];for(let y=MY;y<MY+520;y+=13)for(let x=MX;x<MX+1000;x+=13){const lon=(x-MX)/PX-170,lat=75-(y-MY)/PY;if(inside(lon,lat))DOTS.push([x,y])}
+function drawMap(al,col){ctx.save();ctx.globalAlpha*=al;ctx.fillStyle=col||LD;DOTS.forEach(([x,y])=>ctx.fillRect(x-3,y-3,6,6));ctx.restore()}
+const FR=P(8.7,50),NY=P(-74,40.7);
+ST.bg=t=>{ctx.fillStyle=CR;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle='rgba(74,52,22,.09)';ctx.lineWidth=2;for(let x=0;x<W;x+=90){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(let y=0;y<H;y+=90){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.fillStyle=BR;ctx.fillRect(0,0,W,16);ctx.fillRect(0,H-16,W,16);Lb('ATLAS DE MERCADOS · 1974',540,60,26,ST.mu);drawMap(.16,LD)};
+function head(t,t0,s,col){Lb(s,540,175,52,col||BR,eout(prog(t,t0,t0+.5)))}
+function arc(a,b,k,col,lw,bend){const mx=(a[0]+b[0])/2,my=Math.min(a[1],b[1])-bend;ctx.save();ctx.strokeStyle=col;ctx.lineWidth=lw;ctx.lineCap='round';ctx.setLineDash([16,12]);ctx.beginPath();ctx.moveTo(a[0],a[1]);
+  const N=40;for(let i=1;i<=N*k;i++){const u=i/N;const x=(1-u)*(1-u)*a[0]+2*(1-u)*u*mx+u*u*b[0],y=(1-u)*(1-u)*a[1]+2*(1-u)*u*my+u*u*b[1];ctx.lineTo(x,y)}ctx.stroke();ctx.restore()}
+function marker(p,col,lab,t,t0,dy){const k=eback(prog(t,t0,t0+.6));if(k<=.02)return;ctx.save();ctx.translate(p[0],p[1]);ctx.scale(k,k);ctx.fillStyle=col;ctx.beginPath();ctx.arc(0,0,20,0,7);ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=5;ctx.stroke();ctx.restore();Lb(lab,p[0],p[1]+dy,32,col,Math.min(1,k))}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('BANKHAUS HERSTATT · COLONIA',540,215,40,RDM,eout(prog(t,.2,.8)));
+  drawMap(.55*eout(prog(t,.4,1.6)),LD);marker(FR,RDM,'FRÁNCFORT',t,1.6,-36);marker(NY,BLM,'NUEVA YORK',t,2.0,46);
+  bigNum(t,.8,540,980,'26 JUN',230,BR);bigNum(t,1.4,540,1180,'1974',230,RDM);
+  Lb('pagaron marcos… y los dólares no llegaron',540,1330,42,BR,eout(prog(t,3.4,4)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'EL CIERRE DEL BANCO');
+  drawMap(.75,LD);marker(FR,RDM,'FRÁNCFORT',t,7,-36);marker(NY,BLM,'NUEVA YORK',t,7.6,46);
+  card(t,8.4,780,150,RDM,'Alemania ordena su liquidación',null,44);
+  card(t,10.2,960,100,'#a8741a','Wikipedia: 16:30 · BIS: 15:30',null,40);
+  Lb('las fuentes difieren en la hora',540,1115,34,ST.mu,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'MARCOS PAGADOS · DÓLARES NO');
+  drawMap(.75,LD);marker(FR,RDM,'FRÁNCFORT',t,13.8,-36);marker(NY,BLM,'NUEVA YORK',t,13.8,46);
+  const BX=[540,980];ctx.save();ctx.restore();pop(t,14.2,540,990,()=>{ctx.fillStyle='#fbf3dc';RR(-300,-55,600,110,16);ctx.fill();ctx.strokeStyle=BR;ctx.lineWidth=4;ctx.stroke();Lb('BANCOS CONTRAPARTES',0,0,38,BR)});
+  const k1=eout(prog(t,15,17));arc([540,935],FR,k1,RDM,8,160);Lb('pagan marcos',720,700,36,RDM,eout(prog(t,16.4,17)));
+  const k2=eout(prog(t,17.6,19.4));arc(NY,[400,935],k2,BLM,8,-210);
+  const kx=eout(prog(t,19.2,19.8));if(kx>.02){ctx.save();ctx.translate(300,820);ctx.scale(kx,kx);ctx.strokeStyle=RDM;ctx.lineWidth=14;ctx.lineCap='round';line(-32,-32,32,32,RDM,14);line(32,-32,-32,32,RDM,14);ctx.restore();Lb('dólares: no llegan',290,890,34,BLM,kx)}
+  Lb('Nueva York suspendió los pagos en dólares',540,1100,36,BR,eout(prog(t,18.4,19)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'RIESGO HERSTATT',RDM);
+  card(t,21.4,280,190,RDM,'Pagas una moneda y no','recibes la que compraste',46);
+  bigNum(t,23.4,540,610,'470 M',190,RDM);Lb('marcos de pérdidas acumuladas',540,760,40,BR,eout(prog(t,24.4,25)));
+  bigNum(t,25.2,540,900,'44 M',150,BLM);Lb('marcos de capital',540,1010,40,BR,eout(prog(t,26.2,26.8)));
+  Lb('fuente: Wikipedia y BIS',540,1100,30,ST.mu,eout(prog(t,27,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'LA RESPUESTA');
+  card(t,29.2,280,200,BLM,'Fines de 1974','nace el Comité de Basilea',54);
+  card(t,31.2,520,200,'#2f7d4f','2002','CLS Bank: pago contra pago (PvP)',64);
+  Lb('PvP: las dos monedas se pagan a la vez',540,800,40,BR,eout(prog(t,33,33.6)));
+  Lb('fuente: BIS',540,880,30,ST.mu,eout(prog(t,33.8,34.4)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'ABRIL DE 2025 · SEGÚN EL BIS');
+  bigNum(t,36,540,380,'> 14',230,BR);Lb('billones de US$ al día (millones de millones)',540,520,38,ST.mu,eout(prog(t,37,37.6)));
+  const X=90,Wd=900,Y=620,Hh=120,k=eout(prog(t,38,40));ctx.save();ctx.globalAlpha*=1;let x=X;[[.36,'#2f7d4f','36 %'],[.54,'#a8741a','54 %'],[.10,RDM,'10 %']].forEach(([f,c,tx])=>{const w=Wd*f*k;ctx.fillStyle=c;ctx.fillRect(x,Y,w,Hh);if(k>.95)Lb(tx,x+w/2,Y+Hh/2,36,'#fff');x+=w});ctx.restore();
+  Lb('pago contra pago',X+Wd*.18,Y+190,34,'#2f7d4f',eout(prog(t,40,40.6)));Lb('mitigan sin eliminar',X+Wd*.63,Y+190,34,'#a8741a',eout(prog(t,40.6,41.2)));Lb('sin mitigación',X+Wd*.95,Y+240,34,RDM,eout(prog(t,41.2,41.8)),'right');
+  Lb('cifras aproximadas · fuente: BIS (junio de 2026)',540,1010,30,ST.mu,eout(prog(t,42,42.6)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Conoce a tu contraparte','Define tu riesgo máximo',RDM,BLM)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);drawMap(.3,LD);Lb('HERSTATT · 26 DE JUNIO DE 1974',540,250,46,RDM,1);
+  Lb('PAGAS',540,720,240,BR,1);Lb('Y NO RECIBES',540,930,120,RDM,1);
+  Lb('el riesgo que nació en un banco alemán',540,1050,42,BLM,1);coverBtn('VER QUÉ PASÓ →',RDM,'#fff')}
+</script></body></html>
