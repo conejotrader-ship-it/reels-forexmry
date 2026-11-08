@@ -1,0 +1,66 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 20 (4.º uso): pixel-art 3D — torres de cubos isométricos de colores sobre noche violeta — tema: las mayores mineras de oro, 1.er semestre de 2025 (60 s).
+const SPEC={name:"MinerasOro",hook:"MINERAS DE ORO: LA N.º 1 CASI DUPLICA A LA N.º 2",dur:60,cta:56,bpm:116,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'tick'],[13.6,'wipe'],[15.0,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Mineras de oro, 1.er semestre de 2025: Newmont produjo ≈ 3,38 millones de onzas.","Mineras de oro, primer semestre de dos mil veinticinco: Newmont produjo cerca de tres millones trescientas ochenta mil onzas."],
+ [6.4,13.4,"El ranking de mining.com cubre solo seis meses y no aclara si las cifras son atribuibles.","El ranking de mining punto com cubre solo seis meses y no aclara si las cifras son atribuibles."],
+ [13.6,20.4,"Newmont: 3.383 miles de onzas, 5 % menos que un año antes. Casi 1,9 veces Agnico Eagle: cálculo propio.","Newmont: tres mil trescientas ochenta y tres miles de onzas, cinco por ciento menos que un año antes. Casi uno coma nueve veces Agnico Eagle: cálculo propio."],
+ [20.6,28.2,"2.º Agnico Eagle: 1.740. 3.º Barrick: 1.555, 16,7 % menos; la fuente cita Loulo-Gounkoto, en Malí, y mantenimiento en Nevada.","Segundo, Agnico Eagle: mil setecientas cuarenta. Tercero, Barrick: mil quinientas cincuenta y cinco, dieciséis coma siete por ciento menos; la fuente cita Loulo-Gounkoto, en Malí, y mantenimiento en Nevada."],
+ [28.4,35.0,"4.º Navoi: 1.538. 5.º AngloGold Ashanti: 1.524, 21,5 % más. Los separan 14 miles de onzas: cálculo propio.","Cuarto, Navoi: mil quinientas treinta y ocho. Quinto, AngloGold Ashanti: mil quinientas veinticuatro, veintiuno coma cinco por ciento más. Catorce miles de onzas los separan."],
+ [35.2,43.4,"Del 6.º al 10.º: Zijin, Polyus, Gold Fields, Kinross y Northern Star. Kinross está en oro equivalente. Una sola fuente.","Del sexto al décimo: Zijin, Polyus, Gold Fields, Kinross y Northern Star. Kinross está en oro equivalente. Una sola fuente."],
+ [43.6,49.6,"Para tu robot: define el riesgo máximo antes de operar el oro, sin depender de noticias del sector. Educativo.","Para tu robot: define el riesgo máximo antes de operar el oro, sin depender de noticias del sector. Contenido educativo."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#140f2b',ACC='#ffd23f';
+const STY={subFont:'800 42px Inter',subBg:'rgba(20,15,43,.97)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#f6f1ff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+const GD='#ffd23f',OG='#ff8c42',CYN='#4fd6ff',LM='#8be28b',PNK='#ff5d8f',TX='#f6f1ff',MU='#a99fd0';
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:TX,mu:MU,acc:GD,c:[GD,CYN,PNK,LM],pn:'#241a4a'});
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#140f2b');g.addColorStop(.7,'#2a1a55');g.addColorStop(1,'#140f2b');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  const r=rng(5);for(let i=0;i<70;i++){const x=Math.floor(r()*W/12)*12,y=Math.floor(r()*1000/12)*12,b=.4+.6*Math.abs(Math.sin(t*1.5+i));ctx.fillStyle=`rgba(255,255,255,${b*.8})`;ctx.fillRect(x,y,i%5?6:12,i%5?6:12)}
+  const s=40;for(let y=1250;y<1330;y+=s)for(let x=0;x<W;x+=s){ctx.fillStyle=((x/s+(y-1250)/s)%2)?'#5a3b22':'#6b4628';ctx.fillRect(x,y,s,s)}
+  ctx.fillStyle='#8be28b';ctx.fillRect(0,1240,W,14);
+  ctx.fillStyle=GD;ctx.fillRect(0,0,W,12);Lb('MINERAS DE ORO · 1.ER SEMESTRE 2025',540,56,26,MU)};
+function head(t,t0,s,col){Lb(s,540,175,52,col||GD,eout(prog(t,t0,t0+.5)))}
+function shade(c,k){const n=parseInt(c.slice(1),16);let r=n>>16,g=(n>>8)&255,b=n&255;const f=k<0?0:255,p=Math.abs(k);r=Math.round(r+(f-r)*p);g=Math.round(g+(f-g)*p);b=Math.round(b+(f-b)*p);return `rgb(${r},${g},${b})`}
+function tower(cx,by,n,col,hw=30,s=17){const d=hw*.5;for(let i=0;i<n;i++){const yb=by-i*s;ctx.fillStyle=shade(col,-.38);ctx.beginPath();ctx.moveTo(cx-hw,yb);ctx.lineTo(cx,yb+d);ctx.lineTo(cx,yb+d-s);ctx.lineTo(cx-hw,yb-s);ctx.fill();
+  ctx.fillStyle=shade(col,-.12);ctx.beginPath();ctx.moveTo(cx,yb+d);ctx.lineTo(cx+hw,yb);ctx.lineTo(cx+hw,yb-s);ctx.lineTo(cx,yb+d-s);ctx.fill();
+  ctx.fillStyle=shade(col,.25);ctx.beginPath();ctx.moveTo(cx-hw,yb-s);ctx.lineTo(cx,yb+d-s);ctx.lineTo(cx+hw,yb-s);ctx.lineTo(cx,yb-d-s);ctx.fill();
+  ctx.strokeStyle='rgba(0,0,0,.35)';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(cx-hw,yb-s);ctx.lineTo(cx,yb+d-s);ctx.lineTo(cx+hw,yb-s);ctx.stroke()}}
+const RK=[['Newmont',3383,GD,'3.383'],['Agnico Eagle',1740,OG,'1.740'],['Barrick',1555,CYN,'1.555'],['Navoi',1538,LM,'1.538'],['AngloGold',1524,PNK,'1.524']];
+function towers(t,t0,items,xs,by,unit,hw,s,fs,names=true){items.forEach(([nm,v,col,tx],i)=>{const k=eout(prog(t,t0+i*.5,t0+i*.5+1.2));if(k<=.01)return;const n=Math.round(v/unit*k);tower(xs[i],by,n,col,hw,s);
+  const top=by-n*s-hw*.5-s;Lb(tx,xs[i],top-34,fs,col,k);if(names)Lb(nm,xs[i],by+52,22,TX,k)})}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('RANKING · MAYORES MINERAS DE ORO',540,230,38,GD,eout(prog(t,.2,.8)));
+  bigNum(t,.6,540,390,'NEWMONT',150,TX);tower(540,1010,Math.round(34*eout(prog(t,1.4,3.2))),GD,56,14);
+  Lb('≈ 3,38 millones de onzas',540,1090,58,GD,eout(prog(t,3.2,3.8)));Lb('en solo seis meses (1.er semestre de 2025)',540,1165,38,MU,eout(prog(t,4,4.6)));
+  Lb('fuente: mining.com',540,1215,30,MU,eout(prog(t,4.8,5.4)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'TOP 5 · MILES DE ONZAS');
+  towers(t,7.2,RK,[140,340,540,740,940],1100,100,34,17,38);
+  Lb('1 torre ≈ 100 mil onzas',540,1170,32,MU,eout(prog(t,11,11.6)));
+  Lb('1.er semestre 2025 · mining.com',540,1215,28,MU,eout(prog(t,11.4,12)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'N.º 1 VS N.º 2');
+  towers(t,14.2,[RK[0],RK[1]],[290,790],1000,100,48,14,52);
+  bigNum(t,16.8,540,330,'≈ X1,9',150,GD);Lb('cálculo propio · 3.383 ÷ 1.740',540,1115,34,MU,eout(prog(t,18,18.6)));
+  card(t,18.4,1150,100,OG,'Newmont −5 % vs. 1.er sem. 2024',null,40);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'N.º 2 Y N.º 3');
+  card(t,21.4,290,170,OG,'2.º Agnico Eagle','1.740 miles de onzas',54);
+  card(t,23.2,510,170,CYN,'3.º Barrick · 1.555','16,7 % menos que en 2024',48);
+  card(t,25,730,230,PNK,'La fuente cita: Loulo-Gounkoto','(Malí) y mantenimiento en Nevada',38);
+  Lb('fuente: mining.com',540,1030,30,MU,eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'N.º 4 Y N.º 5: CASI EMPATE');
+  towers(t,29,[RK[3],RK[4]],[300,780],1000,100,60,16,50);
+  bigNum(t,31.6,540,350,'14',200,GD);Lb('mil onzas de diferencia (cálculo propio)',540,490,36,TX,eout(prog(t,32.6,33.2)));
+  card(t,33.2,1090,120,LM,'AngloGold Ashanti: +21,5 %',null,44);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'DEL 6.º AL 10.º');
+  barsH(t,36,[['6.º Zijin',1324/1400,CYN,'1.324'],['7.º Polyus',1311/1400,OG,'1.311'],['8.º Gold Fields',1171/1400,LM,'1.171'],['9.º Kinross (oro equiv.)',1060/1400,PNK,'1.060'],['10.º Northern Star',784/1400,GD,'784']],80,290,780,150,38);
+  Lb('una sola fuente · miles de onzas',540,1100,30,MU,eout(prog(t,40.4,41)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Define tu riesgo máximo','No dependas de noticias del sector',GD,CYN)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('MINERAS DE ORO · 1.ER SEM. 2025',540,250,50,GD,1);
+  Lb('X1,9',540,640,400,TX,1);Lb('LA N.º 1 VS LA N.º 2',540,930,80,GD,1);
+  Lb('Newmont vs Agnico Eagle · cálculo propio',540,1030,40,CYN,1);coverBtn('VER EL TOP 10 →',GD,DK)}
+</script></body></html>
