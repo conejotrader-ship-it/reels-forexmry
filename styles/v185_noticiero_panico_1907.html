@@ -1,0 +1,65 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 22 (4.º uso): noticiero de última hora — azul marino con amarillo y cinta de titulares — tema: el Pánico de 1907 (60 s).
+const SPEC={name:"Panico1907",hook:"22 DE OCTUBRE DE 1907: SE QUIEBRA KNICKERBOCKER TRUST",dur:60,cta:56,bpm:100,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'tick'],[13.6,'wipe'],[15.0,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"22 de octubre de 1907: quiebra Knickerbocker Trust y estalla el pánico en Nueva York.","Veintidós de octubre de mil novecientos siete: quiebra Knickerbocker Trust y estalla el pánico en Nueva York."],
+ [6.4,13.4,"Antes hubo un intento fallido de acaparar United Copper. Los bancos ligados a ese plan perdieron la confianza.","Antes hubo un intento fallido de acaparar United Copper. Los bancos ligados a ese plan perdieron la confianza."],
+ [13.6,20.4,"El 22 de octubre se retiraron casi US$ 8 millones y Knickerbocker suspendió operaciones.","El veintidós de octubre se retiraron casi ocho millones de dólares y Knickerbocker suspendió operaciones."],
+ [20.6,28.2,"Ese día el dinero a la vista pasó de 9,5 % a 70 %. Dos días después, 100 %.","Ese día el dinero a la vista pasó de nueve coma cinco por ciento a setenta por ciento. Dos días después, cien por ciento."],
+ [28.4,35.0,"El 24 de octubre, 14 presidentes de banco reunieron US$ 23,6 millones para sostener la bolsa.","El veinticuatro de octubre, catorce presidentes de banco reunieron veintitrés coma seis millones para sostener la bolsa."],
+ [35.2,43.4,"Según el NBER, la recesión fue de mayo de 1907 a junio de 1908. Producción ≈ −11 %. Cifras aproximadas.","Según el NBER, la recesión fue de mayo de mil novecientos siete a junio de mil novecientos ocho. Producción, cerca de once por ciento menos. Cifras aproximadas."],
+ [43.6,49.6,"En 1913 se aprobó la Reserva Federal. Tu robot: si la liquidez se seca, el spread se abre. Educativo.","En mil novecientos trece se aprobó la Reserva Federal. Tu robot: sin liquidez, el spread se abre. Solo educativo."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#0a1f44',ACC='#ffd400';
+const STY={subFont:'800 42px Inter',subBg:'rgba(10,31,68,.97)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+const NV='#0a1f44',NV2='#14306a',YL='#ffd400',RD='#ff4b3e',CY='#52d6ff',WH='#f4f7ff';
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:WH,mu:'#9db3dd',acc:YL,c:[YL,CY,RD,'#8be28b'],pn:NV2});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle=NV2;RR(x,y,w,h,14);ctx.fill();ctx.fillStyle=col;ctx.fillRect(x,y,14,h);ctx.restore()};
+const TICK=' KNICKERBOCKER SUSPENDE  •  DINERO A LA VISTA AL 100 %  •  MORGAN CONVOCA A LOS BANQUEROS  •  14 BANCOS REUNEN US$ 23,6 M  •  PANICO DE 1907  •';
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0a1f44');g.addColorStop(1,'#050e22');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.07;ctx.fillStyle='#fff';for(let y=0;y<H;y+=6)ctx.fillRect(0,y,W,2);ctx.restore();
+  ctx.fillStyle=RD;ctx.fillRect(0,0,W,70);Lb('ÚLTIMA HORA · NUEVA YORK · 1907',540,36,34,'#fff');
+  ctx.fillStyle=YL;ctx.fillRect(0,1320,W,70);ctx.save();ctx.beginPath();ctx.rect(0,1320,W,70);ctx.clip();
+  ctx.font='900 34px Inter';const TW=ctx.measureText(TICK).width;const off=(t*140)%TW;ctx.fillStyle=NV;ctx.textBaseline='middle';ctx.textAlign='left';for(let k=-1;k<3;k++)ctx.fillText(TICK,-off+k*TW,1356);ctx.restore()};
+function head(t,t0,s,col){Lb(s,540,175,52,col||YL,eout(prog(t,t0,t0+.5)))}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;
+  Lb('PÁNICO FINANCIERO',540,200,56,YL,eout(prog(t,.2,.8)));
+  bigNum(t,.8,540,480,'1907',330,WH);
+  pop(t,1.8,540,820,()=>{ctx.fillStyle=RD;RR(-460,-90,920,180,20);ctx.fill();Lb('KNICKERBOCKER',0,-28,100,'#fff');Lb('TRUST SUSPENDE',0,52,76,'#fff')});
+  Lb('22 DE OCTUBRE',540,1040,76,YL,eout(prog(t,3.0,3.6)));
+  Lb('≈ US$ 8 millones retirados',540,1160,52,CY,eout(prog(t,3.8,4.4)));
+  Lb('fuente: Federal Reserve History',540,1260,30,ST.mu,eout(prog(t,4.6,5.2)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'ANTES DEL PÁNICO');
+  card(t,7.2,290,170,YL,'16 oct · falla el intento','de acaparar United Copper',46);
+  card(t,8.8,510,170,CY,'18 oct · rumores sobre','el presidente de Knickerbocker',46);
+  card(t,10.4,730,170,RD,'21 oct · el Clearing House','le niega ayuda',46);
+  Lb('la confianza era el activo que faltaba',540,990,40,ST.mu,eout(prog(t,12,12.6)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'22 DE OCTUBRE');
+  const k=eout(prog(t,14.6,17.6));const v=(8*k).toFixed(1).replace('.',',');
+  Lb('US$ '+v+' M',540,520,170,YL,eout(prog(t,14.2,14.8)));Lb('retirados en pocas horas · casi 8 M (≈)',540,680,46,WH,eout(prog(t,16,16.6)));
+  pop(t,17.4,540,900,()=>{ctx.fillStyle=RD;RR(-440,-80,880,160,20);ctx.fill();Lb('SUSPENDE OPERACIONES',0,0,64,'#fff')});
+  Lb('fuentes: Federal Reserve History y Wikipedia',540,1100,30,ST.mu,eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'TASA DEL DINERO A LA VISTA');
+  barsV(t,21.4,[['ANTES',9.5/100,CY,'9,5 %'],['22 OCT',.7,YL,'70 %'],['24 OCT',1,RD,'100 %']],130,300,820,620,60,64);
+  Lb('a veces no había quien prestara',540,1090,44,WH,eout(prog(t,25.6,26.2)));
+  Lb('fuente: Federal Reserve History',540,1170,28,ST.mu,eout(prog(t,26.6,27.2)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'24 DE OCTUBRE');
+  bigNum(t,29.2,540,470,'14',280,YL);Lb('presidentes de banco',540,650,52,WH,eout(prog(t,30.2,30.8)));
+  bigNum(t,31.4,540,860,'US$ 23,6 M',140,CY);Lb('para sostener la bolsa abierta',540,990,44,WH,eout(prog(t,32.6,33.2)));
+  card(t,33.6,1090,130,RD,'2 nov · Morgan reúne a los banqueros',null,38);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'RECESIÓN · MAYO 1907 – JUNIO 1908');
+  barsV(t,36,[['PRODUCCIÓN (≈)',.11/.26,RD,'−11 %'],['IMPORTACIONES (≈)',1,RD,'−26 %']],160,310,760,480,120,64);
+  Lb('desempleo: de < 3 % a ≈ 8 %',540,1000,50,YL,eout(prog(t,38.8,39.4)));
+  Lb('cifras aproximadas · fuente: Wikipedia (NBER)',540,1090,30,ST.mu,eout(prog(t,40.2,40.8)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Sin liquidez, el spread se abre','Define tu riesgo máximo',YL,CY)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('EL PÁNICO DE 1907',540,250,60,YL,1);
+  Lb('100 %',540,640,330,WH,1);Lb('EL DINERO A LA VISTA',540,960,72,YL,1);
+  Lb('de 9,5 % a 100 % en dos días',540,1060,52,CY,1);Lb('fuente: Federal Reserve History',540,1130,32,ST.mu,1);coverBtn('VER QUÉ PASÓ →',YL,NV)}
+</script></body></html>
