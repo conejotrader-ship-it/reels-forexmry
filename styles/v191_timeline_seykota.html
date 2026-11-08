@@ -1,0 +1,67 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 21 (4.º uso): línea de tiempo horizontal con hitos — verde bosque con ámbar y coral — tema: Ed Seykota, trend following y tarjetas perforadas (60 s).
+const SPEC={name:"Seykota",hook:"ED SEYKOTA: UN SISTEMA DE TRADING CON TARJETAS PERFORADAS, 1970",dur:60,cta:56,bpm:102,mus:'soft',prog:[[40,'m'],[37,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'tick'],[13.6,'wipe'],[15.0,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Ed Seykota: en 1970 fue pionero de un sistema de trading computarizado, con tarjetas perforadas.","Ed Seykota: en mil novecientos setenta fue pionero de un sistema de trading computarizado, con tarjetas perforadas."],
+ [6.4,13.4,"Nació en 1946. En 1969 obtuvo títulos del MIT: ingeniería eléctrica y administración en MIT Sloan.","Nació en mil novecientos cuarenta y seis. En mil novecientos sesenta y nueve obtuvo títulos del MIT: ingeniería eléctrica y administración en MIT Sloan."],
+ [13.6,20.4,"En 1970 creó un sistema computarizado para futuros en la correduría donde trabajaba con Michael Marcus.","En mil novecientos setenta creó un sistema computarizado para futuros en la correduría donde trabajaba con Michael Marcus."],
+ [20.6,28.2,"Su primer sistema usaba medias móviles exponenciales. Lo inspiraron las medias de 5 y 20 días de Donchian y un libro de Lefèvre.","Su primer sistema usaba medias móviles exponenciales. Lo inspiraron las medias de cinco y veinte días de Donchian y un libro de Lefèvre."],
+ [28.4,35.0,"Jack Schwager le dedicó un capítulo en Market Wizards: sus logros lo ubican entre los mejores traders de su época.","Jack Schwager le dedicó un capítulo en Market Wizards: sus logros lo ubican entre los mejores traders de su época."],
+ [35.2,43.4,"En 1992 reunió a traders para hablar de emociones. De ahí salió la Trading Tribe; su libro es de 2005.","En mil novecientos noventa y dos reunió a traders para hablar de emociones. De ahí salió la Trading Tribe; su libro es de dos mil cinco."],
+ [43.6,49.6,"Para tu robot: el sistema debe ser compatible contigo y con tu riesgo. Educativo, sin garantías.","Para tu robot: el sistema debe ser compatible contigo y con tu riesgo. Contenido educativo, sin garantías."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#082a20',ACC='#f4b942';
+const STY={subFont:'800 42px Inter',subBg:'rgba(8,42,32,.97)',subStroke:ACC,subFill:'#fff7e0',ctaBg:DK,ctaSub:'#f3ead2',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+const AM='#f4b942',CO='#ff6b6b',MT='#7ee0b5',CRM='#f3ead2',GR='#0b3d2e';
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:CRM,mu:'#9cc7b4',acc:AM,c:[AM,CO,MT,'#8ab8ff'],pn:'rgba(0,0,0,.35)'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(0,0,0,.38)';RR(x,y,w,h,16);ctx.fill();ctx.lineWidth=3;ctx.strokeStyle=col;RR(x,y,w,h,16);ctx.stroke();ctx.fillStyle=col;RR(x,y,14,h,7);ctx.fill();ctx.restore()};
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0b3d2e');g.addColorStop(1,'#061f17');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.save();ctx.globalAlpha=.08;ctx.strokeStyle='#fff';ctx.lineWidth=2;for(let x=-200;x<W+200;x+=70){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x+300,H);ctx.stroke()}ctx.restore();
+  ctx.fillStyle=AM;ctx.fillRect(0,0,W,14);Lb('ED SEYKOTA · LÍNEA DE TIEMPO',540,52,26,ST.mu)};
+const HI=[[1946,120],[1969,330],[1970,540],[1992,750],[2005,960]];
+function tl(t,t0,from,to){const AY=300;ctx.save();ctx.strokeStyle='rgba(243,234,210,.35)';ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(60,AY);ctx.lineTo(1020,AY);ctx.stroke();ctx.restore();
+  HI.forEach(([y,x],i)=>{ctx.fillStyle='rgba(243,234,210,.55)';ctx.beginPath();ctx.arc(x,AY,12,0,7);ctx.fill();Lb(String(y),x,AY+44,30,ST.mu)});
+  if(from>=0){const k=eio(prog(t,t0,t0+.9));const x=lerp(HI[from][1],HI[to][1],k);ctx.save();ctx.fillStyle=AM;ctx.shadowColor=AM;ctx.shadowBlur=24;ctx.beginPath();ctx.arc(x,AY,22,0,7);ctx.fill();ctx.restore();Lb(String(k<.5?HI[from][0]:HI[to][0]),x,AY-52,46,AM)}}
+function head(t,t0,s,col){Lb(s,540,150,50,col||AM,eout(prog(t,t0,t0+.5)))}
+function punchCard(cx,cy,t,t0){const k=eback(prog(t,t0,t0+.7));if(k<=.02)return;ctx.save();ctx.translate(cx,cy);ctx.scale(k,k);ctx.fillStyle='#efe3bd';ctx.beginPath();ctx.moveTo(-300,-130);ctx.lineTo(260,-130);ctx.lineTo(300,-90);ctx.lineTo(300,130);ctx.lineTo(-300,130);ctx.closePath();ctx.fill();
+  const R=rng(8);ctx.fillStyle='#082a20';for(let r=0;r<6;r++)for(let c=0;c<26;c++){const on=R()<.45;if(!on)continue;const p=eout(prog(t,t0+.6+c*.03,t0+1.1+c*.03));if(p<=.01)continue;ctx.fillRect(-285+c*21.5,-105+r*38,12*p,22)}ctx.restore()}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;tl(t,0,2,2);
+  Lb('TRADER · TREND FOLLOWING',540,420,38,MT,eout(prog(t,.2,.8)));
+  bigNum(t,.7,540,600,'ED',230,CRM);bigNum(t,1.2,540,830,'SEYKOTA',200,AM);
+  punchCard(540,1130,t,2.4);Lb('1970 · tarjetas perforadas',540,1310,44,CRM,eout(prog(t,4,4.6)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;tl(t,6.5,0,1);head(t,6.6,'NACE Y ESTUDIA',CRM);
+  bigNum(t,7.2,540,560,'1946',190,AM);Lb('nació el 7 de agosto',540,690,40,CRM,eout(prog(t,8.4,9)));
+  card(t,9.6,790,150,MT,'1969 · Ingeniería eléctrica (MIT)',null,42);card(t,11.2,970,150,CO,'1969 · Administración (MIT Sloan)',null,42);
+  Lb('fuente: Wikipedia',540,1170,30,ST.mu,eout(prog(t,12.4,13)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;tl(t,13.7,1,2);head(t,13.8,'1970 · SU SISTEMA',CRM);
+  punchCard(540,560,t,14.4);
+  card(t,16.2,780,150,AM,'Sistema computarizado para futuros',null,42);card(t,17.8,960,170,CO,'Correduría donde trabajaba','con Michael Marcus',44);
+  Lb('fuente: Wikipedia',540,1200,30,ST.mu,eout(prog(t,19.6,20.2)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;tl(t,20.7,-1,-1);head(t,20.8,'SU PRIMER SISTEMA',CRM);
+  const X=90,Y=420,Wd=900,Hh=420;axes(X,Y,Wd,Hh,CRM,'(ILUSTRATIVO)');
+  const pr=[[0,.3],[.1,.42],[.2,.35],[.3,.55],[.4,.5],[.5,.68],[.6,.6],[.7,.8],[.8,.74],[.9,.92],[1,.88]];const em=[[0,.3],[.2,.36],[.4,.46],[.6,.58],[.8,.7],[1,.82]];
+  lineChart(t,21.4,24.4,pr,X,Y,Wd,Hh,'#9cc7b4',6);lineChart(t,22.2,25.2,em,X,Y,Wd,Hh,AM,10);
+  Lb('precio',200,500,32,'#9cc7b4',eout(prog(t,23,23.6)));Lb('media móvil exponencial',690,940,34,AM,eout(prog(t,24.4,25)));
+  card(t,25.4,1010,170,MT,'Inspiración: Donchian (medias de 5 y 20 días)','y Reminiscences of a Stock Operator',34);ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;tl(t,28.5,-1,-1);head(t,28.6,'MARKET WIZARDS',CRM);
+  pop(t,29.2,540,560,()=>{ctx.fillStyle=CO;RR(-320,-130,640,260,20);ctx.fill();Lb('MARKET',0,-50,100,'#fff');Lb('WIZARDS',0,60,100,'#fff')});
+  Lb('Jack Schwager le dedicó un capítulo',540,800,40,CRM,eout(prog(t,30.6,31.2)));
+  card(t,31.8,880,230,AM,'«Uno de los mejores traders','de nuestra época»',48);
+  Lb('cita de Schwager recogida por Wikipedia',540,1160,30,ST.mu,eout(prog(t,33.6,34.2)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;tl(t,35.3,2,3);head(t,35.4,'1992 · LA TRADING TRIBE',CRM);
+  const cx=540,cy=640;pop(t,36,cx,cy,()=>{ctx.fillStyle=MT;ctx.beginPath();ctx.arc(0,0,110,0,7);ctx.fill();Lb('EMOCIONES',0,-14,32,GR);Lb('vs lógica',0,28,34,GR)});
+  for(let i=0;i<8;i++){const p=eback(prog(t,36.6+i*.2,37.4+i*.2));if(p<=.02)continue;const an=i/8*6.283-1.57,x=cx+Math.cos(an)*250*p,y=cy+Math.sin(an)*250*p;ctx.fillStyle=i%2?AM:CO;ctx.beginPath();ctx.arc(x,y,34,0,7);ctx.fill();ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y-8,9,0,7);ctx.fill();ctx.fillRect(x-14,y+4,28,18)}
+  Lb('temía que las emociones ganaran a la lógica',540,990,38,CRM,eout(prog(t,39,39.6)));
+  card(t,40.2,1060,120,AM,'2005 · libro The Trading Tribe',null,42);ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Un sistema compatible contigo','Y con tu tolerancia al riesgo',AM,MT)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('ED SEYKOTA · TREND FOLLOWING',540,250,48,MT,1);
+  Lb('1970',540,600,400,AM,1);Lb('TRADING CON',540,920,84,CRM,1);Lb('TARJETAS PERFORADAS',540,1020,76,CRM,1);
+  punchCard(540,1240,3,0);Lb('sistema computarizado · fuente: Wikipedia',540,1400,34,ST.mu,1);coverBtn('VER SU HISTORIA →',AM,DK)}
+</script></body></html>
