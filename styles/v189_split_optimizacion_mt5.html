@@ -1,0 +1,67 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 24 (4.º uso): pantalla dividida A vs B — diagonal burdeos y verde azulado — tema: optimización completa vs genética en MetaTrader 5 (60 s).
+const SPEC={name:"OptimizacionMT5",hook:"OPTIMIZAR UN ROBOT EN MT5: COMPLETA VS GENÉTICA",dur:60,cta:56,bpm:112,mus:'soft',prog:[[40,'m'],[36,'M'],[43,'m'],[38,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'tick'],[13.6,'wipe'],[15.0,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Optimizar un robot en MT5: completa o genética. Según MetaQuotes, de años a horas.","Optimizar un robot en MT5: completa o genética. Según MetaQuotes, lo que tardaría años puede hacerse en horas."],
+ [6.4,13.4,"La completa prueba todas las combinaciones. La genética selecciona los mejores parámetros, los cruza y los muta.","La completa prueba todas las combinaciones. La genética selecciona los mejores parámetros, los cruza y los muta."],
+ [13.6,20.4,"La completa es la más precisa, pero tarda mucho. La genética es mucho más rápida y de calidad casi igual.","La completa es la más precisa, pero tarda mucho. La genética es mucho más rápida y de calidad casi igual."],
+ [20.6,28.2,"En la genética, la población va de 64 a 256 y las generaciones, de 15 a 31. Hace muchas menos pruebas.","En la genética, la población va de sesenta y cuatro a doscientos cincuenta y seis y las generaciones, de quince a treinta y una. Hace muchas menos pruebas."],
+ [28.4,35.0,"Si los pasos superan 1.000.000 en 32 bits o 100.000.000 en 64 bits, MT5 activa la genética sola.","Si los pasos superan un millón en treinta y dos bits o cien millones en sesenta y cuatro bits, MT5 activa la genética sola."],
+ [35.2,43.4,"La opción Forward divide el periodo en dos: uno para optimizar y otro para verificar. Evita ajustarse a ciertos intervalos.","La opción Forward divide el periodo en dos: uno para optimizar y otro para verificar. Evita ajustarse a ciertos intervalos."],
+ [43.6,49.6,"Para tu robot: valida con datos que no usó al optimizar. Educativo, sin garantías.","Para tu robot: valida con datos que no usó al optimizar. Contenido educativo, sin garantías."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#0d1b2a',ACC='#ffd166';
+const STY={subFont:'800 42px Inter',subBg:'rgba(13,27,42,.97)',subStroke:ACC,subFill:'#fff',ctaBg:DK,ctaSub:'#fff',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+const LF='#7c1d3a',LF2='#a8324f',RT='#0e7490',RT2='#14a3c7',YL='#ffd166',WH='#ffffff';
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:WH,mu:'#cfe3ea',acc:YL,c:[YL,RT2,LF2,'#8be28b'],pn:'rgba(0,0,0,.35)'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(8,16,28,.82)';RR(x,y,w,h,18);ctx.fill();ctx.fillStyle=col;RR(x,y,14,h,7);ctx.fill();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=RT;ctx.fillRect(0,0,W,H);const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'rgba(255,255,255,.08)');g.addColorStop(1,'rgba(0,0,0,.25)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  ctx.fillStyle=LF;ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(600,0);ctx.lineTo(480,1440);ctx.lineTo(0,1440);ctx.fill();
+  ctx.save();ctx.globalAlpha=.07;ctx.fillStyle='#fff';for(let i=-4;i<30;i++){ctx.beginPath();ctx.moveTo(i*80,0);ctx.lineTo(i*80+40,0);ctx.lineTo(i*80-300,1440);ctx.lineTo(i*80-340,1440);ctx.fill()}ctx.restore();
+  ctx.fillStyle=YL;ctx.beginPath();ctx.moveTo(596,0);ctx.lineTo(606,0);ctx.lineTo(486,1440);ctx.lineTo(476,1440);ctx.fill();
+  ctx.fillStyle=DK;ctx.fillRect(0,0,W,64);Lb('METATRADER 5 · PROBADOR DE ESTRATEGIAS',540,34,26,YL)};
+function head(t,t0,s,col){Lb(s,540,135,50,col||YL,eout(prog(t,t0,t0+.5)))}
+function sides(t,t0,a,b){Lb(a,270,215,40,WH,eout(prog(t,t0,t0+.5)));Lb(b,810,215,40,WH,eout(prog(t,t0,t0+.5)))}
+function hc(side,t,t0,y,h,col,l1,l2,sz=40){const k=eout(prog(t,t0,t0+.6));if(k<=.02)return;const x=side==0?40:560,cx=x+240;ctx.save();ctx.globalAlpha*=k;ctx.translate(lerp(side==0?-50:50,0,k),0);panel(x,y,480,h,col);
+  if(l2){Lb(l1,cx+8,y+h*.36,sz,WH);Lb(l2,cx+8,y+h*.72,Math.round(sz*.8),col==LF2?'#ffc9d6':'#bff1ff')}else Lb(l1,cx+8,y+h/2,sz,WH);ctx.restore()}
+function grid(x,y,n,cs,fn,t){for(let i=0;i<n;i++)for(let j=0;j<n;j++){const c=fn(i,j,t);ctx.fillStyle=c;ctx.fillRect(x+j*cs+2,y+i*cs+2,cs-4,cs-4)}}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('OPTIMIZAR UN ROBOT',540,150,46,WH,eout(prog(t,.2,.8)));
+  Lb('COMPLETA',270,420,76,WH,eout(prog(t,.6,1.2)));Lb('GENÉTICA',810,420,76,WH,eout(prog(t,.8,1.4)));
+  bigNum(t,1.6,260,680,'AÑOS',124,'#ffc9d6');bigNum(t,2.4,815,680,'HORAS',124,YL);
+  pop(t,3.2,540,980,()=>{ctx.fillStyle=DK;RR(-300,-52,600,104,52);ctx.fill();Lb('VS',0,0,64,YL)});
+  Lb('según la ayuda de MetaQuotes',540,1130,42,WH,eout(prog(t,4.2,4.8)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'¿QUÉ PRUEBA CADA UNA?');sides(t,6.8,'COMPLETA','GENÉTICA');
+  const q=eout(prog(t,7.4,11.6));const R=rng(4);const pick=[];for(let i=0;i<100;i++)pick.push(R()<.14);
+  grid(60,300,10,38,(i,j)=>{const idx=i*10+j;return idx<q*100?'#ffc9d6':'rgba(255,255,255,.15)'});
+  grid(620,300,10,38,(i,j)=>{const idx=i*10+j;const on=pick[idx]&&idx<q*100*1.1;return on?YL:'rgba(255,255,255,.15)'});
+  Lb('todas las combinaciones',250,730,34,WH,eout(prog(t,8.4,9)));Lb('selecciona, cruza y muta',810,730,34,WH,eout(prog(t,9.4,10)));
+  Lb('cuadrícula ILUSTRATIVA',540,830,30,'#cfe3ea',eout(prog(t,11.2,11.8)));ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'PRECISIÓN VS VELOCIDAD');sides(t,14,'COMPLETA','GENÉTICA');
+  hc(0,t,14.6,290,170,LF2,'La más precisa',null,44);hc(0,t,16.4,500,170,LF2,'Tarda mucho tiempo',null,40);
+  hc(1,t,15.4,290,170,RT2,'Mucho más rápida',null,44);hc(1,t,17.2,500,170,RT2,'Calidad casi igual',null,42);
+  Lb('fuente: ayuda de MetaTrader 5',540,780,30,'#cfe3ea',eout(prog(t,19,19.6)));ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'POR DENTRO DE LA GENÉTICA');
+  card(t,21.4,290,150,YL,'Población: de 64 a 256',null,50);card(t,23,480,150,RT2,'Generaciones: de 15 a 31',null,50);
+  card(t,24.6,670,150,LF2,'Selección · cruce · mutación',null,46);
+  Lb('muchas menos pruebas que la completa',540,900,40,YL,eout(prog(t,26.4,27)));Lb('fuente: ayuda de MetaTrader 5',540,970,30,'#cfe3ea',eout(prog(t,27,27.6)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'CAMBIO AUTOMÁTICO');
+  bigNum(t,29.2,540,400,'1.000.000',160,YL);Lb('pasos en 32 bits',540,520,44,WH,eout(prog(t,30.2,30.8)));
+  bigNum(t,31.2,540,700,'100.000.000',130,YL);Lb('pasos en 64 bits',540,810,44,WH,eout(prog(t,32.2,32.8)));
+  card(t,33.2,900,110,RT2,'Arranca la optimización genética',null,40);ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'LA OPCIÓN FORWARD');
+  const X=70,Wd=940,Y=330,Hh=130,k=eout(prog(t,36,37.2));ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=RT2;ctx.fillRect(X,Y,Wd*.67*k,Hh);ctx.fillStyle=YL;ctx.fillRect(X+Wd*.67,Y,Wd*.33*k,Hh);ctx.restore();
+  Lb('OPTIMIZAR',X+Wd*.335,Y+Hh/2,44,WH,eout(prog(t,37.2,37.8)));Lb('FORWARD',X+Wd*.835,Y+Hh/2,40,DK,eout(prog(t,37.6,38.2)));
+  Lb('el periodo se divide en dos partes',540,560,42,WH,eout(prog(t,38.4,39)));Lb('tamaño: mitad, un tercio, un cuarto o a medida',540,640,34,'#cfe3ea',eout(prog(t,39.4,40)));
+  card(t,40.4,730,150,LF2,'Sirve para evitar ajustarse','a ciertos intervalos',44);Lb('fuente: ayuda de MetaTrader 5',540,960,30,'#cfe3ea',eout(prog(t,42,42.6)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'Valida con datos nuevos','No solo con los que optimizaste',YL,RT2)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('OPTIMIZAR UN ROBOT EN MT5',540,250,52,WH,1);
+  Lb('AÑOS',540,560,260,'#ffc9d6',1);T('→',540,780,{font:'900 200px Inter',fill:YL});Lb('HORAS',540,1030,250,YL,1);
+  Lb('según MetaQuotes · completa vs genética',540,1190,40,WH,1);coverBtn('VER CÓMO →',YL,DK)}
+</script></body></html>
