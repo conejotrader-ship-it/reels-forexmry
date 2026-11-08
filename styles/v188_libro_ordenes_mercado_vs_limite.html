@@ -1,0 +1,70 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 18 (4.º uso): libro de órdenes — escalera de precios clara (verde menta, azul y rojo) — tema: orden de mercado vs orden límite (60 s).
+const SPEC={name:"MercadoVsLimite",hook:"ORDEN DE MERCADO VS ORDEN LÍMITE: ¿YA O A TU PRECIO?",dur:60,cta:56,bpm:104,mus:'soft',prog:[[41,'m'],[38,'M'],[43,'m'],[36,'M']],
+ ev:[[0.3,'rise',2.4],[3.0,'down'],[3.6,'hit'],[6.4,'wipe'],[8.0,'ding'],[10.0,'tick'],[13.6,'wipe'],[15.0,'ding'],[17.0,'hit'],[20.6,'wipe'],[22.0,'ding'],[24.0,'hit'],[28.4,'wipe'],[30.0,'ding'],[32.0,'ding'],[35.2,'wipe'],[37.0,'alert'],[39.0,'ding'],[41.0,'ding'],[43.6,'wipe'],[45.2,'ding'],[49.8,'wipe'],[51.0,'ding'],[52.2,'ding'],[53.4,'ding'],[54.6,'ding'],[56.2,'cta']],
+ subs:[[0.2,6.0,"Orden de mercado u orden límite: ¿ejecución inmediata o precio fijado? Cada una garantiza algo distinto.","Orden de mercado u orden límite: ¿ejecución inmediata o precio fijado? Cada una garantiza algo distinto."],
+ [6.4,13.4,"Orden de mercado: se ejecuta de inmediato, pero el precio no está garantizado. Suele cerrarse cerca del bid o del ask.","Orden de mercado: se ejecuta de inmediato, pero el precio no está garantizado. Suele cerrarse cerca del bid o del ask."],
+ [13.6,20.4,"Orden límite: compra a tu precio o menos, vende a tu precio o más. No garantiza que se ejecute.","Orden límite: compra a tu precio o menos, vende a tu precio o más. No garantiza que se ejecute."],
+ [20.6,28.2,"Ejemplo de la SEC: comprar 1.000 acciones con oferta a US$ 3,00. Pueden ser 500 a 3,00 y 500 a un precio mayor.","Ejemplo de la SEC: comprar mil acciones con oferta a tres dólares. Pueden ser quinientas a tres dólares y quinientas a un precio mayor."],
+ [28.4,35.0,"Otro ejemplo: comprar ABC por máximo US$ 10 con orden límite. Solo se ejecuta si el precio es 10 o menos.","Otro ejemplo: comprar ABC por máximo diez dólares con orden límite. Solo se ejecuta si el precio es diez o menos."],
+ [35.2,43.4,"Orden stop: al llegar al precio stop pasa a mercado y puede ejecutarse lejos de él. Stop-límite: pasa a límite y quizá no se ejecute.","Orden stop: al llegar al precio stop pasa a mercado y puede ejecutarse lejos de él. Stop-límite: pasa a límite y quizá no se ejecute."],
+ [43.6,49.6,"Para tu robot: elige entre ejecución y precio, y revisa las reglas de tu bróker. Educativo, sin garantías.","Para tu robot: elige entre ejecución y precio, y revisa las reglas de tu bróker. Contenido educativo, sin garantías."],
+ [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."],[56.2,59.8,"Securus Apex. Link en bio."]]};
+const DK='#10231c',ACC='#34d399';
+const STY={subFont:'800 42px Inter',subBg:'rgba(255,255,255,.97)',subStroke:'#2563eb',subFill:'#10231c',ctaBg:DK,ctaSub:'#e8f7ef',ctaGlow:ACC,ctaAccent:ACC,ctaBtnText:DK,ctaFontS:'800 50px Inter',ctaFontL:'900 104px Inter'};
+window.FONTS=['900 40px Inter','800 40px Inter'];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+const INK='#10231c',BLU='#2563eb',RED='#e11d48',MNT='#10b981',AMB='#f59e0b',BGC='#eef6f1';
+Object.assign(ST,{fam:'Inter',w:900,mono:true,txt:INK,mu:'#5c7268',acc:BLU,c:[BLU,RED,MNT,AMB],pn:'#ffffff'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.shadowColor='rgba(16,35,28,.22)';ctx.shadowBlur=14;ctx.shadowOffsetY=6;ctx.fillStyle='#fff';RR(x,y,w,h,18);ctx.fill();ctx.restore();ctx.save();ctx.fillStyle=col;RR(x,y,14,h,7);ctx.fill();ctx.restore()};
+ST.bg=t=>{ctx.fillStyle=BGC;ctx.fillRect(0,0,W,H);ctx.save();ctx.strokeStyle='rgba(16,35,28,.07)';ctx.lineWidth=2;for(let y=120;y<H;y+=80){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}ctx.restore();
+  ctx.fillStyle=BLU;ctx.fillRect(0,0,W,16);ctx.fillStyle=INK;ctx.fillRect(0,16,W,56);Lb('LIBRO DE ÓRDENES · EJEMPLO ILUSTRATIVO',540,46,26,'#e8f7ef')};
+function head(t,t0,s,col){Lb(s,540,135,52,col||INK,eout(prog(t,t0,t0+.5)))}
+const BASE=[[3.03,0,300],[3.02,0,700],[3.01,0,0],[3.00,0,500],[2.99,600,0],[2.98,450,0],[2.97,500,0],[2.96,300,0]];
+function ladder(t,t0,y0,rh,ov){ov=ov||{};const k0=eout(prog(t,t0,t0+.6));if(k0<=.01)return;
+  ctx.save();ctx.globalAlpha*=k0;ctx.fillStyle='#fff';RR(60,y0-20,960,rh*8+40,22);ctx.fill();ctx.lineWidth=4;ctx.strokeStyle=INK;ctx.stroke();ctx.restore();
+  Lb('COMPRAS (bid)',250,y0-48,26,BLU,k0);Lb('VENTAS (ask)',830,y0-48,26,RED,k0);
+  BASE.forEach(([p,b,a],i)=>{const y=y0+i*rh,k=eout(prog(t,t0+.2+i*.1,t0+.7+i*.1));if(k<=.01)return;const key=p.toFixed(2);const A=ov['a'+key]!=null?ov['a'+key]:a,B=ov['b'+key]!=null?ov['b'+key]:b;
+    ctx.save();ctx.globalAlpha*=k;ctx.fillStyle='#e3efe8';ctx.fillRect(440,y+4,200,rh-8);if(ov.hl==key){ctx.fillStyle='rgba(245,158,11,.45)';ctx.fillRect(100,y+2,880,rh-4)}
+    ctx.restore();Lb('US$ '+key.replace('.',','),540,y+rh/2,34,INK,k);
+    if(B>0){const w=B/800*320;ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=BLU;ctx.fillRect(430-w,y+10,w,rh-20);ctx.restore();Lb(String(Math.round(B)),430-w+14,y+rh/2,28,'#fff',k,'left')}
+    if(A>0){const w=A/800*320;ctx.save();ctx.globalAlpha*=k;ctx.fillStyle=RED;ctx.fillRect(650,y+10,w,rh-20);ctx.restore();Lb(String(Math.round(A)),650+w-14,y+rh/2,28,'#fff',k,'right')}
+    if(ov['m'+key]){const w=ov['m'+key]/800*320;ctx.save();ctx.fillStyle=AMB;ctx.fillRect(430-w,y+10,w,rh-20);ctx.restore()}})}
+function h0(t,a){ctx.save();ctx.globalAlpha=a;Lb('DOS FORMAS DE ENTRAR',540,215,40,BLU,eout(prog(t,.2,.8)));
+  bigNum(t,.7,540,470,'MERCADO',190,RED);Lb('vs',540,640,80,INK,eout(prog(t,1.6,2.2)));bigNum(t,2.0,540,810,'LÍMITE',230,BLU);
+  Lb('¿ejecución inmediata o precio fijado?',540,1010,48,INK,eout(prog(t,3.2,3.8)));
+  Lb('fuente: SEC (Investor.gov)',540,1090,30,ST.mu,eout(prog(t,4.4,5)));ctx.restore()}
+function b1(t,a){ctx.save();ctx.globalAlpha=a;head(t,6.6,'ORDEN DE MERCADO',RED);
+  const q=eout(prog(t,10,11.2));ladder(t,6.8,260,76,{hl:q<.99?'3.00':null,'a3.00':500*(1-q)});
+  card(t,8.4,980,110,RED,'Se ejecuta de inmediato',null,46);card(t,10.2,1110,110,AMB,'Precio no garantizado',null,46);ctx.restore()}
+function b2(t,a){ctx.save();ctx.globalAlpha=a;head(t,13.8,'ORDEN LÍMITE',BLU);
+  const q=eout(prog(t,16.4,17.4));ladder(t,14,260,76,{'m2.98':200*q,hl:q>.02?'2.98':null,'b2.98':450+200*q});
+  pop(t,15.4,300,1010,()=>{ctx.fillStyle=AMB;RR(-240,-45,480,90,16);ctx.fill();Lb('TU LÍMITE: 2,98',0,0,40,INK)});
+  card(t,17.6,1090,110,BLU,'Compra a tu precio o menos',null,42);card(t,19,1220,110,RED,'No garantiza que se ejecute',null,42);ctx.restore()}
+function b3(t,a){ctx.save();ctx.globalAlpha=a;head(t,20.8,'EJEMPLO DE LA SEC');
+  const q1=eout(prog(t,22.4,23.4)),q2=eout(prog(t,23.8,24.8));ladder(t,21,260,76,{'a3.00':500*(1-q1),'a3.02':700-500*q2,hl:q1<.99?'3.00':(q2<.99?'3.02':null)});
+  card(t,24.6,980,110,RED,'Compra de 1.000 acciones a mercado',null,40);Lb('500 a US$ 3,00 y 500 a un precio mayor',540,1150,38,INK,eout(prog(t,25.6,26.2)));
+  Lb('cifras de la SEC · escalera ILUSTRATIVA',540,1215,28,ST.mu,eout(prog(t,26.4,27)));ctx.restore()}
+function b4(t,a){ctx.save();ctx.globalAlpha=a;head(t,28.6,'ORDEN LÍMITE DE COMPRA');
+  const X=90,Y=290,Wd=900,Hh=560;axes(X,Y,Wd,Hh,INK,'(ILUSTRATIVO)');
+  const pts=[[0,.82],[.2,.72],[.4,.62],[.55,.5],[.7,.36],[.85,.44],[1,.58]];
+  const yl=Y+Hh-.5*Hh;hline(yl,AMB,5,X,X+Wd);Lb('LÍMITE US$ 10',X+Wd-10,yl-30,34,AMB,eout(prog(t,29,29.6)),'right');
+  lineChart(t,29.4,33,pts,X,Y,Wd,Hh,BLU,9);
+  const kx=eout(prog(t,31.4,31.9));if(kx>.02){ring(t,31.4,X+.55*Wd,yl,40,MNT);Lb('se ejecuta si el precio ≤ 10',X+.5*Wd,yl+100,38,MNT,kx)}
+  Lb('ABC · máximo US$ 10',540,950,44,INK,eout(prog(t,33.4,34)));ctx.restore()}
+function b5(t,a){ctx.save();ctx.globalAlpha=a;head(t,35.4,'ÓRDENES STOP',AMB);
+  card(t,36,260,260,AMB,'STOP: al llegar al precio stop','pasa a orden de mercado',44);
+  Lb('puede ejecutarse lejos del stop',540,590,40,RED,eout(prog(t,38,38.6)));
+  card(t,39,680,260,BLU,'STOP-LÍMITE: al llegar al stop','pasa a orden límite',44);
+  Lb('puede no ejecutarse',540,1010,40,RED,eout(prog(t,41.4,42)));
+  Lb('fuente: SEC (Investor.gov)',540,1090,30,ST.mu,eout(prog(t,42,42.6)));ctx.restore()}
+function b6(t,a){endBlock(t,a,43.6,'¿Ejecución o precio?','Revisa las reglas de tu bróker',BLU,RED)}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+function cover(){ST.bg(2);Lb('ORDEN DE MERCADO VS LÍMITE',540,250,50,BLU,1);
+  Lb('YA',540,610,470,RED,1);Lb('O A TU PRECIO',540,960,118,BLU,1);
+  Lb('mercado: ejecución · límite: precio',540,1070,44,INK,1);coverBtn('VER LA DIFERENCIA →',BLU,'#fff')}
+</script></body></html>
