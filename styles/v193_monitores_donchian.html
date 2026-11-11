@@ -19,7 +19,8 @@ ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#1a0f33');
  for(let i=0;i<3;i++){const x=40+i*340,y=1330,w=320,h=150;ctx.save();ctx.globalAlpha=.55;ctx.fillStyle='#0d0720';RR(x,y,w,h,12);ctx.fill();ctx.lineWidth=3;ctx.strokeStyle=[LM,PK,MT][i];RR(x,y,w,h,12);ctx.stroke();
   ctx.beginPath();ctx.lineWidth=3;const R=rng(30+i);let v=.5;for(let k=0;k<30;k++){v=clamp(v+(R()-.5)*.25+Math.sin(t*1.5+k+i)*.02,.1,.9);const px=x+14+k*(w-28)/29,py=y+h-12-v*(h-24);k?ctx.lineTo(px,py):ctx.moveTo(px,py)}ctx.stroke();ctx.restore()}
  ctx.fillStyle=LM;ctx.fillRect(0,0,W,12);Lb('SALA DE OPERACIONES · DONCHIAN',540,52,26,ST.mu)};
-function candles(t,a0,a1,x,y,w,h,n,seed,chan,col1,col2){const R=rng(seed);const C=[];let p=.4;for(let i=0;i<n;i++){const o=p;p=clamp(p+(R()-.42)*.16,.08,.95);const c=p;C.push([o,c,Math.max(o,c)+R()*.05,Math.min(o,c)-R()*.05])}
+function candles(t,a0,a1,x,y,w,h,n,seed,chan,col1,col2){const R=rng(seed);const C=[];let p=.4;for(let i=0;i<n;i++){const o=p;p=p+(R()-.45)*.34;const c=p;C.push([o,c,Math.max(o,c)+R()*.12,Math.min(o,c)-R()*.12])}
+ let mn=9,mx=-9;C.forEach(q=>{mn=Math.min(mn,q[3]);mx=Math.max(mx,q[2])});C.forEach(q=>{for(let j=0;j<4;j++)q[j]=.06+(q[j]-mn)/(mx-mn)*.88});
  const k=eio(prog(t,a0,a1));const m=Math.floor(k*n);const cw=w/n;
  for(let i=0;i<m;i++){const [o,c,hi,lo]=C[i];const up=c>=o;const cx=x+i*cw+cw/2;ctx.strokeStyle=up?col1:col2;ctx.fillStyle=up?col1:col2;ctx.lineWidth=3;
   ctx.beginPath();ctx.moveTo(cx,y+h-hi*h);ctx.lineTo(cx,y+h-lo*h);ctx.stroke();const yt=y+h-Math.max(o,c)*h;ctx.fillRect(cx-cw*.3,yt,cw*.6,Math.max(4,Math.abs(c-o)*h))}
@@ -42,5 +43,5 @@ function b4(t,al){const a=28.4;ctx.save();ctx.globalAlpha=al;head(t,a+.1,"ANCHO 
 function b5(t,al){const a=35.2;ctx.save();ctx.globalAlpha=al;head(t,a+.1,"SUS LÍMITES",PK);bigNum(t,a+0.6,540,460,"35 %",250,PK);Lb("de aciertos en una prueba de terceros",540,620,38,CRM,eout(prog(t,a+1.6,a+2.2)));card(t,a+2.6,720,140,LM,"4.887 operaciones · ajuste 20","con razón beneficio/riesgo de 2:1",38);card(t,a+4.0,890,150,PK,"Con slippage podría dar pérdidas",null,40);card(t,a+5.4,1070,150,VI,"Es una sola prueba de StockChartPro,","no una conclusión definitiva",36);Lb("fuente: Wikipedia (cita backtest de StockChartPro)",540,1260,30,ST.mu,eout(prog(t,a+6.4,a+7.0)));ctx.restore()}
 function b6(t,a){endBlock(t,a,43.6,"Prueba el canal en el probador de MT5","Con spread y slippage reales",LM,MT)}
 function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
-function cover(){ST.bg(2);Lb('CANAL DE DONCHIAN',540,250,52,MT,1);Lb('20',540,620,520,LM,1);Lb('VELAS',540,960,170,CRM,1);Lb('MÁXIMO Y MÍNIMO',540,1100,64,CRM,1);ctx.save();ctx.translate(0,0);candles(2.5,0,1,150,1180,780,150,22,11,20);ctx.restore();coverBtn('VER EL CANAL →',LM,DK)}
+function cover(){ST.bg(2);Lb('CANAL DE DONCHIAN',540,250,52,MT,1);Lb('20',540,620,520,LM,1);Lb('VELAS',540,960,170,CRM,1);Lb('MÁXIMO Y MÍNIMO',540,1100,64,CRM,1);ctx.save();ctx.translate(0,0);candles(2.5,0,1,150,1150,780,140,22,11,20);ctx.restore();coverBtn('VER EL CANAL →',LM,DK)}
 </script></body></html>
