@@ -1,0 +1,45 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:'Patrick Hand';font-weight:400;src:url(node_modules/@fontsource/patrick-hand/files/patrick-hand-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 35 (4.º uso): acuarela con tinta — papel crema con turquesa, coral y ocre — tema: Ichimoku Kinko Hyo (técnica, 60 s).
+const SPEC={"name": "Ichimoku Kinko Hyo", "hook": "ICHIMOKU: 9, 26 Y 52 EN UN VISTAZO", "dur": 60, "cta": 56, "bpm": 96, "mus": "soft", "prog": [[45, "m"], [41, "M"], [48, "M"], [43, "m"]], "ev": [[0.3, "rise", 2.4], [3.0, "down"], [3.6, "hit"], [6.2, "wipe"], [8.0, "ding"], [13.4, "wipe"], [15.2, "ding"], [20.4, "wipe"], [22.2, "ding"], [28.2, "wipe"], [30.0, "ding"], [35.0, "wipe"], [36.8, "ding"], [43.4, "wipe"], [45.2, "ding"], [51.0, "ding"], [52.2, "ding"], [53.4, "ding"], [54.6, "ding"], [56.2, "cta"]], "subs": [[0.2, 6.0, "Ichimoku Kinko Hyo: el gráfico de equilibrio que se lee de un solo vistazo."], [6.4, 13.4, "Lo creó el periodista japonés Goichi Hosoda, tras unos 30 años de trabajo. Lo publicó a finales de los años 60.", "Lo creó el periodista japonés Goichi Hosoda, tras unos treinta años de trabajo. Lo publicó a finales de los años sesenta."], [13.6, 20.4, "Tenkan: punto medio de 9 periodos. Kijun, de 26. Senkou B, de 52.", "Tenkan: punto medio de nueve periodos. Kijun, de veintiséis. Senkou B, de cincuenta y dos."], [20.6, 28.2, "Senkou A es el promedio de Tenkan y Kijun, adelantado 26 periodos. La nube es el espacio entre A y B.", "Senkou A es el promedio de Tenkan y Kijun, adelantado veintiséis periodos. La nube es el espacio entre A y B."], [28.4, 35.0, "Con A sobre B la nube es alcista; el precio sobre ella es más favorable."], [35.2, 43.4, "Una configuración corta da más señales falsas; una larga confirma tarde. El 9, 26 y 52 viene de un calendario japonés antiguo.", "Una configuración corta da más señales falsas; una larga confirma tarde. El nueve, veintiséis y cincuenta y dos viene de un calendario japonés antiguo."], [43.6, 49.6, "Para tu robot: prueba cada ajuste con datos fuera de muestra. Contenido educativo, sin garantías."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const DK='#1c2447',ACC='#e76f51';
+const STY={"subFont": "800 42px Inter", "subBg": "rgba(255,250,238,.97)", "subStroke": "#e76f51", "subFill": "#22305a", "ctaBg": "#1c2447", "ctaSub": "#f6eedc", "ctaGlow": "#e76f51", "ctaAccent": "#e76f51", "ctaBtnText": "#fff", "ctaFontS": "800 50px Inter", "ctaFontL": "900 104px Inter"};
+window.FONTS=["400 40px \"Patrick Hand\"", "900 40px Inter", "800 40px Inter"];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+const INK='#22305a',TL='#2a9d8f',CO='#e76f51',OC='#e9a23b',PU='#7b5ea7';
+Object.assign(ST,{fam:"'Patrick Hand'",w:400,sc:1.35,mono:true,txt:INK,mu:'#6b7396',acc:CO,c:[CO,TL,OC,PU],pn:'rgba(255,252,244,.9)'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(255,252,244,.92)';RR(x,y,w,h,30);ctx.fill();ctx.globalAlpha=.4;ctx.fillStyle=col;RR(x,y,w*.5,h,30);ctx.fill();ctx.globalAlpha=1;ctx.lineWidth=5;ctx.strokeStyle=col;RR(x,y,w,h,30);ctx.stroke();ctx.restore()};
+const _r=rng(5),BL=Array.from({length:9},(_,i)=>[_r()*1080,_r()*1900,200+_r()*260,[TL,CO,OC,PU][i%4],_r()*6]),DOTS=Array.from({length:260},()=>[_r()*1080,_r()*1920,_r()*2+1]);
+ST.bg=t=>{ctx.fillStyle='#f6eedc';ctx.fillRect(0,0,W,H);
+ BL.forEach(([x,y,r,c,ph])=>{const dx=Math.sin(t*.4+ph)*30,dy=Math.cos(t*.3+ph)*30;const g=ctx.createRadialGradient(x+dx,y+dy,10,x+dx,y+dy,r);g.addColorStop(0,c+'55');g.addColorStop(.7,c+'22');g.addColorStop(1,c+'00');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)});
+ ctx.fillStyle='rgba(120,90,50,.10)';DOTS.forEach(([x,y,s])=>ctx.fillRect(x,y,s,s));
+ ctx.fillStyle=CO;ctx.globalAlpha=.8;RR(0,0,W,14,0);ctx.fill();ctx.globalAlpha=1;Lb('ACUARELA · ICHIMOKU',540,56,26,ST.mu)};
+const PS=(()=>{const r=rng(11);let p=100,a=[];for(let i=0;i<115;i++){p+=(i<60?.5:(i<95?-.6:.4))+(r()-.5)*3.2;a.push(p)}return a})();
+function mid(i,n){let hi=-1e9,lo=1e9;for(let j=Math.max(0,i-n+1);j<=i;j++){hi=Math.max(hi,PS[j]+1);lo=Math.min(lo,PS[j]-1)}return (hi+lo)/2}
+const SA=k=>{const i=k-26;return i<8?null:(mid(i,9)+mid(i,26))/2},SB=k=>{const i=k-26;return i<25?null:mid(i,52)};
+function h0(t,al){const a=0;ctx.save();ctx.globalAlpha=al;Lb("JAPÓN · AÑOS 60",540,380,40,TL,eout(prog(t,a+.2,a+.8)));bigNum(t,a+.6,540,640,"9·26·52",210,INK);Lb("UN VISTAZO",540,860,64,CO,eout(prog(t,a+1.6,a+2.2)));card(t,a+3.0,990,130,TL,"Goichi Hosoda, periodista",null,40);card(t,a+4.2,1140,120,OC,"El gráfico de la nube",null,40);ctx.restore()}
+function b1(t,al){std(t,al,6.4,"SU CREADOR",CO,"≈ 30 AÑOS",160,PU,"perfeccionando el sistema",36,[[CO,"Goichi Hosoda, ‘Ichimoku Sanjin’",null,150,38],[TL,"Publicado a fines de los años 60",null,150,38],[OC,"Kinko Hyo: equilibrio de un vistazo",null,110,36]],"fuente: Wikipedia y MQL5 (1969)")}
+function b2(t,al){const a=13.6;ctx.save();ctx.globalAlpha=al;head(t,a+.1,"TRES LÍNEAS, TRES PERIODOS",CO);
+ barsH(t,a+.6,[["Tenkan-sen",9/52,TL,"9"],["Kijun-sen",26/52,OC,"26"],["Senkou Span B",1,PU,"52"]],80,320,700,170,40);
+ card(t,a+3.2,870,130,CO,"Cada línea = (máx. + mín.) / 2",null,36);card(t,a+4.4,1030,120,TL,"Chikou: el cierre, 26 atrás",null,38);Lb("fuente: Wikipedia",540,1230,30,ST.mu,eout(prog(t,a+5.6,a+6.2)));ctx.restore()}
+function b3(t,al){const a=20.6;ctx.save();ctx.globalAlpha=al;head(t,a+.1,"LA NUBE (KUMO)",TL);
+ const X0=70,X1=1010,Y0=300,Y1=1000,k0=30,k1=140;let mn=1e9,mx=-1e9;for(let k=k0;k<=k1;k++){[SA(k),SB(k),k<115?PS[k]:null].forEach(v=>{if(v!=null){mn=Math.min(mn,v);mx=Math.max(mx,v)}})}
+ const px=k=>X0+(k-k0)/(k1-k0)*(X1-X0),py=v=>Y1-(v-mn)/(mx-mn)*(Y1-Y0);const r=eio(prog(t,a+.6,a+4.6)),kc=k0+r*(k1-k0);
+ for(let k=k0;k<kc;k++){const A=SA(k),B=SB(k),A2=SA(k+1),B2=SB(k+1);if(A==null||B==null||A2==null||B2==null)continue;ctx.fillStyle=A>=B?'rgba(42,157,143,.38)':'rgba(231,111,81,.38)';ctx.beginPath();ctx.moveTo(px(k),py(A));ctx.lineTo(px(k+1),py(A2));ctx.lineTo(px(k+1),py(B2));ctx.lineTo(px(k),py(B));ctx.fill()}
+ ctx.strokeStyle=INK;ctx.lineWidth=6;ctx.lineJoin='round';ctx.beginPath();let f=1;for(let k=k0;k<Math.min(kc,115);k++){f?ctx.moveTo(px(k),py(PS[k])):ctx.lineTo(px(k),py(PS[k]));f=0}ctx.stroke();
+ Lb("precio (ilustrativo)",300,1050,30,INK,eout(prog(t,a+1,a+1.6)));Lb("la nube se proyecta 26 periodos",720,1050,30,TL,eout(prog(t,a+4,a+4.6)));
+ card(t,a+5.0,1110,110,OC,"Verde: A sobre B · rojo: A bajo B",null,34);Lb("datos ILUSTRATIVOS · fórmulas de Wikipedia",540,1260,28,ST.mu,eout(prog(t,a+5.6,a+6.2)));ctx.restore()}
+function b4(t,al){std(t,al,28.4,"CÓMO LEERLA",TL,"A > B",230,TL,"la nube es alcista",40,[[TL,"Precio sobre la nube: panorama",null,150,38],[CO,"más favorable (Wikipedia)",null,110,38],[OC,"Nube delgada: soporte débil",null,110,38]],"fuente: Wikipedia")}
+function b5(t,al){std(t,al,35.2,"SUS LÍMITES",CO,"8·21·42",210,PU,"ajuste moderno sugerido (diario)",34,[[CO,"Corta: más señales falsas",null,150,40],[TL,"Larga: la señal llega tarde",null,150,40],[OC,"9·26·52: calendario japonés antiguo",null,110,34]],"fuente: Wikipedia (Ichimoku Kinkō Hyō)")}
+function b6(t,a){endBlock(t,a,43.6,"Prueba cada ajuste fuera de muestra","Ninguna línea es una garantía",CO,TL)}
+function cover(){ST.bg(2);Lb('ICHIMOKU',540,250,90,TL,1);Lb('9·26·52',540,600,250,INK,1);Lb('LA NUBE QUE LEE',540,860,84,CO,1);Lb('EL MERCADO DE UN VISTAZO',540,970,64,PU,1);Lb('fuente: Wikipedia',540,1120,32,ST.mu,1);coverBtn('VER LA NUBE →',CO,'#fff')}
+
+function std(t,al,a,hd,hc,big,bsz,bc,sub,ssz,cards,src){ctx.save();ctx.globalAlpha=al;head(t,a+.1,hd,hc);bigNum(t,a+.6,540,470,big,bsz,bc);Lb(sub,540,620,ssz,ST.txt,eout(prog(t,a+1.6,a+2.2)));cards.forEach((c,i)=>card(t,a+2.8+i*1.5,720+i*180,c[3]||(i<2?150:120),c[0],c[1],c[2]||null,c[4]||40));if(src)Lb(src,540,1290,30,ST.mu,eout(prog(t,a+6.2,a+6.8)));ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+
+</script></body></html>
