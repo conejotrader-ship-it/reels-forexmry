@@ -1,0 +1,46 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:'Press Start 2P';font-weight:400;src:url(node_modules/@fontsource/press-start-2p/files/press-start-2p-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 32 (4.º uso): pixel-art 2D de 8 bits — azul noche con plata y oro — tema: Hunt y el jueves de la plata, 27 mar 1980 (60 s).
+const SPEC={"name": "Hunt y la plata 1980", "hook": "27 DE MARZO DE 1980: LA PLATA CAYÓ A $10,80", "dur": 60, "cta": 56, "bpm": 128, "mus": "chip", "prog": [[40, "m"], [36, "M"], [43, "m"], [41, "M"]], "ev": [[0.3, "rise", 2.4], [3.0, "down"], [3.6, "hit"], [6.2, "wipe"], [8.0, "ding"], [13.4, "wipe"], [15.2, "ding"], [20.4, "wipe"], [22.2, "ding"], [28.2, "wipe"], [30.0, "ding"], [35.0, "wipe"], [36.8, "ding"], [43.4, "wipe"], [45.2, "ding"], [51.0, "ding"], [52.2, "ding"], [53.4, "ding"], [54.6, "ding"], [56.2, "cta"]], "subs": [[0.2, 6.0, "27 de marzo de 1980: la plata se desplomó a 10,80 dólares.", "El veintisiete de marzo de mil novecientos ochenta, la plata cayó a diez coma ochenta dólares."], [6.4, 13.4, "De unos 9 dólares en 1979 a más de 50 en enero de 1980.", "De unos nueve dólares en mil novecientos setenta y nueve a más de cincuenta en enero de mil novecientos ochenta."], [13.6, 20.4, "Los Hunt acumularon plata; las fuentes difieren entre 100 y 195 millones de onzas.", "Los Hunt acumularon plata; las fuentes difieren entre cien y ciento noventa y cinco millones de onzas."], [20.6, 28.2, "El 7 de enero COMEX limitó las posiciones; el 21 solo permitió liquidar. La plata empezó a caer.", "El siete de enero, COMEX limitó las posiciones; el veintiuno solo permitió liquidar. La plata empezó a caer."], [28.4, 35.0, "Del 10 al 27 de marzo pasó de 29,75 a 10,80 dólares.", "Del diez al veintisiete de marzo, la plata pasó de veintinueve coma setenta y cinco a diez coma ochenta dólares."], [35.2, 43.4, "Trece bancos prestaron 1.100 millones a Placid Oil, empresa de los Hunt. En 1988 pidieron el Capítulo 11.", "Trece bancos prestaron mil cien millones a Placid Oil, empresa de los Hunt. En mil novecientos ochenta y ocho, pidieron el Capítulo once."], [43.6, 49.6, "Para tu robot: apalancamiento y margen pueden liquidar una posición. Contenido educativo, sin garantías."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const DK='#0f1530',ACC='#ffd23f';
+const STY={"subFont": "800 42px Inter", "subBg": "rgba(15,21,48,.97)", "subStroke": "#ffd23f", "subFill": "#f7f3ff", "ctaBg": "#0f1530", "ctaSub": "#cfd8e6", "ctaGlow": "#ffd23f", "ctaAccent": "#ffd23f", "ctaBtnText": "#0f1530", "ctaFontS": "800 50px Inter", "ctaFontL": "900 104px Inter"};
+window.FONTS=["400 40px \"Press Start 2P\"", "900 40px Inter", "800 40px Inter"];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+const GD='#ffd23f',SV='#cfd8e6',RD='#ff4d6d',CY='#3de0ff',GR='#5cf29a',PK='#f7f3ff';
+Object.assign(ST,{fam:"'Press Start 2P'",w:400,sc:.72,mono:true,txt:PK,mu:'#8f9ac9',acc:GD,c:[GD,CY,SV,RD],pn:'rgba(0,0,0,.4)'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#1a2350';ctx.fillRect(x,y,w,h);ctx.fillStyle=col;ctx.fillRect(x,y,w,6);ctx.fillRect(x,y+h-6,w,6);ctx.fillRect(x,y,18,h);ctx.fillStyle='rgba(255,255,255,.08)';ctx.fillRect(x+18,y+6,w-18,10);ctx.restore()};
+const _r=rng(7),STARS=Array.from({length:70},()=>[_r()*1080,_r()*1900,_r()]);
+ST.bg=t=>{ctx.fillStyle='#0f1530';ctx.fillRect(0,0,W,H);ctx.fillStyle='#161f4a';for(let y=0;y<H;y+=48){ctx.fillRect(0,y,W,3)}
+ STARS.forEach(([x,y,r],i)=>{const on=(Math.floor(t*2+i)%3)!=0;ctx.fillStyle=on?'#cfd8e6':'#59639c';const s=r>.7?9:6;ctx.fillRect(Math.floor(x/6)*6,Math.floor((y+t*10*r)%1900/6)*6,s,s)});
+ // lingotes de plata pixelados al pie
+ for(let i=0;i<5;i++){const x=70+i*200,y=1720;ctx.fillStyle='#8f9ac9';ctx.fillRect(x,y,150,54);ctx.fillStyle=SV;ctx.fillRect(x,y,150,12);ctx.fillRect(x+6,y+12,18,30);ctx.fillStyle='#59639c';ctx.fillRect(x+132,y+12,18,42)}
+ ctx.fillStyle=GD;ctx.fillRect(0,0,W,12);Lb('PIXEL 8 BITS · LOS HUNT',540,52,26,ST.mu)};
+function tag(t,a,txt,x,y,col){const k=eout(prog(t,a,a+.5));if(k<=.02)return;Lb(txt,x,y,32,col,k)}
+function h0(t,al){const a=0;ctx.save();ctx.globalAlpha=al;Lb("JUEVES 27 · MARZO 1980",540,380,34,CY,eout(prog(t,a+.2,a+.8)));bigNum(t,a+.6,540,640,"$10,80",200,SV);Lb("LA PLATA CAYÓ",540,860,52,GD,eout(prog(t,a+1.6,a+2.2)));card(t,a+3.0,990,130,RD,"Desde más de $50 en enero",null,40);card(t,a+4.2,1140,120,CY,"Los hermanos Hunt, en jaque",null,40);ctx.restore()}
+function b1(t,al){const a=6.4;ctx.save();ctx.globalAlpha=al;head(t,a+.1,"LA SUBIDA",GD);axes(110,360,860,560,SV,'USD / onza');hline(360+560*(1-.909),RD,3,110,970);
+ const P=[[0,.16],[.55,.63],[1,.909]];const e=lineChart(t,a+.6,a+4.2,P,110,360,860,560,SV,12);
+ tag(t,a+1.0,"≈ $9",150,860,CY);tag(t,a+3.0,"$34,45",600,640,GD);tag(t,a+4.4,"> $50",900,330,RD);
+ Lb("jul 1979",200,990,28,ST.mu,eout(prog(t,a+1,a+1.6)));Lb("31 dic 1979",640,990,28,ST.mu,eout(prog(t,a+3,a+3.6)));Lb("ene 1980",900,990,28,ST.mu,eout(prog(t,a+4.4,a+5)));
+ card(t,a+5.0,1060,110,GD,"Plata ×5,5 en unos 6 meses",null,34);Lb("fuente: Wikipedia · cálculo propio",540,1250,28,ST.mu,eout(prog(t,a+5.6,a+6.2)));ctx.restore()}
+function b2(t,al){const a=13.6;ctx.save();ctx.globalAlpha=al;head(t,a+.1,"LOS HUNT ACUMULAN",GD);Lb("onzas troy de plata (millones)",540,300,30,SV,eout(prog(t,a+.4,a+1)));
+ barsH(t,a+.8,[["Wikipedia (fin 1979)",1,GD,"≈ 195"],["Britannica (estimado)",.51,CY,"≈ 100"]],70,400,780,160,32);
+ card(t,a+3.6,800,150,RD,"Las fuentes no coinciden","fechas o entidades distintas",36);card(t,a+5.0,980,110,SV,"Cifras aproximadas",null,40);Lb("fuente: Wikipedia y Britannica",540,1180,28,ST.mu,eout(prog(t,a+6,a+6.6)));ctx.restore()}
+function b3(t,al){std(t,al,20.6,"LAS REGLAS CAMBIAN",GD,"ENERO",190,RD,"COMEX cambia las reglas",34,[[GD,"7 ene: límites de posición",null,150,38],[CY,"21 ene: solo liquidar o cubrir",null,150,38],[RD,"El CBOT adoptó algo similar",null,110,36]],"fuente: Wikipedia (Silver Thursday)")}
+function b4(t,al){const a=28.4;ctx.save();ctx.globalAlpha=al;head(t,a+.1,"EL JUEVES DE LA PLATA",RD);axes(110,360,860,560,SV,'USD / onza');
+ const P=[[0,.909],[.45,.54],[1,.196]];lineChart(t,a+.6,a+4.2,P,110,360,860,560,RD,12);
+ tag(t,a+.8,"> $50",150,380,SV);tag(t,a+2.4,"$29,75",520,520,GD);tag(t,a+4.2,"$10,80",830,800,RD);
+ Lb("ene 1980",200,990,28,ST.mu);Lb("10 mar",520,990,28,ST.mu);Lb("27 mar",880,990,28,ST.mu);
+ card(t,a+4.6,1060,110,RD,"≈ −64 % en 17 días",null,38);Lb("fuente: Wikipedia · cálculo propio",540,1250,28,ST.mu,eout(prog(t,a+5.6,a+6.2)));ctx.restore()}
+function b5(t,al){std(t,al,35.2,"EL RESCATE Y LA FACTURA",GD,"$1.100 M",135,CY,"préstamo de 13 bancos a Placid Oil",30,[[GD,"1988: jurado civil los halló",null,150,36],[RD,"responsables · Capítulo 11",null,110,36],[SV,"1989: acuerdo con la CFTC",null,110,38]],"fuente: Wikipedia (Silver Thursday)")}
+function b6(t,a){endBlock(t,a,43.6,"Apalancamiento y margen = riesgo","Las reglas pueden cambiar de golpe",GD,CY)}
+function cover(){ST.bg(2);Lb('27 MAR 1980',540,250,60,CY,1);Lb("$10,80",540,620,200,SV,1);Lb('LA PLATA SE DESPLOMÓ',540,860,52,GD,1);Lb('LOS HUNT PERDIERON',540,990,56,RD,1);Lb('fuente: Wikipedia (Silver Thursday)',540,1130,26,ST.mu,1);coverBtn('VER LA CAÍDA →',GD,'#0f1530')}
+
+function std(t,al,a,hd,hc,big,bsz,bc,sub,ssz,cards,src){ctx.save();ctx.globalAlpha=al;head(t,a+.1,hd,hc);bigNum(t,a+.6,540,470,big,bsz,bc);Lb(sub,540,620,ssz,ST.txt,eout(prog(t,a+1.6,a+2.2)));cards.forEach((c,i)=>card(t,a+2.8+i*1.5,720+i*180,c[3]||(i<2?150:120),c[0],c[1],c[2]||null,c[4]||40));if(src)Lb(src,540,1290,30,ST.mu,eout(prog(t,a+6.2,a+6.8)));ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+
+</script></body></html>
