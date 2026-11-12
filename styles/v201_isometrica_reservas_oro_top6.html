@@ -1,0 +1,43 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 33 (4.º uso): ciudad isométrica — azul petróleo con oro, turquesa y coral — tema: ranking de reservas oficiales de oro (60 s).
+const SPEC={"name": "Ranking de reservas de oro", "hook": "EE. UU. TIENE ≈ 8.133 TONELADAS DE ORO: EL N.º 1", "dur": 60, "cta": 56, "bpm": 104, "mus": "soft", "prog": [[40, "m"], [36, "M"], [43, "M"], [38, "m"]], "ev": [[0.3, "rise", 2.4], [3.0, "down"], [3.6, "hit"], [6.2, "wipe"], [8.0, "ding"], [13.4, "wipe"], [15.2, "ding"], [20.4, "wipe"], [22.2, "ding"], [28.2, "wipe"], [30.0, "ding"], [35.0, "wipe"], [36.8, "ding"], [43.4, "wipe"], [45.2, "ding"], [51.0, "ding"], [52.2, "ding"], [53.4, "ding"], [54.6, "ding"], [56.2, "cta"]], "subs": [[0.2, 6.0, "Reservas oficiales de oro: Estados Unidos lidera con unas 8.133 toneladas.", "Reservas oficiales de oro: Estados Unidos lidera con unas ocho mil ciento treinta y tres toneladas."], [6.4, 13.4, "Alemania, 3.352 toneladas; Italia, 2.452.", "Alemania, tres mil trescientas cincuenta y dos toneladas; Italia, dos mil cuatrocientas cincuenta y dos."], [13.6, 20.4, "Francia, 2.437. Rusia y China, cerca de 2.300 toneladas cada una.", "Francia, dos mil cuatrocientas treinta y siete. Rusia y China, cerca de dos mil trescientas toneladas cada una."], [20.6, 28.2, "Estados Unidos tiene unas 2,4 veces el oro de Alemania. Es un cálculo propio con estas cifras.", "Estados Unidos tiene unas dos coma cuatro veces el oro de Alemania. Es un cálculo propio con estas cifras."], [28.4, 35.0, "Sobre China, algunos analistas creen que sus reservas reales son mayores que las reportadas."], [35.2, 43.4, "Son datos de fines de 2024. Para 2026, el Consejo Mundial del Oro proyecta unas 850 toneladas de compras.", "Son datos de fines de dos mil veinticuatro. Para dos mil veintiséis, el Consejo Mundial del Oro proyecta unas ochocientas cincuenta toneladas de compras."], [43.6, 49.6, "Para tu robot: el oro reacciona a la macro. Filtra spread y horario. Contenido educativo, sin garantías."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const DK='#071a22',ACC='#ffc233';
+const STY={"subFont": "800 42px Inter", "subBg": "rgba(7,26,34,.97)", "subStroke": "#ffc233", "subFill": "#e8f6f7", "ctaBg": "#071a22", "ctaSub": "#e8f6f7", "ctaGlow": "#ffc233", "ctaAccent": "#ffc233", "ctaBtnText": "#071a22", "ctaFontS": "800 50px Inter", "ctaFontL": "900 104px Inter"};
+window.FONTS=["900 40px Inter", "800 40px Inter"];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+const GD='#ffc233',TQ='#2dd4bf',RD='#ff6b6b',WH='#e8f6f7';
+Object.assign(ST,{fam:'Inter',w:900,txt:WH,mu:'#7fb3bd',acc:GD,c:[GD,TQ,RD,WH],pn:'rgba(0,0,0,.3)'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(10,50,62,.9)';ctx.beginPath();ctx.moveTo(x+30,y);ctx.lineTo(x+w,y);ctx.lineTo(x+w-30,y+h);ctx.lineTo(x,y+h);ctx.closePath();ctx.fill();ctx.lineWidth=4;ctx.strokeStyle=col;ctx.stroke();ctx.fillStyle=col;ctx.beginPath();ctx.moveTo(x+30,y);ctx.lineTo(x+54,y);ctx.lineTo(x+24,y+h);ctx.lineTo(x,y+h);ctx.fill();ctx.restore()};
+function iso(cx,by,w,h,c1,c2,c3){const d=w*.55;ctx.save();ctx.fillStyle=c2;ctx.beginPath();ctx.moveTo(cx-w,by);ctx.lineTo(cx,by+d);ctx.lineTo(cx,by+d-h);ctx.lineTo(cx-w,by-h);ctx.fill();
+ ctx.fillStyle=c3;ctx.beginPath();ctx.moveTo(cx+w,by);ctx.lineTo(cx,by+d);ctx.lineTo(cx,by+d-h);ctx.lineTo(cx+w,by-h);ctx.fill();
+ ctx.fillStyle=c1;ctx.beginPath();ctx.moveTo(cx,by-h-d);ctx.lineTo(cx+w,by-h);ctx.lineTo(cx,by-h+d);ctx.lineTo(cx-w,by-h);ctx.fill();
+ ctx.strokeStyle='rgba(0,0,0,.18)';ctx.lineWidth=3;for(let y=36;y<h;y+=44){ctx.beginPath();ctx.moveTo(cx-w,by-y);ctx.lineTo(cx,by+d-y);ctx.lineTo(cx+w,by-y);ctx.stroke()}ctx.restore()}
+ST.bg=t=>{const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#0c2f3b');g.addColorStop(1,'#071a22');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ ctx.save();ctx.strokeStyle='rgba(120,200,215,.10)';ctx.lineWidth=2;for(let i=-20;i<40;i++){const o=i*110+(t*8)%110;ctx.beginPath();ctx.moveTo(o,0);ctx.lineTo(o+1100,640);ctx.stroke();ctx.beginPath();ctx.moveTo(o+1100,0);ctx.lineTo(o,640);ctx.stroke();ctx.beginPath();ctx.moveTo(o,1000);ctx.lineTo(o+1100,1640);ctx.stroke();ctx.beginPath();ctx.moveTo(o+1100,1000);ctx.lineTo(o,1640);ctx.stroke()}ctx.restore();
+ ctx.fillStyle=GD;ctx.fillRect(0,0,W,12);Lb('CIUDAD ISOMÉTRICA · RESERVAS DE ORO',540,52,26,ST.mu)};
+function tower(t,t0,cx,by,tn,name,col,lab,vsz=40){const k=eout(prog(t,t0,t0+1.2));if(k<=.02)return;const h=tn*.0565*k,w=120,d=w*.55;
+ iso(cx,by,w,h,col[0],col[1],col[2]);Lb(lab,cx,by-h-d-54,vsz,col[0],Math.min(1,k*2));Lb(name,cx,by+d+60,34,WH,Math.min(1,k*2))}
+const GC=['#ffd568','#d49a1a','#a8760c'],TC=['#6ee8d8','#1aa896','#0f7d6f'],CC=['#ff9a9a','#d94c4c','#a63434'];
+function h0(t,al){const a=0;ctx.save();ctx.globalAlpha=al;Lb("EL RANKING DEL ORO OFICIAL",540,380,36,TQ,eout(prog(t,a+.2,a+.8)));bigNum(t,a+.6,540,640,"8.133 t",200,GD);Lb("EE. UU. · N.º 1",540,860,64,WH,eout(prog(t,a+1.6,a+2.2)));card(t,a+3.0,990,130,TQ,"Reservas oficiales, en toneladas",null,38);card(t,a+4.2,1140,120,RD,"Datos aprox. de fines de 2024",null,40);ctx.restore()}
+function b1(t,al){const a=6.4;ctx.save();ctx.globalAlpha=al;head(t,a+.1,"TOP 3 DEL ORO OFICIAL",GD);
+ tower(t,a+.6,200,1000,8133.5,"EE. UU.",GC,"8.133,5",38);tower(t,a+1.4,540,1000,3351.6,"Alemania",TC,"3.351,6",38);tower(t,a+2.2,880,1000,2451.9,"Italia",CC,"2.451,9",38);
+ card(t,a+4.2,1160,110,GD,"Toneladas · fines de 2024",null,40);Lb("fuente: FMI (IFS) vía BullionVault",540,1310,28,ST.mu,eout(prog(t,a+5.4,a+6)));ctx.restore()}
+function b2(t,al){const a=13.6;ctx.save();ctx.globalAlpha=al;head(t,a+.1,"PUESTOS 4 AL 6",TQ);
+ tower(t,a+.6,200,1000,2437,"Francia",TC,"2.437",40);tower(t,a+1.4,540,1000,2333.1,"Rusia",CC,"≈ 2.200–2.333",30);tower(t,a+2.2,880,1000,2279.6,"China",GC,"≈ 2.280",40);
+ card(t,a+4.2,1160,110,TQ,"Rusia y China: fuentes difieren",null,38);Lb("fuente: BullionVault y Business Today",540,1310,28,ST.mu,eout(prog(t,a+5.4,a+6)));ctx.restore()}
+function b3(t,al){std(t,al,20.6,"¿CUÁNTO MÁS?",GD,"× 2,4",250,GD,"EE. UU. frente a Alemania",38,[[GD,"8.133,5 ÷ 3.351,6 ≈ 2,43",null,150,40],[TQ,"Cálculo propio con estas cifras",null,150,38],[RD,"Cifras aproximadas",null,110,40]],"fuente: BullionVault (FMI, IFS)")}
+function b4(t,al){std(t,al,28.4,"EL CASO DE CHINA",RD,"≈ 2.280 t",180,RD,"reservas reportadas",40,[[RD,"Algunos analistas creen que",null,150,40],[GD,"las reales son mayores",null,150,40],[TQ,"Dato no confirmado oficialmente",null,110,38]],"fuente: BullionVault")}
+function b5(t,al){std(t,al,35.2,"¿Y AHORA?",TQ,"≈ 850 t",200,TQ,"compras proyectadas en 2026 (WGC)",34,[[TQ,"Las cifras del ranking son de",null,150,38],[GD,"fines de 2024, con compras después",null,150,36],[RD,"Proyección: no es un dato final",null,110,38]],"fuente: mining.com (WGC) · BullionVault")}
+function b6(t,a){endBlock(t,a,43.6,"El oro reacciona a la macro","Filtra spread y horario en tu robot",GD,TQ)}
+function cover(){ST.bg(2);Lb('RESERVAS DE ORO',540,250,60,TQ,1);Lb('8.133 t',540,610,230,GD,1);Lb('EE. UU. · EL N.º 1',540,860,76,WH,1);Lb('ALEMANIA, 2.º: 3.352 t',540,985,56,RD,1);Lb('fuente: FMI (IFS) vía BullionVault',540,1120,30,ST.mu,1);coverBtn('VER EL RANKING →',GD,'#0c2f3b')}
+
+function std(t,al,a,hd,hc,big,bsz,bc,sub,ssz,cards,src){ctx.save();ctx.globalAlpha=al;head(t,a+.1,hd,hc);bigNum(t,a+.6,540,470,big,bsz,bc);Lb(sub,540,620,ssz,ST.txt,eout(prog(t,a+1.6,a+2.2)));cards.forEach((c,i)=>card(t,a+2.8+i*1.5,720+i*180,c[3]||(i<2?150:120),c[0],c[1],c[2]||null,c[4]||40));if(src)Lb(src,540,1290,30,ST.mu,eout(prog(t,a+6.2,a+6.8)));ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+
+</script></body></html>
