@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+@font-face{font-family:'Press Start 2P';font-weight:400;src:url(node_modules/@fontsource/press-start-2p/files/press-start-2p-latin-400-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 32 (4.º uso): pixel-art 2D de 8 bits — azul noche con plata y oro — tema: intervención del Banco de Inglaterra en los gilts, 28 sep 2022 (60 s).
+const SPEC={"name": "Banco de Inglaterra y los gilts 2022", "hook": "28 DE SEPTIEMBRE DE 2022: EL BANCO DE INGLATERRA COMPRA BONOS", "dur": 60, "cta": 56, "bpm": 128, "mus": "chip", "prog": [[40, "m"], [36, "M"], [43, "m"], [41, "M"]], "ev": [[0.3, "rise", 2.4], [3.0, "down"], [3.6, "hit"], [6.2, "wipe"], [8.0, "ding"], [13.4, "wipe"], [15.2, "ding"], [20.4, "wipe"], [22.2, "ding"], [28.2, "wipe"], [30.0, "ding"], [35.0, "wipe"], [36.8, "ding"], [43.4, "wipe"], [45.2, "ding"], [51.0, "ding"], [52.2, "ding"], [53.4, "ding"], [54.6, "ding"], [56.2, "cta"]], "subs": [[0.2, 6.0, "28 de septiembre de 2022: el Banco de Inglaterra interviene en el mercado de bonos.", "El veintiocho de septiembre de dos mil veintidós, el Banco de Inglaterra compra bonos."], [6.4, 13.4, "Compra bonos del Gobierno a largo plazo, con más de 20 años de vencimiento.", "Compra bonos del Gobierno a largo plazo, con más de veinte años de vencimiento."], [13.6, 20.4, "Al inicio, hasta 5.000 millones de libras por subasta. Duró hasta el 14 de octubre.", "Al inicio, hasta cinco mil millones de libras por subasta. Duró hasta el catorce de octubre."], [20.6, 28.2, "El aviso del Banco: si la disfunción empeoraba, habría un riesgo material para la estabilidad financiera."], [28.4, 35.0, "Las compras eran temporales y el Tesoro las indemnizaba por completo."], [35.2, 43.4, "Aplazó las ventas de bonos, cuya primera operación sería el 31 de octubre. El 26 de septiembre ya citaba la caída de la libra.", "Aplazó la venta de bonos hasta el treinta y uno de octubre. El veintiséis ya citaba la caída de la libra."], [43.6, 49.6, "Para tu robot: si interviene un banco central, el spread cambia de golpe. Contenido educativo, sin garantías."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const DK='#0f1530',ACC='#ffd23f';
+const STY={"subFont": "800 42px Inter", "subBg": "rgba(15,21,48,.97)", "subStroke": "#ffd23f", "subFill": "#f7f3ff", "ctaBg": "#0f1530", "ctaSub": "#cfd8e6", "ctaGlow": "#ffd23f", "ctaAccent": "#ffd23f", "ctaBtnText": "#0f1530", "ctaFontS": "800 50px Inter", "ctaFontL": "900 104px Inter"};
+window.FONTS=["400 40px \"Press Start 2P\"", "900 40px Inter", "800 40px Inter"];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+
+const GD='#ffd23f',SV='#cfd8e6',RD='#ff4d6d',CY='#3de0ff',GR='#5cf29a',PK='#f7f3ff';
+Object.assign(ST,{fam:"'Press Start 2P'",w:400,sc:.72,mono:true,txt:PK,mu:'#8f9ac9',acc:GD,c:[GD,CY,SV,RD],pn:'rgba(0,0,0,.4)'});
+ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#1a2350';ctx.fillRect(x,y,w,h);ctx.fillStyle=col;ctx.fillRect(x,y,w,6);ctx.fillRect(x,y+h-6,w,6);ctx.fillRect(x,y,18,h);ctx.fillStyle='rgba(255,255,255,.08)';ctx.fillRect(x+18,y+6,w-18,10);ctx.restore()};
+const _r=rng(7),STARS=Array.from({length:70},()=>[_r()*1080,_r()*1900,_r()]);
+ST.bg=t=>{ctx.fillStyle='#0f1530';ctx.fillRect(0,0,W,H);ctx.fillStyle='#161f4a';for(let y=0;y<H;y+=48){ctx.fillRect(0,y,W,3)}
+ STARS.forEach(([x,y,r],i)=>{const on=(Math.floor(t*2+i)%3)!=0;ctx.fillStyle=on?'#cfd8e6':'#59639c';const s=r>.7?9:6;ctx.fillRect(Math.floor(x/6)*6,Math.floor((y+t*10*r)%1900/6)*6,s,s)});
+ // lingotes de plata pixelados al pie
+ for(let i=0;i<5;i++){const x=70+i*200,y=1720;ctx.fillStyle='#8f9ac9';ctx.fillRect(x,y,150,54);ctx.fillStyle=SV;ctx.fillRect(x,y,150,12);ctx.fillRect(x+6,y+12,18,30);ctx.fillStyle='#59639c';ctx.fillRect(x+132,y+12,18,42)}
+ ctx.fillStyle=GD;ctx.fillRect(0,0,W,12);Lb('PIXEL 8 BITS · GILTS 2022',540,52,26,ST.mu)};
+function tag(t,a,txt,x,y,col){const k=eout(prog(t,a,a+.5));if(k<=.02)return;Lb(txt,x,y,32,col,k)}
+
+function h0(t,al){const a=0;ctx.save();ctx.globalAlpha=al;Lb("REINO UNIDO · 2022",540,380,34,CY,eout(prog(t,a+.2,a+.8)));bigNum(t,a+.6,540,640,"28 SEP",200,SV);Lb("EL BANCO DE INGLATERRA ENTRA",540,860,40,GD,eout(prog(t,a+1.6,a+2.2)));card(t,a+3.0,990,130,RD,"Compra bonos del Gobierno",null,40);card(t,a+4.2,1140,120,CY,"Hasta el 14 de octubre",null,40);ctx.restore()}
+function b1(t,al){std(t,al,6.4,"QUÉ COMPRABA",GD,"> 20 AÑOS",130,SV,"vencimiento de los bonos comprados",30,[[GD,"Bonos del Gobierno británico",null,150,40],[CY,"Mercado de largo plazo",null,150,40],[RD,"Meta: frenar la disfunción",null,110,40]],"fuente: Banco de Inglaterra (28 sep 2022)")}
+function b2(t,al){std(t,al,13.6,"CUÁNTO",GD,"£5.000 M",125,CY,"por subasta, al inicio",34,[[GD,"Subastas en días hábiles",null,150,38],[CY,"Del 28 sep al 14 oct de 2022",null,150,38],[SV,"Escala: ‘la que sea necesaria’",null,110,38]],"fuente: Banco de Inglaterra (aviso de mercado)")}
+function b3(t,al){std(t,al,20.6,"LA ADVERTENCIA",RD,"RIESGO",190,RD,"material para la estabilidad financiera",30,[[RD,"Si la disfunción empeoraba…",null,150,38],[GD,"…riesgo ‘material’ (BoE)",null,150,38],[CY,"Afectaba a bonos a largo plazo",null,110,38]],"fuente: Banco de Inglaterra (28 sep 2022)")}
+function b4(t,al){std(t,al,28.4,"QUIÉN ASUME EL RIESGO",GD,"100 %",200,GR,"indemnizado por el Tesoro",36,[[GD,"Compras temporales",null,150,40],[CY,"Fondos: reservas del banco central",null,150,34],[SV,"Tesoro: indemnización total",null,110,38]],"fuente: Banco de Inglaterra (comunicado)")}
+function b5(t,al){std(t,al,35.2,"TAMBIÉN APLAZÓ",CY,"31 OCT",200,CY,"primera operación de venta de bonos",32,[[CY,"26 sep: el Gobernador habla de",null,150,36],[RD,"‘caída de la libra’ y reajuste",null,150,36],[SV,"significativo de activos",null,110,38]],"fuente: Banco de Inglaterra (26 y 28 sep)")}
+function b6(t,a){endBlock(t,a,43.6,"Un banco central mueve el mercado","Cuida el spread en tu robot",GD,CY)}
+function cover(){ST.bg(2);Lb('REINO UNIDO · 2022',540,250,56,CY,1);Lb('28 SEP',540,620,210,SV,1);Lb('EL BANCO CENTRAL',540,860,50,GD,1);Lb('COMPRA BONOS A LA FUERZA',540,970,46,RD,1);Lb('fuente: Banco de Inglaterra',540,1120,26,ST.mu,1);coverBtn('VER QUÉ PASÓ →',GD,'#0f1530')}
+
+function std(t,al,a,hd,hc,big,bsz,bc,sub,ssz,cards,src){ctx.save();ctx.globalAlpha=al;head(t,a+.1,hd,hc);bigNum(t,a+.6,540,470,big,bsz,bc);Lb(sub,540,620,ssz,ST.txt,eout(prog(t,a+1.6,a+2.2)));cards.forEach((c,i)=>card(t,a+2.8+i*1.5,720+i*180,c[3]||(i<2?150:120),c[0],c[1],c[2]||null,c[4]||40));if(src)Lb(src,540,1290,30,ST.mu,eout(prog(t,a+6.2,a+6.8)));ctx.restore()}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+
+</script></body></html>
