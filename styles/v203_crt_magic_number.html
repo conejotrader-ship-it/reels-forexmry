@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Inter;font-weight:800;src:url(node_modules/@fontsource/inter/files/inter-latin-800-normal.woff2)}
+@font-face{font-family:Inter;font-weight:900;src:url(node_modules/@fontsource/inter/files/inter-latin-900-normal.woff2)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}
+</style></head><body><canvas id="c"></canvas><script src="common.js"></script><script>
+// Estilo 38 (4.º uso): monitor CRT verde fósforo con ámbar y rosa — tema: Magic number en MT5 (60 s).
+const SPEC={"name": "Magic number en MT5", "hook": "DOS ROBOTS, UNA CUENTA: EL MAGIC NUMBER", "dur": 60, "cta": 56, "bpm": 118, "mus": "chip", "prog": [[40, "m"], [36, "M"], [43, "m"], [41, "M"]], "ev": [[0.3, "rise", 2.4], [3.0, "down"], [3.6, "hit"], [6.2, "wipe"], [8.0, "ding"], [13.4, "wipe"], [15.2, "ding"], [20.4, "wipe"], [22.2, "ding"], [28.2, "wipe"], [30.0, "ding"], [35.0, "wipe"], [36.8, "ding"], [43.4, "wipe"], [45.2, "ding"], [51.0, "ding"], [52.2, "ding"], [53.4, "ding"], [54.6, "ding"], [56.2, "cta"]], "subs": [[0.2, 6.0, "Dos robots en la misma cuenta. ¿Cuál abrió cada posición? Lo dice el magic number."], [6.4, 13.4, "Magic number: el ID del Expert Advisor en cada solicitud de trading (campo magic de MqlTradeRequest)."], [13.6, 20.4, "Cada EA puede fijar su propio ID único, o incluso usar varios."], [20.6, 28.2, "Se aplica a compras, ventas a mercado y órdenes pendientes nuevas; no al modificar SL o TP."], [28.4, 35.0, "La posición toma el magic del último trato que la formó. Las operaciones manuales dan magic 0.", "La posición toma el magic del último trato que la formó. Las operaciones manuales dan magic cero."], [35.2, 43.4, "En cuentas netting hay una sola posición por símbolo; en hedging puedes tener varias."], [43.6, 49.6, "Para tu robot: un magic distinto por cada EA. Contenido educativo, sin garantías."], [49.8, 55.9, "Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com", "Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."], [56.2, 59.8, "Securus Apex. Link en bio."]]};
+const DK='#02110a',ACC='#39ff88';
+const STY={"subFont": "800 42px Inter", "subBg": "rgba(2,17,10,.97)", "subStroke": "#39ff88", "subFill": "#c9ffdc", "ctaBg": "#02110a", "ctaSub": "#e8e8f0", "ctaGlow": "#39ff88", "ctaAccent": "#39ff88", "ctaBtnText": "#02110a", "ctaFontS": "800 50px Inter", "ctaFontL": "900 104px Inter"};
+window.FONTS=["900 40px Inter","800 40px Inter"];
+</script><script src="kit2.js"></script><script src="kit3.js"></script><script>
+const C=["#39ff88", "#ffd23f", "#ff5a8a", "#5ee0ff"];
+Object.assign(ST,{fam:'Inter',w:900,sc:1,txt:'#c9ffdc',mu:'#6fbf8c',acc:C[0],c:C,pn:'rgba(2,30,16,.82)'});
+
+ST.bg=t=>{ctx.fillStyle='#02110a';ctx.fillRect(0,0,W,H);const g=ctx.createRadialGradient(540,900,200,540,900,1200);g.addColorStop(0,'rgba(57,255,136,.10)');g.addColorStop(1,'rgba(0,0,0,.65)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ ctx.fillStyle='rgba(57,255,136,.06)';for(let y=0;y<H;y+=4)ctx.fillRect(0,y,W,2);const by=(t*180)%(H+200)-100;ctx.fillStyle='rgba(57,255,136,.07)';ctx.fillRect(0,by,W,90);
+ const fl=.03+.02*Math.sin(t*40);ctx.fillStyle=`rgba(255,255,255,${fl})`;ctx.fillRect(0,0,W,H);
+ ctx.fillStyle='#39ff88';ctx.fillRect(0,0,W,10);Lb('> MONITOR CRT · MAGIC NUMBER_',540,52,26,ST.mu)};
+
+function std(t,al,a,hd,hc,big,bsz,bc,sub,ssz,cards,src){ctx.save();ctx.globalAlpha=al;head(t,a+.1,hd,hc);bigNum(t,a+.6,540,470,big,bsz,bc);Lb(sub,540,620,ssz,ST.txt,eout(prog(t,a+1.6,a+2.2)));cards.forEach((c,i)=>card(t,a+2.8+i*1.4,720+i*180,i<2?150:120,c[0],c[1],c[2]||null,c[3]||38));if(src)Lb(src,540,1290,28,ST.mu,eout(prog(t,a+6.0,a+6.6)));ctx.restore()}
+function h0(t,al){const a=0;ctx.save();ctx.globalAlpha=al;Lb("MT5 · EXPERT ADVISORS",540,380,36,C[1],eout(prog(t,a+.2,a+.8)));bigNum(t,a+.6,540,640,"MAGIC",230,C[0]);Lb("EL ID DE CADA ROBOT",540,860,38,C[0],eout(prog(t,a+1.6,a+2.2)));card(t,a+3.0,990,130,C[1],"Tipo de dato: ulong",null,40);card(t,a+4.2,1140,120,C[3],"Campo magic de MqlTradeRequest",null,34);ctx.restore()}
+function b1(t,al){std(t,al,6.4,"QUÉ ES",C[0],"ID",260,C[1],"número único del Expert Advisor",34,[[C[0],"Va en cada solicitud de trading",null,36],[C[1],"Campo: magic (MqlTradeRequest)",null,34],[C[3],"Sirve para analizar tus órdenes",null,34]],"fuente: documentación oficial de MQL5")}
+function b2(t,al){std(t,al,13.6,"UNO POR ROBOT",C[1],"1 EA = 1 ID",130,C[0],"o varios IDs, si lo necesitas",34,[[C[0],"Cada EA fija su propio ID",null,38],[C[1],"También puede usar varios",null,38],[C[3],"Debe ser único para no mezclar",null,34]],"fuente: MQL5 Reference y MQL5 Book")}
+function b3(t,al){std(t,al,20.6,"CUÁNDO SE APLICA",C[2],"ÓRDENES",150,C[2],"al enviar una operación nueva",34,[[C[0],"Compras y ventas a mercado",null,38],[C[1],"Órdenes pendientes nuevas",null,38],[C[2],"No al modificar SL, TP o pendientes",null,30]],"fuente: MQL5 Book (MqlTradeRequest)")}
+function b4(t,al){std(t,al,28.4,"EN LA POSICIÓN",C[3],"ÚLTIMO",170,C[3],"magic del último trato que la formó",34,[[C[0],"Propiedad: POSITION_MAGIC",null,38],[C[1],"Operaciones manuales: magic 0",null,34],[C[3],"Un EA también puede usar 0",null,38]],"fuente: MQL5 Book y Reference")}
+function b5(t,al){std(t,al,35.2,"NETTING VS HEDGING",C[0],"1 vs N",190,C[0],"posiciones por símbolo",34,[[C[0],"Netting: una posición por símbolo",null,32],[C[1],"Hedging: varias posiciones",null,38],[C[3],"El magic las separa por robot",null,34]],"fuente: MQL5 Book")}
+function b6(t,a){endBlock(t,a,43.6,"Un magic distinto por robot","Así no mezclas operaciones",C[0],C[1])}
+function cover(){ST.bg(2);Lb("MT5 · ROBOTS",540,250,56,C[1],1);Lb("MAGIC",540,640,210,C[0],1);Lb("NUMBER",540,860,120,C[3],1);Lb("EL ID DE TU ROBOT",540,990,60,'#c9ffdc',1);Lb("fuente: MQL5",540,1130,26,ST.mu,1);coverBtn("VER POR QUÉ IMPORTA →",C[0],'#02110a')}
+function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
+</script></body></html>
