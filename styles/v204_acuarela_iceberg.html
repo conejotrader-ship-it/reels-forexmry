@@ -25,6 +25,6 @@ function b3(t,al){std(t,al,20.6,"ICEBERG NATIVO (CME)",C[2],"MISMO ID",130,C[2],
 function b4(t,al){std(t,al,28.4,"ICEBERG SINTÉTICO",C[1],"ID NUEVO",140,C[1],"cada recarga cambia el OrderID",34,[[C[0],"Lo gestiona un servidor externo",null,34],[C[1],"Fuera de la bolsa (ISV)",null,38],[C[2],"Cada recarga: OrderID nuevo",null,36]],"fuente: CME Group (Market by Order)")}
 function b5(t,al){std(t,al,35.2,"CÓMO SE DETECTAN",C[3],"RASTRO",160,C[3],"datos MBO: orden nueva en el mismo nivel",30,[[C[0],"Aparece al instante tras ejecutarse",null,32],[C[1],"Solo son estimaciones",null,38],[C[2],"La parte oculta no se ve",null,38]],"fuente: Bookmap; CME Group")}
 function b6(t,a){endBlock(t,a,43.6,"El libro no muestra todo","Tu robot ve solo la punta",C[0],C[1])}
-function cover(){ST.bg(2);Lb("ÓRDENES ICEBERG",540,250,56,C[2],1);Lb("PUNTA",540,640,230,C[0],1);Lb("LO DEMÁS ESTÁ OCULTO",540,860,52,C[1],1);Lb("el tamaño real no se ve",540,980,46,'#1d2b3a',1);Lb("fuente: CME Group · Bookmap",540,1120,26,ST.mu,1);coverBtn("VER CÓMO SE OCULTA →",C[0],'#0f2a4a')}
+function cover(){ST.bg(2);Lb("ÓRDENES ICEBERG",540,250,56,C[2],1);Lb("PUNTA",540,640,230,C[0],1);Lb("LO DEMÁS ESTÁ OCULTO",540,860,52,C[1],1);Lb("el tamaño real no se ve",540,980,46,'#1d2b3a',1);Lb("fuente: CME Group · Bookmap",540,1120,26,ST.mu,1);coverBtn("VER CÓMO SE OCULTA →",C[0],'#ffffff')}
 function draw(t){drawBlocks(t,[[0,6.0,h0],[6.4,13.4,b1],[13.6,20.4,b2],[20.6,28.2,b3],[28.4,35.0,b4],[35.2,43.4,b5],[43.6,49.6,b6]])}
 </script></body></html>
