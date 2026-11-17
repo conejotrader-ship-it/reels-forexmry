@@ -181,7 +181,7 @@ R.append(dict(n=233, scene=303, slug='larry_williams', page='v233_blueprint_larr
     ("LA LECCIÓN","RIESGO",270,"un resultado extremo vino con una caída extrema",36,["El pasado no garantiza nada","Un concurso no es una cuenta real","Mide la caída, no solo la ganancia"],"análisis propio")],
  END=("Mira la caída máxima, no solo la ganancia","Prueba tu robot en demo"),
  subs=[("En 1987, Larry Williams convirtió US$ 10.000 en ≈ US$ 1,1 millones en un concurso de 12 meses.","En mil novecientos ochenta y siete, Larry Williams convirtió diez mil dólares en cerca de un millón cien mil en un concurso de doce meses."),
-  ("Fue el Robbins World Cup de futuros. Las fuentes dan entre ≈ 11.000 % y 11.376 % de retorno.","Fue el Robbins World Cup de futuros. Las fuentes dan entre once mil y once mil trescientos setenta y seis por ciento de retorno."),
+  ("Fue el Robbins World Cup de futuros. Las fuentes dan entre ≈ 11.000 % y 11.376 % de retorno.","Fue el Robbins World Cup de futuros. Las fuentes hablan de más de once mil por ciento de retorno."),
   ("Según su relato, llegó a ≈ US$ 2,2 millones, cayó a ≈ 750.000 y cerró en ≈ 1,1 millones: ≈ −66 % en el camino.","Según su relato, llegó a dos coma dos millones, cayó a setecientos cincuenta mil y cerró en cerca de un millón cien mil: menos sesenta y seis por ciento en el camino."),
   ("Él mismo describió un manejo de dinero muy agresivo, con mucho capital en casi cada apuesta.","Él mismo describió un manejo de dinero muy agresivo, con mucho capital en casi cada apuesta."),
   ("Creó herramientas como Williams %R y el Ultimate Oscillator, y escribió ≈ 11 libros.","Creó herramientas como Williams porciento erre y el Ultimate Oscillator, y escribió cerca de once libros."),
