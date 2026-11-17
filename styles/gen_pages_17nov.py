@@ -201,10 +201,10 @@ R.append(dict(n=234, scene=304, slug='sumitomo_cobre_1996', page='v234_papercut_
  END=("Una posición sin límites es un riesgo","Pon límites a tu robot"),
  subs=[("En junio de 1996, Sumitomo anunció pérdidas de ≈ US$ 1.800 millones por un operador de cobre.","En junio de mil novecientos noventa y seis, Sumitomo anunció pérdidas de mil ochocientos millones de dólares por un operador de cobre."),
   ("Yasuo Hamanaka, jefe de cobre, hizo operaciones no autorizadas cerca de diez años y falsificó registros.","Yasuo Hamanaka, jefe de cobre, hizo operaciones no autorizadas durante cerca de diez años y falsificó registros."),
-  ("En noviembre de 1995 llegó a tener el 93 % de los warrants de cobre de la LME, según Wikipedia.","En noviembre de mil novecientos noventa y cinco llegó a tener el noventa y tres por ciento de los warrants de cobre de la bolsa de Londres, según Wikipedia."),
-  ("El cobre cayó de ≈ 2.800 a ≈ 1.800 entre mayo y el 25 de junio de 1996: ≈ −36 %, cálculo propio.","El cobre cayó de dos mil ochocientos a mil ochocientos entre mayo y el veinticinco de junio de mil novecientos noventa y seis: cerca de treinta y seis por ciento."),
+  ("En noviembre de 1995 llegó a tener el 93 % de los warrants de cobre de la LME, según Wikipedia.","En noviembre de mil novecientos noventa y cinco tenía el noventa y tres por ciento de los warrants de cobre de Londres."),
+  ("El cobre cayó de ≈ 2.800 a ≈ 1.800 entre mayo y el 25 de junio de 1996: ≈ −36 %, cálculo propio.","El cobre cayó de dos mil ochocientos a mil ochocientos entre mayo y junio de mil novecientos noventa y seis."),
   ("Las pérdidas finales fueron ≈ US$ 2.600 millones según Wikipedia; Maclean's habló de 2.400. Cifras aproximadas.","Las pérdidas finales fueron de unos dos mil seiscientos millones de dólares según Wikipedia; Maclean's habló de dos mil cuatrocientos. Cifras aproximadas."),
-  ("En 1997 lo condenaron en Tokio a 8 años por fraude y falsificación. Fuentes: Wikipedia y Maclean's. Educativo.","En mil novecientos noventa y siete lo condenaron en Tokio a ocho años por fraude y falsificación. Fuentes: Wikipedia y Maclean's. Contenido educativo."),
+  ("En 1997 lo condenaron en Tokio a 8 años por fraude y falsificación. Fuentes: Wikipedia y Maclean's. Educativo.","En mil novecientos noventa y siete lo condenaron en Tokio a ocho años por fraude y falsificación. Fuente: Wikipedia. Contenido educativo."),
   ("Para tu robot: una posición sin límites es un riesgo. Ponle límites.","Para tu robot: una posición sin límites es un riesgo. Ponle límites.")],
  cover=("SUMITOMO · 1996","US$ 1.800 M","UN SOLO OPERADOR DE COBRE","la pérdida que salió a la luz en junio de 1996","VER QUÉ PASÓ →")))
 
