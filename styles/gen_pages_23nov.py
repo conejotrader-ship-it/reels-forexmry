@@ -47,7 +47,7 @@ ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='rgba(250,252,244,.96)';RR(x,y
 
 BG_COMIC = """ST.bg=t=>{ctx.fillStyle='#ffe8b0';ctx.fillRect(0,0,W,H);
   ctx.fillStyle='rgba(230,57,70,.22)';for(let y=0;y<H;y+=44)for(let x=((y/44)%2)*22;x<W;x+=44){ctx.beginPath();ctx.arc(x,y,9+4*Math.sin((x+y)*.01+t),0,7);ctx.fill()}
-  ctx.fillStyle='#e63946';ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(W,0);ctx.lineTo(W,130);ctx.lineTo(0,170);ctx.fill();
+  ctx.fillStyle='#e63946';ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(W,0);ctx.lineTo(W,96);ctx.lineTo(0,122);ctx.fill();
   ctx.fillStyle='#fff';ctx.font='900 34px Inter';ctx.textAlign='left';ctx.fillText('¡CÓMIC! · PETER LYNCH',50,92);
   ctx.strokeStyle='#111';ctx.lineWidth=10;ctx.strokeRect(30,30,W-60,H-60);ctx.textAlign='center'};
 ST.panel=(x,y,w,h,col)=>{ctx.save();ctx.fillStyle='#111';RR(x+8,y+8,w,h,12);ctx.fill();ctx.fillStyle='#fff';RR(x,y,w,h,12);ctx.fill();ctx.lineWidth=5;ctx.strokeStyle='#111';RR(x,y,w,h,12);ctx.stroke();ctx.fillStyle=col;ctx.fillRect(x+10,y+h-18,w-20,8);ctx.restore()};"""
