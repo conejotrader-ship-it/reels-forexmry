@@ -77,7 +77,7 @@ R.append(dict(n=274, scene=344, slug='arbitraje_triangular', page='v274_billete_
  B=[("TASA IMPLÍCITA","EUR/GBP",230,"EUR/USD ÷ GBP/USD da la tasa cruzada implícita",32,["Ilustrativo: 1,1000 ÷ 1,3000 = 0,846154","Si el mercado cotiza otra cifra...","...hay una discrepancia"],"fuente: Wikipedia; BabyPips; precios ilustrativos"),
     ("LA DISCREPANCIA","0,8500",300,"cotizada, frente a 0,846154 implícita (ilustrativo)",34,["1 EUR compraría más GBP de lo debido","Es un precio inventado","Hoy casi no existe así"],"ejemplo ilustrativo"),
     ("EL CICLO","1.000.000 EUR",150,"EUR a GBP: 850.000; GBP a USD: 1.105.000 (ilustrativo)",32,["USD a EUR: 1.004.545,45 EUR","Ganancia bruta ≈ 4.545 EUR (≈ 45 pb)","Sin spread ni comisiones"],"ejemplo ilustrativo; aritmética comprobada"),
-    ("LA REALIDAD","< 1 pb",260,"el 94 % de las oportunidades de un estudio con datos de HSBC",32,["Duración media ≈ 2 s (2003–2005)","Spread y comisiones las anulan","Muestra antigua: hoy es más rápido"],"fuente: arXiv 0812.0913 (HSBC, 2003–05)"),
+    ("LA REALIDAD","< 1 pb",260,"94 % de las oportunidades, en un estudio con HSBC",32,["Duración media ≈ 2 s (2003–2005)","Spread y comisiones las anulan","Muestra antigua: hoy es más rápido"],"fuente: arXiv 0812.0913 (HSBC, 2003–05)"),
     ("EL RIESGO","LAST LOOK",230,"el proveedor puede llenar, recotizar o rechazar",34,["Si el precio se mueve antes de la 3.ª operación","Queda una posición abierta","Habitual en forex minorista"],"fuente: Wikipedia (Last look); FXCM")],
  END=("Es terreno de máquinas","No lo persigas a mano"),
  subs=[("El arbitraje triangular usa tres divisas y tres operaciones para explotar una discrepancia.","El arbitraje triangular usa tres divisas y tres operaciones para explotar una discrepancia."),
