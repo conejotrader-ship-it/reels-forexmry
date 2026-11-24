@@ -120,7 +120,7 @@ R.append(dict(n=283, scene=353, slug='fiebre_oro_california', page='v283_lingote
   ("Polk lo confirmó ante el Congreso el 5 de diciembre. Ya había ≈ 4.000 mineros.","El presidente Polk habló del oro ante el Congreso el cinco de diciembre. Ya había al menos cuatro mil mineros."),
   ("San Francisco pasó de menos de 1.000 habitantes a ≈ 25.000 hacia 1849.","San Francisco pasó de menos de mil habitantes a cerca de veinticinco mil hacia mil ochocientos cuarenta y nueve."),
   ("Llegaron ≈ 80.000 buscadores en 1849, según Britannica; otras fuentes dan ≈ 90.000.","Llegaron cerca de ochenta mil buscadores en mil ochocientos cuarenta y nueve, según Britannica; otras fuentes dan noventa mil."),
-  ("La producción tocó su pico en 1852: ≈ US$ 81 millones. El total, ≈ 2.000 millones.","La producción tocó su pico en mil ochocientos cincuenta y dos: cerca de ochenta y un millones de dólares. El total, cerca de dos mil millones."),
-  ("El ingreso diario del minero cayó de ≈ 20 a menos de 8 dólares. Fuentes: Britannica, NPS y National Geographic. Educativo.","El ingreso diario del minero cayó de cerca de veinte a menos de ocho dólares. Fuentes: Britannica, NPS y National Geographic. Contenido educativo."),
+  ("La producción tocó su pico en 1852: ≈ US$ 81 millones. El total, ≈ 2.000 millones.","El pico fue en mil ochocientos cincuenta y dos: cerca de ochenta y un millones de dólares. El total, cerca de dos mil millones."),
+  ("El ingreso diario del minero cayó de ≈ 20 a menos de 8 dólares. Fuentes: Britannica, NPS y National Geographic. Educativo.","El ingreso diario del minero cayó de cerca de veinte a menos de ocho dólares. Fuentes: Britannica, NPS y NatGeo. Contenido educativo."),
   ("Para tu robot: cuando todos persiguen lo mismo, el rendimiento se diluye.","Para tu robot: cuando todos persiguen lo mismo, el rendimiento se diluye.")],
  cover=("FIEBRE DEL ORO","1848","UN MOLINO CAMBIÓ TODO","San Francisco: de 1.000 a ≈ 25.000","VER LA HISTORIA →")))
