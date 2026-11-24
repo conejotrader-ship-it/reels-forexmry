@@ -29,7 +29,7 @@ R.append(dict(n=278, scene=348, slug='kama_kaufman', page='v278_blueprint_kama_k
  subs=[("La KAMA es una media móvil que se adapta: corre en tendencias y se frena con ruido.","La kama es una media móvil que se adapta: corre en tendencias y se frena con ruido."),
   ("La creó Perry Kaufman; TradingView la fecha en 1995. Parámetros usuales: 10, 2 y 30.","La creó Perry Kaufman; TradingView la fecha en mil novecientos noventa y cinco. Los parámetros usuales son diez, dos y treinta."),
   ("El Efficiency Ratio divide el avance neto entre la suma de movimientos. Ilustrativo: 5 entre 10, igual a 0,5.","El Efficiency Ratio divide el avance neto entre la suma de movimientos. Ilustrativo: cinco entre diez, igual a cero coma cinco."),
-  ("Con ER de 0,5, el suavizado es ≈ 0,13. Va de ≈ 0,004 en rango a ≈ 0,44 en tendencia.","Con ER de cero coma cinco, el suavizado es cerca de cero coma trece. Va de cero coma cero cero cuatro en rango a cero coma cuarenta y cuatro en tendencia."),
+  ("Con ER de 0,5, el suavizado es ≈ 0,13. En rango baja a ≈ 0,004.","Con ER de cero coma cinco, el suavizado es cerca de cero coma trece. En rango baja a cero coma cero cero cuatro."),
   ("Ilustrativo: media previa 100, precio 102. La nueva media queda en ≈ 100,27.","Ilustrativo: media previa cien, precio ciento dos. La nueva media queda en cerca de cien coma veintisiete."),
   ("Los cruces simples dan falsas señales en rangos. Fuentes: StockCharts y TradingView. Educativo.","Los cruces simples dan falsas señales en rangos, y no predice el precio. Fuentes: StockCharts y TradingView. Contenido educativo."),
   ("Para tu robot: una media no predice. Pruébala en backtest.","Para tu robot: una media no predice. Pruébala en backtest.")],
