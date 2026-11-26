@@ -4,9 +4,9 @@ const _s=s=>(typeof NOACC!=='undefined'&&NOACC)?String(s).replace(/≈/g,'~').re
 function lbl(s,x,y,sz,col,a=1,al='center',fam){s=_s(s);T(s,x,y,{font:`${typeof FW!=='undefined'?FW:900} ${sz}px ${fam||FAM}`,fill:col,a,align:al})}
 function fade(t,a,b){return Math.min(prog(t,a,a+.35),1-prog(t,b-.3,b))}
 function robot(x,y,h,a=1){const w=h*ROB.width/ROB.height;ctx.save();ctx.globalAlpha*=a;ctx.drawImage(ROB,x,y,w,h);ctx.restore();return w}
-function ctaCard(t,st){const CT=SPEC.cta;const k=eout(prog(t,CT,CT+.7));if(k<=0)return;ctx.save();ctx.globalAlpha=k;ctx.fillStyle=DK;ctx.fillRect(0,0,W,H);
-  const g=ctx.createRadialGradient(540,520,60,540,520,560);g.addColorStop(0,ACC+'73');g.addColorStop(1,ACC+'00');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  const y=lerp(40,0,k);robot(540-.5*ROB.width/ROB.height*780,90+y,780,1);
+function ctaCard(t,st){const CT=SPEC.cta;const k=eout(prog(t,CT,CT+.7));if(k<=0)return;ctx.save();ctx.globalAlpha=k;const V=window.CTA_VIDEO;if(!V){ctx.fillStyle=DK;ctx.fillRect(0,0,W,H);
+  const g=ctx.createRadialGradient(540,520,60,540,520,560);g.addColorStop(0,ACC+'73');g.addColorStop(1,ACC+'00');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+  const y=lerp(40,0,k);if(!V)robot(540-.5*ROB.width/ROB.height*780,90+y,780,1);
   T('ROBOT',540,925+y,{font:'800 46px Inter',fill:'#f4efe2',glow:ACC,gb:16});
   T('TRUST GOLD',540,1015+y,{font:'900 92px Inter',fill:'#fff',glow:ACC,gb:20});
   T('MR. Y',540,1125+y,{font:'900 92px Inter',fill:ACC,glow:ACC,gb:24});
