@@ -1,0 +1,18 @@
+# Reel de la LISTA VIRAL n.º 3 (pedido en vivo por Cristian, 26 nov 2026; primera locución con ElevenLabs). Se ejecuta dentro de gen_pages_citibank.py
+R.append(dict(n=303, scene=373, slug='citibank_revlon_900m_2020', page='v303_acuarela_citibank_revlon_900m', theme='acuarela', hora='2026-11-26_live2', bpm=104, prog=[[41,"m"],[45,"M"],[38,"M"],[43,"m"]],
+ name='CitibankRevlon', hook='QUERÍA PAGAR US$ 7,8 M Y ENVIÓ ≈ US$ 900 M',
+ H0=dict(l='ERROR ÉPICO · NUEVA YORK 2020',b='US$ 900 M',s=230,u='ENVIADOS POR ERROR',c=['Debía pagar ≈ US$ 7,8 M de intereses','Agosto de 2020 · Citibank y el préstamo de Revlon']),
+ B=[("EL ERROR","TODO EL PRÉSTAMO",120,"en vez de los intereses, pagó el préstamo entero",30,["Citi era el agente del préstamo de Revlon","El préstamo vencía hasta 2023","Y lo pagó con su propio dinero"],"fuente: Reuters; Torys"),
+    ("EL TAMAÑO","> 100 VECES",230,"lo que debía pagar ese día",32,["Debía: ≈ US$ 7,8 millones","Envió: ≈ US$ 894 millones","Un error de nueve cifras"],"fuente: Reuters (veces = cálculo propio)"),
+    ("LA RESPUESTA","≈ US$ 500 M",170,"que 10 fondos se negaron a devolver",32,["Otros acreedores sí lo devolvieron","«Nos pagaron lo que nos debían»","Y la pelea llegó a los tribunales"],"fuente: Reuters; Financial Times"),
+    ("EL JUICIO","FEB. 2021",230,"un juez les dio la razón a los fondos",32,["Podían quedarse con el dinero","Regla del «pago de buena fe»","Una sorpresa para Wall Street"],"fuente: Reuters; Torys"),
+    ("EL GIRO","SEP. 2022",230,"la corte de apelaciones lo revirtió: 3 a 0",32,["Había «banderas rojas» de un error","El préstamo aún no vencía","Citi recuperó ≈ US$ 500 M"],"fuente: Reuters; Financial Times; Torys")],
+ END=("Revisa cada parámetro de tu robot","Un clic mal puesto cuesta millones"),
+ subs=[("Citibank iba a pagar casi 8 millones de dólares… y envió casi 900 millones.","Citibank iba a pagar casi ocho millones de dólares... y envió casi novecientos millones."),
+  ("Era solo el interés de un préstamo de Revlon. Pero Citi pagó todo el préstamo, con su dinero.","Era solo el interés de un préstamo de Revlon. Pero Citi pagó todo el préstamo, con su dinero."),
+  ("≈ 894 millones de dólares: más de 100 veces lo que debía pagar ese día.","Unos ochocientos noventa y cuatro millones: más de cien veces lo que debía pagar ese día."),
+  ("Algunos acreedores lo devolvieron. Pero 10 fondos se negaron a devolver ≈ 500 millones.","Algunos acreedores lo devolvieron. Pero diez fondos se negaron a devolver unos quinientos millones."),
+  ("En febrero de 2021, un juez les dio la razón: podían quedarse con el dinero.","En febrero de dos mil veintiuno, un juez les dio la razón: podían quedarse con el dinero."),
+  ("Pero en 2022, la corte de apelaciones lo revirtió: había señales de error y tenían que devolverlo. Fuentes: Reuters, Financial Times y Torys.","Pero en dos mil veintidós, la corte de apelaciones lo revirtió: había señales de error, y tenían que devolverlo."),
+  ("Para tu robot: revisa cada parámetro antes de activarlo. Un clic mal puesto cuesta millones. Contenido educativo.","Para tu robot: revisa cada parámetro antes de activarlo. Un clic mal puesto cuesta millones.")],
+ cover=("ERROR ÉPICO · 2020","US$ 900 M","ENVIADOS POR ERROR","quería pagar 7,8 millones de intereses","VER QUÉ PASÓ →")))
