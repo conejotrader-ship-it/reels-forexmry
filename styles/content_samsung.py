@@ -1,0 +1,18 @@
+# Reel de la LISTA VIRAL n.º 2 (pedido en vivo por Cristian, 26 nov 2026). Se ejecuta dentro de gen_pages_samsung.py
+R.append(dict(n=302, scene=372, slug='samsung_acciones_fantasma_2018', page='v302_lowpoly_samsung_acciones_fantasma', theme='lowpoly', hora='2026-11-26_live', bpm=116, prog=[[43,"m"],[39,"M"],[46,"m"],[41,"M"]],
+ name='SamsungFantasma', hook='UNA PALABRA MAL ESCRITA CREÓ 2.800 MILLONES DE ACCIONES',
+ H0=dict(l='ERROR ÉPICO · SEÚL 2018',b='2.800 M',s=260,u='DE ACCIONES FANTASMA… POR ERROR',c=['Debía pagar 1.000 wones por acción','6 de abril de 2018 · Samsung Securities']),
+ B=[("EL ERROR","WONES → ACCIONES",130,"escribió «acciones» donde iba «wones»",34,["Debía pagar 1.000 wones por acción","Pagó 1.000 acciones por cada acción","Era el dividendo del plan de empleados"],"fuente: Korea JoongAng Daily; Finance Magnates"),
+    ("EL TAMAÑO","≈ 31 VECES",230,"más acciones de las que la empresa tenía emitidas",32,["≈ 2.800 millones de acciones nuevas","Acciones que no existían","Más de 30 veces su valor en bolsa"],"fuente: Korea JoongAng Daily; Bloomberg"),
+    ("EL VALOR","≈ US$ 100.000 M",120,"112,6 billones de wones en acciones de papel",32,["Debía ser un pago de ≈ US$ 2,6 M","Bloomberg habló de US$ 105.000 M","Todo por una sola palabra"],"fuente: Bloomberg; Finance Magnates; Wikipedia"),
+    ("LA TENTACIÓN","16 EMPLEADOS",190,"vendieron ≈ 5 millones de acciones fantasma",32,["Entre las 9:35 y las 10:05 de la mañana","Aunque la empresa pidió no vender","La acción llegó a caer ≈ 12 %"],"fuente: Korea JoongAng Daily; Finance Magnates; Bloomberg"),
+    ("LA FACTURA","CASTIGOS",230,"suspensiones, despidos, demandas y la fiscalía",32,["Fiscales allanaron sus oficinas","El fondo de pensiones de Corea se alejó","El regulador revisó a más de 30 corredoras"],"fuente: Wikipedia; Bloomberg; Finance Magnates")],
+ END=("Revisa las unidades de tu robot","Lotes no es lo mismo que dinero"),
+ subs=[("En 2018, una palabra mal escrita creó ≈ 2.800 millones de acciones que no existían.","En dos mil dieciocho, una palabra mal escrita creó unos dos mil ochocientos millones de acciones que no existían."),
+  ("Samsung Securities debía pagar 1.000 wones por acción a sus empleados. Alguien escribió «acciones» en vez de «wones».","Samsung Securities debía pagar mil wones por acción a sus empleados. Alguien escribió acciones, en vez de wones."),
+  ("Resultado: 1.000 acciones por cada acción. ≈ 31 veces más de las que la empresa tenía.","Resultado: mil acciones por cada acción. Unas treinta y una veces más de las que la empresa tenía."),
+  ("En papel valían ≈ 112,6 billones de wones: unos 100.000 millones de dólares.","En papel valían unos ciento doce billones de wones: unos cien mil millones de dólares."),
+  ("Y en media hora, 16 empleados vendieron ≈ 5 millones de esas acciones. La acción llegó a caer ≈ 12 %.","Y en media hora, dieciséis empleados vendieron unos cinco millones de esas acciones. La acción llegó a caer un doce por ciento."),
+  ("Hubo castigos, demandas y la fiscalía allanó sus oficinas. Fuentes: Bloomberg, Korea JoongAng Daily y Finance Magnates.","Hubo castigos, demandas, y la fiscalía allanó sus oficinas."),
+  ("Para tu robot: revisa siempre las unidades. Lotes no es lo mismo que dinero. Contenido educativo.","Para tu robot: revisa siempre las unidades. Lotes no es lo mismo que dinero. Contenido educativo.")],
+ cover=("ERROR ÉPICO · SEÚL 2018","2.800 M","ACCIONES FANTASMA","creadas por una palabra mal escrita","VER QUÉ PASÓ →")))
