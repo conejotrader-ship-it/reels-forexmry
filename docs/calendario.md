@@ -110,7 +110,7 @@ Motivo: los temas muy técnicos no se entienden. Desde el 27 nov los reels son *
 
 Errores épicos:
 1. Mizuho, dic. 2005: vendió 610.000 acciones a 1 yen en vez de 1 acción a 610.000 yenes.
-2. Samsung Securities, 2018: por error repartió ≈ 2.800 millones de "acciones fantasma" y algunos empleados las vendieron.
+2. (HECHO 26 nov 16:01, v302, en vivo) Samsung Securities, 2018: por error repartió ≈ 2.800 millones de "acciones fantasma" y algunos empleados las vendieron.
 3. Citibank, 2020: transfirió ≈ US$ 900 M por error a acreedores de Revlon (y la pelea en los tribunales para recuperarlos).
 4. Deutsche Bank, 2015: un empleado junior envió ≈ US$ 6.000 M por error a un fondo.
 5. El tuit falso de AP, 23 abr 2013 ("explosiones en la Casa Blanca"): ≈ US$ 136.000 M borrados en minutos por algoritmos que leen noticias.
@@ -618,3 +618,7 @@ Temas nuevos: evento, técnica, ranking, robots, mecánica, persona, evento. Est
 - 27 nov 9:30 — Bóveda de oro de la Fed de Nueva York (lista viral n.º 22; estilo 33, `v300_iso_boveda_fed_ny.html`, escena 370). Fuente: Fed de Nueva York (80 pies bajo la calle y 50 bajo el nivel del mar, sobre roca; ≈ 507.000 lingotes y 6.331 t en 2024; nada es de la Fed; cilindro de 90 toneladas cortas y 9 pies en un marco de 140; 122 compartimentos; 3 personas incluso para cambiar una bombilla; > 12.000 t en 1973; lingote ≈ 27 libras). Metros y kilos: cálculo propio. No se usaron los «protectores de magnesio» (no verificados en la fuente oficial).
 - 27 nov 13:00 — Mantequilla de Bangladesh y el sobreajuste (lista viral n.º 16; estilo 32, `v301_pixel8_mantequilla_bangladesh.html`, escena 371). Fuentes: Wikipedia (David Leinweber, «Stupid Data Miner Tricks»: R² 0,75 con la mantequilla 1981–1993, 95 % con queso de EE. UU., 99 % con ovejas de EE. UU. y Bangladesh), KDnuggets/Motley Fool (da 1983–1993) y Crossing Wall Street.
 - Escenas usadas hasta 371. Créditos Higgsfield de estos 3 reels: ≈ 54.
+
+## Reel de la LISTA VIRAL publicado al momento (pedido en vivo por Cristian, 26 nov ≈ 15:40)
+- 26 nov 16:01 — Samsung Securities, acciones fantasma, 6 abr 2018 (lista viral n.º 2; estilo 34, 6.º uso, `v302_lowpoly_samsung_acciones_fantasma.html`, escena 372, id Metricool 443637102; 3 clips Hailuo y carátula con foto; contenido en `styles/content_samsung.py`, página con `styles/gen_pages_samsung.py`). Fuentes: Bloomberg vía Business Standard (12 abr 2018: 2.830 M de acciones, ≈ 112,6 billones de wones, > 30 veces el valor de mercado, caída de hasta 12 %, primera venta 9:35 a. m.), Korea JoongAng Daily (9 abr 2018: 1.000 wones por acción, escribió «acciones» en vez de «wones», ≈ 31 veces las acciones emitidas, 16 empleados vendieron entre 9:35 y 10:05; su «501 millones» es un error de traducción de 501 万 = 5,01 M, coherente con ≈ 200.000 M de wones), Finance Magnates (23 may 2018: ≈ 5 M de acciones, pago previsto ≈ US$ 2,6 M, ≈ US$ 100.000 M, castigos, revisión de más de 30 corredoras) y Wikipedia (allanamiento de la fiscalía el 28 may 2018; NPS dejó de operar con ellos). Wikipedia da 8 abr como fecha (se usó 6 abr). No se usaron: renuncia del presidente, multas ni condenas (no verificados en las fuentes leídas).
+- Escenas usadas hasta 372. Siguiente estilo por antigüedad: 35. La rutina de la noche debe saltar el n.º 2 (ya hecho).
