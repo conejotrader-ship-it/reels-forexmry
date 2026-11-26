@@ -30,7 +30,7 @@ function barsH(t,t0,items,x,y,w,rowH=130,sz=38){items.forEach(([lab,v,col,tx],i)
 // bloque final estándar: Para tu robot / Recuerda
 function endBlock(t,a,t0,l1,l2,c1,c2){ctx.save();ctx.globalAlpha=a;head(t,t0+.2,'RECUERDA',ST.c[0]);
   [[l1,c1||ST.c[1]],[l2,c2||ST.c[2]]].forEach(([s,c],i)=>{const k=eout(prog(t,t0+1+i*1.1,t0+1.7+i*1.1));if(k<=.02)return;ctx.save();ctx.translate(lerp(-80,0,k),0);ctx.globalAlpha=a*k;panel(60,290+i*140,960,110,c);Lb(s,110,345+i*140,s.length>26?38:44,ST.txt,1,'left');ctx.restore()});
-  robot(300,620,780,eout(prog(t,t0+2.8,t0+3.6)));
+  robot(540-.5*ROB.width/ROB.height*780,620,780,eout(prog(t,t0+2.8,t0+3.6)));
   Lb('Contenido educativo,',60,1440,34,ST.c[0],eout(prog(t,t0+4.8,t0+5.4)),'left');Lb('no es asesoría financiera',60,1490,34,ST.c[0],eout(prog(t,t0+4.8,t0+5.4)),'left');ctx.restore()}
 // motor de bloques: BL = [[a,b,fn(t,a)]...]; hook en 0..6
 function drawBlocks(t,BL){ST.bg(t);for(const [a,b,fn,fade0] of BL){let al=fade(t,a,b);if(a==0&&t<.3)al=1;if(al>0)fn(t,al)}
