@@ -83,6 +83,15 @@ Desde el 26 nov 2026 las publicaciones ya no hablan del «Robot De Oro Mr. Y 10.
 ## Carátulas con personas o imágenes (regla de Cristian, 26 nov 2026)
 Las carátulas ya no pueden ser solo letras grandes: cada una lleva una foto realista con personas o una escena llamativa, generada con IA en Higgsfield (`generate_image`, modelo `gpt_image_2_6`, 9:16, quality high, 2k; pedir el tercio superior oscuro y sin texto ni logos; sin personas reales ni figuras públicas). Las imágenes de resultado (d8j0ntlcm91z4.cloudfront.net) no se pueden descargar desde la sesión: importarlas con `media_import_url` y descargarlas desde la URL de `show_medias` (d2ol7oe51mr4n9.cloudfront.net). Se incrustan en base64 en un `img_<tema>.js` (el canvas no acepta imágenes file://). Encima va el gancho corto con la cifra (ver reglas de abajo), con sombra fuerte. Ejemplo: `styles/gen_page_oro_alemania.py` (estilo 51), que también usa las fotos de fondo durante el video.
 
+## Animación con IA en cada reel (decisión de Cristian, 26 nov 2026)
+Ya no se quieren reels de solo diapositivas e imágenes estáticas. Cada reel lleva **3 clips animados** con Higgsfield, modelo elegido por calidad/precio: **Hailuo 2.3 Fast** (`minimax_hailuo`, `variant: minimax-2.3-fast`, `duration: 6`, `resolution: 768`, ≈ 4 créditos por clip), cada uno desde una foto IA de `gpt_image_2_6` (≈ 2 créditos; se puede pasar el job_id de la imagen como `start_image`). Total ≈ 18 créditos por reel. Segmentos: gancho [0, 6.2], bloque 2 [13.4, 20.5] y bloque 4 [28.2, 35.1]; la foto del gancho es la misma de la carátula.
+- Descarga: `media_import_url` (type video) y curl desde d2ol7oe51mr4n9.cloudfront.net/<usuario>/<media_id>.mp4.
+- Montaje: render normal con `render_canvas.py`, luego `python3 styles/render_anim.py <pagina> <escena> <spec.json>` (ver `styles/anim/spec_36*.json`); la página se dibuja sin fondo sobre el clip oscurecido. Para temas con texto oscuro (expediente, papel, pizarra blanca) usar `"tone": "light"`.
+- Tarjeta final: el robot animado `styles/anim/robot_trust_gold.mp4` (Grok Lite, se reutiliza sin costo) en `"robot": {"t0": 56.0, "clip": ...}`.
+- Carátulas: `python3 styles/make_photo_cover.py <foto> <salida.jpg> "<chip>" "<cifra>" "<línea>" "<línea pequeña>" "<botón>" [acento]`.
+- Robot oficial: `styles/robot_trust_gold.png` (ya incrustado en `kit2.js`).
+- Rehechos el 26 nov con este sistema: 16:30 backtest (364), 20:00 fix 4 p. m. (365), 23:30 Chanos (366, tono claro) y 27 nov 3:00 China 2015 (367). El reel de prueba del oro de Alemania se publicó a las 14:30.
+
 ## Carátulas (regla de Cristian, 17 oct): más llamativas y con potencial viral
 Aplica a todos los reels nuevos desde ahora (cada `cover()` de `styles/`):
 - Un solo gancho de máximo 5–6 palabras en letra enorme (≥120 px en la palabra clave), con cifra o fecha cuando exista ("−30% EN MINUTOS", "×24 EN 9 AÑOS").
