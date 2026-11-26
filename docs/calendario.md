@@ -100,6 +100,51 @@ Aplica a todos los reels nuevos desde ahora (cada `cover()` de `styles/`):
 - Todo el texto importante dentro de la zona central (cuadrícula del perfil recorta los bordes); sin letra pequeña.
 - Guardar como `covers/cover_<tema>.jpg` y usar como `videoThumbnailUrl` en Metricool.
 
+## LISTA VIRAL: curiosidades y temas extraños (decisión de Cristian, 26 nov 2026) — tiene prioridad sobre las listas anteriores
+Motivo: los temas muy técnicos no se entienden. Desde el 27 nov los reels son **entretenidos**: historias reales, errores épicos, personajes raros, curiosidades del oro, de los mercados y de los robots (EA). Reglas de tono:
+- Primero la historia, después el dato: gancho tipo "el día que…", "¿sabías que…?", "por error…". Una sola idea por reel.
+- Lenguaje de conversación, sin jerga. Si hace falta un término técnico, explicarlo con una comparación cotidiana (máximo uno o dos por reel).
+- Cerrar con una lección corta y útil para quien usa un robot o opera oro ("para tu robot: …").
+- Seguir verificando cada dato con fuentes; si una historia es un mito, decirlo (eso también engancha). Sin promesas de ganancias.
+- Mezclar categorías en el día (no dos del mismo tipo seguidos). Los ganchos de abajo son orientativos: verificar las cifras antes de producir.
+
+Errores épicos:
+1. Mizuho, dic. 2005: vendió 610.000 acciones a 1 yen en vez de 1 acción a 610.000 yenes.
+2. Samsung Securities, 2018: por error repartió ≈ 2.800 millones de "acciones fantasma" y algunos empleados las vendieron.
+3. Citibank, 2020: transfirió ≈ US$ 900 M por error a acreedores de Revlon (y la pelea en los tribunales para recuperarlos).
+4. Deutsche Bank, 2015: un empleado junior envió ≈ US$ 6.000 M por error a un fondo.
+5. El tuit falso de AP, 23 abr 2013 ("explosiones en la Casa Blanca"): ≈ US$ 136.000 M borrados en minutos por algoritmos que leen noticias.
+Personajes increíbles:
+6. Navinder Sarao: operaba desde la casa de sus padres en Hounslow y fue acusado por el flash crash de 2010.
+7. Hetty Green, la "bruja de Wall Street": una de las mujeres más ricas de su época que vivía como pobre.
+8. Takashi Kotegawa (BNF): el joven japonés que ganó una fortuna operando desde su cuarto (y el día del error de Mizuho).
+9. James Howells: tiró a la basura un disco duro con ≈ 8.000 bitcoins y pasó años pidiendo excavar el vertedero.
+10. Laszlo Hanyecz, 22 may 2010: pagó 10.000 bitcoins por 2 pizzas (Bitcoin Pizza Day).
+11. Bernie Madoff: el expresidente del Nasdaq detrás del mayor fraude piramidal conocido.
+Indicadores raros:
+12. El indicador del Super Bowl: ¿el ganador "predice" la bolsa? (correlación vs causalidad).
+13. El índice Big Mac de The Economist: una hamburguesa para saber si una moneda está cara.
+14. El índice del lápiz labial y el de la ropa interior masculina (Greenspan): cómo se lee la economía en lo cotidiano.
+15. El "efecto Anne Hathaway": ¿los algoritmos confunden a la actriz con Berkshire Hathaway? (teoría; presentarla con matiz).
+16. La mantequilla de Bangladesh "predecía" el S&P 500: la trampa de la sobreoptimización (lección directa para EA).
+Robots y EA (fáciles de entender):
+17. Un gato le ganó a gestores profesionales (Orlando, The Observer, 2012): suerte vs habilidad en un backtest.
+18. La carrera por milisegundos: un cable de fibra casi recto Chicago–Nueva York (Spread Networks) y luego torres de microondas.
+19. El EA "que nunca pierde": la martingala contada con una moneda y una simulación ilustrativa (hasta el día que lo pierde todo).
+20. ¿Dónde empieza el día del forex? El mercado abre primero en Wellington y Sídney (y qué ve tu robot el domingo).
+21. ¿De dónde salieron los Expert Advisors? MetaTrader 4 y MQL4 (≈ 2005) y cómo cambiaron el trading minorista.
+Oro curioso:
+22. La bóveda de oro de la Fed de Nueva York: ≈ 25 m bajo la calle y protectores de magnesio en los zapatos de los guardias.
+23. ¿Cuánto oro tiene tu celular? y por qué una tonelada de celulares puede tener más oro que una de mineral.
+24. El lingote de oro más grande del mundo (≈ 250 kg, Toi, Japón), que se puede tocar.
+25. El "barco del oro" SS Central America (1857): su hundimiento ayudó a desatar el pánico de 1857.
+26. Fort Knox: ¿cuándo fue la última vez que alguien entró a ver el oro?
+Mercados extraños:
+27. Volkswagen, oct. 2008: por unas horas, la empresa más valiosa del mundo (short squeeze).
+28. Los "bonos Bowie" (1997): un músico vendió bonos respaldados por sus canciones.
+29. El mito de Rothschild y Waterloo: ¿se hizo rico con palomas mensajeras? (mito desmentido).
+30. 1914: la bolsa de Nueva York cerró más de 4 meses por la Primera Guerra Mundial.
+
 ## NUEVA LISTA DE TEMAS (oro y trading) — reemplaza el "Plan de 21 reels" (decisión de Cristian, 18 oct 2026)
 Motivo: guarda mejor relación con el Robot De Oro Mr. Y 10.0 Securus Apex. Horarios Bogotá: 6:00, 9:30, 13:00, 16:30, 20:00, 23:30 y 3:00. Se produce en el orden de la lista (verificar cada cifra con fuentes antes de producir; los ganchos son orientativos).
 **Todos los videos nuevos incluyen:** la imagen del Robot (`styles/robot_oro.png`) y una escena de cierre con: seguir @forexmry en Instagram, activar las notificaciones, unirse al grupo de Telegram y visitar www.robotsdeforexmry.com (ver `styles/v44_expediente_orden6102.html`: funciones `outro` y `ctaCard`). Falta el enlace del grupo de Telegram para ponerlo explícito en el texto.
