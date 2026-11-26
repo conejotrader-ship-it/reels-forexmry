@@ -2,7 +2,7 @@
 """Compone clips de video IA (Higgsfield) debajo de los textos de una página canvas ya renderizada.
 Primero se renderizan los frames normales (render_canvas.py <pagina> <escena>); luego:
   python3 render_anim.py <pagina.html> <escena> <spec.json>
-spec.json: {"segs": [{"t0": 0, "t1": 6.2, "clip": "hook.mp4"}, ...], "robot": {"t0": 56.0, "clip": "robot.mp4"}}
+spec.json: {"tone": "light" (opcional), "segs": [{"t0": 0, "t1": 6.2, "clip": "hook.mp4"}, ...], "robot": {"t0": 56.0, "clip": "robot.mp4"}}
 - En cada segmento la página se dibuja SIN fondo (ST.bg y PRE/POST vacíos), se exporta PNG con transparencia
   y se pone encima del clip (escalado a 1080x1920, oscurecido arriba y abajo para leer los textos).
 - Los bordes del segmento se funden 0,3 s con el frame normal.
@@ -37,6 +37,9 @@ top = np.clip(1 - y / (1000 / H), 0, 1) ** 1.2 * 0.80
 bot = np.clip((y - 1300 / H) / (1 - 1300 / H), 0, 1) * 0.65
 mult = (dark * (1 - top) * (1 - bot))[:, :, None]
 
+# tono claro (temas con texto oscuro, p. ej. expediente): el video se aclara hacia crema
+CREAM = np.array([242, 234, 218], dtype=np.float32)[None, None, :]
+LIGHT = (0.55 + 0.33 * np.clip(1 - y / (1000 / H), 0, 1))[:, :, None]
 def b64png(s): return Image.open(io.BytesIO(base64.b64decode(s.split(',', 1)[1]))).convert('RGBA')
 
 with sync_playwright() as p:
@@ -50,7 +53,8 @@ with sync_playwright() as p:
         for k in range(n):
             i = a + k; t = i / FPS
             pg.evaluate(f'__seek({t})'); ov = b64png(pg.evaluate('__png()'))
-            v = np.asarray(Image.open(cf[k]).convert('RGB'), dtype=np.float32) * mult
+            v = np.asarray(Image.open(cf[k]).convert('RGB'), dtype=np.float32)
+            v = v * (1 - LIGHT) + CREAM * LIGHT if spec.get('tone') == 'light' else v * mult
             bg = Image.fromarray(np.clip(v, 0, 255).astype(np.uint8)).convert('RGBA')
             out = Image.alpha_composite(bg, ov).convert('RGB')
             e = min(k + 1, n - k) / (0.3 * FPS)  # fundido con el frame normal en los bordes
