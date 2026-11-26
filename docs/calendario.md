@@ -92,6 +92,15 @@ Ya no se quieren reels de solo diapositivas e imágenes estáticas. Cada reel ll
 - Robot oficial: `styles/robot_trust_gold.png` (ya incrustado en `kit2.js`).
 - Rehechos el 26 nov con este sistema: 16:30 backtest (364), 20:00 fix 4 p. m. (365), 23:30 Chanos (366, tono claro) y 27 nov 3:00 China 2015 (367). El reel de prueba del oro de Alemania se publicó a las 14:30.
 
+## Locución con voz humana de ElevenLabs (decisión de Cristian, 26 nov 2026) — reemplaza a Kokoro
+Cristian dijo que la voz de Kokoro «suena muy robótica» y pidió que las nuevas publicaciones tengan locución que parezca una persona, hecha con ElevenLabs. Desde el reel del 26 nov 16:24 (Citibank, escena 373):
+- Voz: **Juan Esteban - Storyteller & Guide** (`voice_id` Wb1wmVQjMx9g2QSIOTPI, acento colombiano, educativo), modelo `eleven_v4`, `generations_count: 1`. Crear un flujo por reel con `creative_create_flow` y pasar su `flow_id` a cada `creative_generate_speech`.
+- Una generación por subtítulo (los 7 del guion + «Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre ye punto com.» + «Robot Trust Gold, Míster Y. Link en bio.»), con números escritos en palabras. Esperar con `creative_get_flow_run_status`.
+- Descarga: el proxy bloquea elevenlabsusercontent.com. Importar cada `content_url` con Higgsfield `media_import_url` (type audio) y bajarlo con curl desde `https://d2ol7oe51mr4n9.cloudfront.net/user_34VrdvKVJk1UXa9dvFrDrK0PMFE/<media_id>.mp3`, guardándolos como `s0.mp3 … s8.mp3` en una carpeta.
+- Mezcla: `python3 audio/gen_px5.py <escena>` (música y efectos; también crea la voz Kokoro) y DESPUÉS `python3 audio/mix_elevenlabs.py <escena> <carpeta>`, que reemplaza `v5_<escena>.wav` colocando cada frase al inicio de su subtítulo, recorta silencios y acelera con atempo solo si no cabe (máx. 1,25; ideal ≤ 1,12). Luego `pixel/build_pixel.py` como siempre.
+- ElevenLabs habla más despacio que Kokoro (≈ 2,5 palabras por segundo): ≈ 13–15 palabras habladas para las ventanas de 6 s y ≈ 16–19 para las de 7–8 s. Si una frase sale con tempo > 1,15, acortar el texto (visible y hablado) y regenerar SOLO esa frase. Las etiquetas como [intrigued] alargan la frase: usarlas poco.
+- Costo: ≈ 90–120 créditos de ElevenLabs por frase, ≈ 850–950 por reel.
+
 ## Carátulas (regla de Cristian, 17 oct): más llamativas y con potencial viral
 Aplica a todos los reels nuevos desde ahora (cada `cover()` de `styles/`):
 - Un solo gancho de máximo 5–6 palabras en letra enorme (≥120 px en la palabra clave), con cifra o fecha cuando exista ("−30% EN MINUTOS", "×24 EN 9 AÑOS").
@@ -111,7 +120,7 @@ Motivo: los temas muy técnicos no se entienden. Desde el 27 nov los reels son *
 Errores épicos:
 1. Mizuho, dic. 2005: vendió 610.000 acciones a 1 yen en vez de 1 acción a 610.000 yenes.
 2. (HECHO 26 nov 16:01, v302, en vivo) Samsung Securities, 2018: por error repartió ≈ 2.800 millones de "acciones fantasma" y algunos empleados las vendieron.
-3. Citibank, 2020: transfirió ≈ US$ 900 M por error a acreedores de Revlon (y la pelea en los tribunales para recuperarlos).
+3. (HECHO 26 nov 16:24, v303, en vivo, primera voz ElevenLabs) Citibank, 2020: transfirió ≈ US$ 900 M por error a acreedores de Revlon (y la pelea en los tribunales para recuperarlos).
 4. Deutsche Bank, 2015: un empleado junior envió ≈ US$ 6.000 M por error a un fondo.
 5. El tuit falso de AP, 23 abr 2013 ("explosiones en la Casa Blanca"): ≈ US$ 136.000 M borrados en minutos por algoritmos que leen noticias.
 Personajes increíbles:
@@ -622,3 +631,5 @@ Temas nuevos: evento, técnica, ranking, robots, mecánica, persona, evento. Est
 ## Reel de la LISTA VIRAL publicado al momento (pedido en vivo por Cristian, 26 nov ≈ 15:40)
 - 26 nov 16:01 — Samsung Securities, acciones fantasma, 6 abr 2018 (lista viral n.º 2; estilo 34, 6.º uso, `v302_lowpoly_samsung_acciones_fantasma.html`, escena 372, id Metricool 443637102; 3 clips Hailuo y carátula con foto; contenido en `styles/content_samsung.py`, página con `styles/gen_pages_samsung.py`). Fuentes: Bloomberg vía Business Standard (12 abr 2018: 2.830 M de acciones, ≈ 112,6 billones de wones, > 30 veces el valor de mercado, caída de hasta 12 %, primera venta 9:35 a. m.), Korea JoongAng Daily (9 abr 2018: 1.000 wones por acción, escribió «acciones» en vez de «wones», ≈ 31 veces las acciones emitidas, 16 empleados vendieron entre 9:35 y 10:05; su «501 millones» es un error de traducción de 501 万 = 5,01 M, coherente con ≈ 200.000 M de wones), Finance Magnates (23 may 2018: ≈ 5 M de acciones, pago previsto ≈ US$ 2,6 M, ≈ US$ 100.000 M, castigos, revisión de más de 30 corredoras) y Wikipedia (allanamiento de la fiscalía el 28 may 2018; NPS dejó de operar con ellos). Wikipedia da 8 abr como fecha (se usó 6 abr). No se usaron: renuncia del presidente, multas ni condenas (no verificados en las fuentes leídas).
 - Escenas usadas hasta 372. Siguiente estilo por antigüedad: 35. La rutina de la noche debe saltar el n.º 2 (ya hecho).
+- 26 nov 16:24 — Citibank y Revlon: ≈ US$ 900 M enviados por error, 11 ago 2020 (lista viral n.º 3; estilo 35, 6.º uso, tono claro, `v303_acuarela_citibank_revlon_900m.html`, escena 373, id Metricool 443656862; 3 clips Hailuo; carátula con foto; **primera locución con ElevenLabs**, voz Juan Esteban). Fuentes: Reuters vía Insurance Journal (12 sep 2022: intención de pagar US$ 7,8 M de intereses, pagó el préstamo de US$ 894 M que vencía en 2023, 10 gestores no devolvieron ≈ US$ 500 M, fallo de Furman de feb. 2021 por «discharge for value», decisión 3-0 del juez Leval), Financial Times vía Irish Times (9 sep 2022: ≈ US$ 900 M, «banderas rojas»), Torys LLP (16 feb 2021 y 8 sep 2022; el préstamo no había vencido) y American Banker (US$ 504 M). No se usaron Flexcube, la aprobación de «seis ojos» ni las casillas mal marcadas (no verificados en las fuentes leídas). La primera foto del gancho mostraba «$1.000.000.000» en pantalla y se descartó.
+- Escenas usadas hasta 373. Siguiente estilo por antigüedad: 36. La rutina de la noche debe saltar los n.º 2 y 3 (ya hechos).
