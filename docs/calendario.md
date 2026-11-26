@@ -77,6 +77,12 @@ Horarios (Bogotá): 6:00, 9:30, 13:00, 16:30, 20:00, 23:30, 3:00.
 7. (HECHO 19 oct 20:00, v50) Técnica: perfil de volumen (POC y área de valor).
 Reserva: LTCM 1998, flash crash de la libra 2016, carry trade del yen 2024, Kelly, MAE/MFE, walk-forward, COT, puntos swap.
 
+## Nombre del producto (decisión de Cristian, 26 nov 2026)
+Desde el 26 nov 2026 las publicaciones ya no hablan del «Robot De Oro Mr. Y 10.0 Securus Apex»: el cierre (tarjeta final, narración final y texto del post) es **Robot Trust Gold Mr. Y** (nunca abreviar). `common.js`, `kit2.js` (`ctaCard`) y `gen_pages_16nov.py` (`CTA`) ya usan el nombre nuevo; narración final: «Robot Trust Gold, Míster Y. Link en bio.». Línea del post: `Robot Trust Gold Mr. Y | Link en bio · @forexmry`.
+
+## Carátulas con personas o imágenes (regla de Cristian, 26 nov 2026)
+Las carátulas ya no pueden ser solo letras grandes: cada una lleva una foto realista con personas o una escena llamativa, generada con IA en Higgsfield (`generate_image`, modelo `gpt_image_2_6`, 9:16, quality high, 2k; pedir el tercio superior oscuro y sin texto ni logos; sin personas reales ni figuras públicas). Las imágenes de resultado (d8j0ntlcm91z4.cloudfront.net) no se pueden descargar desde la sesión: importarlas con `media_import_url` y descargarlas desde la URL de `show_medias` (d2ol7oe51mr4n9.cloudfront.net). Se incrustan en base64 en un `img_<tema>.js` (el canvas no acepta imágenes file://). Encima va el gancho corto con la cifra (ver reglas de abajo), con sombra fuerte. Ejemplo: `styles/gen_page_oro_alemania.py` (estilo 51), que también usa las fotos de fondo durante el video.
+
 ## Carátulas (regla de Cristian, 17 oct): más llamativas y con potencial viral
 Aplica a todos los reels nuevos desde ahora (cada `cover()` de `styles/`):
 - Un solo gancho de máximo 5–6 palabras en letra enorme (≥120 px en la palabra clave), con cifra o fecha cuando exista ("−30% EN MINUTOS", "×24 EN 9 AÑOS").
@@ -548,3 +554,7 @@ Temas nuevos: evento, técnica, ranking, robots, mecánica, persona, evento. Est
 - 26 nov 23:30 — Jim Chanos y Enron (persona; estilo 28, `v296_expediente_chanos_enron.html`, escena 366). Fuentes: Yale Alumni Magazine, HedgeFundAlpha, Britannica, Wikipedia. Sin cifras de ganancias; discrepancia de mes sobre el artículo del WSJ (no se usó).
 - 27 nov 3:00 (séptimo reel) — Lunes negro de China, 24 ago. 2015 (evento; estilo 30, `v297_velocimetro_china_2015.html`, escena 367). Fuentes: Al Jazeera, Fortune, NBC News. No se usó «+150 %», ni oro/yen, ni la fecha de la devaluación del yuan.
 - Fin del 26 nov: escenas hasta 367. Siguientes estilos por antigüedad: 31, 32, 33… Reserva: Goldfinger, 3 velas del Nikkei, Quantum Fund, Hindenburg Omen, Coppock, OrderCalcMargin/OnTimer (sin verificar en mql5.com).
+
+## Reel de prueba del jueves 26 nov, 18:00 (pedido por Cristian)
+- 26 nov 18:00 — ¿Por qué Alemania sacó su oro de Nueva York y París? Repatriación de 674 t, Bundesbank 2013–2017 (evento; estilo 51 nuevo, fotografía IA, `v298_foto_oro_alemania.html`, escena 368; fotos de Higgsfield en `img_oro_alemania.js`). Fuentes: Deutsche Bundesbank (16 ene 2013: plan de 374 t desde París y 300 t desde Nueva York, meta 2020; razones: confianza y el euro; 23 ago 2017: traslado terminado ≈ 3 años antes, sin irregularidades en autenticidad, pureza y peso), CNBC (23 ago 2017: 53.780 lingotes, ≈ US$ 27.900 M, temor de la Guerra Fría a que cayera en manos soviéticas, París para francos) y cifras clave de la Bundesbank (31 dic 2025: 3.350 t; Fráncfort 1.710, Nueva York 1.236, Londres 404; % = cálculo propio). Video `videos/2026-11-26_1800_oro_alemania_repatriacion.mp4`, portada `covers/cover_oro_alemania.jpg`. Primer reel con «Robot Trust Gold Mr. Y».
+- Escenas usadas hasta 368.

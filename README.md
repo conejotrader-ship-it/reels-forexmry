@@ -1,4 +1,4 @@
-# Reels @forexmry — Robot De Oro Mr. Y 10.0 Securus Apex
+# Reels @forexmry — Robot Trust Gold Mr. Y
 
 Sistema para producir y programar reels educativos de Instagram (estilo pixel-art 3D con Three.js, voz en español y música/sfx chiptune).
 

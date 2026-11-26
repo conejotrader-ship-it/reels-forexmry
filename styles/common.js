@@ -31,9 +31,9 @@ function subs(t,st){const s=SPEC.subs.find(([a,b])=>t>=a&&t<b);if(!s)return;cons
 function ctaCard(t,st){const CT=SPEC.cta||17.1;const k=eout(prog(t,CT,CT+.7));if(k<=0)return;ctx.save();ctx.globalAlpha=k;
   ctx.fillStyle=st.ctaBg;ctx.fillRect(0,0,W,H);ctx.restore();
   const y=lerp(40,0,k);
-  T('ROBOT DE ORO',540,640+y,{font:st.ctaFontS,fill:st.ctaSub,a:k,glow:st.ctaGlow,gb:18});
-  T('MR. Y 10.0',540,770+y,{font:st.ctaFontL,fill:st.ctaMain||'#fff',a:k,glow:st.ctaGlow,gb:22});
-  T('SECURUS APEX',540,920+y,{font:st.ctaFontL,fill:st.ctaAccent,a:k,glow:st.ctaGlow,gb:26});
+  T('ROBOT',540,640+y,{font:st.ctaFontS,fill:st.ctaSub,a:k,glow:st.ctaGlow,gb:18});
+  T('TRUST GOLD',540,770+y,{font:st.ctaFontL,fill:st.ctaMain||'#fff',a:k,glow:st.ctaGlow,gb:22});
+  T('MR. Y',540,920+y,{font:st.ctaFontL,fill:st.ctaAccent,a:k,glow:st.ctaGlow,gb:26});
   ctx.save();ctx.globalAlpha=k;RR(240,1060+y,600,110,55);ctx.fillStyle=st.ctaAccent;ctx.fill();ctx.restore();
   T('LINK EN BIO',540,1115+y,{font:st.ctaFontS,fill:st.ctaBtnText,a:k});
   T('@forexmry',540,1230+y,{font:st.ctaFontS,fill:st.ctaMain||'#fff',a:k})}
