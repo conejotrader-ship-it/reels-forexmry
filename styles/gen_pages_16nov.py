@@ -5,7 +5,7 @@ import json, sys, os
 HERE = os.path.dirname(os.path.abspath(__file__))
 EVB = [[6.2,"wipe"],[8.0,"ding"],[13.4,"wipe"],[15.2,"ding"],[20.4,"wipe"],[22.2,"ding"],[28.2,"wipe"],[30.0,"ding"],[35.0,"wipe"],[36.8,"ding"],[43.4,"wipe"],[45.2,"ding"],[51.0,"ding"],[52.2,"ding"],[53.4,"ding"],[54.6,"ding"],[56.2,"cta"]]
 WIN = [(0.2,6.0),(6.4,13.4),(13.6,20.4),(20.6,28.2),(28.4,35.0),(35.2,43.4),(43.6,49.6)]
-OUTRO = [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita robotsdeforexmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita robots de forex eme erre i punto com."]
+OUTRO = [49.8,55.9,"Sígueme @forexmry, activa las notificaciones, únete al grupo de Telegram y visita www.trustgoldmry.com","Sígueme, activa las notificaciones, únete a Telegram y visita trust gold eme erre ye punto com."]
 CTA = [56.2,59.8,"Robot Trust Gold Mr. Y. Link en bio.","Robot Trust Gold, Míster Y. Link en bio."]
 
 # ---------------- TEMAS (un fondo y un panel distintos por estilo) ----------------

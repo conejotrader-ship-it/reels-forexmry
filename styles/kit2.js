@@ -22,10 +22,10 @@ function outro(t,a){ctx.save();ctx.globalAlpha=a;ctx.fillStyle=DK;ctx.fillRect(0
   const g=ctx.createRadialGradient(290,800,60,290,800,560);g.addColorStop(0,ACC+'66');g.addColorStop(1,ACC+'00');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
   const kr=eout(prog(t,50.0,50.8));robot(-20+lerp(-60,0,kr),340,1020,kr);
   lbl('ÚNETE A LA COMUNIDAD',540,290,52,ACC,eout(prog(t,50.0,50.6)),'center','Inter');
-  const R=[[51.0,'#c13584','SÍGUENOS','@forexmry en Instagram'],[52.2,'#e0a020','ACTIVA LAS','NOTIFICACIONES'],[53.4,'#2a9bd8','GRUPO DE TELEGRAM','únete a la comunidad'],[54.6,'#2f8a5a','www.robotsdeforexmry.com','visita la página']];
+  const R=[[51.0,'#c13584','SÍGUENOS','@forexmry en Instagram'],[52.2,'#e0a020','ACTIVA LAS','NOTIFICACIONES'],[53.4,'#2a9bd8','GRUPO DE TELEGRAM','únete a la comunidad'],[54.6,'#2f8a5a','www.trustgoldmry.com','visita la página']];
   R.forEach(([ts,col,h,s],i)=>{const k=eout(prog(t,ts,ts+.5));if(k<=0)return;const y=420+i*215;ctx.save();ctx.globalAlpha=a*k;ctx.translate(lerp(60,0,k),0);
     RR(470,y,560,185,28);ctx.fillStyle='#1b1b24';ctx.fill();ctx.lineWidth=4;ctx.strokeStyle=ACC;ctx.stroke();ctx.beginPath();ctx.arc(550,y+92,50,0,7);ctx.fillStyle=col;ctx.fill();icon(i,550,y+92);
-    const big=i==3?24:(i==2?32:42);lbl(h,620,y+(i==1?66:80),big,'#fff',1,'left','Inter');if(i==1){lbl(s,620,y+118,42,ACC,1,'left','Inter')}else lbl(s,620,y+(i==3?118:128),30,'#d9d9e3',1,'left','Inter');ctx.restore()});
+    const big=i==3?30:(i==2?32:42);lbl(h,620,y+(i==1?66:80),big,'#fff',1,'left','Inter');if(i==1){lbl(s,620,y+118,42,ACC,1,'left','Inter')}else lbl(s,620,y+(i==3?118:128),30,'#d9d9e3',1,'left','Inter');ctx.restore()});
   ctx.restore()}
 // botón de carátula
 function coverBtn(txt,col,tc){ctx.save();ctx.fillStyle=col;RR(170,1440,740,110,55);ctx.fill();ctx.restore();T(txt,540,1498,{font:'900 50px Inter',fill:tc})}

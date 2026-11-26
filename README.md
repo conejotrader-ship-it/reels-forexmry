@@ -36,3 +36,5 @@ Motor liviano (`common.js`) para reels de estilos distintos, sin WebGL. Cada pá
 
 ## Estilos
 `docs/estilos.md` tiene el catálogo de 50 estilos de animación y el registro de cuál se usó en cada video. Regla: cada video nuevo usa un estilo distinto (primero los marcados "Disponible").
+
+- Página web del cierre (desde el 26 nov 2026): www.trustgoldmry.com (`kit2.js` y `OUTRO` en `gen_pages_16nov.py`).
