@@ -659,3 +659,10 @@ Cristian pidió carátulas más atractivas, que inviten a ver el video, variadas
 **Foto:** gpt_image_2_6 9:16 high 2k, pedida para la plantilla (persona en la mitad inferior con la cara a ≈ 60 % de la altura y el 40 % superior oscuro; u objeto centrado con espacio vacío arriba), «No text, no letters, no logos», sin personas reales. Revisar la vista previa (completa, recorte 3:4 y miniatura de 120 px) antes de programar.
 **Nota:** según Instagram, la portada influye poco en el alcance (se ve en el perfil y Explorar); en el feed manda el primer fotograma y los primeros segundos, así que el gancho del video debe tener la misma fuerza que la carátula.
 - Aplicadas el 26 nov a los reels pendientes: 20:00 fix (cifra), 23:30 Chanos (antes_despues), 27 nov 3:00 China (grafico), 6:00 Mizuho (interfaz), 9:30 bóveda (objeto) y 13:00 mantequilla (vs); archivos `covers/cover_*_ctr.jpg`.
+
+## 27 nov noche (escenas 374–377, estilos 36–39 de uso 5.º: deco, teletipo, crt, holo)
+- 27 nov 16:30 Pizza de Bitcoin 2010 (v304_deco_pizza_bitcoin_2010, escena 374, carátula `pregunta`)
+- 27 nov 20:00 Gato vs expertos, Londres 2012 (v305_teletipo_gato_orlando_2012, escena 375, carátula `sello`)
+- 27 nov 23:30 Volkswagen 2008 squeeze (v306_crt_volkswagen_2008, escena 376, carátula `antes_despues`)
+- 28 nov 3:00 Deutsche Bank US$ 6.000 M 2015 (v307_holo_deutsche_bank_6000m, escena 377, carátula `cifra`)
+Voz ElevenLabs Juan Esteban; escenas usadas hasta la 377.
