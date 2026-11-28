@@ -666,3 +666,13 @@ Cristian pidió carátulas más atractivas, que inviten a ver el video, variadas
 - 27 nov 23:30 Volkswagen 2008 squeeze (v306_crt_volkswagen_2008, escena 376, carátula `antes_despues`)
 - 28 nov 3:00 Deutsche Bank US$ 6.000 M 2015 (v307_holo_deutsche_bank_6000m, escena 377, carátula `cifra`)
 Voz ElevenLabs Juan Esteban; escenas usadas hasta la 377.
+
+## 28 nov (escenas 378–384, estilos 42, 45, 43, 41, 40, 46, 44 de uso 6.º)
+- 28 nov 6:00 Tuit falso de AP, 2013 (v308_domino_tuit_falso_ap_2013, escena 378, carátula `interfaz`)
+- 28 nov 9:30 Índice Big Mac (v309_libro_indice_big_mac, escena 379, carátula `objeto`)
+- 28 nov 13:00 SS Central America, 1857 (v310_montana_rusa_ss_central_america_1857, escena 380, carátula `cifra`)
+- 28 nov 16:30 Bitcoins de James Howells (v311_rayosx_howells_bitcoin_2013, escena 381, carátula `pregunta`)
+- 28 nov 20:00 Fibra Chicago–Nueva York (v312_glitch_fibra_chicago_nueva_york, escena 382, carátula `vs`)
+- 28 nov 23:30 Bonos de Bowie, 1997 (v313_vhs_bonos_bowie_1997, escena 383, carátula `antes_despues`)
+- 29 nov 3:00 Fort Knox, 1974 (v314_ajedrez_fort_knox_1974, escena 384, carátula `objeto`)
+Voz ElevenLabs Juan Esteban; escenas usadas hasta la 384.
